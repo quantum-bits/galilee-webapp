@@ -7,10 +7,20 @@
  **********************************************************************************************/
 /** Map relative paths to URLs. */
 const map: any = {
+  'materialize-css': 'materialize-src',
+  'materialize': 'vendor/angular2-materialize',
+  'angular2-materialize': 'vendor/angular2-materialize'
 };
 
 /** User packages configuration. */
 const packages: any = {
+  'materialize-src': {
+    'main': 'js/bin/materialize.min.js'
+  },
+  'materialize': {
+    'main': 'dist/materialize-directive.js',
+    //'defaultExtension': 'js'
+  }
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
