@@ -1,11 +1,16 @@
 <nav>
-  <div class="nav-wrapper">
+  <div class="toolbar-wrapper">
+    <div class="nav-wrapper">
       <span class="brand-logo left">Scripture Engagement</span>
-      <span class="brand-logo right">Fifth Sunday after Pentecost </span>
+      <span class="brand-logo right">
+        <a href="#"><i class="material-icons left">perm_identity</i> </a>
+        <a (click)="gotoManage()"><i class="material-icons right">settings</i> </a>
+      </span>
+    </div>
   </div>
 </nav>
 
-<div *ngIf ="showDetails">
+<div *ngIf ="landingPage">
   <div class="container">
     <div class="row">
       <div *ngFor="let reading of readings" class="col s12 m6 l4">
@@ -19,7 +24,7 @@
             </div>
           </div>
           <div class="card-action">
-            <p><a (click)= "toggleDetails()">Lectio Divina</a></p>
+            <p><a (click)= "gotoDetails()">Lectio Divina</a></p>
             <p><a href="#">Journaling Scripture</a></p>
           </div>
         </div>
@@ -28,7 +33,7 @@
   </div>
 </div>
 
-<div *ngIf ="!showDetails">
+<div *ngIf ="detailsPage">
   <div class="container">
     <div class="row">
       <div *ngIf="singleReading" class="col s12 m6 l4">
@@ -43,7 +48,7 @@
             </div>
           </div>
           <div class="card-action">
-            <a (click)= "toggleDetails()">Back</a>
+            <a (click)= "goBack()">Back</a>
           </div>
         </div>
       </div>
@@ -88,6 +93,58 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf ="managePage">
+  <div class="container">
+    <h5 class="brand-logo left">{{date.getMonth()+1}}/{{date.getDate()}}/{{date.getFullYear()}}</h5>
+    <h5 class="brand-logo right"> Fifth Sunday after Epiphany</h5>
+    <div class="row">
+      <div class="card col s12">
+        <div class="card-content ">
+          <span class="card-title ">
+            <div class="row">
+              <div class="col s4"> Choose Passage </div>
+              <div class="col s3"> Choose Practice </div>
+              <div class="col s5"> Enter Advice </div>
+            </div>
+          </span>
+          <div class="card-item">
+            <div class="row">
+              <div class="col s4">
+                <div class="collection">
+                  <a *ngFor="let reading of readings" href="#!" class="collection-item">
+                  {{ reading.description }}
+                  </a>
+                </div>
+              </div>
+              <div class="col s3">
+                <ul>
+                  <li *ngFor="#practice of practices; #i = index">
+                    <!--
+                    see: http://raydaq.com/dynamically-bind-inputs-and-labels-in-ngfor-loop-angular-2/
+                    -->
+                    <p>
+                      <input type="checkbox" class="filled-in" id="f_{{i}}" />
+                        <label [attr.for]="'f_' + i">{{ practice.title }}
+                      </label>
+                    </p>
+                  </li>
+                </ul>
+              </div>
+              <div class="input-field col s5">
+                <label for="textarea1">Description</label>
+                <textarea id="textarea1" class="materialize-textarea"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-action">
+      <a class="btn"(click)= "goBack()">Back</a>
     </div>
   </div>
 </div>
