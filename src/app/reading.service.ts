@@ -19,7 +19,7 @@ const READINGS: Reading[] = [
     'came to Beersheba in Judah, he left his servant there,....'
   },
   {
-    id: 1,
+    id: 2,
     title:      'Second Reading',
     description:
       'Psalm 51: 1-2',
@@ -29,7 +29,7 @@ const READINGS: Reading[] = [
     '2 Wash away all my iniquity and cleanse me from my sin.'
   },
   {
-    id: 1,
+    id: 3,
     title: 'Third Reading',
     description: 'Revelation 21:4',
     text: '4 He will wipe every tear from their eyes. There will be no ' +
@@ -46,6 +46,10 @@ export class ReadingService {
 
   constructor() {
     console.log('got here');
+  }
+
+  getSingleReading() {
+    return Promise.resolve(READINGS[0]);
   }
 
   getTodaysReadings() {

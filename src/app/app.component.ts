@@ -14,6 +14,9 @@ export class AppComponent implements OnInit {
 
   date: Date;
   readings: Reading[] = [];
+  singleReading: Reading;
+
+  public showDetails = true;
 
   constructor(
     private readingService: ReadingService) {
@@ -27,9 +30,17 @@ export class AppComponent implements OnInit {
         this.readings = readings;
       }
     );
+    this.readingService.getSingleReading().then(
+      (reading) => {
+        this.singleReading = reading;
+      }
+    );
 
   }
 
+  toggleDetails() {
+    this.showDetails = ! this.showDetails;
+  }
 
 
 }
