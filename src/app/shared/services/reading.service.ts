@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Reading } from './reading';
+import { Reading } from '../models/reading';
 
 // MOCK
 const READINGS: Reading[] = [
@@ -48,9 +48,22 @@ export class ReadingService {
     console.log('got here');
   }
 
+  getReading(id: number) {
+    return Promise.resolve(READINGS[0]);
+  }
+
   getSingleReading() {
     return Promise.resolve(READINGS[0]);
   }
+/*
+  getReading(id: number) {
+    return this.getTodaysReadings()
+      .then(readings => {
+        readings.filter(reading => reading.id === id)[0];
+        console.log('hey, i got here');
+      });
+  }
+  */
 
   getTodaysReadings() {
     return Promise.resolve(READINGS);

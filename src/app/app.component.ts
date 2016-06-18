@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 
-import { ReadingService } from './reading.service';
-import { Reading } from './reading';
-import { PracticeService } from './practice.service';
-import { Practice } from './practice';
+import { ReadingService } from './shared/services/reading.service';
+import { Reading } from './shared/models/reading';
+import { PracticeService } from './shared/services/practice.service';
+import { Practice } from './shared/models/practice';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { Practice } from './practice';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css'],
   providers: [ReadingService, PracticeService],
-  directives: [],
+  directives: [ROUTER_DIRECTIVES],
 })
 export class AppComponent implements OnInit {
   title = 'app works!';
