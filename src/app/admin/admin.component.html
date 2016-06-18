@@ -1,3 +1,67 @@
-<p>
-  admin works!
-</p>
+<div class="container">
+    <span class="row">
+      <h5 class="brand-logo left">{{date.getMonth()+1}}/{{date.getDate()}}/{{date.getFullYear()}}</h5>
+      <h5 class="brand-logo right"> Fifth Sunday after Epiphany</h5>
+    </span>
+    <span class="row">
+      <span class="right">
+        <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+      </span>
+    </span>
+  <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a class="btn-floating btn-large red">
+      <i class="large material-icons">mode_edit</i>
+    </a>
+    <ul>
+      <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+      <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+      <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+      <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+    </ul>
+  </div>
+  <div class="row">
+    <div class="card col s12">
+      <div class="card-content ">
+          <span class="card-title ">
+            <div class="row">
+              <div class="col s4"> Choose Passage </div>
+              <div class="col s3"> Choose Practice </div>
+              <div class="col s5"> Enter Advice </div>
+            </div>
+          </span>
+        <div class="card-item">
+          <div class="row">
+            <div class="col s4">
+              <div class="collection">
+                <a *ngFor="let reading of readings" href="#!" class="collection-item">
+                  {{ reading.description }}
+                </a>
+              </div>
+            </div>
+            <div class="col s3">
+              <ul>
+                <li *ngFor="#practice of practices; #i = index">
+                  <!--
+                  see: http://raydaq.com/dynamically-bind-inputs-and-labels-in-ngfor-loop-angular-2/
+                  -->
+                  <p>
+                    <input type="checkbox" class="filled-in" id="f_{{i}}" />
+                    <label [attr.for]="'f_' + i">{{ practice.title }}
+                    </label>
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <div class="input-field col s5">
+              <label for="textarea1">Description</label>
+              <textarea id="textarea1" class="materialize-textarea"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-action">
+    <a class="btn"(click)= "goBack()">Back</a>
+  </div>
+</div>
