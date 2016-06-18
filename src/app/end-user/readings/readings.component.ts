@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { ReadingService } from '../../shared/services/reading.service';
 import { Reading } from '../../shared/models/reading';
@@ -18,6 +19,7 @@ export class ReadingsComponent implements OnInit {
   readings: Reading[] = [];
 
   constructor(
+    private router: Router,
     private readingService: ReadingService){
   }
 
@@ -30,6 +32,10 @@ export class ReadingsComponent implements OnInit {
       }
     );
 
+  }
+
+  onSelect(reading: Reading) {
+    this.router.navigate(['/reading-detail', reading.id]);
   }
 
 }

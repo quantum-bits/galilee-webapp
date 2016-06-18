@@ -11,7 +11,13 @@
           </div>
         </div>
         <div class="card-action">
-          <p><a [routerLink]="['/reading-detail']">Lectio Divina</a></p>
+          <p><a (click)="onSelect(reading)">Lectio Divina</a></p>
+          <!--
+          FIXME
+          ...would be nice to user routerLink with a param (id) to get
+          and actual URL in the above....
+          https://github.com/angular/router/issues/353
+          -->
           <p><a href="#">Journaling Scripture</a></p>
         </div>
       </div>

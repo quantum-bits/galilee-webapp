@@ -6,6 +6,15 @@ import { ReadingDetailComponent } from './end-user/reading-detail/reading-detail
 import { AdminComponent } from './admin/admin.component';
 
 
+/*
+FIXME....
+To Do:
+1. Get relative routes working.
+2. Gather services, components, etc., into a shared file.
+3. Possible to use routerLink to get an actual url with a parameter?
+ */
+
+
 const routes: RouterConfig = [
   {
     path: '/readings',
@@ -13,7 +22,7 @@ const routes: RouterConfig = [
     index: true,
   },
   {
-    path: '/reading-detail',
+    path: '/reading-detail/:id',
     component: ReadingDetailComponent,
   },
   {

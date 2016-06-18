@@ -44,26 +44,40 @@ const READINGS: Reading[] = [
 @Injectable()
 export class ReadingService {
 
+  reading: Reading;
   constructor() {
     console.log('got here');
   }
 
+  /*
   getReading(id: number) {
     return Promise.resolve(READINGS[0]);
   }
+  */
 
   getSingleReading() {
     return Promise.resolve(READINGS[0]);
   }
-/*
-  getReading(id: number) {
-    return this.getTodaysReadings()
+
+  getReading(id: number) {// typescript for loop: https://basarat.gitbooks.io/typescript/content/docs/for...of.html
+    for (var readingItem of READINGS) {
+      if (readingItem.id === id) {
+        this.reading = readingItem;
+      }
+    }
+    //FIXME convert to Observable
+    return Promise.resolve(
+      this.reading //FIXME need to add error trapping!
+    );
+    /*
+    this.getTodaysReadings()
       .then(readings => {
         readings.filter(reading => reading.id === id)[0];
         console.log('hey, i got here');
       });
+      */
   }
-  */
+
 
   getTodaysReadings() {
     return Promise.resolve(READINGS);

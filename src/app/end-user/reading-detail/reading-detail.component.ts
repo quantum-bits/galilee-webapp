@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
-//import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { ReadingService } from '../../shared/services/reading.service';
 import { Reading } from '../../shared/models/reading';
@@ -22,16 +22,23 @@ export class ReadingDetailComponent implements OnInit {
   singleReading: Reading;
 
   constructor(
+    private router: Router,
+    private route: ActivatedRoute,
     private readingService: ReadingService){
   }
 
   ngOnInit() {
     this.date = new Date();
-    this.readingService.getSingleReading().then(
-      (reading) => {
-        this.singleReading = reading;
-      }
-    );
+    this.route.params.subscribe(params => {
+      let id = +params['id'];
+      this.readingService.getReading(id)
+        .then(//FIXME convert to Observable - subscribe (?)
+          reading => {
+            this.singleReading = reading;
+            console.log(reading);
+          }
+        );
+    });
   }
   /*
   date: Date;
