@@ -1,21 +1,21 @@
 import { EndUserComponent } from './end-user.component';
 
-import { ReadingsComponent } from './readings/readings.component';
-import { ReadingDetailComponent } from './reading-detail/reading-detail.component';
+import { ReadingsComponent } from './readings';
+import { ReadingDetailComponent } from './reading-detail';
 
 export const EndUserRoutes = [
   {
     path: '/end-user',
     component: EndUserComponent,
-    /*
+    index: true,
     children: [
       {
         path: '/readings',
         component: ReadingsComponent,
         index: true,
       },
-      //{ path: '/readings/:id', component: ReadingDetailComponent },
+      { path: '/reading-detail/:id', component: ReadingDetailComponent },
     ]
-    */
+
   },
 ];

@@ -35,7 +35,7 @@ export class ReadingsComponent implements OnInit {
   }
 
   onSelect(reading: Reading) {
-    this.router.navigate(['/reading-detail', reading.id]);
+    this.router.navigate(['/end-user/reading-detail', reading.id]);
   }
 
 }
