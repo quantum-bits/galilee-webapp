@@ -1,3 +1,31 @@
+<a materialize="tooltip" class="btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="I am tooltip">Hover me!</a>
+
+<ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
+  <li>
+    <div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
+    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+  </li>
+  <li>
+    <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
+    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+  </li>
+  <li>
+    <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
+    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+  </li>
+</ul>
+
+
+<nav>
+  <ul class="right hide-on-med-and-down">
+    <li *ngFor="let routeName of routeNames" ><a href="#">{{routeName}}</a></li>
+  </ul>
+  <ul id="slide-out" class="side-nav"><!-- remove fixed to have it not there permanently; can also add/delete show-on-large below-->
+    <li *ngFor="let routeName of routeNames" ><a href="#">{{routeName}}</a></li>
+  </ul>
+  <a materialize="sideNav" [materializeParams]="[{edge:'left'}]" href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu material-icons">menu</i></a>
+</nav>
+
 <div class="container">
     <span class="row">
       <h5 class="brand-logo left">{{date | date}}</h5>
@@ -62,6 +90,6 @@
     </div>
   </div>
   <div class="card-action">
-    <a class="btn"(click)= "goBack()">Back</a>
+    <a [routerLink]="['/end-user/readings']">Back</a>
   </div>
 </div>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Practice } from '../models/practice';
+import { Practice } from '../models/practice.model';
 
 // MOCK
 const PRACTICES: Practice[] = [

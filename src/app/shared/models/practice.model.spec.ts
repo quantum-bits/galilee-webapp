@@ -6,10 +6,10 @@ import {
   expect, it, xit,
   async, inject
 } from '@angular/core/testing';
-import {Reading} from './reading';
+import {Practice} from './practice.model';
 
-describe('Reading', () => {
+describe('Practice', () => {
   it('should create an instance', () => {
-    expect(new Reading()).toBeTruthy();
+    expect(new Practice()).toBeTruthy();
   });
 });

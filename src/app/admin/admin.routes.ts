@@ -2,7 +2,7 @@ import { AdminComponent } from './admin.component';
 
 export const AdminRoutes = [
   {
-    path: '/admin',
+    path: 'admin',
     component: AdminComponent,
   },
 ];

@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 
 import { ReadingService } from './shared/services/reading.service';
-import { Reading } from './shared/models/reading';
+import { Reading } from './shared/models/reading.model';
 import { PracticeService } from './shared/services/practice.service';
-import { Practice } from './shared/models/practice';
+import { Practice } from './shared/models/practice.model';
 
+//import { ReadingService } from './shared';
 
 @Component({
   moduleId: module.id,

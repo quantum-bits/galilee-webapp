@@ -5,16 +5,16 @@ import { ReadingDetailComponent } from './reading-detail';
 
 export const EndUserRoutes = [
   {
-    path: '/end-user',
+    path: 'end-user',
     component: EndUserComponent,
-    index: true,
     children: [
+      { path: '', redirectTo: 'readings', terminal: true },
       {
-        path: '/readings',
+        path: 'readings',
         component: ReadingsComponent,
         index: true,
       },
-      { path: '/reading-detail/:id', component: ReadingDetailComponent },
+      { path: 'reading-detail/:id', component: ReadingDetailComponent },
     ]
 
   },

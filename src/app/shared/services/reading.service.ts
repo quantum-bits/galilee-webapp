@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Reading } from '../models/reading';
+import { Reading } from '../models/reading.model';
 
 // MOCK
 const READINGS: Reading[] = [
