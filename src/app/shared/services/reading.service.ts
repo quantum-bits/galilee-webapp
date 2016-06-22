@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { Reading } from '../models/reading.model';
 
 // MOCK
-const READINGS: Reading[] = [
+const READINGS = [
+  //READINGS: Reading[] = [
+
   {
     id: 1,
     title:      'First Reading',
@@ -16,7 +18,24 @@ const READINGS: Reading[] = [
     'with me, be it ever so severely, if by this time tomorrow I do '+
     'not make your life like that of one of them. '+
     '3 Elijah was afraid[a] and ran for his life. When he '+
-    'came to Beersheba in Judah, he left his servant there,....'
+    'came to Beersheba in Judah, he left his servant there,....',
+    practices: [
+      {
+        id: 1,
+        title: 'Lectio Divina',
+        advice: 'Here is some advice for how to do Lectio Divina for this passage.'
+      },
+      {
+        id: 2,
+        title:      'Praying Scripture',
+        description: 'Here is some advice for how to pray scripture for this passage.'
+      },
+      {
+        id: 3,
+        title: 'Memorizing Scripture',
+        description: 'Here is some advice for memorizing this passage.'
+      },
+    ]
   },
   {
     id: 2,
@@ -26,7 +45,24 @@ const READINGS: Reading[] = [
     text:
     '1. Have mercy on me, O God, according to your unfailing love; '+
     'according to your great compassion blot out my transgressions. '+
-    '2 Wash away all my iniquity and cleanse me from my sin.'
+    '2 Wash away all my iniquity and cleanse me from my sin.',
+    practices: [
+      {
+        id: 1,
+        title: 'Lectio Divina',
+        advice: 'Here is some advice for how to do Lectio Divina for this passage.'
+      },
+      {
+        id: 2,
+        title:      'Praying Scripture',
+        description: 'Here is some advice for how to pray scripture for this passage.'
+      },
+      {
+        id: 3,
+        title: 'Memorizing Scripture',
+        description: 'Here is some advice for memorizing this passage.'
+      },
+    ]
   },
   {
     id: 3,
@@ -34,7 +70,24 @@ const READINGS: Reading[] = [
     description: 'Revelation 21:4',
     text: '4 He will wipe every tear from their eyes. There will be no ' +
     'more death or mourning or crying or pain, for the old order of ' +
-    'things has passed away.'
+    'things has passed away.',
+    practices: [
+      {
+        id: 1,
+        title: 'Lectio Divina',
+        advice: 'Here is some advice for how to do Lectio Divina for this passage.'
+      },
+      {
+        id: 2,
+        title:      'Praying Scripture',
+        description: 'Here is some advice for how to pray scripture for this passage.'
+      },
+      {
+        id: 3,
+        title: 'Memorizing Scripture',
+        description: 'Here is some advice for memorizing this passage.'
+      },
+    ]
   }
 ];
 

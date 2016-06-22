@@ -1,20 +1,5 @@
 <a materialize="tooltip" class="btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="I am tooltip">Hover me!</a>
 
-<ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
-  <li>
-    <div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
-    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
-  </li>
-  <li>
-    <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
-    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
-  </li>
-  <li>
-    <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
-    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
-  </li>
-</ul>
-
 
 <nav>
   <ul class="right hide-on-med-and-down">
@@ -89,7 +74,73 @@
       </div>
     </div>
   </div>
-  <div class="card-action">
-    <a [routerLink]="['/end-user/readings']">Back</a>
+</div>
+
+<div class="container">
+  <ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
+    <li *ngFor="let reading of readings">
+      <div class="collapsible-header"><i class="material-icons">book</i>{{reading.description}}</div>
+
+      <div class="collapsible-body">
+        <div class="container">
+          <div class="row">
+            <div class="card col s12 m8 l8">
+              <div class="card-content">
+                <span class="card-title">Text</span>
+                <p>
+                  {{reading.text}}
+                </p>
+              </div>
+            </div>
+            <div class="collection col s12 m4 l4">
+
+                <a materialize="leanModal" [materializeParams]="[{dismissible: false}]" class="collection-item modal-trigger" href="#modal1">
+
+                Lectio Divina
+              </a>
+              <a href="#" class="collection-item">
+                Praying Scripture
+              </a>
+
+              <div class="row">
+                <div class="bottom right">
+                  <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+
+<!-- Modal Trigger -->
+<a materialize="leanModal" [materializeParams]="[{dismissible: false}]" class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+  <div class="modal-content">
+    <h4>Enter Advice</h4>
+    <div class="input-field col s5">
+      <label for="textarea1">Description</label>
+      <textarea id="textarea1" class="materialize-textarea"></textarea>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
   </div>
 </div>
+
+
+<div class="row">
+  <div class="col s12">
+    <ul class="tabs" materialize="tabs">
+      <li *ngFor="#reading of readings; #j = index" class="tab col s3"><a href="#test{{j}}">{{ reading.description }}</a></li>
+    </ul>
+  </div>
+  <div *ngFor="#reading of readings; #j = index" id="test{{j}}" class="col s12">{{reading.text}}</div>
+</div>
+
