@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 import {Location} from '@angular/common';
 
@@ -19,6 +19,8 @@ import { Reading } from '../shared/models/reading.model';
   styleUrls: ['admin.component.css'],
   providers: [ReadingService, PracticeService],
   directives: [ROUTER_DIRECTIVES, MaterializeDirective],
+  inputs: ['model: textInput'],
+  outputs: ['textInputChange'],
 
 })
 export class AdminComponent implements OnInit {
@@ -28,8 +30,12 @@ export class AdminComponent implements OnInit {
   date: Date;
   readings: Reading[] = [];
   practices: Practice[] = [];
-  currentReading: Reading;//reading being shown in current tab
+  currentReading: any;//reading being shown in current tab
   unusedPractices = [];//unused practices for the current reading
+  currentPractice: any = null;
+
+  textInput: string = '';
+  textInputChange = new EventEmitter();
 
   constructor(
     //private _location:Location,
@@ -45,28 +51,27 @@ export class AdminComponent implements OnInit {
         this.readings = readings;
         var reading = this.readings[0];
         this.currentReading = reading;
-        this.fetchUnusedPractices(reading);
+        this.practiceService.getPractices().then(
+          (practices) => {
+            this.practices = practices;
+            this.fetchUnusedPractices();
+          }
+        );
       }
     );
-    this.practiceService.getPractices().then(
-      (practices) => {
-        this.practices = practices;
-      }
-    );
-
   }
 
   updateTab(reading){
     this.currentReading = reading;
-    this.fetchUnusedPractices(reading);
+    this.fetchUnusedPractices();
   }
 
-  fetchUnusedPractices(reading){
+  fetchUnusedPractices(){
     this.unusedPractices = [];
     var alreadyInUse: boolean;
     for (var practice of this.practices) {
       alreadyInUse = false;
-      for (var usedPractice of reading.practices) {
+      for (var usedPractice of this.currentReading.practices) {
         if (usedPractice.id === practice.id) {
           alreadyInUse = true;
         }
@@ -75,8 +80,33 @@ export class AdminComponent implements OnInit {
         this.unusedPractices.push(practice);
       }
     }
-    console.log(this.unusedPractices);
   }
+
+  setCurrentPractice(practice){
+    this.currentPractice = practice;
+  }
+
+  // the following is probably overkill...it tracks every new character that is typed
+  updateTextInput(newValue) {
+    this.textInput = newValue;
+    this.textInputChange.emit(newValue);
+    console.log(this.textInput);
+  }
+
+  addPracticeToCurrentReading(){
+    this.currentReading.practices.push(
+      {
+        id: this.currentPractice.id,
+        title: this.currentPractice.title,
+        advice: this.textInput
+      }
+    );
+    // clean up for modal exit
+    this.textInput = '';
+    this.currentPractice = null;
+    this.fetchUnusedPractices();
+  }
+
 
   isActive(reading){
     if(reading.id == this.currentReading.id) {

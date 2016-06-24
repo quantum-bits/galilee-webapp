@@ -10,29 +10,39 @@
 <!-- Modal Structure -->
 <div id="modal1" class="modal">
   <div class="modal-content">
+    <div class="modal-advice-area">
     <!-- Dropdown Trigger -->
-    <a materialize="dropdown" class='dropdown-button btn' href='#' data-activates='dropdown1'>Choose Practice</a>
+    <a materialize="dropdown" class='dropdown-button btn' href='#' data-activates='dropdown1'>
+
+    <div *ngIf = 'currentPractice'>{{currentPractice.title}}</div>
+      <div *ngIf = '!currentPractice'>Choose Practice</div>
+    </a>
+
     <!-- Dropdown Structure -->
 
     <ul id='dropdown1' class='dropdown-content'>
       <li *ngFor="let practice of unusedPractices; let i = index">
-        <a (click)="fetchUnusedPractices()">
+        <a (click)="setCurrentPractice(practice)">
           {{ practice.title }}
         </a>
       </li>
     </ul>
 
-
-    <h4>Enter Advice</h4>
-    <div class="input-field col s5">
-      <label for="textarea1">Description</label>
-      <textarea id="textarea1" class="materialize-textarea"></textarea>
+    <div *ngIf="currentPractice">
+      <div class="row">
+      <div class="input-field col s12">
+        <label for="textarea1">Advice for {{currentPractice.title}}</label>
+        <textarea [ngModel]="textInput" (ngModelChange)="updateTextInput($event)" id="textarea1" class="materialize-textarea"></textarea>
+      </div>
+        </div>
+    </div>
+      </div>
+    <div class="modal-footer">
+      <a (click)="addPracticeToCurrentReading()" class="modal-action modal-close waves-effect waves-green btn-flat">Submit</a>
     </div>
   </div>
-  <div class="modal-footer">
-    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Submit</a>
-  </div>
 </div>
+
 
 
 <div *ngIf="currentReading">
@@ -102,8 +112,7 @@
 <!-- <a materialize="leanModal" [materializeParams]="[{dismissible: false}]" class="collection-item modal-trigger" href="#modal1">
 -->
 
-
-
+<!--
 
 
 <a materialize="tooltip" class="btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="I am tooltip">Hover me!</a>
@@ -113,7 +122,7 @@
   <ul class="right hide-on-med-and-down">
     <li *ngFor="let routeName of routeNames" ><a href="#">{{routeName}}</a></li>
   </ul>
-  <ul id="slide-out" class="side-nav"><!-- remove fixed to have it not there permanently; can also add/delete show-on-large below-->
+  <ul id="slide-out" class="side-nav">
     <li *ngFor="let routeName of routeNames" ><a href="#">{{routeName}}</a></li>
   </ul>
   <a materialize="sideNav" [materializeParams]="[{edge:'left'}]" href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu material-icons">menu</i></a>
@@ -142,9 +151,7 @@
             <div class="col s3">
               <ul>
                 <li *ngFor="let practice of practices; let i = index">
-                  <!--
-                  see: http://raydaq.com/dynamically-bind-inputs-and-labels-in-ngfor-loop-angular-2/
-                  -->
+
                   <p>
                     <input type="checkbox" class="filled-in" id="f_{{i}}" />
                     <label [attr.for]="'f_' + i">{{ practice.title }}
@@ -219,11 +226,4 @@
   <div id="test3" class="col s12">Test 3</div>
   <div id="test4" class="col s12">Test 4</div>
 </div>
-
-<!--
-<ul class="nav nav-tabs" role="tablist">
-  <li *ngFor="let aType of resourceTypes; let i = index"
-      [ngClass]="{'active': i == 0}" role="presentation">
-    <a [attr.href]="aType.Name" [attr.aria-controls]="aType.Name"
-       role="tab" data-toggle="tab">{{aType.Name}}</a></li>
 -->
