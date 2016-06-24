@@ -67,9 +67,10 @@
 
 <div *ngIf="currentReading">
   <!-- Tab structure at the top of the page-->
+
   <div class="row">
     <div class="col s12">
-      <ul class="tabs" materialize="tabs">
+      <ul class="tabs  hide-on-med-and-down" materialize="tabs">
         <li *ngFor="let reading of readings; let i = index" class="tab col s3">
           <a [class.active]="isActive(currentReading)" (click)="updateTab(reading)">
             {{ reading.description }}</a>
@@ -77,6 +78,15 @@
       </ul>
     </div>
   </div>
+  <nav class="hide-on-large-only nav-wrapper">
+    <a class="brand-logo custom-nav center" href="#">{{ currentReading.description }}</a>
+    <ul id="slide-out" class="side-nav">
+      <li *ngFor="let reading of readings; let i = index" ><a [class.active]="isActive(currentReading)" (click)="updateTab(reading)">{{ reading.description }}</a></li>
+    </ul>
+    <a materialize="sideNav" [materializeParams]="[{edge:'left', closeOnClick: true}]" href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu material-icons">menu</i></a>
+  </nav>
+
+
   <!-- Content of the Page -->
   <div class="container">
     <span class="row">
