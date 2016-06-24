@@ -28,12 +28,12 @@ const READINGS = [
       {
         id: 2,
         title:      'Praying Scripture',
-        description: 'Here is some advice for how to pray scripture for this passage.'
+        advice: 'Here is some advice for how to pray scripture for this passage.'
       },
       {
         id: 3,
         title: 'Memorizing Scripture',
-        description: 'Here is some advice for memorizing this passage.'
+        advice: ''
       },
     ]
   },
@@ -48,19 +48,14 @@ const READINGS = [
     '2 Wash away all my iniquity and cleanse me from my sin.',
     practices: [
       {
-        id: 1,
-        title: 'Lectio Divina',
-        advice: 'Here is some advice for how to do Lectio Divina for this passage.'
-      },
-      {
         id: 2,
         title:      'Praying Scripture',
-        description: 'Here is some advice for how to pray scripture for this passage.'
+        advice: 'Here is some advice for how to pray scripture for this passage.'
       },
       {
         id: 3,
         title: 'Memorizing Scripture',
-        description: 'Here is some advice for memorizing this passage.'
+        advice: ''
       },
     ]
   },
@@ -80,18 +75,42 @@ const READINGS = [
       {
         id: 2,
         title:      'Praying Scripture',
-        description: 'Here is some advice for how to pray scripture for this passage.'
+        advice: 'Here is some advice for how to pray scripture for this passage.'
       },
       {
-        id: 3,
-        title: 'Memorizing Scripture',
-        description: 'Here is some advice for memorizing this passage.'
+        id: 6,
+        title: 'Dramatizing Scripture',
+        advice: ''
+      },
+    ]
+  },
+  {
+    id: 4,
+    title: 'Fourth Reading',
+    description: 'Mark 2:1-3',
+    text: '1. And when he returned to Capernaum after some days, it was reported '+
+          'that he was at home. 2 And many were gathered together, so that there '+
+          'was no more room, not even at the door. And he was preaching the word '+
+          'to them. 3 And they came, bringing to him a paralytic carried by four men.',
+    practices: [
+      {
+        id: 1,
+        title: 'Lectio Divina',
+        advice: 'Here is some advice for how to do Lectio Divina for this passage.'
+      },
+      {
+        id: 4,
+        title:      'Singing Scripture',
+        advice: 'Here is some advice for how to sing scripture for this passage.'
+      },
+      {
+        id: 5,
+        title: 'Journaling Scripture',
+        advice: 'Here is some advice for memorizing this passage.'
       },
     ]
   }
 ];
-
-
 
 
 @Injectable()

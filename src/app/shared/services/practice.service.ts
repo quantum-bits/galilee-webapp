@@ -26,7 +26,7 @@ const PRACTICES: Practice[] = [
   },
   {
     id: 5,
-    title: 'Praying Scripture',
+    title: 'Journaling Scripture',
     description: 'textual description'
   },
   {

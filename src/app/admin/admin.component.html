@@ -1,3 +1,111 @@
+<!-- http://stackoverflow.com/questions/37948504/angular2-set-href-in-attribute-directive -->
+
+<div class="fixed-action-btn">
+  <a materialize="leanModal" [materializeParams]="[{dismissible: true}]"
+     class="btn-floating btn-large waves-effect waves-light red modal-trigger" href="#modal1">
+    <i class="large material-icons">add</i>
+  </a>
+</div>
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+  <div class="modal-content">
+    <!-- Dropdown Trigger -->
+    <a materialize="dropdown" class='dropdown-button btn' href='#' data-activates='dropdown1'>Choose Practice</a>
+    <!-- Dropdown Structure -->
+
+    <ul id='dropdown1' class='dropdown-content'>
+      <li *ngFor="let practice of unusedPractices; let i = index">
+        <a (click)="fetchUnusedPractices()">
+          {{ practice.title }}
+        </a>
+      </li>
+    </ul>
+
+
+    <h4>Enter Advice</h4>
+    <div class="input-field col s5">
+      <label for="textarea1">Description</label>
+      <textarea id="textarea1" class="materialize-textarea"></textarea>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Submit</a>
+  </div>
+</div>
+
+
+<div *ngIf="currentReading">
+
+  <div class="row">
+    <div class="col s12">
+      <ul class="tabs" materialize="tabs">
+        <li *ngFor="let reading of readings; let i = index" class="tab col s3">
+          <a [class.active]="isActive(currentReading)" (click)="updateTab(reading)">
+            {{ reading.description }}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="container">
+    <span class="row">
+      <h5 class="brand-logo left">{{date | date}} (Fifth Sunday after Epiphany)</h5>
+    </span>
+
+    <div class="row">
+      <div class="card col s12 m6 l5">
+        <div class="card-content ">
+          <div class="card-title">
+            {{currentReading.title}}
+          </div>
+          <p>{{currentReading.description}}</p>
+          <p>
+            {{currentReading.text}}
+          </p>
+        </div>
+      </div>
+
+      <div class="col s12 m6 l5 offset-l2">
+      <ul materialize="collapsible" class="collapsible " data-collapsible="accordion">
+        <li *ngFor="let practice of currentReading.practices">
+          <div *ngIf="noAdvice(practice)" class="collapsible-header">
+            {{practice.title}}
+            <span materialize="tooltip" class="tooltipped right" data-position="top" data-delay="50" data-tooltip="No advice given yet">
+              <i class="large material-icons">warning</i>
+            </span>
+
+          </div>
+          <div *ngIf="!noAdvice(practice)" class="collapsible-header">
+            {{practice.title}}
+          </div>
+
+          <div class="collapsible-body">
+
+            <p>{{practice.advice}}</p>
+
+          </div>
+
+        </li>
+      </ul>
+        </div>
+
+    </div>
+
+  </div>
+
+
+</div>
+
+
+<!-- <a materialize="leanModal" [materializeParams]="[{dismissible: false}]" class="collection-item modal-trigger" href="#modal1">
+-->
+
+
+
+
+
 <a materialize="tooltip" class="btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="I am tooltip">Hover me!</a>
 
 
@@ -12,26 +120,6 @@
 </nav>
 
 <div class="container">
-    <span class="row">
-      <h5 class="brand-logo left">{{date | date}}</h5>
-      <h5 class="brand-logo right"> Fifth Sunday after Epiphany</h5>
-    </span>
-    <span class="row">
-      <span class="right">
-        <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
-      </span>
-    </span>
-  <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-    <a class="btn-floating btn-large red">
-      <i class="large material-icons">mode_edit</i>
-    </a>
-    <ul>
-      <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
-      <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-      <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-      <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
-    </ul>
-  </div>
   <div class="row">
     <div class="card col s12">
       <div class="card-content ">
@@ -53,7 +141,7 @@
             </div>
             <div class="col s3">
               <ul>
-                <li *ngFor="#practice of practices; #i = index">
+                <li *ngFor="let practice of practices; let i = index">
                   <!--
                   see: http://raydaq.com/dynamically-bind-inputs-and-labels-in-ngfor-loop-angular-2/
                   -->
@@ -117,30 +205,25 @@
 </div>
 
 
-<!-- Modal Trigger -->
-<a materialize="leanModal" [materializeParams]="[{dismissible: false}]" class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
-
-<!-- Modal Structure -->
-<div id="modal1" class="modal">
-  <div class="modal-content">
-    <h4>Enter Advice</h4>
-    <div class="input-field col s5">
-      <label for="textarea1">Description</label>
-      <textarea id="textarea1" class="materialize-textarea"></textarea>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-  </div>
-</div>
-
-
 <div class="row">
   <div class="col s12">
     <ul class="tabs" materialize="tabs">
-      <li *ngFor="#reading of readings; #j = index" class="tab col s3"><a href="#test{{j}}">{{ reading.description }}</a></li>
+      <li class="tab col s3"><a href="#test1">Test 1</a></li>
+      <li class="tab col s3"><a class="active" href="#test2">Test 2</a></li>
+      <li class="tab col s3 disabled"><a href="#test3">Disabled Tab</a></li>
+      <li class="tab col s3"><a href="#test4">Test 4</a></li>
     </ul>
   </div>
-  <div *ngFor="#reading of readings; #j = index" id="test{{j}}" class="col s12">{{reading.text}}</div>
+  <div id="test1" class="col s12">Test 1</div>
+  <div id="test2" class="col s12">Test 2</div>
+  <div id="test3" class="col s12">Test 3</div>
+  <div id="test4" class="col s12">Test 4</div>
 </div>
 
+<!--
+<ul class="nav nav-tabs" role="tablist">
+  <li *ngFor="let aType of resourceTypes; let i = index"
+      [ngClass]="{'active': i == 0}" role="presentation">
+    <a [attr.href]="aType.Name" [attr.aria-controls]="aType.Name"
+       role="tab" data-toggle="tab">{{aType.Name}}</a></li>
+-->

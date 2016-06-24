@@ -28,19 +28,24 @@ export class AdminComponent implements OnInit {
   date: Date;
   readings: Reading[] = [];
   practices: Practice[] = [];
+  currentReading: Reading;//reading being shown in current tab
+  unusedPractices = [];//unused practices for the current reading
 
   constructor(
-    private _location:Location,
+    //private _location:Location,
     private practiceService: PracticeService,
     private readingService: ReadingService) {
   }
 
   ngOnInit() {
     this.date = new Date();
-    // FIXME hardcoded readings
+    // FIXME hardcoded readings; assumes there is at least one reading...FIX!!!
     this.readingService.getTodaysReadings().then(
       (readings) => {
         this.readings = readings;
+        var reading = this.readings[0];
+        this.currentReading = reading;
+        this.fetchUnusedPractices(reading);
       }
     );
     this.practiceService.getPractices().then(
@@ -49,6 +54,42 @@ export class AdminComponent implements OnInit {
       }
     );
 
+  }
+
+  updateTab(reading){
+    this.currentReading = reading;
+    this.fetchUnusedPractices(reading);
+  }
+
+  fetchUnusedPractices(reading){
+    this.unusedPractices = [];
+    var alreadyInUse: boolean;
+    for (var practice of this.practices) {
+      alreadyInUse = false;
+      for (var usedPractice of reading.practices) {
+        if (usedPractice.id === practice.id) {
+          alreadyInUse = true;
+        }
+      }
+      if (!alreadyInUse) {
+        this.unusedPractices.push(practice);
+      }
+    }
+    console.log(this.unusedPractices);
+  }
+
+  isActive(reading){
+    if(reading.id == this.currentReading.id) {
+      return true;
+    }
+    return false;
+  }
+
+  noAdvice(practice){
+    if(practice.advice=='') {
+      return true;
+    }
+    return false;
   }
 
 }
