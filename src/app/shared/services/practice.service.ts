@@ -1,51 +1,19 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {Http} from '@angular/http';
 
-import { Practice } from '../models/practice.model';
+import {Observable} from 'rxjs/Rx';
 
-// MOCK
-const PRACTICES: Practice[] = [
-  {
-    id: 1,
-    title: 'Lectio Divina',
-    description: 'textual description'
-  },
-  {
-    id: 2,
-    title:      'Praying Scripture',
-    description: 'textual description'
-  },
-  {
-    id: 3,
-    title: 'Memorizing Scripture',
-    description: 'textual description'
-  },
-  {
-    id: 4,
-    title: 'Singing Scripture',
-    description: 'textual description'
-  },
-  {
-    id: 5,
-    title: 'Journaling Scripture',
-    description: 'textual description'
-  },
-  {
-    id: 6,
-    title: 'Dramatizing Scripture',
-    description: 'textual description'
-  }
-];
+import {PracticesUrl} from './urls';
+import {Practice} from '../models/practice.model';
 
 @Injectable()
 export class PracticeService {
 
-  constructor() {
-    console.log('got here');
+  constructor(private http:Http) {  }
+
+  getPractices(): Observable<Array<Practice>> {
+    return this.http
+      .get(PracticesUrl)
+      .map(response => response.json());
   }
-
-  getPractices() {
-    return Promise.resolve(PRACTICES);
-  }
-
-
 }

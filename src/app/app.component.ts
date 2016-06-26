@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ROUTER_DIRECTIVES} from '@angular/router';
 
-import { ReadingService } from './shared/services/reading.service';
-import { Reading } from './shared/models/reading.model';
-import { PracticeService } from './shared/services/practice.service';
-import { Practice } from './shared/models/practice.model';
+import {ReadingService} from './shared/services/reading.service';
+import {Reading} from './shared/models/reading.model';
+import {PracticeService} from './shared/services/practice.service';
+import {Practice} from './shared/models/practice.model';
 
 //import { ReadingService } from './shared';
 
@@ -19,18 +19,17 @@ import { Practice } from './shared/models/practice.model';
 export class AppComponent implements OnInit {
   title = 'app works!';
 
-  date: Date;
-  readings: Reading[] = [];
-  practices: Practice[] = [];
-  singleReading: Reading;
+  date:Date;
+  readings:Reading[] = [];
+  practices:Practice[] = [];
+  singleReading:Reading;
 
   public landingPage = true;
   public detailsPage = false;
   public managePage = false;
 
-  constructor(
-    private readingService: ReadingService,
-    private practiceService: PracticeService){
+  constructor(private readingService:ReadingService,
+              private practiceService:PracticeService) {
   }
 
   ngOnInit() {
@@ -46,10 +45,9 @@ export class AppComponent implements OnInit {
         this.singleReading = reading;
       }
     );
-    this.practiceService.getPractices().then(
-      (practices) => {
-        this.practices = practices;
-      }
+
+    this.practiceService.getPractices().subscribe(
+      practices => this.practices = practices
     );
 
   }
@@ -60,13 +58,13 @@ export class AppComponent implements OnInit {
     this.landingPage = false;
   }
 
-  goBack(){
+  goBack() {
     this.detailsPage = false;
     this.managePage = false;
     this.landingPage = true;
   }
 
-  gotoManage(){
+  gotoManage() {
     this.detailsPage = false;
     this.managePage = true;
     this.landingPage = false;

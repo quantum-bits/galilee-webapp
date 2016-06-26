@@ -14,8 +14,8 @@
     <div class="modal-advice-area">
       <!-- Dropdown Trigger -->
       <a materialize="dropdown" class='dropdown-button btn' href='#' data-activates='dropdown1'>
-        <div *ngIf = 'currentPractice'>{{currentPractice.title}}</div>
-        <div *ngIf = '!currentPractice'>Choose Practice</div>
+        <div *ngIf='currentPractice'>{{currentPractice.title}}</div>
+        <div *ngIf='!currentPractice'>Choose Practice</div>
       </a>
       <!-- Dropdown Structure -->
       <ul id='dropdown1' class='dropdown-content'>
@@ -30,7 +30,8 @@
         <div class="row">
           <div class="input-field col s12">
             <label for="textarea1">Advice for {{currentPractice.title}}</label>
-            <textarea [ngModel]="textInput" (ngModelChange)="updateTextInput($event)" id="textarea1" class="materialize-textarea"></textarea>
+            <textarea [ngModel]="textInput" (ngModelChange)="updateTextInput($event)" id="textarea1"
+                      class="materialize-textarea"></textarea>
           </div>
         </div>
       </div>
@@ -52,7 +53,8 @@
         <div class="row">
           <div class="input-field col s12">
             <label class="active" for="textarea2">Advice for {{currentPractice.title}}</label>
-            <textarea [ngModel]="textInput" (ngModelChange)="updateTextInput($event)" id="textarea2" class="materialize-textarea"></textarea>
+            <textarea [ngModel]="textInput" (ngModelChange)="updateTextInput($event)" id="textarea2"
+                      class="materialize-textarea"></textarea>
           </div>
         </div>
       </div>
@@ -81,9 +83,12 @@
   <nav class="hide-on-large-only nav-wrapper">
     <a class="brand-logo custom-nav center" href="#">{{ currentReading.description }}</a>
     <ul id="slide-out" class="side-nav">
-      <li *ngFor="let reading of readings; let i = index" ><a [class.active]="isActive(currentReading)" (click)="updateTab(reading)">{{ reading.description }}</a></li>
+      <li *ngFor="let reading of readings; let i = index"><a [class.active]="isActive(currentReading)"
+                                                             (click)="updateTab(reading)">{{ reading.description }}</a>
+      </li>
     </ul>
-    <a materialize="sideNav" [materializeParams]="[{edge:'left', closeOnClick: true}]" href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu material-icons">menu</i></a>
+    <a materialize="sideNav" [materializeParams]="[{edge:'left', closeOnClick: true}]" href="#"
+       data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu material-icons">menu</i></a>
   </nav>
 
 
@@ -112,7 +117,8 @@
             <!-- title of practice-->
             <div *ngIf="noAdvice(practice)" class="collapsible-header">
               {{practice.title}}
-            <span materialize="tooltip" class="tooltipped right" data-position="top" data-delay="50" data-tooltip="No advice given yet">
+            <span materialize="tooltip" class="tooltipped right" data-position="top" data-delay="50"
+                  data-tooltip="No advice given yet">
               <i class="large material-icons">warning</i>
             </span>
             </div>
@@ -124,11 +130,13 @@
               <p>{{practice.advice}}</p>
               <div *ngIf="noAdvice(practice)" class="collapsible-header">
                 <a materialize="leanModal" [materializeParams]="[{dismissible: false}]"
-                   (click)="initializeEditAdviceModal(practice)" class="waves-effect waves-teal btn-flat" href="#modal2">Add Advice</a>
+                   (click)="initializeEditAdviceModal(practice)" class="waves-effect waves-teal btn-flat"
+                   href="#modal2">Add Advice</a>
               </div>
               <div *ngIf="!noAdvice(practice)" class="collapsible-header">
                 <a materialize="leanModal" [materializeParams]="[{dismissible: false}]"
-                   (click)="initializeEditAdviceModal(practice)" class="waves-effect waves-teal btn-flat" href="#modal2">Edit Advice</a>
+                   (click)="initializeEditAdviceModal(practice)" class="waves-effect waves-teal btn-flat"
+                   href="#modal2">Edit Advice</a>
               </div>
             </div>
           </li>
