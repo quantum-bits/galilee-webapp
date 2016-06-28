@@ -31,7 +31,7 @@ const READINGS = [
         advice: 'Here is some advice for how to pray scripture for this passage.'
       },
       {
-        id: 3,
+        id: 4,
         title: 'Memorizing Scripture',
         advice: ''
       },
@@ -53,7 +53,7 @@ const READINGS = [
         advice: 'Here is some advice for how to pray scripture for this passage.'
       },
       {
-        id: 3,
+        id: 4,
         title: 'Memorizing Scripture',
         advice: ''
       },
@@ -78,7 +78,7 @@ const READINGS = [
         advice: 'Here is some advice for how to pray scripture for this passage.'
       },
       {
-        id: 6,
+        id: 5,
         title: 'Dramatizing Scripture',
         advice: ''
       },
@@ -99,12 +99,12 @@ const READINGS = [
         advice: 'Here is some advice for how to do Lectio Divina for this passage.'
       },
       {
-        id: 4,
+        id: 6,
         title:      'Singing Scripture',
         advice: 'Here is some advice for how to sing scripture for this passage.'
       },
       {
-        id: 5,
+        id: 3,
         title: 'Journaling Scripture',
         advice: 'Here is some advice for memorizing this passage.'
       },

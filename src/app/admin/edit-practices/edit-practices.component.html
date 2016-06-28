@@ -12,12 +12,12 @@
 <div id="modal1" class="modal">
   <div class="modal-content">
     <div class="modal-advice-area">
-      <!-- Dropdown Trigger -->
+      <!-- Dropdown Trigger for Choosing Practice -->
       <a materialize="dropdown" class='dropdown-button btn' href='#' data-activates='dropdown1'>
         <div *ngIf='currentPractice'>{{currentPractice.title}}</div>
         <div *ngIf='!currentPractice'>Choose Practice</div>
       </a>
-      <!-- Dropdown Structure -->
+      <!-- Dropdown Structure for Choosing Practice -->
       <ul id='dropdown1' class='dropdown-content'>
         <li *ngFor="let practice of unusedPractices; let i = index">
           <a (click)="setCurrentPractice(practice.id)">
@@ -25,6 +25,26 @@
           </a>
         </li>
       </ul>
+
+      <!-- Dropdown Trigger for Choosing Resources -->
+      <a materialize="dropdown" class='dropdown-button btn' href='#' data-activates='dropdown2'>
+        <div *ngIf='currentPractice'>{{currentPractice.title}}</div>
+        <div *ngIf='!currentPractice'>Choose Resource</div>
+      </a>
+      <!-- Dropdown Structure for Choosing Resources -->
+      <ul id='dropdown2' class='dropdown-content'>
+        <li>
+          <a href="#">
+            Art
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            Music
+          </a>
+        </li>
+      </ul>
+
       <!-- Text Area -->
       <div *ngIf="currentPractice">
         <div class="row">
@@ -99,7 +119,7 @@
     </span>
     <!-- 'Reading' Card -->
     <div class="row">
-      <div class="card col s12 m6 l5">
+      <div class="card col s12">
         <div class="card-content ">
           <div class="card-title">
             {{currentReading.title}}
@@ -111,7 +131,9 @@
         </div>
       </div>
       <!-- Practices -->
-      <div class="col s12 m6 l5 offset-l2">
+    </div>
+    <div class="row">
+      <div class="col s12 m6 l6">
         <ul materialize="collapsible" class="collapsible " data-collapsible="accordion">
           <li *ngFor="let practice of currentReading.practices">
             <!-- title of practice-->
@@ -142,7 +164,25 @@
           </li>
         </ul>
       </div>
+
+      <div class="col s12 m6 l6">
+        <div class="card">
+          <div class="card-image waves-effect waves-block waves-light">
+            <img class="activator" src="http://fakeimg.pl/350x200/?text=Golgotha Image">
+          </div>
+          <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4">Golgotha<i class="material-icons right">more_vert</i></span>
+          </div>
+          <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">Golgotha<i class="material-icons right">close</i></span>
+            <p>Here is some more information about this image that is only revealed once clicked on.</p>
+          </div>
+        </div>
+      </div>
     </div>
+
+
+
   </div>
 </div>
 

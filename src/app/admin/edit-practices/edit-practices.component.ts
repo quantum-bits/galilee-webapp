@@ -24,9 +24,7 @@ import {Reading} from '../../shared/models/reading.model';
 
 })
 export class EditPracticesComponent implements OnInit {
-
-  private routeNames = ["Buttons", "Collapsible", "Dialogs", "Dropdown", "Forms", "Tabs", "TabsRouting", "DatePicker", "ModelBindings"];
-
+  
   date:Date;
   readings:Reading[] = [];
   practices:Practice[] = [];
