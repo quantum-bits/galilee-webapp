@@ -50,6 +50,7 @@ const barrels: string[] = [
   'app/admin/side-nav',
   'app/admin/edit-reading-resources',
   'app/admin/update-practices',
+  'app/admin/update-practices-modal',
   /** @cli-barrel */
 ];
 

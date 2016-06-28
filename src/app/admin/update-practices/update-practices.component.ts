@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 
 import {PracticeService} from '../../shared/services/practice.service';
 import {Practice} from '../../shared/models/practice.model';
+import {UpdatePracticesModalComponent} from '../update-practices-modal';
 
 import {MaterializeDirective} from "angular2-materialize";
 
@@ -11,19 +12,22 @@ import {MaterializeDirective} from "angular2-materialize";
   selector: 'app-update-practices',
   templateUrl: 'update-practices.component.html',
   styleUrls: ['update-practices.component.css'],
-  directives: [MaterializeDirective]
+  directives: [MaterializeDirective, UpdatePracticesModalComponent]
 })
 export class UpdatePracticesComponent implements OnInit {
 
-  @Input() practicesThisReading; 
+  @Input() practicesThisReading;
   @Output() onUpdatePractice = new EventEmitter();
-
-  checkedAnswerID = null;
 
   practices:Practice[] = [];
   unusedPractices = [];//unused practices for the current reading
   currentPractice:any = null;//practice that is currently being added/edited in modal(s)
   textInput:string = '';//text area input that will eventually be saved as the "advice" for a practice for a reading
+
+  //showUpdatePracticeModal = false;
+
+  // FIXME: current bug...if add new practice using fab, the drop-down list is not
+  // getting updated before you go to add another one
 
 
   constructor(
@@ -69,6 +73,7 @@ export class UpdatePracticesComponent implements OnInit {
   initializeEditAdviceModal(practiceWithAdvice) {
     this.setCurrentPractice(practiceWithAdvice.id);
     this.textInput = practiceWithAdvice.advice;
+    //this.showUpdatePracticeModal = true;
   }
 
   // called upon exiting modal; resets various things....
@@ -102,16 +107,15 @@ export class UpdatePracticesComponent implements OnInit {
       }
     );
     this.cleanUp();
-    /*
-    this.onAnswered.emit(
-      {
-        questionID: questionID,
-        answerID: answerID
-      }
-    );
-    this.checkedAnswerID = answerID;
-    */
   }
 
+  passEventUp(response) {
+    this.cleanUp();
+    this.onUpdatePractice.emit(response);//passes the response (received from this comp's child) up to the parent
+  }
+
+  onModalCancel(response) {
+    this.cleanUp();
+  }
 
 }
