@@ -15,14 +15,7 @@ import {MaterializeDirective} from "angular2-materialize";
 })
 export class UpdatePracticesComponent implements OnInit {
 
-  @Input() practicesThisReading; ///////WHERE to have practices for this reading?!?!?!?
-  // I think they're all bundled up with reading after the GET from ther server
-  // ...they get passed to the component, which then grabs available practices, etc.
-  // and then does things from that point, communicating to the parent if there are
-  // changes, etc....
-  //
-  // data integrity question -- what if a practice type gets deleted...do all of the
-  // associated practices (and their advice) get deleted, too?
+  @Input() practicesThisReading; 
   @Output() onUpdatePractice = new EventEmitter();
 
   checkedAnswerID = null;

@@ -17,15 +17,15 @@ import { UpdatePracticesComponent } from '../update-practices';
 @Component({
   moduleId: module.id,
   selector: 'app-edit-practices',
-  templateUrl: 'edit-practices.component.html',
-  styleUrls: ['edit-practices.component.css'],
+  templateUrl: 'edit-reading-resources.component.html',
+  styleUrls: ['edit-reading-resources.component.css'],
   providers: [ReadingService],
   directives: [ROUTER_DIRECTIVES, MaterializeDirective, UpdatePracticesComponent],
   //inputs: ['model: textInput'],
   //outputs: ['textInputChange'],
 
 })
-export class EditPracticesComponent implements OnInit {
+export class EditReadingResourcesComponent implements OnInit {
 
   date:Date;
   readings:Reading[] = [];

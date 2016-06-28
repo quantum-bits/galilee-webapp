@@ -10,11 +10,11 @@ import {
   async, inject
 } from '@angular/core/testing';
 
-import { EditPracticesComponent } from './edit-practices.component';
+import { EditReadingResourcesComponent } from './edit-reading-resources.component';
 
-describe('Component: EditPractices', () => {
+describe('Component: EditReadingResources', () => {
   it('should create an instance', () => {
-    // let component = new EditPracticesComponent();
+    // let component = new EditReadingResourcesComponent();
     // expect(component).toBeTruthy();
   });
 });
