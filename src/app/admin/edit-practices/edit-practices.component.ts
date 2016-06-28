@@ -9,6 +9,8 @@ import {Practice} from '../../shared/models/practice.model';
 import {ReadingService} from '../../shared/services/reading.service';
 import {Reading} from '../../shared/models/reading.model';
 
+import { UpdatePracticesComponent } from '../update-practices';
+
 // useful resource for using Materialize components that require js:
 // https://github.com/InfomediaLtd/angular2-materialize/tree/master/app/components
 
@@ -18,13 +20,13 @@ import {Reading} from '../../shared/models/reading.model';
   templateUrl: 'edit-practices.component.html',
   styleUrls: ['edit-practices.component.css'],
   providers: [ReadingService, PracticeService],
-  directives: [ROUTER_DIRECTIVES, MaterializeDirective],
+  directives: [ROUTER_DIRECTIVES, MaterializeDirective, UpdatePracticesComponent],
   inputs: ['model: textInput'],
   outputs: ['textInputChange'],
 
 })
 export class EditPracticesComponent implements OnInit {
-  
+
   date:Date;
   readings:Reading[] = [];
   practices:Practice[] = [];
@@ -162,6 +164,39 @@ export class EditPracticesComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  onUpdatePractice(response) {
+    console.log(response);
+    var practice = response.practice;
+    var textInput = response.textInput;
+
+    // used to add a new practice to this.currentReading or to edit an existing practice
+
+    var practiceAlreadyInUse = false; // true if this practice is already in use for this reading
+    var practiceArrayIndex = null;
+    for (let i in this.currentReading.practices) {// using for...in so that I can get the index
+      if (practice.id === this.currentReading.practices[i].id) {
+        practiceAlreadyInUse = true;
+        practiceArrayIndex = i;
+      }
+    }
+    if (practiceAlreadyInUse) { //update the practice and associated advice
+      this.currentReading.practices[practiceArrayIndex] =
+      {
+        id: practice.id,
+        title: practice.title,
+        advice: textInput
+      }
+    } else { //add the new practice and associated advice
+      this.currentReading.practices.push(
+        {
+          id: practice.id,
+          title: practice.title,
+          advice: textInput
+        }
+      );
+    }
   }
 
 }

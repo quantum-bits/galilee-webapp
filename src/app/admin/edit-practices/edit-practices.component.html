@@ -1,12 +1,14 @@
 <!-- http://stackoverflow.com/questions/37948504/angular2-set-href-in-attribute-directive -->
 
 <!-- fab -->
+
 <div class="fixed-action-btn">
   <a materialize="leanModal" [materializeParams]="[{dismissible: false}]"
-     class="btn-floating btn-large waves-effect waves-light red modal-trigger" href="#modal1">
+     class="btn-floating btn-large waves-effect waves-light red modal-trigger" href="#modalAddNewPractice">
     <i class="large material-icons">add</i>
   </a>
 </div>
+
 
 <!-- Modal Structure for Adding New Practice Advice -->
 <div id="modal1" class="modal">
@@ -181,10 +183,26 @@
       </div>
     </div>
 
+    <div *ngIf="currentReading.practices">
+      <h4>Practices</h4>
+      <app-update-practices
+        [practicesThisReading]="currentReading.practices"
+        (onUpdatePractice) = "onUpdatePractice($event)"
+      >
+      </app-update-practices>
+    </div>
+
 
 
   </div>
 </div>
+
+
+
+
+
+
+
 
 
 <!-- <a materialize="leanModal" [materializeParams]="[{dismissible: false}]" class="collection-item modal-trigger" href="#modal1">
