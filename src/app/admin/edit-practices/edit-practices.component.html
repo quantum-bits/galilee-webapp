@@ -10,88 +10,8 @@
 </div>
 
 
-<!-- Modal Structure for Adding New Practice Advice -->
-<div id="modal1" class="modal">
-  <div class="modal-content">
-    <div class="modal-advice-area">
-      <!-- Dropdown Trigger for Choosing Practice -->
-      <a materialize="dropdown" class='dropdown-button btn' href='#' data-activates='dropdown1'>
-        <div *ngIf='currentPractice'>{{currentPractice.title}}</div>
-        <div *ngIf='!currentPractice'>Choose Practice</div>
-      </a>
-      <!-- Dropdown Structure for Choosing Practice -->
-      <ul id='dropdown1' class='dropdown-content'>
-        <li *ngFor="let practice of unusedPractices; let i = index">
-          <a (click)="setCurrentPractice(practice.id)">
-            {{ practice.title }}
-          </a>
-        </li>
-      </ul>
-
-      <!-- Dropdown Trigger for Choosing Resources -->
-      <a materialize="dropdown" class='dropdown-button btn' href='#' data-activates='dropdown2'>
-        <div *ngIf='currentPractice'>{{currentPractice.title}}</div>
-        <div *ngIf='!currentPractice'>Choose Resource</div>
-      </a>
-      <!-- Dropdown Structure for Choosing Resources -->
-      <ul id='dropdown2' class='dropdown-content'>
-        <li>
-          <a href="#">
-            Art
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            Music
-          </a>
-        </li>
-      </ul>
-
-      <!-- Text Area -->
-      <div *ngIf="currentPractice">
-        <div class="row">
-          <div class="input-field col s12">
-            <label for="textarea1">Advice for {{currentPractice.title}}</label>
-            <textarea [ngModel]="textInput" (ngModelChange)="updateTextInput($event)" id="textarea1"
-                      class="materialize-textarea"></textarea>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Footer -->
-    <div class="modal-footer">
-      <a (click)="addPracticeToCurrentReading()" class="modal-action modal-close waves-effect waves-green btn-flat">Submit</a>
-      <a (click)="cancelReadingEdits()" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Structure for Editing Practice Advice -->
-<div id="modal2" class="modal">
-  <div class="modal-content">
-    <div class="modal-advice-area">
-      <!-- Text Area -->
-      <div *ngIf="currentPractice">
-        <div class="row">
-          <div class="input-field col s12">
-            <label class="active" for="textarea2">Advice for {{currentPractice.title}}</label>
-            <textarea [ngModel]="textInput" (ngModelChange)="updateTextInput($event)" id="textarea2"
-                      class="materialize-textarea"></textarea>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Footer -->
-    <div class="modal-footer">
-      <a (click)="addPracticeToCurrentReading()" class="modal-action modal-close waves-effect waves-green btn-flat">Submit</a>
-      <a (click)="cancelReadingEdits()" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
-    </div>
-  </div>
-</div>
-
 <div *ngIf="currentReading">
   <!-- Tab structure at the top of the page-->
-
   <div class="row">
     <div class="col s12">
       <ul class="tabs  hide-on-med-and-down" materialize="tabs">
@@ -105,8 +25,10 @@
   <nav class="hide-on-large-only nav-wrapper">
     <a class="brand-logo custom-nav center" href="#">{{ currentReading.description }}</a>
     <ul id="slide-out" class="side-nav">
-      <li *ngFor="let reading of readings; let i = index"><a [class.active]="isActive(currentReading)"
-                                                             (click)="updateTab(reading)">{{ reading.description }}</a>
+      <li *ngFor="let reading of readings; let i = index">
+        <a [class.active]="isActive(currentReading)"
+           (click)="updateTab(reading)">{{ reading.description }}
+        </a>
       </li>
     </ul>
     <a materialize="sideNav" [materializeParams]="[{edge:'left', closeOnClick: true}]" href="#"
@@ -132,41 +54,18 @@
           </p>
         </div>
       </div>
-      <!-- Practices -->
     </div>
-    <div class="row">
-      <div class="col s12 m6 l6">
-        <ul materialize="collapsible" class="collapsible " data-collapsible="accordion">
-          <li *ngFor="let practice of currentReading.practices">
-            <!-- title of practice-->
-            <div *ngIf="noAdvice(practice)" class="collapsible-header">
-              {{practice.title}}
-            <span materialize="tooltip" class="tooltipped right" data-position="top" data-delay="50"
-                  data-tooltip="No advice given yet">
-              <i class="large material-icons">warning</i>
-            </span>
-            </div>
-            <div *ngIf="!noAdvice(practice)" class="collapsible-header">
-              {{practice.title}}
-            </div>
-            <!-- advice for this practice -->
-            <div class="collapsible-body">
-              <p>{{practice.advice}}</p>
-              <div *ngIf="noAdvice(practice)" class="collapsible-header">
-                <a materialize="leanModal" [materializeParams]="[{dismissible: false}]"
-                   (click)="initializeEditAdviceModal(practice)" class="waves-effect waves-teal btn-flat"
-                   href="#modal2">Add Advice</a>
-              </div>
-              <div *ngIf="!noAdvice(practice)" class="collapsible-header">
-                <a materialize="leanModal" [materializeParams]="[{dismissible: false}]"
-                   (click)="initializeEditAdviceModal(practice)" class="waves-effect waves-teal btn-flat"
-                   href="#modal2">Edit Advice</a>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
 
+    <div class="row">
+      <!-- Practices -->
+      <div *ngIf="currentReading.practices">
+        <app-update-practices
+          [practicesThisReading]="currentReading.practices"
+          (onUpdatePractice) = "onUpdatePractice($event)"
+        >
+        </app-update-practices>
+      </div>
+      <!-- Other Resources -->
       <div class="col s12 m6 l6">
         <div class="card">
           <div class="card-image waves-effect waves-block waves-light">
@@ -182,144 +81,5 @@
         </div>
       </div>
     </div>
-
-    <div *ngIf="currentReading.practices">
-      <h4>Practices</h4>
-      <app-update-practices
-        [practicesThisReading]="currentReading.practices"
-        (onUpdatePractice) = "onUpdatePractice($event)"
-      >
-      </app-update-practices>
-    </div>
-
-
-
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-<!-- <a materialize="leanModal" [materializeParams]="[{dismissible: false}]" class="collection-item modal-trigger" href="#modal1">
--->
-
-<!--
-
-
-<a materialize="tooltip" class="btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="I am tooltip">Hover me!</a>
-
-
-<nav>
-  <ul class="right hide-on-med-and-down">
-    <li *ngFor="let routeName of routeNames" ><a href="#">{{routeName}}</a></li>
-  </ul>
-  <ul id="slide-out" class="side-nav">
-    <li *ngFor="let routeName of routeNames" ><a href="#">{{routeName}}</a></li>
-  </ul>
-  <a materialize="sideNav" [materializeParams]="[{edge:'left'}]" href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu material-icons">menu</i></a>
-</nav>
-
-<div class="container">
-  <div class="row">
-    <div class="card col s12">
-      <div class="card-content ">
-          <span class="card-title ">
-            <div class="row">
-              <div class="col s4"> Choose Passage </div>
-              <div class="col s3"> Choose Practice </div>
-              <div class="col s5"> Enter Advice </div>
-            </div>
-          </span>
-        <div class="card-item">
-          <div class="row">
-            <div class="col s4">
-              <div class="collection">
-                <a *ngFor="let reading of readings" href="#!" class="collection-item">
-                  {{ reading.description }}
-                </a>
-              </div>
-            </div>
-            <div class="col s3">
-              <ul>
-                <li *ngFor="let practice of practices; let i = index">
-
-                  <p>
-                    <input type="checkbox" class="filled-in" id="f_{{i}}" />
-                    <label [attr.for]="'f_' + i">{{ practice.title }}
-                    </label>
-                  </p>
-                </li>
-              </ul>
-            </div>
-            <div class="input-field col s5">
-              <label for="textarea1">Description</label>
-              <textarea id="textarea1" class="materialize-textarea"></textarea>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="container">
-  <ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
-    <li *ngFor="let reading of readings">
-      <div class="collapsible-header"><i class="material-icons">book</i>{{reading.description}}</div>
-
-      <div class="collapsible-body">
-        <div class="container">
-          <div class="row">
-            <div class="card col s12 m8 l8">
-              <div class="card-content">
-                <span class="card-title">Text</span>
-                <p>
-                  {{reading.text}}
-                </p>
-              </div>
-            </div>
-            <div class="collection col s12 m4 l4">
-
-                <a materialize="leanModal" [materializeParams]="[{dismissible: false}]" class="collection-item modal-trigger" href="#modal1">
-
-                Lectio Divina
-              </a>
-              <a href="#" class="collection-item">
-                Praying Scripture
-              </a>
-
-              <div class="row">
-                <div class="bottom right">
-                  <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </li>
-  </ul>
-</div>
-
-
-<div class="row">
-  <div class="col s12">
-    <ul class="tabs" materialize="tabs">
-      <li class="tab col s3"><a href="#test1">Test 1</a></li>
-      <li class="tab col s3"><a class="active" href="#test2">Test 2</a></li>
-      <li class="tab col s3 disabled"><a href="#test3">Disabled Tab</a></li>
-      <li class="tab col s3"><a href="#test4">Test 4</a></li>
-    </ul>
-  </div>
-  <div id="test1" class="col s12">Test 1</div>
-  <div id="test2" class="col s12">Test 2</div>
-  <div id="test3" class="col s12">Test 3</div>
-  <div id="test4" class="col s12">Test 4</div>
-</div>
--->

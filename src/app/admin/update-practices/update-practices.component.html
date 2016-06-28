@@ -1,98 +1,97 @@
-<div class="row">
-  <div class="col s12 m6 l6">
-    <ul materialize="collapsible" class="collapsible " data-collapsible="accordion">
-      <li *ngFor="let practice of practicesThisReading">
-        <!-- title of practice-->
-        <div *ngIf="noAdvice(practice)" class="collapsible-header">
-          {{practice.title}}
+<div class="col s12 m6 l6">
+  <ul materialize="collapsible" class="collapsible " data-collapsible="accordion">
+    <li *ngFor="let practice of practicesThisReading">
+      <!-- title of practice-->
+      <div *ngIf="noAdvice(practice)" class="collapsible-header">
+        {{practice.title}}
             <span materialize="tooltip" class="tooltipped right" data-position="top" data-delay="50"
                   data-tooltip="No advice given yet">
               <i class="large material-icons">warning</i>
             </span>
+      </div>
+      <div *ngIf="!noAdvice(practice)" class="collapsible-header">
+        {{practice.title}}
+      </div>
+      <!-- advice for this practice -->
+      <div class="collapsible-body">
+        <p>{{practice.advice}}</p>
+        <div *ngIf="noAdvice(practice)" class="collapsible-header">
+          <a materialize="leanModal" [materializeParams]="[{dismissible: false}]"
+             (click)="initializeEditAdviceModal(practice)" class="waves-effect waves-teal btn-flat"
+             href="#modalUpdateAdvice">Add Advice</a>
         </div>
         <div *ngIf="!noAdvice(practice)" class="collapsible-header">
-          {{practice.title}}
+          <a materialize="leanModal" [materializeParams]="[{dismissible: false}]"
+             (click)="initializeEditAdviceModal(practice)" class="waves-effect waves-teal btn-flat"
+             href="#modalUpdateAdvice">Edit Advice</a>
         </div>
-        <!-- advice for this practice -->
-        <div class="collapsible-body">
-          <p>{{practice.advice}}</p>
-          <div *ngIf="noAdvice(practice)" class="collapsible-header">
-            <a materialize="leanModal" [materializeParams]="[{dismissible: false}]"
-               (click)="initializeEditAdviceModal(practice)" class="waves-effect waves-teal btn-flat"
-               href="#modalUpdateAdvice">Add Advice</a>
-          </div>
-          <div *ngIf="!noAdvice(practice)" class="collapsible-header">
-            <a materialize="leanModal" [materializeParams]="[{dismissible: false}]"
-               (click)="initializeEditAdviceModal(practice)" class="waves-effect waves-teal btn-flat"
-               href="#modalUpdateAdvice">Edit Advice</a>
-          </div>
-        </div>
-      </li>
-    </ul>
-  </div>
+      </div>
+    </li>
+  </ul>
+</div>
 
-  <!-- Modal Structure for Editing Practice Advice -->
-  <div id="modalUpdateAdvice" class="modal">
-    <div class="modal-content">
-      <div class="modal-advice-area">
-        <!-- Text Area -->
-        <div *ngIf="currentPractice">
-          <div class="row">
-            <div class="input-field col s12">
-              <label class="active" for="textarea2">Advice for {{currentPractice.title}}</label>
+<!-- Modal Structure for Editing Practice Advice -->
+<div id="modalUpdateAdvice" class="modal">
+  <div class="modal-content">
+    <div class="modal-advice-area">
+      <!-- Text Area -->
+      <div *ngIf="currentPractice">
+        <div class="row">
+          <div class="input-field col s12">
+            <label class="active" for="textarea2">Advice for {{currentPractice.title}}</label>
             <textarea [(ngModel)]="textInput" id="textareaUpdateAdvice"
                       class="materialize-textarea"></textarea>
-            </div>
           </div>
         </div>
       </div>
-      <!-- Footer -->
-      <div class="modal-footer">
-        <a (click)="updateAdvice()" class="modal-action modal-close waves-effect waves-green btn-flat">Submit</a>
-        <a (click)="cancelReadingEdits()" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
-      </div>
+    </div>
+    <!-- Footer -->
+    <div class="modal-footer">
+      <a (click)="updateAdvice()" class="modal-action modal-close waves-effect waves-green btn-flat">Submit</a>
+      <a (click)="cancelReadingEdits()" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
     </div>
   </div>
+</div>
 
-  <!-- Modal Structure for Adding New Practice Advice -->
+<!-- Modal Structure for Adding New Practice Advice -->
 
-  <!-- HOW TO MAKE THIS VISIBLE TO THE PARENT?!? -->
+<!-- HOW TO MAKE THIS VISIBLE TO THE PARENT?!? -->
 
-  <div id="modalAddNewPractice" class="modal">
-    <div class="modal-content">
-      <div class="modal-advice-area">
-        <!-- Dropdown Trigger for Choosing Practice -->
-        <a materialize="dropdown" class='dropdown-button btn' href='#' data-activates='dropdownAddNewPractice'>
-          <div *ngIf='currentPractice'>{{currentPractice.title}}</div>
-          <div *ngIf='!currentPractice'>Choose Practice</div>
-        </a>
-        <!-- Dropdown Structure for Choosing Practice -->
-        <ul id='dropdownAddNewPractice' class='dropdown-content'>
-          <li *ngFor="let practice of unusedPractices; let i = index">
-            <a (click)="setCurrentPractice(practice.id)">
-              {{ practice.title }}
-            </a>
-          </li>
-        </ul>
+<div id="modalAddNewPractice" class="modal">
+  <div class="modal-content">
+    <div class="modal-advice-area">
+      <!-- Dropdown Trigger for Choosing Practice -->
+      <a materialize="dropdown" class='dropdown-button btn' href='#' data-activates='dropdownAddNewPractice'>
+        <div *ngIf='currentPractice'>{{currentPractice.title}}</div>
+        <div *ngIf='!currentPractice'>Choose Practice</div>
+      </a>
+      <!-- Dropdown Structure for Choosing Practice -->
+      <ul id='dropdownAddNewPractice' class='dropdown-content'>
+        <li *ngFor="let practice of unusedPractices; let i = index">
+          <a (click)="setCurrentPractice(practice.id)">
+            {{ practice.title }}
+          </a>
+        </li>
+      </ul>
 
-        <!-- Text Area -->
-        <div *ngIf="currentPractice">
-          <div class="row">
-            <div class="input-field col s12">
-              <label for="textarea1">Advice for {{currentPractice.title}}</label>
+      <!-- Text Area -->
+      <div *ngIf="currentPractice">
+        <div class="row">
+          <div class="input-field col s12">
+            <label for="textarea1">Advice for {{currentPractice.title}}</label>
             <textarea [(ngModel)]="textInput" id="textareaAddNewAdvice"
                       class="materialize-textarea"></textarea>
-            </div>
           </div>
         </div>
       </div>
-      <!-- Footer -->
-      <div class="modal-footer">
-        <a (click)="updateAdvice()" class="modal-action modal-close waves-effect waves-green btn-flat">Submit</a>
-        <a (click)="cancelReadingEdits()" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
-      </div>
+    </div>
+    <!-- Footer -->
+    <div class="modal-footer">
+      <a (click)="updateAdvice()" class="modal-action modal-close waves-effect waves-green btn-flat">Submit</a>
+      <a (click)="cancelReadingEdits()" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
     </div>
   </div>
+
 
   <!--
   <div class="fixed-action-btn">
