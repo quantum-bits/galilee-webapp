@@ -62,6 +62,7 @@
       <div *ngIf="currentReading.practices">
         <app-update-practices
           [practicesThisReading]="currentReading.practices"
+          [changeTracker]="changeTracker"
           (onUpdatePractice) = "onUpdatePractice($event)"
         >
         </app-update-practices>

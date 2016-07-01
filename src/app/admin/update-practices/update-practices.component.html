@@ -8,36 +8,35 @@
   >
   </app-update-practices-modal>
 
-  
-  <div class="col s12 m6 l6">
-  <ul materialize="collapsible" class="collapsible " data-collapsible="accordion">
-    <li *ngFor="let practice of practicesThisReading">
-      <!-- title of practice-->
-      <div *ngIf="noAdvice(practice)" class="collapsible-header">
-        {{practice.title}}
-            <span materialize="tooltip" class="tooltipped right" data-position="top" data-delay="50"
-                  data-tooltip="No advice given yet">
-              <i class="large material-icons">warning</i>
-            </span>
-      </div>
-      <div *ngIf="!noAdvice(practice)" class="collapsible-header">
-        {{practice.title}}
-      </div>
-      <!-- advice for this practice -->
-      <div class="collapsible-body">
-        <p>{{practice.advice}}</p>
-        <div *ngIf="noAdvice(practice)" class="collapsible-header">
-          <a materialize="leanModal" [materializeParams]="[{dismissible: false}]"
-             (click)="initializeEditAdviceModal(practice)" class="waves-effect waves-teal btn-flat"
-             href="#modalUpdateAdviceComponent">Add Advice</a>
-        </div>
-        <div *ngIf="!noAdvice(practice)" class="collapsible-header">
-          <a materialize="leanModal" [materializeParams]="[{dismissible: false}]"
-             (click)="initializeEditAdviceModal(practice)" class="waves-effect waves-teal btn-flat"
-             href="#modalUpdateAdviceComponent">Edit Advice</a>
-        </div>
-      </div>
-    </li>
-  </ul>
-</div>
+
+  <div class="card col s12 m6 l6">
+    <div class="card-content">
+      <span class="card-title">Practices</span>
+      <span class="right">
+        <button materialize="dropdown"
+           class="drop-down btn"
+           [class.disabled]="buttonDisabled"
+           data-activates="dropdownAddNewPractice">
+          Add</button>
+      </span>
+      <!-- Dropdown Structure for Choosing Practice -->
+      <ul id='dropdownAddNewPractice' class='dropdown-content'>
+        <li *ngFor="let practice of unusedPractices; let i = index">
+          <a (click)="addPractice(practice)">
+            {{ practice.title }}
+          </a>
+        </li>
+      </ul>
+
+      <ul>
+        <li *ngFor="let practice of practicesThisReading">
+
+          <app-update-practice-item
+            [practice]="practice"
+          ></app-update-practice-item>
+
+        </li>
+      </ul>
+    </div>
+  </div>
 

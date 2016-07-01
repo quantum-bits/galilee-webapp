@@ -51,6 +51,7 @@ const barrels: string[] = [
   'app/admin/edit-reading-resources',
   'app/admin/update-practices',
   'app/admin/update-practices-modal',
+  'app/admin/update-practice-item',
   /** @cli-barrel */
 ];
 

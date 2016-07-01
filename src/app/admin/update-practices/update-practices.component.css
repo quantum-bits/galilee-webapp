@@ -1,3 +1,7 @@
 .modal .modal-advice-area {
   min-height: 200px;
 }
+
+.dropdown-content {
+  min-width: 200px
+}

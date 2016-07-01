@@ -1,0 +1,34 @@
+<!-- title of practice-->
+
+<ul materialize="collapsible" class="collapsible " data-collapsible="accordion">
+  <li>
+    <div *ngIf="noAdvice(practice)" class="collapsible-header">
+      {{practice.title}}
+            <span materialize="tooltip" class="tooltipped right" data-position="top" data-delay="50"
+                  data-tooltip="No advice given yet">
+              <i class="large material-icons">warning</i>
+            </span>
+    </div>
+    <div *ngIf="!noAdvice(practice)" class="collapsible-header">
+      {{practice.title}}
+    </div>
+    <!-- advice for this practice -->
+    <div class="collapsible-body">
+      <p>{{practice.advice}}</p>
+      <!--
+      <div *ngIf="noAdvice(practice)" class="collapsible-header">
+        <a materialize="leanModal" [materializeParams]="[{dismissible: false}]"
+           (click)="initializeEditAdviceModal(practice)" class="waves-effect waves-teal btn-flat"
+           href="#modalUpdateAdviceComponent">Add Advice</a>
+      </div>
+      <div *ngIf="!noAdvice(practice)" class="collapsible-header">
+        <a materialize="leanModal" [materializeParams]="[{dismissible: false}]"
+           (click)="initializeEditAdviceModal(practice)" class="waves-effect waves-teal btn-flat"
+           href="#modalUpdateAdviceComponent">Edit Advice</a>
+      </div>
+      -->
+    </div>
+  </li>
+</ul>
+
+

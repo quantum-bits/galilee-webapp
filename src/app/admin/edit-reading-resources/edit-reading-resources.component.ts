@@ -30,6 +30,7 @@ export class EditReadingResourcesComponent implements OnInit {
   date:Date;
   readings:Reading[] = [];
   currentReading:any;//reading being shown in current tab
+  private changeTracker = 0;//this is a hack to get ngOnChanges to fire when the practices are updated...it doesn't fire if something deep in a nested object changes
 
   constructor(//private _location:Location,
     //private practiceService:PracticeService,
@@ -51,6 +52,7 @@ export class EditReadingResourcesComponent implements OnInit {
 
   updateTab(reading) {
     this.currentReading = reading;
+    this.changeTracker++;
     //this.fetchUnusedPractices();
   }
 
@@ -64,6 +66,7 @@ export class EditReadingResourcesComponent implements OnInit {
   }
 
   onUpdatePractice(response) {
+    this.changeTracker++;
     console.log(response);
     var practice = response.practice;
     var textInput = response.textInput;
