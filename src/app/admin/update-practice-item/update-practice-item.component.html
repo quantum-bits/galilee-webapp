@@ -2,33 +2,89 @@
 
 <ul materialize="collapsible" class="collapsible " data-collapsible="accordion">
   <li>
-    <div *ngIf="noAdvice(practice)" class="collapsible-header">
+    <a #myModalSaveMessage href="#modalSaveFirst{{practice.id}}" materialize="leanModal"
+       [materializeParams]="[{dismissible: true}]">
+    </a>
+    <div *ngIf="noAdvice(practice)" class="collapsible-header" (click)="toggleDivStatus()"#myInput>
       {{practice.title}}
+      <span>
+        <a materialize="leanModal"
+           [materializeParams]="[{dismissible: false}]"
+           class="waves-effect waves-light secondary-content modal-trigger"
+           (click)="overrideOpenClose()"
+           href="#modalDeletePracticeThisReading{{practice.id}}">
+          <i class="material-icons right">close</i>
+        </a>
+      </span>
             <span materialize="tooltip" class="tooltipped right" data-position="top" data-delay="50"
                   data-tooltip="No advice given yet">
               <i class="large material-icons">warning</i>
             </span>
+
     </div>
-    <div *ngIf="!noAdvice(practice)" class="collapsible-header">
+    <div *ngIf="!noAdvice(practice)" class="collapsible-header" (click)="toggleDivStatus()" #myInput>
       {{practice.title}}
+      <!-- Modal trigger -->
+      <a materialize="leanModal"
+         [materializeParams]="[{dismissible: false}]"
+         class="waves-effect waves-light secondary-content modal-trigger"
+         (click)="overrideOpenClose()"
+         href="#modalDeletePracticeThisReading{{practice.id}}">
+        <i class="material-icons right">close</i>
+      </a>
     </div>
     <!-- advice for this practice -->
     <div class="collapsible-body">
-      <p>{{practice.advice}}</p>
-      <!--
-      <div *ngIf="noAdvice(practice)" class="collapsible-header">
-        <a materialize="leanModal" [materializeParams]="[{dismissible: false}]"
-           (click)="initializeEditAdviceModal(practice)" class="waves-effect waves-teal btn-flat"
-           href="#modalUpdateAdviceComponent">Add Advice</a>
+      <div *ngIf="!editModeOn">
+        <p>{{practice.advice}}</p>
+          <a class="waves-effect waves-teal btn-flat" (click)="launchEditMode()">Edit</a>
       </div>
-      <div *ngIf="!noAdvice(practice)" class="collapsible-header">
-        <a materialize="leanModal" [materializeParams]="[{dismissible: false}]"
-           (click)="initializeEditAdviceModal(practice)" class="waves-effect waves-teal btn-flat"
-           href="#modalUpdateAdviceComponent">Edit Advice</a>
+      <div *ngIf="editModeOn">
+        <p>
+        <label [attr.for]="'textareaAdvice'+practice.id">Advice for {{practice.title}}</label>
+        <textarea [(ngModel)]="textInput" id="textareaAdvice{{practice.title}}"
+                      class="materialize-textarea"></textarea>
+        </p>
+        <a class="waves-effect waves-teal btn-flat" (click)="cancel()">Cancel</a>
+        <a class="waves-effect waves-teal btn-flat" (click)="save()">Save</a>
       </div>
-      -->
     </div>
   </li>
 </ul>
 
+<!-- Modal Structure -->
+<div id="modalDeletePracticeThisReading{{practice.id}}" class="modal">
+  <div class="modal-content">
+    <h5>Delete {{practice.title}} for this reading?</h5>
+    <p>Deleting this practice will also delete the associated advice, if any.</p>
+  </div>
+  <div class="modal-footer">
+    <a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="delete()">Delete</a>
+    <a class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+  </div>
+</div>
 
+<!-- Modal Structure -->
+<div id="modalSaveFirst{{practice.id}}" class="modal">
+  <div class="modal-content">
+    <h5>Please save your work before closing this panel.</h5>
+  </div>
+  <div class="modal-footer">
+    <a class="modal-action modal-close waves-effect waves-green btn-flat">Dismiss</a>
+  </div>
+</div>
+
+
+
+<!-- Text Area -->
+<!--
+<div *ngIf="currentPractice">
+  <div class="row">
+    <div class="input-field col s12">
+      <label for="textarea1">Advice for {{currentPractice.title}}</label>
+            <textarea [(ngModel)]="textInput" id="textareaAddNewAdvice"
+                      class="materialize-textarea"></textarea>
+    </div>
+  </div>
+</div>
+-->

@@ -2,6 +2,8 @@ import {Component, OnInit, EventEmitter} from '@angular/core';
 import {ROUTER_DIRECTIVES} from '@angular/router';
 import {Location} from '@angular/common';
 
+import {UpdatePracticeItemBindingService} from '../update-practice-item-binding.service';
+
 import {MaterializeDirective} from "angular2-materialize";
 
 //import {PracticeService} from '../../shared/services/practice.service';
@@ -19,11 +21,12 @@ import { UpdatePracticesComponent } from '../update-practices';
   selector: 'app-edit-practices',
   templateUrl: 'edit-reading-resources.component.html',
   styleUrls: ['edit-reading-resources.component.css'],
-  providers: [ReadingService],
-  directives: [ROUTER_DIRECTIVES, MaterializeDirective, UpdatePracticesComponent],
-  //inputs: ['model: textInput'],
-  //outputs: ['textInputChange'],
-
+  providers: [ReadingService, UpdatePracticeItemBindingService],
+  directives: [
+    ROUTER_DIRECTIVES,
+    MaterializeDirective,
+    UpdatePracticesComponent,
+  ],
 })
 export class EditReadingResourcesComponent implements OnInit {
 
@@ -34,7 +37,16 @@ export class EditReadingResourcesComponent implements OnInit {
 
   constructor(//private _location:Location,
     //private practiceService:PracticeService,
-    private readingService:ReadingService) {
+    private readingService:ReadingService,
+    private updatePracticeItemBindingService:UpdatePracticeItemBindingService) {
+    updatePracticeItemBindingService.practiceUpdated$.subscribe(
+      practiceWithAdvice => {
+        this.onUpdatePractice(practiceWithAdvice);
+      });
+    updatePracticeItemBindingService.practiceDeleted$.subscribe(
+      practiceID => {
+        this.onDeletePractice(practiceID);
+      });
   }
 
   ngOnInit() {
@@ -69,7 +81,7 @@ export class EditReadingResourcesComponent implements OnInit {
     this.changeTracker++;
     console.log(response);
     var practice = response.practice;
-    var textInput = response.textInput;
+    var advice = response.advice;
 
     // used to add a new practice to this.currentReading or to edit an existing practice
 
@@ -86,17 +98,36 @@ export class EditReadingResourcesComponent implements OnInit {
       {
         id: practice.id,
         title: practice.title,
-        advice: textInput
+        advice: advice
       }
     } else { //add the new practice and associated advice
       this.currentReading.practices.push(
         {
           id: practice.id,
           title: practice.title,
-          advice: textInput
+          advice: advice
         }
       );
     }
   }
+
+  onDeletePractice(practiceID) {
+    this.changeTracker++;
+    console.log(practiceID);
+    // used to delete a practice (and its associated advice) from this.currentReading
+    // http://www.c-sharpcorner.com/UploadFile/5089e0/array-object-in-typescript-part-6/
+    var practiceArrayIndex = null;
+    for (let i in this.currentReading.practices) {// using for...in so that I can get the index
+      if (practiceID === this.currentReading.practices[i].id) {
+        practiceArrayIndex = i;
+      }
+    }
+    if (practiceArrayIndex !== null) { //update the practice and associated advice
+      this.currentReading.practices.splice(practiceArrayIndex,1);
+    }
+  }
+
+
+
 
 }

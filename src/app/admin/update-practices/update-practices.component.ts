@@ -48,6 +48,7 @@ export class UpdatePracticesComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
+    console.log('change detected');
     this.fetchUnusedPractices();
     this.buttonDisabled = this.noUnusedPractices();
   }
@@ -84,7 +85,7 @@ export class UpdatePracticesComponent implements OnInit, OnChanges {
     this.onUpdatePractice.emit(
       {
         practice: practice,
-        textInput: ''
+        advice: ''
       }
     );
   }
