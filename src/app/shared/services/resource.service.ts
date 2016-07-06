@@ -22,6 +22,8 @@ const RESOURCES = [
   }
 ];
 
+const PATH = 'app/images_temp/';
+
 @Injectable()
 export class ResourceService {
 
@@ -31,6 +33,12 @@ export class ResourceService {
     var promise = Promise.resolve(RESOURCES);// Observable.just(READINGS);
     return Observable.fromPromise(promise);
   }
+
+  getResourcePath() {
+    var promise = Promise.resolve(PATH);// Observable.just(READINGS);
+    return Observable.fromPromise(promise);
+  }
+
 
 
 

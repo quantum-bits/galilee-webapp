@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import {ResourceService} from '../../shared/services/resource.service';
+import { UpdateResourceItemComponent } from '../update-resource-item';
 
 import {MaterializeDirective} from "angular2-materialize";
 
@@ -9,7 +10,7 @@ import {MaterializeDirective} from "angular2-materialize";
   selector: 'app-update-resources',
   templateUrl: 'update-resources.component.html',
   styleUrls: ['update-resources.component.css'],
-  directives: [MaterializeDirective],
+  directives: [MaterializeDirective, UpdateResourceItemComponent],
 })
 export class UpdateResourcesComponent implements OnInit {
 
@@ -18,6 +19,7 @@ export class UpdateResourcesComponent implements OnInit {
 
   resources = [];
   resourceDropDown = [];
+  resourcePath: string;
 
   constructor(private resourceService:ResourceService) {}
 
@@ -30,6 +32,14 @@ export class UpdateResourcesComponent implements OnInit {
       },
       err => console.log("ERROR", err),
       () => console.log("Resources fetched"));
+    this.resourceService.getResourcePath().subscribe(
+      path => {
+        this.resourcePath = path;
+        console.log(this.resourcePath);
+        //this.buttonDisabled = this.noUnusedPractices();
+      },
+      err => console.log("ERROR", err),
+      () => console.log("Resource path fetched"));
   }
 
 

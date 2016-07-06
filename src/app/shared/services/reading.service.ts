@@ -42,8 +42,16 @@ const READINGS = [
       {
         id: 1,
         title: 'image',
-        description: 'Image of Golgotha',
-        copyrightInfo: 'copyright Zondervan Publishing, 2009.'
+        description: 'Golgotha',
+        fileName: 'cross_image.jpeg',
+        copyrightInfo: 'Zondervan Publishing, 2009'
+      },
+      {
+        id: 2,
+        title: 'image',
+        description: "Noah's Ark",
+        fileName: 'ark.jpeg',
+        copyrightInfo: 'ABC Publishing, 2012'
       }
     ]
   },
@@ -72,8 +80,9 @@ const READINGS = [
       {
         id: 1,
         title: 'image',
-        description: 'Image of Golgotha',
-        copyrightInfo: 'copyright Zondervan Publishing, 2009.'
+        description: 'Golgotha',
+        fileName: 'cross_image.jpeg',
+        copyrightInfo: 'Zondervan Publishing, 2009.'
       }
     ]
   },
@@ -105,8 +114,9 @@ const READINGS = [
       {
         id: 1,
         title: 'image',
-        description: 'Image of Golgotha',
-        copyrightInfo: 'copyright Zondervan Publishing, 2009.'
+        description: 'Golgotha',
+        fileName: 'cross_image.jpeg',
+        copyrightInfo: 'Zondervan Publishing, 2009.'
       }
     ]
   },
@@ -139,8 +149,9 @@ const READINGS = [
       {
         id: 1,
         title: 'image',
-        description: 'Image of Golgotha',
-        copyrightInfo: 'copyright Zondervan Publishing, 2009.'
+        description: 'Golgotha',
+        fileName: 'cross_image.jpeg',
+        copyrightInfo: 'Zondervan Publishing, 2009.'
       }
     ]
   }

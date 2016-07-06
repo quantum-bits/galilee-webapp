@@ -20,12 +20,16 @@
       <ul>
         <li *ngFor="let resource of resourcesThisReading">
 
-          <h4>{{resource.title}}</h4>
-          <p>{{resource.description}}</p>
-          <p>{{resource.copyrightInfo}}</p>
+          <app-update-resource-item
+            [resource]="resource"
+            [resourcePath]="resourcePath"
+          ></app-update-resource-item>
 
         </li>
       </ul>
+
     </div>
   </div>
 </div>
+
+

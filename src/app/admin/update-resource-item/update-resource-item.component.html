@@ -1,0 +1,17 @@
+<ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
+  <li>
+    <div class="collapsible-header">
+      <div class="chip">
+        <img src={{resourcePath}}{{resource.fileName}} alt="Image">
+        {{resource.description}} ({{resource.title}})
+      </div>
+    </div>
+    <div class="collapsible-body">
+      <p>
+        <span><b>Description:</b> {{resource.description}}</span><br>
+        <span><b>Copyright:</b> {{resource.copyrightInfo}}</span>
+        {{resourcePath}}{{resource.fileName}}
+      </p>
+    </div>
+  </li>
+</ul>

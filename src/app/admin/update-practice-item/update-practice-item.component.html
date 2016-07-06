@@ -1,5 +1,3 @@
-<!-- title of practice-->
-
 <ul materialize="collapsible" class="collapsible " data-collapsible="accordion">
   <li>
     <a #myModalSaveMessage href="#modalSaveFirst{{practice.id}}" materialize="leanModal"
@@ -17,10 +15,10 @@
           <i class="material-icons right">close</i>
         </a>
       </span>
-            <span materialize="tooltip" class="tooltipped right" data-position="top" data-delay="50"
-                  data-tooltip="No advice given yet">
-              <i class="large material-icons">warning</i>
-            </span>
+      <span materialize="tooltip" class="tooltipped right" data-position="top" data-delay="50"
+            data-tooltip="No advice given yet">
+          <i class="large material-icons">warning</i>
+      </span>
 
     </div>
     <div *ngIf="!noAdvice(practice)" class="collapsible-header" (click)="toggleDivStatus()" #myInput>
@@ -38,13 +36,13 @@
     <div class="collapsible-body">
       <div *ngIf="!editModeOn">
         <p>{{practice.advice}}</p>
-          <a class="waves-effect waves-teal btn-flat" (click)="launchEditMode()">Edit</a>
+        <a class="waves-effect waves-teal btn-flat" (click)="launchEditMode()">Edit</a>
       </div>
       <div *ngIf="editModeOn">
         <p>
-        <label [attr.for]="'textareaAdvice'+practice.id">Advice for {{practice.title}}</label>
+          <label [attr.for]="'textareaAdvice'+practice.id">Advice for {{practice.title}}</label>
         <textarea [(ngModel)]="textInput" id="textareaAdvice{{practice.title}}"
-                      class="materialize-textarea"></textarea>
+                  class="materialize-textarea"></textarea>
         </p>
         <a class="waves-effect waves-teal btn-flat" (click)="cancel()">Cancel</a>
         <a class="waves-effect waves-teal btn-flat" (click)="save()">Save</a>
@@ -76,17 +74,3 @@
   </div>
 </div>
 
-
-
-<!-- Text Area -->
-<!--
-<div *ngIf="currentPractice">
-  <div class="row">
-    <div class="input-field col s12">
-      <label for="textarea1">Advice for {{currentPractice.title}}</label>
-            <textarea [(ngModel)]="textInput" id="textareaAddNewAdvice"
-                      class="materialize-textarea"></textarea>
-    </div>
-  </div>
-</div>
--->
