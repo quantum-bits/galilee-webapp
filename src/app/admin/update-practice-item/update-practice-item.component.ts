@@ -13,8 +13,6 @@ import {MaterializeDirective} from "angular2-materialize";
 })
 export class UpdatePracticeItemComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  // ARGH: transpile error after I reinstalled node_modules; commented out
-  //       offending lines of code in overrideOpenClose() and toggleDivStatus()
   // BUGS: Clicking on the 'X' also registers a click on the header element.  This leads to all sorts of problems.
   //  (1) at the moment, if a practice is in edit mode, and you try to
   //      delete the practice, it gives you two modals at once...this is because

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 
 import {UpdateResourceItemBindingService} from '../update-resource-item-binding.service';
 
@@ -11,14 +11,21 @@ import {MaterializeDirective} from "angular2-materialize";
   styleUrls: ['update-resource-item.component.css'],
   directives: [MaterializeDirective],
 })
-export class UpdateResourceItemComponent implements OnInit {
+export class UpdateResourceItemComponent implements OnInit, OnDestroy {
 
   @Input() resource;
   @Input() resourcePath;
-  
+
   constructor() {}
 
   ngOnInit() {
   }
+
+
+  ngOnDestroy() {
+    // prevent memory leak when component destroyed
+    //this.subscription.unsubscribe(); //not actually using the subscription here....
+  }
+
 
 }

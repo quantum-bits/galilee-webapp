@@ -1,3 +1,70 @@
-<p>
-  upload-resource works!
-</p>
+<div class="row">
+
+  <div class="col s3">
+
+    <div ng2FileDrop
+         [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+         (fileOver)="fileOverBase($event)"
+         [uploader]="uploader"
+         class="well my-drop-zone">
+      Drop file here
+    </div>
+  </div>
+
+  <div class="col s9" style="margin-bottom: 40px">
+
+    <h5>Upload queue</h5>
+    <p>Queue length: {{numFiles}} </p>
+
+    <table class="table">
+      <thead>
+      <tr>
+        <th width="50%">Name</th>
+        <th>Size</th>
+        <th>Progress</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of uploader.queue">
+
+        <td><strong>{{item._file.name}}</strong></td>
+
+        <td *ngIf="uploader.isHTML5" nowrap>0.00 MB</td>
+        <td *ngIf="uploader.isHTML5">
+          <div class="progress" style="margin-bottom: 0;">
+            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+          </div>
+        </td>
+        <td class="text-center">
+          <span *ngIf="item.isSuccess"><i class="material-icons left">check_circle</i></span>
+          <span *ngIf="item.isCancel"><i class="material-icons left">cancel</i></span>
+          <span *ngIf="item.isError"><i class="material-icons left">error_outline</i></span>
+        </td>
+        <td nowrap>
+          <button class="waves-effect waves-light btn" (click)="item.upload()" [class.disabled]="item.isReady || item.isUploading || item.isSuccess">
+            <i class="material-icons left">file_upload</i>
+            upload
+          </button>
+
+          <button class="waves-effect waves-light btn" (click)="item.cancel()" [class.disabled]="!item.isUploading">
+            <i class="material-icons left">cancel</i>
+            cancel
+          </button>
+
+          <button class="waves-effect waves-light btn" (click)="item.remove()">
+            <i class="material-icons left">delete_forever</i>
+            remove
+          </button>
+
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+</div>
+
+<button class="btn btn-flat" (click)="onClick()">info about file(s)</button>

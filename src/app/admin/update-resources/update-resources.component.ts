@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, Renderer } from '@angular/core';
 
 import {ResourceService} from '../../shared/services/resource.service';
 import { UpdateResourceItemComponent } from '../update-resource-item';
@@ -17,12 +17,14 @@ export class UpdateResourcesComponent implements OnInit {
 
   @Input() resourcesThisReading;
   @Input() changeTracker;
+  @ViewChild('myModalResourcePicker') input: ElementRef;
 
   resources = [];
   resourceDropDown = [];
   resourcePath: string;
 
-  constructor(private resourceService:ResourceService) {}
+  constructor(private resourceService:ResourceService,
+              private renderer: Renderer) {}
 
   ngOnInit() {
     this.resourceService.getResources().subscribe(
@@ -45,7 +47,8 @@ export class UpdateResourcesComponent implements OnInit {
 
 
   addResource(resource) {
-
+    this.renderer.invokeElementMethod(this.input.nativeElement,
+      'click');
   }
 
 }
