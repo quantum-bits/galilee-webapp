@@ -10,11 +10,11 @@ import {
   async, inject
 } from '@angular/core/testing';
 
-import { UpdatePracticesModalComponent } from './update-practices-modal.component';
+import { UpdateResourcesComponent } from './update-resources.component';
 
-describe('Component: UpdatePracticesModal', () => {
+describe('Component: UpdateResources', () => {
   it('should create an instance', () => {
-    let component = new UpdatePracticesModalComponent();
+    let component = new UpdateResourcesComponent();
     expect(component).toBeTruthy();
   });
 });

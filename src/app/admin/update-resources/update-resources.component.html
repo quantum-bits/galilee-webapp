@@ -1,0 +1,31 @@
+<div class="col s12 m6 l6">
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">Resources</span>
+      <span class="right">
+        <button materialize="dropdown"
+                class="drop-down btn"
+                data-activates="dropdownAddNewResource">
+          Add</button>
+      </span>
+      <!-- Dropdown Structure for Choosing Practice -->
+      <ul id='dropdownAddNewResource' class='dropdown-content'>
+        <li *ngFor="let resource of resources; let i = index">
+          <a (click)="addResource(resource)">
+            {{ resource.title }}
+          </a>
+        </li>
+      </ul>
+
+      <ul>
+        <li *ngFor="let resource of resourcesThisReading">
+
+          <h4>{{resource.title}}</h4>
+          <p>{{resource.description}}</p>
+          <p>{{resource.copyrightInfo}}</p>
+
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

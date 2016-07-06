@@ -5,6 +5,7 @@ import {ReadingService} from './shared/services/reading.service';
 import {Reading} from './shared/models/reading.model';
 import {PracticeService} from './shared/services/practice.service';
 import {Practice} from './shared/models/practice.model';
+import {ResourceService} from './shared/services/resource.service';
 
 //import { ReadingService } from './shared';
 
@@ -13,7 +14,7 @@ import {Practice} from './shared/models/practice.model';
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css'],
-  providers: [ReadingService, PracticeService],
+  providers: [ReadingService, PracticeService, ResourceService],
   directives: [ROUTER_DIRECTIVES],
 })
 export class AppComponent implements OnInit {

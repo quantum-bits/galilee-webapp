@@ -59,14 +59,21 @@
 
     <div class="row">
       <!-- Practices -->
-      <div *ngIf="currentReading.practices">
         <app-update-practices
           [practicesThisReading]="currentReading.practices"
           [changeTracker]="changeTracker"
           (onUpdatePractice) = "onUpdatePractice($event)"
         >
         </app-update-practices>
-      </div>
+
+      <!-- Resources -->
+        <app-update-resources
+          [resourcesThisReading]="currentReading.resources"
+          [changeTracker]="changeTracker">
+        </app-update-resources>
+
+
+
       <!-- Other Resources -->
       <div class="col s12 m16 l6">
         <div class="card">

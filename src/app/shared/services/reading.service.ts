@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { Reading } from '../models/reading.model';
 
+import {Observable} from 'rxjs/Rx';
+
 // MOCK
 const READINGS = [
   //READINGS: Reading[] = [
@@ -35,6 +37,14 @@ const READINGS = [
         title: 'Memorizing Scripture',
         advice: ''
       },
+    ],
+    resources: [
+      {
+        id: 1,
+        title: 'image',
+        description: 'Image of Golgotha',
+        copyrightInfo: 'copyright Zondervan Publishing, 2009.'
+      }
     ]
   },
   {
@@ -57,6 +67,14 @@ const READINGS = [
         title: 'Memorizing Scripture',
         advice: ''
       },
+    ],
+    resources: [
+      {
+        id: 1,
+        title: 'image',
+        description: 'Image of Golgotha',
+        copyrightInfo: 'copyright Zondervan Publishing, 2009.'
+      }
     ]
   },
   {
@@ -82,6 +100,14 @@ const READINGS = [
         title: 'Dramatizing Scripture',
         advice: ''
       },
+    ],
+    resources: [
+      {
+        id: 1,
+        title: 'image',
+        description: 'Image of Golgotha',
+        copyrightInfo: 'copyright Zondervan Publishing, 2009.'
+      }
     ]
   },
   {
@@ -108,6 +134,14 @@ const READINGS = [
         title: 'Journaling Scripture',
         advice: 'Here is some advice for memorizing this passage.'
       },
+    ],
+    resources: [
+      {
+        id: 1,
+        title: 'image',
+        description: 'Image of Golgotha',
+        copyrightInfo: 'copyright Zondervan Publishing, 2009.'
+      }
     ]
   }
 ];
@@ -150,6 +184,11 @@ export class ReadingService {
       */
   }
 
+  getTodaysReadingsAsObservable() {
+    var promise = Promise.resolve(READINGS);// Observable.just(READINGS);
+    return Observable.fromPromise(promise);
+    //return Observable.from(READINGS); // using from sends them back as four packages or something...?
+  }
 
   getTodaysReadings() {
     return Promise.resolve(READINGS);

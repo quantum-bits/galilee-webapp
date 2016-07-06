@@ -2,7 +2,7 @@ import { Component, OnInit, OnChanges, EventEmitter, Input, Output } from '@angu
 
 import {PracticeService} from '../../shared/services/practice.service';
 import {Practice} from '../../shared/models/practice.model';
-import {UpdatePracticesModalComponent} from '../update-practices-modal';
+
 import { UpdatePracticeItemComponent } from '../update-practice-item';
 
 import {MaterializeDirective} from "angular2-materialize";
@@ -13,7 +13,7 @@ import {MaterializeDirective} from "angular2-materialize";
   selector: 'app-update-practices',
   templateUrl: 'update-practices.component.html',
   styleUrls: ['update-practices.component.css'],
-  directives: [MaterializeDirective, UpdatePracticesModalComponent, UpdatePracticeItemComponent]
+  directives: [MaterializeDirective, UpdatePracticeItemComponent]
 })
 export class UpdatePracticesComponent implements OnInit, OnChanges {
 
@@ -89,70 +89,5 @@ export class UpdatePracticesComponent implements OnInit, OnChanges {
       }
     );
   }
-
-  /*
-  // sets the practice that is currently in play (the one being added/edited)
-  setCurrentPractice(practiceId) {
-    for (var practice of this.practices) {
-      if (practiceId === practice.id) {
-        this.currentPractice = practice;
-      }
-    }
-  }
-  */
-
-  /*
-  // performs some initialization so that this.currentReading.practices[i] can be edited
-  initializeEditAdviceModal(practiceWithAdvice) {
-    this.setCurrentPractice(practiceWithAdvice.id);
-    this.textInput = practiceWithAdvice.advice;
-    //this.showUpdatePracticeModal = true;
-  }
-  */
-  /*
-  // called upon exiting modal; resets various things....
-  cleanUp() {
-    this.textInput = '';
-    this.currentPractice = null;
-    this.fetchUnusedPractices();
-  }
-  */
-  /*
-  cancelReadingEdits() {
-    // clean up for modal exit
-    this.cleanUp();
-  }
-
-  // true if there is not currently any advice listed for this practice for this reading
-  noAdvice(practice) {
-    if (practice.advice == '') {
-      return true;
-    }
-    return false;
-  }
-  */
-  /*
-  updateAdvice() {
-    console.log(this.currentPractice);
-    console.log('and some text input....');
-    console.log(this.textInput);
-    this.onUpdatePractice.emit(
-      {
-        practice: this.currentPractice,
-        textInput: this.textInput
-      }
-    );
-    this.cleanUp();
-  }
-
-  passEventUp(response) {
-    this.cleanUp();
-    this.onUpdatePractice.emit(response);//passes the response (received from this comp's child) up to the parent
-  }
-
-  onModalCancel(response) {
-    this.cleanUp();
-  }
-  */
 
 }

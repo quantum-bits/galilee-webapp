@@ -5,6 +5,7 @@
     <a #myModalSaveMessage href="#modalSaveFirst{{practice.id}}" materialize="leanModal"
        [materializeParams]="[{dismissible: true}]">
     </a>
+
     <div *ngIf="noAdvice(practice)" class="collapsible-header" (click)="toggleDivStatus()"#myInput>
       {{practice.title}}
       <span>
@@ -51,6 +52,7 @@
     </div>
   </li>
 </ul>
+
 
 <!-- Modal Structure -->
 <div id="modalDeletePracticeThisReading{{practice.id}}" class="modal">

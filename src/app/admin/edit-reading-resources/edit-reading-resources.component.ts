@@ -1,17 +1,17 @@
 import {Component, OnInit, EventEmitter} from '@angular/core';
 import {ROUTER_DIRECTIVES} from '@angular/router';
 import {Location} from '@angular/common';
+import { Observable } from 'rxjs/Observable';
 
 import {UpdatePracticeItemBindingService} from '../update-practice-item-binding.service';
 
 import {MaterializeDirective} from "angular2-materialize";
 
-//import {PracticeService} from '../../shared/services/practice.service';
-//import {Practice} from '../../shared/models/practice.model';
 import {ReadingService} from '../../shared/services/reading.service';
 import {Reading} from '../../shared/models/reading.model';
 
 import { UpdatePracticesComponent } from '../update-practices';
+import {UpdateResourcesComponent} from '../update-resources';
 
 // useful resource for using Materialize components that require js:
 // https://github.com/InfomediaLtd/angular2-materialize/tree/master/app/components
@@ -26,6 +26,7 @@ import { UpdatePracticesComponent } from '../update-practices';
     ROUTER_DIRECTIVES,
     MaterializeDirective,
     UpdatePracticesComponent,
+    UpdateResourcesComponent,
   ],
 })
 export class EditReadingResourcesComponent implements OnInit {
@@ -51,14 +52,16 @@ export class EditReadingResourcesComponent implements OnInit {
 
   ngOnInit() {
     this.date = new Date();
-
     // FIXME hardcoded readings; assumes there is at least one reading...FIX!!!
-    this.readingService.getTodaysReadings().then(
-      (readings) => {
+    this.readingService.getTodaysReadingsAsObservable().subscribe(
+      readings => {
         this.readings = readings;
         var reading = this.readings[0];
         this.currentReading = reading;
-      });
+        console.log(readings);
+      },
+      err => console.log("ERROR", err),
+      () => console.log("Readings fetched"));
   }
 
 
