@@ -9,7 +9,8 @@
 const map: any = {
   'materialize-css': 'materialize-src',
   'materialize': 'vendor/angular2-materialize',
-  'angular2-materialize': 'vendor/angular2-materialize'
+  'angular2-materialize': 'vendor/angular2-materialize',
+  'ng2-file-upload': 'vendor/ng2-file-upload/ng2-file-upload.js'
 };
 
 /** User packages configuration. */
@@ -20,8 +21,14 @@ const packages: any = {
   'materialize': {
     'main': 'dist/materialize-directive.js',
     //'defaultExtension': 'js'
+  },
+  'vendor/ng2-file-upload': {
+    defaultExtension: 'js'
   }
 };
+
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************************
@@ -54,6 +61,7 @@ const barrels: string[] = [
   'app/admin/update-practice-item',
   'app/admin/update-resources',
   'app/admin/update-resource-item',
+  'app/admin/upload-resource',
   /** @cli-barrel */
 ];
 

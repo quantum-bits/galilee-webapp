@@ -5,6 +5,7 @@ import {APP_ROUTER_PROVIDERS} from './app/app.routes';
 import {HTTP_PROVIDERS} from '@angular/http';
 
 import "angular2-materialize";
+import "ng2-file-upload";
 
 if (environment.production) {
   enableProdMode();

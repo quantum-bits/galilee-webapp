@@ -17,7 +17,8 @@ module.exports = function(defaults) {
       'rxjs/**/*.+(js|js.map)',
       '@angular/**/*.+(js|js.map)',
       'jquery/**/*',
-      'angular2-materialize/**/*'
+      'angular2-materialize/**/*',
+      'ng2-file-upload/**/*.js'
     ]
   });
 };

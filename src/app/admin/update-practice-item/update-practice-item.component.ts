@@ -13,6 +13,8 @@ import {MaterializeDirective} from "angular2-materialize";
 })
 export class UpdatePracticeItemComponent implements OnInit, OnDestroy, AfterViewInit {
 
+  // ARGH: transpile error after I reinstalled node_modules; commented out
+  //       offending lines of code in overrideOpenClose() and toggleDivStatus()
   // BUGS: Clicking on the 'X' also registers a click on the header element.  This leads to all sorts of problems.
   //  (1) at the moment, if a practice is in edit mode, and you try to
   //      delete the practice, it gives you two modals at once...this is because
@@ -66,7 +68,7 @@ export class UpdatePracticeItemComponent implements OnInit, OnDestroy, AfterView
     //}
   }
 
-  overrideOpenClose(){
+  overrideOpenClose(){//for some reason the following gives a typescript transpile error now
     this.renderer.invokeElementMethod(this.input.nativeElement,
       'click');
   }
@@ -74,7 +76,7 @@ export class UpdatePracticeItemComponent implements OnInit, OnDestroy, AfterView
   // the following toggles on the collapsible-header so we can keep track of whether the div is open or closed
   toggleDivStatus(){
     if ((this.divOpen === true)&&(this.editModeOn)) {//user is attempting to close the div without saving first
-      this.overrideOpenClose();
+      this.overrideOpenClose();//for some reason the following gives a typescript transpile error now
       this.renderer.invokeElementMethod(this.input2.nativeElement,
         'click'); //launches 'save first before closing' modal....
     }

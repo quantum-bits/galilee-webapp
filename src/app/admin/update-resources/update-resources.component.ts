@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import {ResourceService} from '../../shared/services/resource.service';
 import { UpdateResourceItemComponent } from '../update-resource-item';
+import { UploadResourceComponent } from '../upload-resource';
 
 import {MaterializeDirective} from "angular2-materialize";
 
@@ -10,7 +11,7 @@ import {MaterializeDirective} from "angular2-materialize";
   selector: 'app-update-resources',
   templateUrl: 'update-resources.component.html',
   styleUrls: ['update-resources.component.css'],
-  directives: [MaterializeDirective, UpdateResourceItemComponent],
+  directives: [MaterializeDirective, UpdateResourceItemComponent, UploadResourceComponent],
 })
 export class UpdateResourcesComponent implements OnInit {
 
