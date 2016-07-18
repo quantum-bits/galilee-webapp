@@ -1,6 +1,38 @@
-.my-drop-zone { border: dotted 3px lightgray; }
-.nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
-.another-file-over-class { border: dotted 3px green; }
+.my-drop-zone {/* http://jsfiddle.net/yeaqrh48/ */
+  display: -webkit-flexbox;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  /*line-height: 80px;
+  vertical-align: middle;*/
+  border: dotted 3px lightgray;
+  border-radius: 10px;
+  /*text-align: center;*/
+}
+.nv-file-over { /* Default class applied to drop zones on over */
+  display: -webkit-flexbox;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  background: rgba(38,165,154,0.8); /* approximate green colour used for buttons */
+  color: rgba(255,255,255,1);
+  border: rgba(38,165,154,1);
+  /*background: green;*/
+  /*opacity: 0.2;*/
+  border-radius: 10px;
+}
 
 .well {
   height: 100px
