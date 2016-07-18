@@ -16,18 +16,14 @@
           </a>
         </li>
       </ul>
-
-      <ul>
-        <li *ngFor="let resource of resourcesThisReading">
-
+      <div class='dragula-container' [dragula]='"resources-bag"' [dragulaModel]='resourcesThisReading'>
+        <div *ngFor="let resource of resourcesThisReading">
           <app-update-resource-item
             [resource]="resource"
             [resourcePath]="resourcePath"
           ></app-update-resource-item>
-
-        </li>
-      </ul>
-
+        </div>
+      </div>
     </div>
   </div>
 </div>

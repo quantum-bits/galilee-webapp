@@ -9,6 +9,7 @@ import {MaterializeDirective} from "angular2-materialize";
   selector: 'app-update-practice-item',
   templateUrl: 'update-practice-item.component.html',
   styleUrls: ['update-practice-item.component.css'],
+  providers: [],
   directives: [MaterializeDirective],
 })
 export class UpdatePracticeItemComponent implements OnInit, OnDestroy, AfterViewInit {

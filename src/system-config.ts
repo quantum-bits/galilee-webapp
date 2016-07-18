@@ -10,7 +10,9 @@ const map: any = {
   'materialize-css': 'materialize-src',
   'materialize': 'vendor/angular2-materialize',
   'angular2-materialize': 'vendor/angular2-materialize',
-  'ng2-file-upload': 'vendor/ng2-file-upload/ng2-file-upload.js'
+  'ng2-file-upload': 'vendor/ng2-file-upload/ng2-file-upload.js',
+  'dragula': 'vendor/dragula/dist/dragula.js',
+  'ng2-dragula': 'vendor/ng2-dragula'
 };
 
 /** User packages configuration. */
@@ -23,6 +25,12 @@ const packages: any = {
     //'defaultExtension': 'js'
   },
   'vendor/ng2-file-upload': {
+    defaultExtension: 'js'
+  },
+  'vendor/dragula': {
+    defaultExtension: 'js'
+  },
+  'vendor/ng2-dragula': {
     defaultExtension: 'js'
   }
 };

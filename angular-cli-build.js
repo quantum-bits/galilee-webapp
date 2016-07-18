@@ -18,7 +18,9 @@ module.exports = function(defaults) {
       '@angular/**/*.+(js|js.map)',
       'jquery/**/*',
       'angular2-materialize/**/*',
-      'ng2-file-upload/**/*.js'
+      'ng2-file-upload/**/*.js',
+      'dragula/**/*.+(js|css)',
+      'ng2-dragula/**/*.js'
     ]
   });
 };

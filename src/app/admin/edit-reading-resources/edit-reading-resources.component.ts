@@ -82,7 +82,10 @@ export class EditReadingResourcesComponent implements OnInit {
 
   onUpdatePractice(response) {
     this.changeTracker++;
+    console.log('practice updated!');
+    console.log(this.currentReading);
     console.log(response);
+    console.log()
     var practice = response.practice;
     var advice = response.advice;
 

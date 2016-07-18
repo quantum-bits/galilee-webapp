@@ -1,13 +1,12 @@
-
 <div class="col s12 m6 l6">
   <div class="card">
     <div class="card-content">
       <span class="card-title">Practices</span>
       <span class="right">
         <button materialize="dropdown"
-           class="drop-down btn"
-           [class.disabled]="buttonDisabled"
-           data-activates="dropdownAddNewPractice">
+                class="drop-down btn"
+                [class.disabled]="buttonDisabled"
+                data-activates="dropdownAddNewPractice">
           Add</button>
       </span>
       <!-- Dropdown Structure for Choosing Practice -->
@@ -18,16 +17,14 @@
           </a>
         </li>
       </ul>
-
-      <ul>
-        <li *ngFor="let practice of practicesThisReading">
-
+      <div class='dragula-container' [dragula]='"practices-bag"' [dragulaModel]='practicesThisReading'>
+        <div *ngFor="let practice of practicesThisReading">
           <app-update-practice-item
             [practice]="practice"
           ></app-update-practice-item>
-
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
