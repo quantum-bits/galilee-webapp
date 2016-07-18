@@ -1,0 +1,17 @@
+<div class="card ">
+  <div class="card-content ">
+    <span class="card-title">{{ reading.title }}</span>
+    <div class="card-item">
+      <p><b>{{ reading.description }}</b></p>
+      <br>
+      <p>{{ reading.text}}</p>
+    </div>
+  </div>
+  <div class="card-action">
+    <p *ngIf="includeBackButton"><a [routerLink]="['/end-user/readings']">Back</a></p>
+    <!--<p><a (click)="displayInfo(reading)">Display Info</a></p>-->
+    <div *ngFor="let practice of practices">
+      <a (click)="onSelect(reading, practice)">{{practice.title}}</a>
+    </div>
+  </div>
+</div>

@@ -14,7 +14,7 @@ export const EndUserRoutes = [
         component: ReadingsComponent,
         index: true,
       },
-      { path: 'reading-detail/:id', component: ReadingDetailComponent },
+      { path: 'reading-detail/:readingID/:practiceID', component: ReadingDetailComponent },
     ]
 
   },
