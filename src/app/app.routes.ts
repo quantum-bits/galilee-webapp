@@ -3,7 +3,7 @@ import { provideRouter, RouterConfig } from '@angular/router';
 import { EndUserRoutes } from './end-user/end-user.routes';
 import { AdminRoutes } from './admin/admin.routes';
 import { ReadingsComponent } from './end-user/readings/readings.component';
-import { ReadingDetailComponent } from './end-user/reading-detail/reading-detail.component';
+//import { ReadingPracticeComponent } from './end-user/reading-detail/reading-practice.component';
 
 import { AdminComponent } from './admin/admin.component';
 
