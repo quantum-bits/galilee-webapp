@@ -3,7 +3,7 @@
     <div class="collapsible-header">
       <div class="chip">
         <img src={{resourcePath}}{{resource.fileName}} alt="Image">
-        {{resource.description}} ({{resource.title}})
+        {{resource.title}} ({{resource.type}})
       </div>
     </div>
     <div class="collapsible-body">
@@ -12,6 +12,7 @@
         <span><b>Copyright:</b> {{resource.copyrightInfo}}</span>
         {{resourcePath}}{{resource.fileName}}
       </p>
+      <a class="waves-effect waves-teal btn-flat">Edit</a>
     </div>
   </li>
 </ul>

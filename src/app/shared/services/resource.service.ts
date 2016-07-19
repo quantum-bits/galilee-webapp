@@ -6,19 +6,19 @@ import {Observable} from 'rxjs/Rx';
 const RESOURCES = [
   {
     id: 1,
-    title: 'image',
+    type: 'image',
   },
   {
     id: 2,
-    title: 'audio',
+    type: 'audio',
   },
   {
     id: 3,
-    title: 'video',
+    type: 'video',
   },
   {
     id: 4,
-    title: 'link',
+    type: 'link',
   }
 ];
 

@@ -15,7 +15,7 @@
     </div>
     <br>
     <div *ngFor="let resource of resources">
-      <a (click)="onSelectResource(reading, resource)">{{resource.description}}</a>
+      <a (click)="onSelectResource(reading, resource)">{{resource.title}} ({{resource.type}})</a>
     </div>
   </div>
 </div>

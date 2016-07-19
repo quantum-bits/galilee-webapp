@@ -35,14 +35,6 @@ export class ReadingPracticeComponent implements OnInit {
     private practiceService: PracticeService){
   }
 
-
-  // WORKING HERE....
-  // NEXT: add resource-item views, along the same lines as the practice-item views
-
-
-
-
-
   // NOTE: the following might not be the most efficient way to do this; it fetches
   // the entire reading, even it if only needs to refresh the practice for that reading;
   // in principle, once there has been one trip to the db, we wouldn't need to hit it again

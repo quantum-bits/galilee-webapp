@@ -41,15 +41,17 @@ const READINGS = [
     resources: [
       {
         id: 1,
-        title: 'image',
-        description: 'Golgotha',
+        title: 'Golgotha',
+        description: 'Golgotha is the location where Christ was crucified.',
+        type: 'image',
         fileName: 'cross_image.jpeg',
         copyrightInfo: 'Zondervan Publishing, 2009'
       },
       {
         id: 2,
-        title: 'image',
-        description: "Noah's Ark",
+        title: "Noah's Ark",
+        description: "The animals came in two by two...and then it rained...a lot!",
+        type: 'image',
         fileName: 'ark.jpeg',
         copyrightInfo: 'ABC Publishing, 2012'
       }
@@ -79,8 +81,9 @@ const READINGS = [
     resources: [
       {
         id: 1,
-        title: 'image',
-        description: 'Golgotha',
+        title: 'Golgotha',
+        description: 'Golgotha is the location where Christ was crucified.',
+        type: 'image',
         fileName: 'cross_image.jpeg',
         copyrightInfo: 'Zondervan Publishing, 2009.'
       }
@@ -113,8 +116,9 @@ const READINGS = [
     resources: [
       {
         id: 1,
-        title: 'image',
-        description: 'Golgotha',
+        title: 'Golgotha',
+        description: 'Golgotha is the location where Christ was crucified.',
+        type: 'image',
         fileName: 'cross_image.jpeg',
         copyrightInfo: 'Zondervan Publishing, 2009.'
       }
@@ -148,8 +152,9 @@ const READINGS = [
     resources: [
       {
         id: 1,
-        title: 'image',
-        description: 'Golgotha',
+        title: 'Golgotha',
+        description: 'Golgotha is the location where Christ was crucified.',
+        type: 'image',
         fileName: 'cross_image.jpeg',
         copyrightInfo: 'Zondervan Publishing, 2009.'
       }

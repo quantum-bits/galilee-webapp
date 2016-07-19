@@ -12,6 +12,9 @@ import {MaterializeDirective} from "angular2-materialize";
 })
 export class ResourceItemComponent implements OnInit {
 
+  // WORKING HERE: need to refactor the resource stuff a bit; 'image' (etc.) should be a type or something....
+
+
   @Input() reading: any;
   @Input() resource: any;
   @Input() resourcePath;
