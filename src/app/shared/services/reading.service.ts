@@ -23,7 +23,7 @@ const READINGS = [
     'came to Beersheba in Judah, he left his servant there,....',
     practices: [
       {
-        id: 1,
+        id: 1,//currently this id matches the id of the type of practice (as opposed to the id for this particular practice object in the db); presumably we might want to have both id's here
         title: 'Lectio Divina',
         advice: 'Here is some advice for how to do Lectio Divina for this passage.'
       },
@@ -40,7 +40,7 @@ const READINGS = [
     ],
     resources: [
       {
-        id: 1,
+        id: 1,//id of the resource type? or the resource object? should both be here?
         title: 'Golgotha',
         description: 'Golgotha is the location where Christ was crucified.',
         type: 'image',
@@ -54,7 +54,31 @@ const READINGS = [
         type: 'image',
         fileName: 'ark.jpeg',
         copyrightInfo: 'ABC Publishing, 2012'
-      }
+      },
+      {
+        id: 3,
+        title: "Handel's Messiah",
+        description: "Christmas music by Handel.",
+        type: 'audio',
+        fileName: 'ic_library_music_black_24dp_2x.png',
+        copyrightInfo: 'ABC Publishing, 2012'
+      },
+      {
+        id: 4,
+        title: "Nativity Reenactment",
+        description: "Video reenactment of the nativity.",
+        type: 'video',
+        fileName: 'ic_video_library_black_24dp_2x.png',
+        copyrightInfo: 'ABC Publishing, 2012'
+      },
+      {
+        id: 5,
+        title: "More resources",
+        description: "Link to further resources about Solomon and the temple.",
+        type: 'link',
+        fileName: 'ic_link_black_24dp_2x.png',
+        copyrightInfo: 'ABC Publishing, 2012'
+      },
     ]
   },
   {
