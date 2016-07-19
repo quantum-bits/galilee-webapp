@@ -5,7 +5,8 @@
         <app-reading-item
           [includeBackButton]="includeBackButton"
           [reading]="singleReading"
-          [practices]="otherPractices">
+          [practices]="singleReading.practices"
+          [resources]="singleReading.resources">
         </app-reading-item>
       </div>
       <div *ngIf="practice" class="col s12 m6 l6">

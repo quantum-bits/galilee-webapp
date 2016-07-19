@@ -60,7 +60,7 @@ const barrels: string[] = [
   'app/shared',
   'app/admin',
   'app/end-user',
-  'app/end-user/reading-detail',
+  'app/end-user/reading-practice',
   'app/end-user/readings',
   'app/admin/side-nav',
   'app/admin/edit-reading-resources',
@@ -72,6 +72,8 @@ const barrels: string[] = [
   'app/admin/upload-resource',
   'app/end-user/reading-item',
   'app/end-user/practice-item',
+  'app/end-user/resource-item',
+  'app/end-user/reading-resource',
   /** @cli-barrel */
 ];
 

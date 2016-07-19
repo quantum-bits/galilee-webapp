@@ -10,9 +10,9 @@ import { PracticeItemComponent } from '../practice-item';
 
 @Component({
   moduleId: module.id,
-  selector: 'app-reading-detail',
-  templateUrl: 'reading-detail.component.html',
-  styleUrls: ['reading-detail.component.css'],
+  selector: 'app-reading-practice',
+  templateUrl: 'reading-practice.component.html',
+  styleUrls: ['reading-practice.component.css'],
   providers: [ReadingService, PracticeService],
   directives: [
     ROUTER_DIRECTIVES,
@@ -20,12 +20,11 @@ import { PracticeItemComponent } from '../practice-item';
     PracticeItemComponent,
   ],
 })
-export class ReadingDetailComponent implements OnInit {
+export class ReadingPracticeComponent implements OnInit {
 
   date: Date;
   singleReading: Reading;
   practice: any;
-  otherPractices = [];
   practiceGeneralInformation: any;
   includeBackButton = true;
 
@@ -35,6 +34,14 @@ export class ReadingDetailComponent implements OnInit {
     private readingService: ReadingService,
     private practiceService: PracticeService){
   }
+
+
+  // WORKING HERE....
+  // NEXT: add resource-item views, along the same lines as the practice-item views
+
+
+
+
 
   // NOTE: the following might not be the most efficient way to do this; it fetches
   // the entire reading, even it if only needs to refresh the practice for that reading;
@@ -50,7 +57,7 @@ export class ReadingDetailComponent implements OnInit {
         .then(//FIXME convert to Observable - subscribe (?)
           reading => {
             this.singleReading = reading;
-            this.splitPractices(this.singleReading, practiceID);
+            this.fetchPractice(this.singleReading, practiceID);
             this.practiceService.getPracticeGeneralInformation(practiceID)
               .subscribe(
                 practice => {
@@ -63,12 +70,9 @@ export class ReadingDetailComponent implements OnInit {
     });
   }
 
-  splitPractices(reading, practiceID) {
-    this.otherPractices = [];
+  fetchPractice(reading, practiceID) {
     for (let practice of reading.practices) {
-      if (practice.id != practiceID) {
-        this.otherPractices.push(practice);
-      } else if (practice.id === practiceID) {
+      if (practice.id === practiceID) {
         this.practice = practice;
       }
     }

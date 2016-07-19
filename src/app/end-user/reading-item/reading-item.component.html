@@ -11,7 +11,11 @@
     <p *ngIf="includeBackButton"><a [routerLink]="['/end-user/readings']">Back</a></p>
     <!--<p><a (click)="displayInfo(reading)">Display Info</a></p>-->
     <div *ngFor="let practice of practices">
-      <a (click)="onSelect(reading, practice)">{{practice.title}}</a>
+      <a (click)="onSelectPractice(reading, practice)">{{practice.title}}</a>
+    </div>
+    <br>
+    <div *ngFor="let resource of resources">
+      <a (click)="onSelectResource(reading, resource)">{{resource.description}}</a>
     </div>
   </div>
 </div>

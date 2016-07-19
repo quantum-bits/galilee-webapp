@@ -13,6 +13,7 @@ export class ReadingItemComponent implements OnInit {
 
   @Input() reading: any;
   @Input() practices: any;
+  @Input() resources: any;
   @Input() includeBackButton: boolean;
   constructor(private router: Router) {}
 
@@ -23,8 +24,12 @@ export class ReadingItemComponent implements OnInit {
     console.log(reading);
   }
 
-  onSelect(reading, practice) {
-    this.router.navigate(['/end-user/reading-detail', reading.id, practice.id]);
+  onSelectPractice(reading, practice) {
+    this.router.navigate(['/end-user/reading-practice', reading.id, practice.id]);
+  }
+
+  onSelectResource(reading, resource) {
+    this.router.navigate(['/end-user/reading-resource', reading.id, resource.id]);
   }
 
 }

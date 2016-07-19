@@ -1,0 +1,32 @@
+<div class="card ">
+  <div class="card-content ">
+    <span class="card-title">{{ resource.description }} ({{resource.title}})
+    </span>
+    <div class="card-item">
+      <p><b>{{ reading.description }}</b></p>
+      <br>
+      <!-- Modal trigger -->
+      <a materialize="leanModal" [materializeParams]="[{dismissible: true}]" href="#modalFullImage">
+        <div class="chip">
+          <img src={{resourcePath}}{{resource.fileName}} alt="Image">
+          {{resource.description}} ({{resource.title}})
+        </div>
+      </a>
+
+      <p>{{ resource.copyrightInfo}}</p>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="modalFullImage" class="modal">
+  <div class="modal-content">
+    <h4>{{resource.description}}</h4>
+    <img src={{resourcePath}}{{resource.fileName}} alt="Image" width="300">
+    <p>{{ resource.copyrightInfo}}</p>
+  </div>
+  <div class="modal-footer">
+    <a class=" modal-action modal-close waves-effect waves-green btn-flat">DISMISS</a>
+  </div>
+</div>
+

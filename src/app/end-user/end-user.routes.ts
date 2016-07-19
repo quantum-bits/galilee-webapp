@@ -1,7 +1,8 @@
 import { EndUserComponent } from './end-user.component';
 
 import { ReadingsComponent } from './readings';
-import { ReadingDetailComponent } from './reading-detail';
+import { ReadingPracticeComponent } from './reading-practice';
+import { ReadingResourceComponent } from './reading-resource';
 
 export const EndUserRoutes = [
   {
@@ -14,7 +15,14 @@ export const EndUserRoutes = [
         component: ReadingsComponent,
         index: true,
       },
-      { path: 'reading-detail/:readingID/:practiceID', component: ReadingDetailComponent },
+      {
+        path: 'reading-practice/:readingID/:practiceID',
+        component: ReadingPracticeComponent
+      },
+      {
+        path: 'reading-resource/:readingID/:resourceID',
+        component: ReadingResourceComponent
+      },
     ]
 
   },
