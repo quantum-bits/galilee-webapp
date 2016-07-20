@@ -67,15 +67,25 @@ export class UpdatePracticeItemComponent implements OnInit, OnDestroy, AfterView
     //}
   }
 
-  overrideOpenClose(){//for some reason the following gives a typescript transpile error now
-    this.renderer.invokeElementMethod(this.input.nativeElement,
-      'click');
+  overrideOpenClose(event){//stops event bubbling, so clicking on 'close' doesn't also open/close the div
+    event.stopPropagation();
+    //this.renderer.invokeElementMethod(this.input.nativeElement,
+    //  'click');
   }
 
   // the following toggles on the collapsible-header so we can keep track of whether the div is open or closed
   toggleDivStatus(){
     if ((this.divOpen === true)&&(this.editModeOn)) {//user is attempting to close the div without saving first
-      this.overrideOpenClose();//for some reason the following gives a typescript transpile error now
+      //this.overrideOpenClose();//for some reason the following gives a typescript transpile error now
+      this.renderer.invokeElementMethod(this.input2.nativeElement,
+        'click'); //launches 'save first before closing' modal....
+    }
+    this.divOpen = !this.divOpen;
+  }
+
+  checkIfSaved(event) {
+    if ((this.divOpen === true)&&(this.editModeOn)) {
+      event.stopPropagation();
       this.renderer.invokeElementMethod(this.input2.nativeElement,
         'click'); //launches 'save first before closing' modal....
     }

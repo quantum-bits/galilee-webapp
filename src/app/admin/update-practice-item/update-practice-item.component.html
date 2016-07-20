@@ -10,7 +10,7 @@
         <a materialize="leanModal"
            [materializeParams]="[{dismissible: false}]"
            class="waves-effect waves-light secondary-content modal-trigger"
-           (click)="overrideOpenClose()"
+           (click)="overrideOpenClose($event)"
            href="#modalDeletePracticeThisReading{{practice.id}}">
           <i class="material-icons right">close</i>
         </a>
@@ -21,13 +21,13 @@
       </span>
 
     </div>
-    <div *ngIf="!noAdvice(practice)" class="collapsible-header" (click)="toggleDivStatus()" #myInput>
+    <div *ngIf="!noAdvice(practice)" class="collapsible-header" (click)="checkIfSaved($event)" #myInput>
       {{practice.title}}
       <!-- Modal trigger -->
       <a materialize="leanModal"
          [materializeParams]="[{dismissible: false}]"
          class="waves-effect waves-light secondary-content modal-trigger"
-         (click)="overrideOpenClose()"
+         (click)="overrideOpenClose($event)"
          href="#modalDeletePracticeThisReading{{practice.id}}">
         <i class="material-icons right">close</i>
       </a>

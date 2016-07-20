@@ -1,13 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 import { Router, ActivatedRoute } from '@angular/router';
+import {MaterializeDirective} from "angular2-materialize";
 
 @Component({
   moduleId: module.id,
   selector: 'app-reading-item',
   templateUrl: 'reading-item.component.html',
   styleUrls: ['reading-item.component.css'],
-  directives: [ROUTER_DIRECTIVES]
+  directives: [ROUTER_DIRECTIVES, MaterializeDirective]
 })
 export class ReadingItemComponent implements OnInit {
 
@@ -15,6 +16,10 @@ export class ReadingItemComponent implements OnInit {
   @Input() practices: any;
   @Input() resources: any;
   @Input() includeBackButton: boolean;
+
+  idVal = 'dropDownMenu';
+
+
   constructor(private router: Router) {}
 
   ngOnInit() {
