@@ -42,15 +42,27 @@ const READINGS = [
       {
         id: 1,//id of the resource type? or the resource object? should both be here?
         title: 'Golgotha',
-        description: 'Golgotha is the location where Christ was crucified.',
+        description:
+          'Golgotha is the location where Christ was crucified. ' +
+          'Lorem ipsum dolor sit amet, ligula interdum, cras in ' +
+          'purus proin fringilla sit phasellus. Quis ligula lorem ' +
+          'sollicitudin, nibh sit nec et ante. Eu porttitor elit, ' +
+          'risus eget leo, consectetuer vitae et non, malesuada hac ' +
+          'ut suscipit pulvinar ut.',
         type: 'image',
         fileName: 'cross_image.jpeg',
-        copyrightInfo: 'Zondervan Publishing, 2009'
+        copyrightInfo: 'Zondervan Publishing, 2009.'
       },
       {
         id: 2,
         title: "Noah's Ark",
-        description: "The animals came in two by two...and then it rained...a lot!",
+        description:
+          'The animals came in two by two...and then it rained...a lot! ' +
+          'Lorem ipsum dolor sit amet, ligula interdum, cras in ' +
+          'purus proin fringilla sit phasellus. Quis ligula lorem ' +
+          'sollicitudin, nibh sit nec et ante. Eu porttitor elit, ' +
+          'risus eget leo, consectetuer vitae et non, malesuada hac ' +
+          'ut suscipit pulvinar ut.',
         type: 'image',
         fileName: 'ark.jpeg',
         copyrightInfo: 'ABC Publishing, 2012'

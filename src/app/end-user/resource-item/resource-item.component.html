@@ -1,33 +1,16 @@
-<div class="card ">
-  <div class="card-content ">
-    <span class="card-title">{{ resource.title }} ({{resource.type}})
-    </span>
-    <div class="card-item">
-      <p><b>{{ reading.title }}</b></p>
-      <br>
-      <!-- Modal trigger -->
-      <a materialize="leanModal" [materializeParams]="[{dismissible: true}]" href="#modalFullImage">
-        <div class="chip">
-          <img src={{resourcePath}}{{resource.fileName}} alt="Image">
-          {{resource.title}}
-        </div>
-      </a>
-
-      <p>{{ resource.copyrightInfo}}</p>
-    </div>
+<div *ngIf="resource">
+<div class="card">
+  <div class="card-image waves-effect waves-block waves-light">
+    <img class="activator" src={{resourcePath}}{{resource.fileName}} alt="Image">
   </div>
-</div>
-
-<!-- Modal Structure -->
-<div id="modalFullImage" class="modal">
-  <div class="modal-content">
-    <h4>{{resource.title}}</h4>
-    <img src={{resourcePath}}{{resource.fileName}} alt="Image" width="300">
-    <p>{{ resource.copyrightInfo}}</p>
+  <div class="card-content">
+    <span class="card-title activator grey-text text-darken-4">{{resource.title}}<i class="material-icons right">more_vert</i></span>
+    <p>{{resource.description | truncate : 9 }}</p>
+  </div>
+  <div class="card-reveal">
+    <span class="card-title grey-text text-darken-4">{{resource.title}}<i class="material-icons right">close</i></span>
     <p>{{resource.description}}</p>
-  </div>
-  <div class="modal-footer">
-    <a class=" modal-action modal-close waves-effect waves-green btn-flat">DISMISS</a>
+    <p *ngIf="resource.copyrightInfo">Image: <i class="tiny material-icons">copyright</i>{{resource.copyrightInfo}} </p>
   </div>
 </div>
-
+</div>
