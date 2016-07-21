@@ -12,11 +12,11 @@
   <div class="card-action">
     <a materialize="dropdown"
        class="drop-down"
-       data-activates="dropdownViewPractice">
+       [attr.data-activates]="'dropdownViewPractice'+reading.id">
       Practices</a>
     <a materialize="dropdown"
        class="drop-down"
-       data-activates="dropdownViewResource">
+       [attr.data-activates]="'dropdownViewResource'+reading.id">
       Resources</a>
 
     <div *ngIf="includeBackButton" class="right"><a [routerLink]="['/end-user/readings']">Back</a></div>
@@ -26,14 +26,14 @@
 </div>
 
 <!-- Dropdown Structure for Choosing Practice -->
-<ul id="dropdownViewPractice" class='dropdown-content'>
+<ul [id]="'dropdownViewPractice'+reading.id" class='dropdown-content'>
   <li *ngFor="let practice of practices">
     <a (click)="onSelectPractice(reading, practice)">{{practice.title}}</a>
   </li>
 </ul>
 
 <!-- Dropdown Structure for Choosing Resource -->
-<ul id="dropdownViewResource" class='dropdown-content'>
+<ul [id]="'dropdownViewResource'+reading.id" class='dropdown-content'>
   <li *ngFor="let resource of resources">
     <a (click)="onSelectResource(reading, resource)">{{resource.title}} ({{resource.type}})</a>
   </li>

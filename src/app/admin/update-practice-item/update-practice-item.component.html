@@ -39,13 +39,17 @@
         <a class="waves-effect waves-teal btn-flat" (click)="launchEditMode()">Edit</a>
       </div>
       <div *ngIf="editModeOn">
-        <p>
-          <label [attr.for]="'textareaAdvice'+practice.id">Advice for {{practice.title}}</label>
-        <textarea [(ngModel)]="textInput" id="textareaAdvice{{practice.title}}"
-                  class="materialize-textarea"></textarea>
-        </p>
-        <a class="waves-effect waves-teal btn-flat" (click)="cancel()">Cancel</a>
-        <a class="waves-effect waves-teal btn-flat" (click)="save()">Save</a>
+        <form>
+          <p>
+            <label [attr.for]="'textareaAdvice'+practice.id">Advice for {{practice.title}}</label>
+          <textarea [(ngModel)]="textInput" id="textareaAdvice{{practice.id}}"
+                    class="materialize-textarea" #spy></textarea>
+          </p>
+          <a class="waves-effect waves-teal btn-flat" (click)="cancel()">Cancel</a>
+          <a class="waves-effect waves-teal btn-flat" (click)="save()">Save</a>
+
+          <!--<br>TODO: remove this: {{spy.className}}-->
+        </form>
       </div>
     </div>
   </li>

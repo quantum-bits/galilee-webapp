@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, EventEmitter, Input, Output, ViewChild, ElementRef, Renderer, AfterViewInit } from '@angular/core';
 
+
 import {UpdatePracticeItemBindingService} from '../update-practice-item-binding.service';
 
 import {MaterializeDirective} from "angular2-materialize";
@@ -10,9 +11,12 @@ import {MaterializeDirective} from "angular2-materialize";
   templateUrl: 'update-practice-item.component.html',
   styleUrls: ['update-practice-item.component.css'],
   providers: [],
-  directives: [MaterializeDirective],
+  directives: [MaterializeDirective]
 })
 export class UpdatePracticeItemComponent implements OnInit, OnDestroy, AfterViewInit {
+
+  // Possible issue:  to stop event bubbling we are using event.stopPropagation();
+  //                  apparently there are issues for <IE9: http://javascript.info/tutorial/bubbling-and-capturing
 
   // BUGS: Clicking on the 'X' also registers a click on the header element.  This leads to all sorts of problems.
   //  (1) at the moment, if a practice is in edit mode, and you try to
@@ -43,7 +47,9 @@ export class UpdatePracticeItemComponent implements OnInit, OnDestroy, AfterView
   @Input() practice;
   @ViewChild('myInput') input: ElementRef;
   @ViewChild('myModalSaveMessage') input2: ElementRef;
+  @ViewChild('spy') input3: ElementRef;
 
+  //let nameControl = new FormControl("Nate");
 
   private editModeOn = false;
   private textInput = '';
@@ -77,6 +83,8 @@ export class UpdatePracticeItemComponent implements OnInit, OnDestroy, AfterView
   toggleDivStatus(){
     if ((this.divOpen === true)&&(this.editModeOn)) {//user is attempting to close the div without saving first
       //this.overrideOpenClose();//for some reason the following gives a typescript transpile error now
+      console.log(this.input3);
+
       this.renderer.invokeElementMethod(this.input2.nativeElement,
         'click'); //launches 'save first before closing' modal....
     }
