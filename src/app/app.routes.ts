@@ -19,6 +19,7 @@ To Do:
 export const routes: RouterConfig = [
 //  { path: '', redirectTo: 'login', terminal: true },
 //  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: 'end-user', pathMatch: 'full'},
   ...AdminRoutes,
   ...EndUserRoutes,
 ];

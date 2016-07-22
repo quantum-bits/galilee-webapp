@@ -3,7 +3,8 @@ export class GalileePage {
     return browser.get('/');
   }
 
-  getParagraphText() {
-    return element(by.css('app-root h1')).getText();
+  getToolbar() {
+    return $('nav').getText();
   }
+
 }
