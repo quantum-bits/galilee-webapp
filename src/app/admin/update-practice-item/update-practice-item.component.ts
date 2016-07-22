@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, EventEmitter, Input, Output, ViewChild, ElementRef, Renderer } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input} from '@angular/core';
 import {
   FORM_DIRECTIVES,
   REACTIVE_FORM_DIRECTIVES,
@@ -12,6 +12,8 @@ import {UpdatePracticeItemBindingService} from '../update-practice-item-binding.
 
 import {MaterializeDirective} from "angular2-materialize";
 
+declare var $: any;
+
 @Component({
   moduleId: module.id,
   selector: 'app-update-practice-item',
@@ -22,27 +24,12 @@ import {MaterializeDirective} from "angular2-materialize";
 })
 export class UpdatePracticeItemComponent implements OnInit, OnDestroy {
 
-  // Current issue: textarea doesn't do an autoresize when it first opens up; not
-  //                obvious to me how to trigger this.  Here is some discussion:
-  //                http://materializecss.com/forms.html
-  //                maybe something like this...? >>> https://github.com/Dogfalo/materialize/issues/1503
-
   // great resource for angular2 forms: http://blog.ng-book.com/the-ultimate-guide-to-forms-in-angular-2/
 
   // Possible issue:  to stop event bubbling we are using event.stopPropagation();
   //                  apparently there are issues for <IE9: http://javascript.info/tutorial/bubbling-and-capturing
 
   @Input() practice;
-
-  // the 'input' ElementRef is not currently used, but in principle could use
-  // it to figure out whether or not the div is open; instead, we're keeping track
-  // of that manually via the divOpen boolean
-  //@ViewChild('myInput') input: ElementRef;
-
-  // the following ElementRef is used for launching the "save before closing" modal
-  // see: http://angularjs.blogspot.de/2016/04/5-rookie-mistakes-to-avoid-with-angular.html
-
-  @ViewChild('myModalSaveMessage') inputSaveMessageModalAnchorTag: ElementRef;
 
   private editModeOn = false;
   private divOpen = false;
@@ -52,7 +39,6 @@ export class UpdatePracticeItemComponent implements OnInit, OnDestroy {
 
   constructor(
     private updatePracticeItemBindingService: UpdatePracticeItemBindingService,
-    private renderer: Renderer,
     private formBuilder: FormBuilder) {
   }
 
@@ -103,8 +89,7 @@ export class UpdatePracticeItemComponent implements OnInit, OnDestroy {
       if (this.divOpen && this.practiceText.dirty) {
         // the advice field is dirty, so need to save it first, before closing
         event.stopPropagation(); // stop the div from closing
-        this.renderer.invokeElementMethod(this.inputSaveMessageModalAnchorTag.nativeElement,
-          'click'); //launches 'save first before closing' modal....
+        this.launchSaveFirstModal();
       } else {
         if (this.practice.advice !='') {
           this.editModeOn = false;
@@ -128,6 +113,13 @@ export class UpdatePracticeItemComponent implements OnInit, OnDestroy {
     } else {
       this.editModeOn = true;
     }
+    // the following is a bit of a hack that puts the method
+    // call to autoResizeTextArea() at the end of the queue; otherwise
+    // there is a problem in that the resizing gets done prematurely and
+    // doesn't always give a large enough text area;
+    // the 'delay' is 0 ms; the important thing is that the method call now gets put
+    // at the end of the queue
+    setTimeout(()=> this.autoResizeTextArea(), 0);
   }
 
   onDelete(){
@@ -138,6 +130,18 @@ export class UpdatePracticeItemComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // prevent memory leak when component destroyed
     //this.subscription.unsubscribe(); //not actually using the subscription here....
+  }
+
+  launchSaveFirstModal(){
+    let modalID = '#modalSaveFirst'+this.practice.id;
+    console.log(modalID);
+    $(modalID).openModal();
+  }
+
+  autoResizeTextArea(){
+    let textareaID = '#textareaAdvice'+this.practice.id;
+    console.log(textareaID);
+    $(textareaID).trigger('autoresize');
   }
 
 }

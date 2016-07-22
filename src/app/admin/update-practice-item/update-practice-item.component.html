@@ -1,11 +1,6 @@
 <ul materialize="collapsible" class="collapsible " data-collapsible="accordion">
   <li>
-    <!-- invisible anchor tag used to (programatically) launch the modal via a click event -->
-    <a #myModalSaveMessage href="#modalSaveFirst{{practice.id}}" materialize="leanModal"
-       [materializeParams]="[{dismissible: true}]">
-    </a>
-
-    <div class="collapsible-header" (click)="toggleDivStatusCheckSaved($event)"#myInput>
+    <div class="collapsible-header" (click)="toggleDivStatusCheckSaved($event)">
       {{practice.title}}
       <span>
         <a materialize="leanModal"
@@ -24,11 +19,11 @@
 
     <!-- advice for this practice -->
     <div class="collapsible-body">
-      <div *ngIf="!editModeOn">
+      <div [hidden]="editModeOn">
         <div class="text-area-wrapper non-edit-mode">{{practice.advice}}</div>
         <a class="waves-effect waves-teal btn-flat" (click)="launchEditMode()">Edit</a>
       </div>
-      <div *ngIf="editModeOn">
+      <div [hidden]="!editModeOn">
         <form materialize [formGroup]="practiceUpdateForm"
               (ngSubmit)="onSubmit()">
           <div class="input-field text-area-wrapper">
@@ -42,7 +37,6 @@
           </div>
           <a class="waves-effect waves-teal btn-flat" (click)="onCancel()">Cancel</a>
           <button type="submit" class="waves-effect waves-teal btn-flat">Save</button>
-          <!--<a class="waves-effect waves-teal btn-flat" (click)="save()">Save</a>-->
         </form>
       </div>
     </div>
