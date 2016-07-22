@@ -3,6 +3,7 @@ import {enableProdMode} from '@angular/core';
 import {AppComponent, environment} from './app';
 import {APP_ROUTER_PROVIDERS} from './app/app.routes';
 import {HTTP_PROVIDERS} from '@angular/http';
+import {disableDeprecatedForms, provideForms } from '@angular/forms';
 
 import "angular2-materialize";
 import "ng2-file-upload";
@@ -14,5 +15,7 @@ if (environment.production) {
 bootstrap(AppComponent,
   [
     HTTP_PROVIDERS,
-    APP_ROUTER_PROVIDERS
+    APP_ROUTER_PROVIDERS,
+    disableDeprecatedForms(),
+    provideForms()
   ]).catch(err => console.error(err));

@@ -1,5 +1,12 @@
-import { Component, OnInit, OnDestroy, EventEmitter, Input, Output, ViewChild, ElementRef, Renderer, AfterViewInit } from '@angular/core';
-
+import { Component, OnInit, OnDestroy, EventEmitter, Input, Output, ViewChild, ElementRef, Renderer } from '@angular/core';
+import {
+  FORM_DIRECTIVES,
+  REACTIVE_FORM_DIRECTIVES,
+  FormBuilder,
+  FormGroup,
+  // Validators, // not currently being used, but could be used to make a field required
+  AbstractControl
+} from '@angular/forms';
 
 import {UpdatePracticeItemBindingService} from '../update-practice-item-binding.service';
 
@@ -11,93 +18,100 @@ import {MaterializeDirective} from "angular2-materialize";
   templateUrl: 'update-practice-item.component.html',
   styleUrls: ['update-practice-item.component.css'],
   providers: [],
-  directives: [MaterializeDirective]
+  directives: [MaterializeDirective, FORM_DIRECTIVES, REACTIVE_FORM_DIRECTIVES]
 })
-export class UpdatePracticeItemComponent implements OnInit, OnDestroy, AfterViewInit {
+export class UpdatePracticeItemComponent implements OnInit, OnDestroy {
+
+  // Current issue: textarea doesn't do an autoresize when it first opens up; not
+  //                obvious to me how to trigger this.  Here is some discussion:
+  //                http://materializecss.com/forms.html
+  //                maybe something like this...? >>> https://github.com/Dogfalo/materialize/issues/1503
+
+  // great resource for angular2 forms: http://blog.ng-book.com/the-ultimate-guide-to-forms-in-angular-2/
 
   // Possible issue:  to stop event bubbling we are using event.stopPropagation();
   //                  apparently there are issues for <IE9: http://javascript.info/tutorial/bubbling-and-capturing
 
-  // BUGS: Clicking on the 'X' also registers a click on the header element.  This leads to all sorts of problems.
-  //  (1) at the moment, if a practice is in edit mode, and you try to
-  //      delete the practice, it gives you two modals at once...this is because
-  //      clicking on the 'X' also clicks on the header, I think, so it
-  //      launches two things
-  //  (2) at the moment, clicking edit versus clicking save on an open, empty advice
-  //      div has sort of weird behaviour
-  //
-  // ONE POSSIBLE FIX: we could set the <a> tag for the "delete" modal to not trigger
-  //                   on the <i>close(X)</i> (i.e., make it like the trigger for the other
-  //                   modal...then make a new <a>close(X)</a>, and make both the header
-  //                   click and the 'X' click go to one function, which tries to coordinate
-  //                   how to process the click.  The problem will be that both clicks
-  //                   might still register and fire off a modal.  Arghh....
-  //
-  // NOTE: I have used ViewChild and ElementRef in two places.  This appears to
-  //       be the correct way to do things:
-  //       http://angularjs.blogspot.de/2016/04/5-rookie-mistakes-to-avoid-with-angular.html
-  //
-  // (1) when the user clicks on "X" to delete a practice, we override the opening/closing
-  //     of the div by initiating an extra "click" event on the header element
-  //
-  // (2) if a collapsible div is OPEN, and editModeOn=true, and the user tries
-  //     to close the div, we initiate a click event that launches a modal telling
-  //     the user to SAVE first
-
   @Input() practice;
-  @ViewChild('myInput') input: ElementRef;
-  @ViewChild('myModalSaveMessage') input2: ElementRef;
-  @ViewChild('spy') input3: ElementRef;
 
-  //let nameControl = new FormControl("Nate");
+  // the 'input' ElementRef is not currently used, but in principle could use
+  // it to figure out whether or not the div is open; instead, we're keeping track
+  // of that manually via the divOpen boolean
+  //@ViewChild('myInput') input: ElementRef;
+
+  // the following ElementRef is used for launching the "save before closing" modal
+  // see: http://angularjs.blogspot.de/2016/04/5-rookie-mistakes-to-avoid-with-angular.html
+
+  @ViewChild('myModalSaveMessage') inputSaveMessageModalAnchorTag: ElementRef;
 
   private editModeOn = false;
-  private textInput = '';
   private divOpen = false;
+
+  practiceUpdateForm: FormGroup;
+  practiceText: AbstractControl;
 
   constructor(
     private updatePracticeItemBindingService: UpdatePracticeItemBindingService,
-    private renderer: Renderer) {
+    private renderer: Renderer,
+    private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
-    console.log(this.practice);
     if (this.noAdvice(this.practice)){
       this.editModeOn = true;
     }
+    this.practiceUpdateForm = this.formBuilder.group({
+      'practiceText': [this.practice.advice]
+    });
+    // set form control as an instance variable for convenience
+    // (see: http://blog.ng-book.com/the-ultimate-guide-to-forms-in-angular-2/)
+    // if don't go this route, would use things like this.practiceUpdateForm.value.practiceText, etc.
+    this.practiceText = this.practiceUpdateForm.controls['practiceText'];
   }
 
-  ngAfterViewInit(){
-    //if (this.noAdvice(this.practice)) {
-    //  this.overrideOpenClose();
-    //}
+  onSubmit(): void {
+    this.editModeOn = false;
+    // now propagate the change up to edit-reading-resources....
+    this.updatePracticeItemBindingService.updatePractice(
+      {
+        practice: this.practice,
+        advice: this.practiceText.value
+      }
+    );
   }
 
-  overrideOpenClose(event){//stops event bubbling, so clicking on 'close' doesn't also open/close the div
+  onCancel(){// submit the original version of the advice instead
+    this.editModeOn = false;
+    // submit the original version of the advice instead of the version in the form
+    this.updatePracticeItemBindingService.updatePractice(
+      {
+        practice: this.practice,
+        advice: this.practice.advice
+      }
+    );
+  }
+
+  overrideOpenClose(event){//stops event bubbling, so clicking on the 'X' doesn't also open/close the div
     event.stopPropagation();
-    //this.renderer.invokeElementMethod(this.input.nativeElement,
-    //  'click');
   }
 
-  // the following toggles on the collapsible-header so we can keep track of whether the div is open or closed
-  toggleDivStatus(){
-    if ((this.divOpen === true)&&(this.editModeOn)) {//user is attempting to close the div without saving first
-      //this.overrideOpenClose();//for some reason the following gives a typescript transpile error now
-      console.log(this.input3);
-
-      this.renderer.invokeElementMethod(this.input2.nativeElement,
-        'click'); //launches 'save first before closing' modal....
+  toggleDivStatusCheckSaved(event){
+    if (!this.editModeOn) {
+      this.divOpen = !this.divOpen;
+      return; // if edit mode is not on, just return and open/close the div; no problem
+    } else { // edit mode is on....
+      if (this.divOpen && this.practiceText.dirty) {
+        // the advice field is dirty, so need to save it first, before closing
+        event.stopPropagation(); // stop the div from closing
+        this.renderer.invokeElementMethod(this.inputSaveMessageModalAnchorTag.nativeElement,
+          'click'); //launches 'save first before closing' modal....
+      } else {
+        if (this.practice.advice !='') {
+          this.editModeOn = false;
+        }
+        this.divOpen = !this.divOpen;
+      }
     }
-    this.divOpen = !this.divOpen;
-  }
-
-  checkIfSaved(event) {
-    if ((this.divOpen === true)&&(this.editModeOn)) {
-      event.stopPropagation();
-      this.renderer.invokeElementMethod(this.input2.nativeElement,
-        'click'); //launches 'save first before closing' modal....
-    }
-    this.divOpen = !this.divOpen;
   }
 
   // true if there is not currently any advice listed for this practice for this reading
@@ -110,31 +124,13 @@ export class UpdatePracticeItemComponent implements OnInit, OnDestroy, AfterView
 
   launchEditMode(){
     if (this.editModeOn) {
-      return;//edit mode is already on somehow....
+      return;//edit mode is already on somehow....; this should not be the case
     } else {
       this.editModeOn = true;
-      this.textInput = this.practice.advice;
     }
   }
 
-  cancel(){
-    this.editModeOn = false;
-  }
-
-  save(){
-    this.editModeOn = false;
-    // now propagate the change up to edit-reading-resources....
-    this.updatePracticeItemBindingService.updatePractice(
-      {
-        practice: this.practice,
-        advice: this.textInput
-      }
-    );
-    this.textInput='';
-    console.log('save() method sent data....');
-  }
-
-  delete(){
+  onDelete(){
     this.updatePracticeItemBindingService.deletePractice(this.practice.id);
     console.log('delete() method fired');
   }

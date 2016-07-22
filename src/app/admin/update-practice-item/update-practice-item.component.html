@@ -1,10 +1,11 @@
 <ul materialize="collapsible" class="collapsible " data-collapsible="accordion">
   <li>
+    <!-- invisible anchor tag used to (programatically) launch the modal via a click event -->
     <a #myModalSaveMessage href="#modalSaveFirst{{practice.id}}" materialize="leanModal"
        [materializeParams]="[{dismissible: true}]">
     </a>
 
-    <div *ngIf="noAdvice(practice)" class="collapsible-header" (click)="toggleDivStatus()"#myInput>
+    <div class="collapsible-header" (click)="toggleDivStatusCheckSaved($event)"#myInput>
       {{practice.title}}
       <span>
         <a materialize="leanModal"
@@ -15,40 +16,33 @@
           <i class="material-icons right">close</i>
         </a>
       </span>
-      <span materialize="tooltip" class="tooltipped right" data-position="top" data-delay="50"
+      <span *ngIf="noAdvice(practice)" materialize="tooltip" class="tooltipped right" data-position="top" data-delay="50"
             data-tooltip="No advice given yet">
           <i class="large material-icons">warning</i>
       </span>
+    </div>
 
-    </div>
-    <div *ngIf="!noAdvice(practice)" class="collapsible-header" (click)="checkIfSaved($event)" #myInput>
-      {{practice.title}}
-      <!-- Modal trigger -->
-      <a materialize="leanModal"
-         [materializeParams]="[{dismissible: false}]"
-         class="waves-effect waves-light secondary-content modal-trigger"
-         (click)="overrideOpenClose($event)"
-         href="#modalDeletePracticeThisReading{{practice.id}}">
-        <i class="material-icons right">close</i>
-      </a>
-    </div>
     <!-- advice for this practice -->
     <div class="collapsible-body">
       <div *ngIf="!editModeOn">
-        <p>{{practice.advice}}</p>
+        <div class="text-area-wrapper non-edit-mode">{{practice.advice}}</div>
         <a class="waves-effect waves-teal btn-flat" (click)="launchEditMode()">Edit</a>
       </div>
       <div *ngIf="editModeOn">
-        <form>
-          <p>
-            <label [attr.for]="'textareaAdvice'+practice.id">Advice for {{practice.title}}</label>
-          <textarea [(ngModel)]="textInput" id="textareaAdvice{{practice.id}}"
-                    class="materialize-textarea" #spy></textarea>
-          </p>
-          <a class="waves-effect waves-teal btn-flat" (click)="cancel()">Cancel</a>
-          <a class="waves-effect waves-teal btn-flat" (click)="save()">Save</a>
-
-          <!--<br>TODO: remove this: {{spy.className}}-->
+        <form materialize [formGroup]="practiceUpdateForm"
+              (ngSubmit)="onSubmit()">
+          <div class="input-field text-area-wrapper">
+              <label class="label-wrapper" [attr.for]="'textareaAdvice'+practice.id">Advice for {{practice.title}}
+              </label>
+              <textarea [formControl]="practiceText"
+                        id="textareaAdvice{{practice.id}}"
+                        class="materialize-textarea"
+                        #myInput2>
+              </textarea>
+          </div>
+          <a class="waves-effect waves-teal btn-flat" (click)="onCancel()">Cancel</a>
+          <button type="submit" class="waves-effect waves-teal btn-flat">Save</button>
+          <!--<a class="waves-effect waves-teal btn-flat" (click)="save()">Save</a>-->
         </form>
       </div>
     </div>
@@ -63,7 +57,7 @@
     <p>Deleting this practice will also delete the associated advice, if any.</p>
   </div>
   <div class="modal-footer">
-    <a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="delete()">Delete</a>
+    <a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="onDelete()">Delete</a>
     <a class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
   </div>
 </div>
