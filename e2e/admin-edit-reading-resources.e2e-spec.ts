@@ -9,6 +9,7 @@ describe('admin edit reading resources page', function() {
 
   beforeEach(() => {
     page = new AdminEditReadingResourcesPage();
+    //browser.driver.manage().window().setSize(1280, 1024);
     page.navigateTo();
     page.countPracticesInCard().then(
       // putting this here ensures that the promise gets resolved before continuing:
@@ -45,15 +46,27 @@ describe('admin edit reading resources page', function() {
     expect(page.countPracticesInCard()).toEqual(numberPracticesOriginal+1); // check that # of practices in card has increased by 1
     page.clickLastCollapsiblePracticesDiv(); // open up the collapsible div for the new practice
     page.writeTextToPracticesTextArea('here is some test advice!'); // add some text
+
+    console.log('about to save');
     page.saveText(); //save the new text
+    console.log('done saving; opening div');
     page.clickLastCollapsiblePracticesDiv(); // open it up again
 
+    console.log('checking saved advice');
     expect(page.checkSavedText()).toEqual('here is some test advice!'); // check that the saved text is the same as what was entered
+    console.log('deleting last practice');
+
+    //browser.pause();
+
+    //element(by.id('practicesCard')).all(by.css('.collapsible .collapsible-header')).last().element(by.tagName('button')).click();
+
+    //browser.pause();
+
 
     page.attemptLastPracticeDelete();//click the delete button for the new practice; should launch a modal
 
-    // the page has several modals, but only one of them should be active;
-    // the active one will have text associated with it; we check...
+    // the page has several modals, but only one of them should be active at this point;
+    // the active one will have text associated with it; in the following, we check...
     //  - that there is exactly one modal active
     //  - that the modal contains certain text
     // ...and then we find the delete button on this modal and click it
@@ -76,14 +89,28 @@ describe('admin edit reading resources page', function() {
       console.log('number modals launched: ');
       console.log(numberModalsLaunched);
       expect(numberModalsLaunched).toEqual(1);
+      console.log('about to delete');
 
+      // see: http://stackoverflow.com/questions/30862405/element-is-not-clickable-at-point-protractor
+      // apparently protractor finds the on-screen coordinates for a given button, but
+      // if there is an animation or a drop-down menu obscuring the button, the given
+      // coordinates might not be 'click-able'; the following makes sure that we
+      // wait until the button is clickable before attempting to click it
+      var EC = protractor.ExpectedConditions;
+      var el = modalArray.get(activeModalIndex).element(by.linkText('DELETE'));
+      var isClickable = EC.elementToBeClickable(el);
+
+      console.log('waiting for delete button to be clickable');
+      browser.wait(isClickable, 5000);
+      console.log('done waiting');
+      el.click();
+      console.log('done deleting');
       //browser.pause();
-      modalArray.get(activeModalIndex).element(by.linkText('DELETE')).click(); // delete the practice
+      console.log('checking number practices again');
+      expect(page.countPracticesInCard()).toEqual(numberPracticesOriginal); // number of practices should be back to the original value now
 
 
     });
-
-    expect(page.countPracticesInCard()).toEqual(numberPracticesOriginal); // number of practices should be back to the original value now
 
 
 

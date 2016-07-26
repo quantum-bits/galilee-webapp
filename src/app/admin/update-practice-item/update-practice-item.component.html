@@ -3,8 +3,7 @@
     <div class="collapsible-header" (click)="toggleDivStatusCheckSaved($event)">
       {{practice.title}}
       <span>
-        <a id="deletePractice"
-           materialize="leanModal"
+        <a materialize="leanModal"
            [materializeParams]="[{dismissible: false}]"
            class="waves-effect waves-light secondary-content modal-trigger"
            (click)="overrideOpenClose($event)"
@@ -21,7 +20,7 @@
     <!-- advice for this practice -->
     <div class="collapsible-body">
       <div [hidden]="editModeOn">
-        <div id="practiceAdvice" class="text-area-wrapper non-edit-mode">{{practice.advice}}</div>
+        <div class="text-area-wrapper non-edit-mode">{{practice.advice}}</div>
         <a class="waves-effect waves-teal btn-flat" (click)="launchEditMode()">Edit</a>
       </div>
       <div [hidden]="!editModeOn">
@@ -37,7 +36,7 @@
               </textarea>
           </div>
           <a class="waves-effect waves-teal btn-flat" (click)="onCancel()">Cancel</a>
-          <button id="savePracticeButton" type="submit" class="waves-effect waves-teal btn-flat">Save</button>
+          <button type="submit" class="waves-effect waves-teal btn-flat">Save</button>
         </form>
       </div>
     </div>
