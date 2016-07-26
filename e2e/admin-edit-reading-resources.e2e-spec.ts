@@ -97,6 +97,28 @@ describe('admin edit reading resources page', function() {
     expect(page.checkSavedTextFirstPractice()).toEqual(originalPracticeAdvice+'here is some additional advice!'); // check that the saved text is the original text plus the new text
   });
 
+  it('should display save-work-first modal if user adds text and attempts to close div without saving first', () => {
+    page.clickFirstCollapsiblePracticesDiv(); // open up the first collapsible div
+    page.clickEditPracticeButton(); // click edit
+    page.writeTextToFirstPracticesTextArea('here is some additional advice!'); // add some text
+    page.clickFirstCollapsiblePracticesDiv(); // attempt to close the div
 
+    let modalArray = page.getModalsOnPage();
+    var activeModalIndex: any;
+    var numberModalsLaunched = 0;
+    modalArray.getText().then(textArray => {
+      for (var i=0; i< textArray.length; i++) {
+        if (textArray[i] !=='') { // non-empty entry...this is the active modal
+          activeModalIndex = i;
+          numberModalsLaunched++;
+          expectToMatch(textArray[i], /Please save your work before closing this panel./);
+        }
+      }
+      expect(numberModalsLaunched).toEqual(1);
+
+      var el = modalArray.get(activeModalIndex).element(by.linkText('DISMISS'));
+      page.clickWithWait(el);
+    });
+  });
 
 });
