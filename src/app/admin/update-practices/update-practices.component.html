@@ -1,9 +1,9 @@
 <div class="col s12 m6 l6">
-  <div class="card">
+  <div id="practicesCard" class="card">
     <div class="card-content">
       <span class="card-title">Practices</span>
       <span class="right">
-        <button materialize="dropdown"
+        <button id="addPractice" materialize="dropdown"
                 class="drop-down btn"
                 [class.disabled]="buttonDisabled"
                 data-activates="dropdownAddNewPractice">
@@ -12,7 +12,7 @@
       <!-- Dropdown Structure for Choosing Practice -->
       <ul id='dropdownAddNewPractice' class='dropdown-content'>
         <li *ngFor="let practice of unusedPractices; let i = index">
-          <a (click)="addPractice(practice)">
+          <a id="addPracticeDropdownLink" (click)="addPractice(practice)">
             {{ practice.title }}
           </a>
         </li>
