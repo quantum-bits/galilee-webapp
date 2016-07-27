@@ -36,17 +36,6 @@ export class AdminEditReadingResourcesPage {
     element(by.id('practicesCard')).all(by.tagName('textarea')).first().sendKeys(text)
   }
 
-  /*
-  saveTextLastPractice(){
-    // see: http://stackoverflow.com/questions/30862405/element-is-not-clickable-at-point-protractor
-    var EC = protractor.ExpectedConditions;
-    var el = element(by.id('practicesCard')).all(by.css('.collapsible .collapsible-body')).last().element(by.tagName('button'));
-    var isClickable = EC.elementToBeClickable(el); // need to make sure that the button is clickable before continuing
-    browser.wait(isClickable, 5000);
-    el.click();
-  }
-  */
-
   saveTextLastPractice(){
     var el = element(by.id('practicesCard')).all(by.css('.collapsible .collapsible-body')).last().element(by.tagName('button'));
     this.clickWithWait(el);
@@ -56,16 +45,11 @@ export class AdminEditReadingResourcesPage {
     var el = element(by.id('practicesCard')).all(by.css('.collapsible .collapsible-body')).first().element(by.tagName('button'));
     this.clickWithWait(el);
   }
-  /*
-  saveTextFirstPractice(){
-    // see: http://stackoverflow.com/questions/30862405/element-is-not-clickable-at-point-protractor
-    var EC = protractor.ExpectedConditions;
-    var el = element(by.id('practicesCard')).all(by.css('.collapsible .collapsible-body')).first().element(by.tagName('button'));
-    var isClickable = EC.elementToBeClickable(el);
-    browser.wait(isClickable, 5000); // need to make sure that the button is clickable before continuing
-    el.click();
+
+  clickCancelFirstPractice(){
+    var el = element(by.id('practicesCard')).all(by.css('.collapsible .collapsible-body')).first().element(by.linkText('CANCEL'));
+    this.clickWithWait(el);
   }
-  */
 
   countPracticesInCard(){// NOTE: returns a promise
     return element(by.id('practicesCard')).all(by.css('.collapsible')).count();
@@ -91,17 +75,6 @@ export class AdminEditReadingResourcesPage {
   getModalsOnPage() {
     return element.all(by.css('.modal'));
   }
-
-  /*
-  clickEditPracticeButton() {
-    // see: http://stackoverflow.com/questions/30862405/element-is-not-clickable-at-point-protractor
-    var EC = protractor.ExpectedConditions;
-    var el = element(by.id('practicesCard')).all(by.css('.collapsible .collapsible-body')).first().element(by.linkText('EDIT'));
-    var isClickable = EC.elementToBeClickable(el);
-    browser.wait(isClickable, 5000);
-    el.click();
-  }
-  */
 
   clickEditPracticeButton() {
     var el = element(by.id('practicesCard')).all(by.css('.collapsible .collapsible-body')).first().element(by.linkText('EDIT'));

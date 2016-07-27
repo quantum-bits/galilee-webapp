@@ -24,7 +24,7 @@ describe('admin edit reading resources page', function() {
       }
     );
   });
-
+  
   it('should show headers for First Reading, Practices and Resources', () => {
     let body = getBody();
     expectToMatch(body, /First Reading/);
@@ -120,5 +120,15 @@ describe('admin edit reading resources page', function() {
       page.clickWithWait(el);
     });
   });
+
+  it('should allow a user to enter text in a practice and then cancel it', () => {
+    page.clickFirstCollapsiblePracticesDiv(); // open up the first collapsible div
+    page.clickEditPracticeButton(); // click edit
+    page.writeTextToFirstPracticesTextArea('here is some additional advice!'); // add some text
+    page.clickCancelFirstPractice(); //click cancel
+    page.clickFirstCollapsiblePracticesDiv(); // open up the div again
+    expect(page.checkSavedTextFirstPractice()).toEqual(originalPracticeAdvice); // check that the text is unchanged
+  });
+
 
 });
