@@ -12,7 +12,7 @@ import {UpdatePracticeItemBindingService} from '../update-practice-item-binding.
 
 import {MaterializeDirective} from "angular2-materialize";
 
-declare var $: any;
+declare var $: any; // for using jQuery within this angular component
 
 @Component({
   moduleId: module.id,

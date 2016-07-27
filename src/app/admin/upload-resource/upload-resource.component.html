@@ -64,10 +64,11 @@
 
             <td><strong>{{item._file.name}}</strong></td>
 
+            <!-- not sure if we need the part about isHTML5 -->
             <td *ngIf="uploader.isHTML5" nowrap>0.00 MB</td>
             <td *ngIf="uploader.isHTML5">
               <div class="progress" style="margin-bottom: 0;">
-                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                <div class="determinate" [ngStyle]="{ 'width': item.progress + '%' }"></div>
               </div>
             </td>
             <td class="text-center">
@@ -97,7 +98,14 @@
         </table>
       </div>
     </div>
-
+    <!-- copyrights and captions for individual files -->
+    <span>
+      <strong>
+        Maybe put a "done uploading" button, which will launch another modal that
+        will then attach the copyright info, etc., for each uploaded file.  That way
+        can use formgroups, etc., with a well-defined number of formcontrols in the ngoninit.
+      </strong>
+    </span>
 
     <div *ngFor="let item of uploader.queue" class="col s6">
       <div class="card-wrapper">
