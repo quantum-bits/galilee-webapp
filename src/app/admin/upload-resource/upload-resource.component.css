@@ -34,8 +34,34 @@
   border-radius: 10px;
 }
 
+.modal-wrapper {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.card-wrapper {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.drop-title {
+  padding-top: 30px;
+}
+
 .well {
   height: 100px
 }
 
 html, body { height: 100%; }
+
+input[type="file"] {
+  display: none;
+}
+
+/* http://stackoverflow.com/questions/35961565/how-to-change-color-icon-in-materialize */
+i.icon-teal {
+  color: #009688; /* teal */
+}
+
+i.icon-red {
+  color: #c62828; /* darken-3 */
+}
