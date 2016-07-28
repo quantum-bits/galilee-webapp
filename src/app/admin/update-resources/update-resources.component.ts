@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, Renderer } from '@angular/core';
 
 import {ResourceService} from '../../shared/services/resource.service';
-import { UpdateResourceItemComponent } from '../update-resource-item';
+//import { UpdateResourceItemComponent } from '../update-resource-item';
+import { UpdateResourceCollectionComponent } from '../update-resource-collection';
 import { UploadResourceComponent } from '../upload-resource';
 
 import {MaterializeDirective} from "angular2-materialize";
@@ -15,18 +16,18 @@ import {Dragula, DragulaService} from 'ng2-dragula/ng2-dragula';
   providers: [DragulaService],
   directives: [
     MaterializeDirective,
-    UpdateResourceItemComponent,
+    UpdateResourceCollectionComponent,
     UploadResourceComponent,
     Dragula
   ],
 })
 export class UpdateResourcesComponent implements OnInit {
 
-  @Input() resourcesThisReading;
+  @Input() resourceCollectionsThisReading;
   @Input() changeTracker;
   @ViewChild('myModalResourcePicker') input: ElementRef;
 
-  resources = [];
+  resourceTypes = [];
   resourceDropDown = [];
   resourcePath: string;
 
@@ -61,12 +62,12 @@ export class UpdateResourcesComponent implements OnInit {
   ngOnInit() {
     this.resourceService.getResources().subscribe(
       resources => {
-        this.resources = resources;
-        console.log(resources);
+        this.resourceTypes = resources;
+        console.log(this.resourceTypes);
         //this.buttonDisabled = this.noUnusedPractices();
       },
       err => console.log("ERROR", err),
-      () => console.log("Resources fetched"));
+      () => console.log("Resource Types fetched"));
     this.resourceService.getResourcePath().subscribe(
       path => {
         this.resourcePath = path;
@@ -75,6 +76,9 @@ export class UpdateResourcesComponent implements OnInit {
       },
       err => console.log("ERROR", err),
       () => console.log("Resource path fetched"));
+
+
+    console.log(this.resourceCollectionsThisReading);
   }
 
   addResource(resource) {
@@ -105,7 +109,7 @@ export class UpdateResourcesComponent implements OnInit {
   private onDropModel(args) {
     let [el, target, source] = args;
     console.log('dropped!');
-    console.log(this.resourcesThisReading);
+    console.log(this.resourceCollectionsThisReading);
     // do something else
   }
 

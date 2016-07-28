@@ -1,18 +1,13 @@
-<ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
-  <li>
-    <div class="collapsible-header">
+<div class="card">
+  <div class="card-content">
+    <div class="card-title">
       <div class="chip">
         <img src={{resourcePath}}{{resource.fileName}} alt="Image">
-        {{resource.title}} ({{resource.type}})
+        {{resource.type}}
       </div>
     </div>
-    <div class="collapsible-body">
-      <p>
-        <span><b>Description:</b> {{resource.description}}</span><br>
-        <span><b>Copyright:</b> {{resource.copyrightInfo}}</span>
-        {{resourcePath}}{{resource.fileName}}
-      </p>
-      <a class="waves-effect waves-teal btn-flat">Edit</a>
-    </div>
-  </li>
-</ul>
+    <span><b>Caption:</b> {{resource.caption}}</span><br>
+    <span><b>Copyright:</b> {{resource.copyrightInfo}}</span>
+    {{resourcePath}}{{resource.fileName}}
+  </div>
+</div>

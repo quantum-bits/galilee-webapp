@@ -6,12 +6,12 @@
           [includeBackButton]="includeBackButton"
           [reading]="singleReading"
           [practices]="singleReading.practices"
-          [resources]="singleReading.resources">
+          [resourceCollections]="singleReading.resourceCollections">
         </app-reading-item>
       </div>
       <div *ngIf="resource" class="col s12 m6 l6">
         <app-resource-item
-          [resource]="resource"
+          [resourceCollection]="resourceCollection"
           [reading]="singleReading"
           [resourcePath]="resourcePath">
         </app-resource-item>

@@ -7,19 +7,16 @@ import {Observable} from 'rxjs/Rx';
 // MOCK
 const READINGS = [
   //READINGS: Reading[] = [
-
   {
     id: 1,
-    title:      'First Reading',
-    description:
-    '1 Kings 19:1-4, (5-7), 8-15a',
-    text:
-    '1. Now Ahab told Jezebel everything Elijah had done and '+
+    title: 'First Reading',
+    description: '1 Kings 19:1-4, (5-7), 8-15a',
+    text: '1. Now Ahab told Jezebel everything Elijah had done and ' +
     'how he had killed all the prophets with the sword. 2 So ' +
-    'Jezebel sent a messenger to Elijah to say, “May the gods deal '+
-    'with me, be it ever so severely, if by this time tomorrow I do '+
-    'not make your life like that of one of them. '+
-    '3 Elijah was afraid[a] and ran for his life. When he '+
+    'Jezebel sent a messenger to Elijah to say, “May the gods deal ' +
+    'with me, be it ever so severely, if by this time tomorrow I do ' +
+    'not make your life like that of one of them. ' +
+    '3 Elijah was afraid[a] and ran for his life. When he ' +
     'came to Beersheba in Judah, he left his servant there,....',
     practices: [
       {
@@ -29,7 +26,7 @@ const READINGS = [
       },
       {
         id: 2,
-        title:      'Praying Scripture',
+        title: 'Praying Scripture',
         advice: 'Here is some advice for how to pray scripture for this passage.'
       },
       {
@@ -38,61 +35,61 @@ const READINGS = [
         advice: ''
       },
     ],
-    resources: [
+    resourceCollections: [
       {
         id: 1,//id of the resource type? or the resource object? should both be here?
         title: 'Golgotha',
-        description:
-          'Golgotha is the location where Christ was crucified. ' +
-          'Lorem ipsum dolor sit amet, ligula interdum, cras in ' +
-          'purus proin fringilla sit phasellus. Quis ligula lorem ' +
-          'sollicitudin, nibh sit nec et ante. Eu porttitor elit, ' +
-          'risus eget leo, consectetuer vitae et non, malesuada hac ' +
-          'ut suscipit pulvinar ut.',
-        type: 'image',
-        fileName: 'cross_image.jpeg',
-        copyrightInfo: 'Zondervan Publishing, 2009.'
-      },
+        description: 'Golgotha is the location where Christ was crucified. ' +
+        'Lorem ipsum dolor sit amet, ligula interdum, cras in ' +
+        'purus proin fringilla sit phasellus. Quis ligula lorem ' +
+        'sollicitudin, nibh sit nec et ante. Eu porttitor elit, ' +
+        'risus eget leo, consectetuer vitae et non, malesuada hac ' +
+        'ut suscipit pulvinar ut.',
+        resources: [
+          {
+            id: 1,
+            caption: 'image of the cross',
+            type: 'image',
+            fileName: 'cross_image.jpeg',
+            copyrightInfo: 'Zondervan Publishing, 2009.'
+          },
+          {
+            id: 2,
+            caption: 'image of the ark',
+            type: 'image',
+            fileName: 'ark.jpeg',
+            copyrightInfo: 'Zondervan Publishing, 2012.'
+          }
+        ]//end resources
+      },//end of this resource collection
       {
-        id: 2,
-        title: "Noah's Ark",
-        description:
-          'The animals came in two by two...and then it rained...a lot! ' +
-          'Lorem ipsum dolor sit amet, ligula interdum, cras in ' +
-          'purus proin fringilla sit phasellus. Quis ligula lorem ' +
-          'sollicitudin, nibh sit nec et ante. Eu porttitor elit, ' +
-          'risus eget leo, consectetuer vitae et non, malesuada hac ' +
-          'ut suscipit pulvinar ut.',
-        type: 'image',
-        fileName: 'ark.jpeg',
-        copyrightInfo: 'ABC Publishing, 2012'
-      },
-      {
-        id: 3,
-        title: "Handel's Messiah",
-        description: "Christmas music by Handel.",
-        type: 'audio',
-        fileName: 'ic_library_music_black_24dp_2x.png',
-        copyrightInfo: 'ABC Publishing, 2012'
-      },
-      {
-        id: 4,
-        title: "Nativity Reenactment",
-        description: "Video reenactment of the nativity.",
-        type: 'video',
-        fileName: 'ic_video_library_black_24dp_2x.png',
-        copyrightInfo: 'ABC Publishing, 2012'
-      },
-      {
-        id: 5,
-        title: "More resources",
-        description: "Link to further resources about Solomon and the temple.",
-        type: 'link',
-        fileName: 'ic_link_black_24dp_2x.png',
-        copyrightInfo: 'ABC Publishing, 2012'
-      },
-    ]
-  },
+        id: 1,
+        title: 'Golgotha',
+        description: 'Golgotha is the location where Christ was crucified. ' +
+        'Lorem ipsum dolor sit amet, ligula interdum, cras in ' +
+        'purus proin fringilla sit phasellus. Quis ligula lorem ' +
+        'sollicitudin, nibh sit nec et ante. Eu porttitor elit, ' +
+        'risus eget leo, consectetuer vitae et non, malesuada hac ' +
+        'ut suscipit pulvinar ut.',
+        resources: [
+          {
+            id: 1,
+            caption: 'image of the cross',
+            type: 'image',
+            fileName: 'cross_image.jpeg',
+            copyrightInfo: 'Zondervan Publishing, 2009.'
+          },
+          {
+            id: 2,
+            caption: 'image of the ark',
+            type: 'image',
+            fileName: 'ark.jpeg',
+            copyrightInfo: 'Zondervan Publishing, 2012.'
+          }
+        ]//end resources
+      }//end of this resource collection
+    ]//end of resource collections for this reading
+  },//end of this reading
   {
     id: 2,
     title:      'Second Reading',
@@ -114,15 +111,7 @@ const READINGS = [
         advice: ''
       },
     ],
-    resources: [
-      {
-        id: 1,
-        title: 'Golgotha',
-        description: 'Golgotha is the location where Christ was crucified.',
-        type: 'image',
-        fileName: 'cross_image.jpeg',
-        copyrightInfo: 'Zondervan Publishing, 2009.'
-      }
+    resourceCollections: [
     ]
   },
   {
@@ -149,15 +138,7 @@ const READINGS = [
         advice: ''
       },
     ],
-    resources: [
-      {
-        id: 1,
-        title: 'Golgotha',
-        description: 'Golgotha is the location where Christ was crucified.',
-        type: 'image',
-        fileName: 'cross_image.jpeg',
-        copyrightInfo: 'Zondervan Publishing, 2009.'
-      }
+    resourceCollections: [
     ]
   },
   {
@@ -185,15 +166,7 @@ const READINGS = [
         advice: 'Here is some advice for memorizing this passage.'
       },
     ],
-    resources: [
-      {
-        id: 1,
-        title: 'Golgotha',
-        description: 'Golgotha is the location where Christ was crucified.',
-        type: 'image',
-        fileName: 'cross_image.jpeg',
-        copyrightInfo: 'Zondervan Publishing, 2009.'
-      }
+    resourceCollections: [
     ]
   }
 ];

@@ -34,8 +34,8 @@
 
 <!-- Dropdown Structure for Choosing Resource -->
 <ul [id]="'dropdownViewResource'+reading.id" class='dropdown-content'>
-  <li *ngFor="let resource of resources">
-    <a (click)="onSelectResource(reading, resource)">{{resource.title}} ({{resource.type}})</a>
+  <li *ngFor="let resourceCollection of resourceCollections">
+    <a (click)="onSelectResource(reading, resourceCollection)">{{resourceCollection.title}}</a>
   </li>
 </ul>
 

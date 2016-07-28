@@ -42,7 +42,7 @@ export class UpdatePracticesComponent implements OnInit, OnChanges {
   unusedPractices = [];//unused practices for the current reading
   currentPractice:any = null;//practice that is currently being added/edited in modal(s)
   textInput:string = '';//text area input that will eventually be saved as the "advice" for a practice for a reading
-  
+
   buttonDisabled = false;
   //showUpdatePracticeModal = false;
 
@@ -159,5 +159,5 @@ export class UpdatePracticesComponent implements OnInit, OnChanges {
     let [el, source] = args;
     // do something else
   }
-  
+
 }

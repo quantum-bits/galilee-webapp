@@ -10,11 +10,11 @@ import {
   async, inject
 } from '@angular/core/testing';
 
-import { UploadResourceComponent } from './upload-resource.component';
+import { UpdateResourceCollectionComponent } from './update-resource-collection.component';
 
-describe('Component: UploadResource', () => {
+describe('Component: UpdateResourceCollection', () => {
   it('should create an instance', () => {
-    //let component = new UploadResourceComponent();
-    //expect(component).toBeTruthy();
+    let component = new UpdateResourceCollectionComponent();
+    expect(component).toBeTruthy();
   });
 });

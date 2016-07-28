@@ -8,20 +8,20 @@
                 data-activates="dropdownAddNewResource">
           Add</button>
       </span>
-      <!-- Dropdown Structure for Choosing Practice -->
+      <!-- Dropdown Structure for Adding Resource -->
       <ul id='dropdownAddNewResource' class='dropdown-content'>
-        <li *ngFor="let resource of resources; let i = index">
-          <a (click)="addResource(resource)">
-            {{ resource.type }}
+        <li *ngFor="let resourceType of resourceTypes; let i = index">
+          <a (click)="addResource(resourceType)">
+            {{ resourceType.type }}
           </a>
         </li>
       </ul>
-      <div class='dragula-container' [dragula]='"resources-bag"' [dragulaModel]='resourcesThisReading'>
-        <div *ngFor="let resource of resourcesThisReading">
-          <app-update-resource-item
-            [resource]="resource"
+      <div class='dragula-container' [dragula]='"resources-bag"' [dragulaModel]='resourceCollectionsThisReading'>
+        <div *ngFor="let resourceCollection of resourceCollectionsThisReading">
+          <app-update-resource-collection
+            [resourceCollection]="resourceCollection"
             [resourcePath]="resourcePath"
-          ></app-update-resource-item>
+          ></app-update-resource-collection>
         </div>
       </div>
     </div>

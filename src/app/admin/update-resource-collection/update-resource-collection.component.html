@@ -1,0 +1,116 @@
+<ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
+  <li>
+    <div class="collapsible-header">
+      {{resourceCollection.title}}
+    </div>
+    <div class="collapsible-body">
+      <div class="text-area-wrapper non-edit-mode">
+        <span><b>Description:</b> {{resourceCollection.description}}</span>
+        <div *ngFor="let resource of resourceCollection.resources">
+          <app-update-resource-item
+            [resource]="resource"
+            [resourcePath]="resourcePath">
+          </app-update-resource-item>
+        </div>
+        <a #myModalResourcePicker
+           class="waves-effect waves-teal btn-flat"
+           materialize="leanModal"
+           [materializeParams]="[{dismissible: true}]"
+           href="#modalUploadResource"> Edit
+        </a>
+      </div>
+    </div>
+  </li>
+</ul>
+
+<!-- Modal Structure -->
+<div id="modalUploadResource" class="modal">
+  <div class="modal-content">
+    <h5>Edit Collection</h5>
+
+    <form [formGroup]="resourceCollectionForm"
+          novalidate
+          (ngSubmit)="save(resourceCollectionForm.value)">
+
+      <!-- title -->
+      <div class="form-group">
+        <label>Title</label>
+        <input type="text" formControlName="title">
+        <!--display error message if name is not valid-->
+        <small *ngIf="!resourceCollectionForm.controls.title.valid" class="text-danger">
+          Title is required.
+        </small>
+      </div>
+
+      <!-- description -->
+      <div class="form-group">
+        <label>Description</label>
+        <input type="text" formControlName="description">
+        <!--display error message if name is not valid-->
+        <small *ngIf="!resourceCollectionForm.controls.description.valid" class="text-danger">
+          Description is required.
+        </small>
+      </div>
+
+      <!-- list of resources -->
+      <div formArrayName="resources">
+        <div *ngFor="let resource of resourceCollectionForm.controls.resources.controls; let i=index">
+          <!-- resource header, show remove button when more than one address available -->
+          <div>
+            <span>Resource {{i + 1}}</span>
+            <a (click)="removeResource(i)"><i class="material-icons right">close</i></a>
+                <span *ngIf="resourceCollectionForm.controls.resources.controls.length > 1"
+                      (click)="removeResource(i)">
+                </span>
+          </div>
+
+          <!-- Angular assigns array index as group name by default 0, 1, 2, ... -->
+          <div [formGroupName]="i">
+            <!--caption-->
+            <div>
+              <label>caption</label>
+              <input type="text" formControlName="caption">
+              <!--display error message if caption is not valid-->
+              <small [hidden]="resourceCollectionForm.controls.resources.controls[i].controls.caption.valid">
+                Caption is required
+              </small>
+            </div>
+            <!--type-->
+            <div>
+              <label>type</label>
+              <input type="text" formControlName="type">
+              <!--display error message if type is not valid-->
+              <small [hidden]="resourceCollectionForm.controls.resources.controls[i].controls.type.valid">
+                Type is required
+              </small>
+            </div>
+            <!--fileName-->
+            <div>
+              <label>file name</label>
+              <input type="text" formControlName="fileName">
+              <!--display error message if file name is not valid-->
+              <small [hidden]="resourceCollectionForm.controls.resources.controls[i].controls.fileName.valid">
+                File name is required
+              </small>
+            </div>
+            <!--street-->
+            <div>
+              <label>Copyright information</label>
+              <input type="text" formControlName="copyrightInfo">
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="btn" (click)="addResource()">Add Resource</a>
+
+
+
+      <button class="btn" type="submit" [disabled]="!resourceCollectionForm.valid">Submit</button>
+
+    </form>
+
+  </div>
+  <div class="modal-footer">
+    <a class=" modal-action modal-close waves-effect waves-green btn-flat">Dismiss</a>
+  </div>
+</div>

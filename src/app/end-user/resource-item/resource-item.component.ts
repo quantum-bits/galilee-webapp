@@ -19,7 +19,7 @@ export class ResourceItemComponent implements OnInit {
 
 
   @Input() reading: any;
-  @Input() resource: any;
+  @Input() resourceCollection: any;
   @Input() resourcePath;
 
   constructor() {}

@@ -14,7 +14,7 @@ export class ReadingItemComponent implements OnInit {
 
   @Input() reading: any;
   @Input() practices: any;
-  @Input() resources: any;
+  @Input() resourceCollections: any;
   @Input() includeBackButton: boolean;
 
   idVal = 'dropDownMenu';
@@ -33,8 +33,8 @@ export class ReadingItemComponent implements OnInit {
     this.router.navigate(['/end-user/reading-practice', reading.id, practice.id]);
   }
 
-  onSelectResource(reading, resource) {
-    this.router.navigate(['/end-user/reading-resource', reading.id, resource.id]);
+  onSelectResource(reading, resourceCollection) {
+    this.router.navigate(['/end-user/reading-resource', reading.id, resourceCollection.id]);
   }
 
 }
