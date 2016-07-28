@@ -9,6 +9,7 @@ import {
   FormControl
 } from '@angular/forms';
 
+import { Resource } from '../../shared/interfaces/resource.interface';
 import { ResourceCollection } from '../../shared/interfaces/resource-collection.interface';
 import { UpdateResourceItemComponent } from '../update-resource-item';
 
@@ -39,9 +40,8 @@ export class UpdateResourceCollectionComponent implements OnInit {
     this.resourceCollectionForm = this.formBuilder.group({
       title: ['', [<any>Validators.required]],
       description: ['', [<any>Validators.required]],
-      resources: this.formBuilder.array([
-        this.initResource(),
-      ])
+      resources: this.formBuilder.array(
+        this.initResourceArray(this.resourceCollection.resources)),
     });
   }
 
@@ -50,20 +50,35 @@ export class UpdateResourceCollectionComponent implements OnInit {
     //this.subscription.unsubscribe(); //not actually using the subscription here....
   }
 
-  initResource() {
+  initResourceArray(resources: Resource[]) {
+    let resourceArray = [];
+    for (let resource of resources) {
+      resourceArray.push(this.initResource(resource));
+    }
+    return resourceArray;
+  }
+
+  initResource(resourceInfo: Resource) {
     // initialize our address
     return this.formBuilder.group({
-      caption: ['', Validators.required],
-      type: ['', Validators.required],// 'image', 'video', etc.
-      fileName: ['', Validators.required],
-      copyrightInfo: ['']
+      caption: [resourceInfo.caption, Validators.required],
+      type: [resourceInfo.type, Validators.required],// 'image', 'video', etc.
+      fileName: [resourceInfo.fileName, Validators.required],
+      copyrightInfo: [resourceInfo.copyrightInfo]
     });
   }
 
   addResource() {
     // add address to the list
     const control = <FormArray>this.resourceCollectionForm.controls['resources'];
-    control.push(this.initResource());
+    let resource: Resource;
+    resource = {
+      caption:'',
+      type:'',
+      fileName:'',
+      copyrightInfo:''
+    }
+    control.push(this.initResource(resource));
   }
 
   removeResource(i: number) {
