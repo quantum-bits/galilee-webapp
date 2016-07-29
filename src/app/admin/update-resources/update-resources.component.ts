@@ -5,6 +5,9 @@ import {ResourceService} from '../../shared/services/resource.service';
 import { UpdateResourceCollectionComponent } from '../update-resource-collection';
 import { UploadResourceComponent } from '../upload-resource';
 
+import { Resource } from '../../shared/interfaces/resource.interface';
+import { ResourceCollection } from '../../shared/interfaces/resource-collection.interface';
+
 import {MaterializeDirective} from "angular2-materialize";
 import {Dragula, DragulaService} from 'ng2-dragula/ng2-dragula';
 
@@ -26,6 +29,13 @@ export class UpdateResourcesComponent implements OnInit {
   @Input() resourceCollectionsThisReading;
   @Input() changeTracker;
   @ViewChild('myModalResourcePicker') input: ElementRef;
+
+  private initialResourceCollection: ResourceCollection = {
+    title: 'try this title for fun!',
+    description: 'this is a description',
+    resources: []
+  }
+
 
   resourceTypes = [];
   resourceDropDown = [];
@@ -117,5 +127,5 @@ export class UpdateResourcesComponent implements OnInit {
     let [el, source] = args;
     // do something else
   }
-
+  
 }

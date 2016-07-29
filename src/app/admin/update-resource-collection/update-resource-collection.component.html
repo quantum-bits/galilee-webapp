@@ -16,7 +16,7 @@
            class="waves-effect waves-teal btn-flat"
            materialize="leanModal"
            [materializeParams]="[{dismissible: true}]"
-           href="#modalUploadResource"> Edit
+           href="#modalUploadResource1"> Edit
         </a>
       </div>
     </div>
@@ -24,7 +24,7 @@
 </ul>
 
 <!-- Modal Structure -->
-<div id="modalUploadResource" class="modal">
+<div id="modalUploadResource1" class="modal">
   <div class="modal-content">
     <h5>Edit Collection</h5>
 
@@ -59,9 +59,6 @@
           <div>
             <span>Resource {{i + 1}}</span>
             <a (click)="removeResource(i)"><i class="material-icons right">close</i></a>
-                <span *ngIf="resourceCollectionForm.controls.resources.controls.length > 1"
-                      (click)="removeResource(i)">
-                </span>
           </div>
 
           <!-- Angular assigns array index as group name by default 0, 1, 2, ... -->

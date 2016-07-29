@@ -39,7 +39,9 @@
   <div class="modal-content">
     <h5>Upload Resource(s)</h5>
 
-    <app-upload-resource>
+    <app-upload-resource
+    [resourceCollection]="initialResourceCollection"
+    [resourcePath]="resourcePath">
     </app-upload-resource>
 
   </div>

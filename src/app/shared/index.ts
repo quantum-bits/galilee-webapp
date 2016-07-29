@@ -1,4 +1,5 @@
 //export * from './components';
+export * from './directives/input-wake-up.directive';
 export * from './interfaces/resource-collection.interface';
 export * from './interfaces/resource.interface';
 export * from './models';

@@ -1,17 +1,26 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit, DoCheck, Input } from '@angular/core';
 //import {CORE_DIRECTIVES, FORM_DIRECTIVES, NgClass, NgStyle} from '@angular/common';
 import {FILE_UPLOAD_DIRECTIVES, FileUploader} from 'ng2-file-upload';
+import {MaterializeDirective} from "angular2-materialize";
 
 import {
   FORM_DIRECTIVES,
   REACTIVE_FORM_DIRECTIVES,
   FormBuilder,
   FormGroup,
-  // Validators, // not currently being used, but could be used to make a field required
-  AbstractControl
+  FormArray,
+  Validators, // used to make a field required
+  FormControl
 } from '@angular/forms';
 
+import { Resource } from '../../shared/interfaces/resource.interface';
+import { ResourceCollection } from '../../shared/interfaces/resource-collection.interface';
+
+import { InputWakeUp } from '../../shared/directives/input-wake-up.directive';
+
 const URL = '/api/';
+
+declare var $: any; // for using jQuery within this angular component
 
 // taken from: http://valor-software.com/ng2-file-upload/
 // see: http://stackoverflow.com/questions/37625274/implementing-ng2-file-upload
@@ -28,15 +37,36 @@ const URL = '/api/';
     //NgStyle,
     //CORE_DIRECTIVES,
     FORM_DIRECTIVES,
-    REACTIVE_FORM_DIRECTIVES]
+    REACTIVE_FORM_DIRECTIVES,
+    MaterializeDirective,
+    InputWakeUp]
 })
 export class UploadResourceComponent implements OnInit, DoCheck {
+
+  //useful resources for forms, nested forms:
+  //  https://scotch.io/tutorials/using-angular-2s-model-driven-forms-with-formgroup-and-formcontrol
+  //  https://angular.io/docs/ts/latest/cookbook/dynamic-form.html
+  // *https://scotch.io/tutorials/how-to-build-nested-model-driven-forms-in-angular-2
+
+  // WORKING HERE....next steps:
+  // - use jQuery thing to auto-resize the text caption or something when the content
+  //   is added dynamically(!)
+  // - check validation stuff and maybe rewrite things for the submit
+  // - use event emitter to back-propagate stuff
+  // - colour submit button grey when submission is not yet allowed(!)
 
   public uploader:FileUploader = new FileUploader({url: URL});
   public hasBaseDropZoneOver:boolean = false;
   public hasAnotherDropZoneOver:boolean = false;
 
   private numFiles = 0;
+
+  @Input() resourceCollection: ResourceCollection;
+  @Input() resourcePath: string;
+
+  public resourceCollectionForm: FormGroup; // our model driven form
+  public submitted: boolean; // keep track of whether form is submitted
+
 
   public fileOverBase(e:any):void {
     this.hasBaseDropZoneOver = e;
@@ -46,33 +76,96 @@ export class UploadResourceComponent implements OnInit, DoCheck {
     this.hasAnotherDropZoneOver = e;
   }
 
-  practiceUpdateForm: FormGroup;
-  practiceText: AbstractControl;
-
   constructor(
     private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
-    //this.practiceUpdateForm = this.formBuilder.group({
-    //  'practiceText': [this.practice.advice]
-    //});
-    // set form control as an instance variable for convenience
-    // (see: http://blog.ng-book.com/the-ultimate-guide-to-forms-in-angular-2/)
-    // if don't go this route, would use things like this.practiceUpdateForm.value.practiceText, etc.
-    //this.practiceText = this.practiceUpdateForm.controls['practiceText'];
+    this.resourceCollectionForm = this.formBuilder.group({
+      title: [this.resourceCollection.title, [<any>Validators.required]],
+      description: [this.resourceCollection.description, [<any>Validators.required]],
+      resources: this.formBuilder.array(
+        this.initResourceArray(this.resourceCollection.resources)),
+    });
   }
 
   ngDoCheck(){
     if (this.uploader.queue) {
       this.numFiles = this.uploader.queue.length;
     }
-
   }
+
 
   onClick(){
     console.log(this.uploader);
   }
+
+  uploadItem(i: number) {
+    this.uploader.queue[i].upload();//this is a fileUploader method
+    // >>>should somehow wait for success of the upload<<<
+    let resource: Resource;
+    resource = {
+      caption:'here is a caption!',
+      type:'image',
+      fileName:this.uploader.queue[i]._file.name,
+      copyrightInfo:'...and a copyright thing'
+    }
+    this.addResource(resource);
+    console.log(this.resourceCollectionForm);
+  }
+
+
+  initResourceArray(resources: Resource[]) {
+    console.log(resources);
+    let resourceArray = [];
+    for (let resource of resources) {
+      resourceArray.push(this.initResource(resource));
+    }
+    return resourceArray;
+  }
+
+  initResource(resourceInfo: Resource) {
+    // initialize our resource
+    console.log('about to initialize new resource');
+    console.log(resourceInfo);
+    return this.formBuilder.group({
+      caption: [resourceInfo.caption, Validators.required],
+      type: [resourceInfo.type, Validators.required],// 'image', 'video', etc.
+      fileName: [resourceInfo.fileName, Validators.required],
+      copyrightInfo: [resourceInfo.copyrightInfo]
+    });
+  }
+
+  addResource(resource: Resource) {
+    // add resource to the list
+    const control = <FormArray>this.resourceCollectionForm.controls['resources'];
+    control.push(this.initResource(resource));
+  }
+
+  removeResource(i: number) {
+    // remove address from the list
+    const control = <FormArray>this.resourceCollectionForm.controls['resources'];
+    control.removeAt(i);
+  }
+
+  save(model: ResourceCollection) {
+    this.submitted = true; // set form submit to true
+
+    // check if model is valid
+    // if valid, call API to save customer
+    console.log(model);
+  }
+
+  focusInput(){
+    //let textareaID = '#textareaAdvice'+this.practice.id;
+    //console.log(id);
+    console.log('got here');
+    //$('#caption').trigger('focus');
+    $('#caption').trigger('change');
+  }
+
+
+
 
   onSubmit(): void {
     //this.editModeOn = false;
