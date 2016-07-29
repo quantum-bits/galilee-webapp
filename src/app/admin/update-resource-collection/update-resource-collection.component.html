@@ -23,7 +23,35 @@
   </li>
 </ul>
 
+
+<!-- Modal Trigger -->
+<a
+   materialize="leanModal"
+   [materializeParams]="[{dismissible: true}]"
+   href="#modalEditResource{{resourceCollection.id}}">
+  Edit this resource!
+</a>
 <!-- Modal Structure -->
+<div id="modalEditResource{{resourceCollection.id}}" class="modal">
+  <div class="modal-content">
+    <h5>Edit Resource(s)</h5>
+
+    <app-upload-resource
+      [resourceCollection]="resourceCollection"
+      [resourcePath]="resourcePath">
+    </app-upload-resource>
+
+  </div>
+  <div class="modal-footer">
+    <a class=" modal-action modal-close waves-effect waves-green btn-flat">Dismiss</a>
+  </div>
+</div>
+
+
+<!--
+
+
+<!-- Modal Structure
 <div id="modalUploadResource1" class="modal">
   <div class="modal-content">
     <h5>Edit Collection</h5>
@@ -32,65 +60,65 @@
           novalidate
           (ngSubmit)="save(resourceCollectionForm.value)">
 
-      <!-- title -->
+      <!-- title
       <div class="form-group">
         <label>Title</label>
         <input type="text" formControlName="title">
-        <!--display error message if name is not valid-->
+        <!--display error message if name is not valid
         <small *ngIf="!resourceCollectionForm.controls.title.valid" class="text-danger">
           Title is required.
         </small>
       </div>
 
-      <!-- description -->
+      <!-- description
       <div class="form-group">
         <label>Description</label>
         <input type="text" formControlName="description">
-        <!--display error message if name is not valid-->
+        <!--display error message if name is not valid
         <small *ngIf="!resourceCollectionForm.controls.description.valid" class="text-danger">
           Description is required.
         </small>
       </div>
 
-      <!-- list of resources -->
+      <!-- list of resources
       <div formArrayName="resources">
         <div *ngFor="let resource of resourceCollectionForm.controls.resources.controls; let i=index">
-          <!-- resource header, show remove button when more than one address available -->
+          <!-- resource header, show remove button when more than one address available
           <div>
             <span>Resource {{i + 1}}</span>
             <a (click)="removeResource(i)"><i class="material-icons right">close</i></a>
           </div>
 
-          <!-- Angular assigns array index as group name by default 0, 1, 2, ... -->
+          <!-- Angular assigns array index as group name by default 0, 1, 2, ...
           <div [formGroupName]="i">
-            <!--caption-->
+            <!--caption
             <div>
               <label>caption</label>
               <input type="text" formControlName="caption">
-              <!--display error message if caption is not valid-->
+              <!--display error message if caption is not valid
               <small [hidden]="resourceCollectionForm.controls.resources.controls[i].controls.caption.valid">
                 Caption is required
               </small>
             </div>
-            <!--type-->
+            <!--type
             <div>
               <label>type</label>
               <input type="text" formControlName="type">
-              <!--display error message if type is not valid-->
+              <!--display error message if type is not valid
               <small [hidden]="resourceCollectionForm.controls.resources.controls[i].controls.type.valid">
                 Type is required
               </small>
             </div>
-            <!--fileName-->
+            <!--fileName
             <div>
               <label>file name</label>
               <input type="text" formControlName="fileName">
-              <!--display error message if file name is not valid-->
+              <!--display error message if file name is not valid
               <small [hidden]="resourceCollectionForm.controls.resources.controls[i].controls.fileName.valid">
                 File name is required
               </small>
             </div>
-            <!--street-->
+            <!--street
             <div>
               <label>Copyright information</label>
               <input type="text" formControlName="copyrightInfo">
@@ -111,3 +139,4 @@
     <a class=" modal-action modal-close waves-effect waves-green btn-flat">Dismiss</a>
   </div>
 </div>
+-->

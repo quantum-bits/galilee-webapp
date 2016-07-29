@@ -12,6 +12,8 @@ import {
 import { Resource } from '../../shared/interfaces/resource.interface';
 import { ResourceCollection } from '../../shared/interfaces/resource-collection.interface';
 import { UpdateResourceItemComponent } from '../update-resource-item';
+import { UploadResourceComponent } from '../upload-resource';
+
 
 import {MaterializeDirective} from "angular2-materialize";
 
@@ -20,7 +22,11 @@ import {MaterializeDirective} from "angular2-materialize";
   selector: 'app-update-resource-collection',
   templateUrl: 'update-resource-collection.component.html',
   styleUrls: ['update-resource-collection.component.css'],
-  directives: [MaterializeDirective, UpdateResourceItemComponent, REACTIVE_FORM_DIRECTIVES],
+  directives: [
+    MaterializeDirective,
+    UpdateResourceItemComponent,
+    REACTIVE_FORM_DIRECTIVES,
+    UploadResourceComponent],
 })
 export class UpdateResourceCollectionComponent implements OnInit {
 

@@ -13,30 +13,35 @@
                 <!-- title -->
                 <input
                   [class.warning-background]="!(resourceCollectionForm.controls.title.valid||!resourceCollectionForm.controls.title.touched)"
+                  [class.valid-background]="(resourceCollectionForm.controls.title.valid||!resourceCollectionForm.controls.title.touched)"
                   id="title"
                   type="text"
                   formControlName="title">
                 <!--display error message if name is not valid-->
-                <small
-                  class="warning"
-                  [hidden]="resourceCollectionForm.controls.title.valid||!resourceCollectionForm.controls.title.touched">
-                  Title is required.
-                </small>
+                <div *ngIf="!resourceCollectionForm.controls.title.valid">
+                  <small
+                    [class.warning]="resourceCollectionForm.controls.title.touched">
+                    Title is required.
+                  </small>
+                </div>
                 <label for="title">Title for Collection</label>
               </div>
               <div class="input-field col s12">
                 <!--  description -->
                 <textarea
+                  [textarea-autoresize]="'textarea1'"
                   [class.warning-background]="!(resourceCollectionForm.controls.description.valid||!resourceCollectionForm.controls.description.touched)"
+                  [class.valid-background]="(resourceCollectionForm.controls.description.valid||!resourceCollectionForm.controls.description.touched)"
                   id="textarea1"
                   class="materialize-textarea"
                   formControlName="description"></textarea>
-                <!--display error message if name is not valid-->
-                <small
-                  class="warning"
-                  [hidden]="resourceCollectionForm.controls.description.valid||!resourceCollectionForm.controls.description.touched">
-                  Description is required.
-                </small>
+                <!--display error message if description is not valid-->
+                <div *ngIf="!resourceCollectionForm.controls.description.valid">
+                  <small
+                    [class.warning]="resourceCollectionForm.controls.description.touched">
+                    Description is required.
+                  </small>
+                </div>
                 <label for="textarea1">Description</label>
               </div>
 
@@ -73,58 +78,60 @@
         </div>
       </div>
 
-      <div class="card col s12" style="margin-bottom: 40px">
-        <div class="card-content">
-          <span class="card-title"> Upload queue</span>
-          <p>Queue length: {{numFiles}} </p>
-          <table class="table">
-            <thead>
-            <tr>
-              <th width="50%">Name</th>
-              <th>Size</th>
-              <th>Actions</th>
-              <th>Progress</th>
-              <th>Status</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let item of uploader.queue; let i=index">
+      <div *ngIf="showQueue()">
+        <div class="card col s12" style="margin-bottom: 40px">
+          <div class="card-content">
+            <span class="card-title"> Upload queue</span>
+            <p>Queue length: {{numFiles}} </p>
+            <table class="table">
+              <thead>
+              <tr>
+                <th width="50%">Name</th>
+                <th>Size</th>
+                <th>Actions</th>
+                <th>Progress</th>
+                <th>Status</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of uploader.queue; let i=index">
 
-              <td><strong>{{item._file.name}}</strong></td>
+                <td><strong>{{item._file.name}}</strong></td>
 
-              <!-- not sure if we need the part about isHTML5 -->
-              <td *ngIf="uploader.isHTML5" nowrap>0.00 MB</td>
-              <td *ngIf="uploader.isHTML5">
-                <div class="progress" style="margin-bottom: 0;">
-                  <div class="determinate" [ngStyle]="{ 'width': item.progress + '%' }"></div>
-                </div>
-              </td>
-              <td class="text-center">
-                <span *ngIf="item.isSuccess"><i class="material-icons left">check_circle</i></span>
-                <span *ngIf="item.isCancel"><i class="material-icons left">cancel</i></span>
-                <span *ngIf="item.isError"><i class="material-icons left">error_outline</i></span>
-              </td>
-              <td nowrap>
-                <!-- could put buttons here instead, but they take up more room.... -->
-                <div *ngIf="item.isUploading">
-                  <a (click)="item.cancel()">
-                    <i class="material-icons left">cancel</i>
-                  </a>
-                </div>
-                <div *ngIf="!item.isUploading">
-                  <!-- original code: <div (click)="item.upload()" [class.disabled]="item.isReady || item.isUploading || item.isSuccess">-->
-                  <div (click)="uploadItem(i)" [class.disabled]="item.isReady || item.isUploading || item.isSuccess">
-                    <i class="material-icons left icon-teal">file_upload</i>
+                <!-- not sure if we need the part about isHTML5 -->
+                <td *ngIf="uploader.isHTML5" nowrap>0.00 MB</td>
+                <td *ngIf="uploader.isHTML5">
+                  <div class="progress" style="margin-bottom: 0;">
+                    <div class="determinate" [ngStyle]="{ 'width': item.progress + '%' }"></div>
                   </div>
-                  <div (click)="item.remove()">
-                    <i class="material-icons left icon-red">delete_forever</i>
+                </td>
+                <td class="text-center">
+                  <span *ngIf="item.isSuccess"><i class="material-icons left">check_circle</i></span>
+                  <span *ngIf="item.isCancel"><i class="material-icons left">cancel</i></span>
+                  <span *ngIf="item.isError"><i class="material-icons left">error_outline</i></span>
+                </td>
+                <td nowrap>
+                  <!-- could put buttons here instead, but they take up more room.... -->
+                  <div *ngIf="item.isUploading">
+                    <a (click)="item.cancel()">
+                      <i class="material-icons left">cancel</i>
+                    </a>
                   </div>
-                </div>
+                  <div *ngIf="!item.isUploading">
+                    <!-- original code: <div (click)="item.upload()" [class.disabled]="item.isReady || item.isUploading || item.isSuccess">-->
+                    <div (click)="uploadItem(i)" [class.disabled]="item.isReady || item.isUploading || item.isSuccess">
+                      <i class="material-icons left icon-teal">file_upload</i>
+                    </div>
+                    <div (click)="item.remove()">
+                      <i class="material-icons left icon-red">delete_forever</i>
+                    </div>
+                  </div>
 
-              </td>
-            </tr>
-            </tbody>
-          </table>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
       <!-- copyrights and captions for individual files -->
@@ -149,18 +156,25 @@
                         id="captionInModal{{i}}"
                         type="text"
                         [class.warning-background]="!(resourceCollectionForm.controls.resources.controls[i].controls.caption.valid||!resourceCollectionForm.controls.resources.controls[i].controls.caption.touched)"
+                        [class.valid-background]="(resourceCollectionForm.controls.resources.controls[i].controls.caption.valid||!resourceCollectionForm.controls.resources.controls[i].controls.caption.touched)"
                         formControlName="caption">
                       <label [attr.for]="'captionInModal'+i">Caption</label>
-                      <small
-                        class="warning"
-                        [hidden]="resourceCollectionForm.controls.resources.controls[i].controls.caption.valid||!resourceCollectionForm.controls.resources.controls[i].controls.caption.touched">
-                        Caption is required
-                      </small>
+                      <div *ngIf="!resourceCollectionForm.controls.resources.controls[i].controls.caption.valid">
+                        <small
+                          [class.warning]="resourceCollectionForm.controls.resources.controls[i].controls.caption.touched">
+                          Caption is required
+                        </small>
+                      </div>
                     </div>
 
                     <div class="input-field col s12">
                       <label [attr.for]="'copyrightInfoInModal'+i">Copyright information</label>
-                      <input [input-wake-up]="'copyrightInfoInModal'+i" id="copyrightInfoInModal{{i}}" type="text" formControlName="copyrightInfo">
+                      <input
+                        class="valid-background"
+                        [input-wake-up]="'copyrightInfoInModal'+i"
+                        id="copyrightInfoInModal{{i}}"
+                        type="text"
+                        formControlName="copyrightInfo">
                     </div>
 
                   </div>

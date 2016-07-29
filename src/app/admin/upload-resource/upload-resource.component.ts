@@ -17,6 +17,7 @@ import { Resource } from '../../shared/interfaces/resource.interface';
 import { ResourceCollection } from '../../shared/interfaces/resource-collection.interface';
 
 import { InputWakeUp } from '../../shared/directives/input-wake-up.directive';
+import { TextareaAutoresize } from '../../shared/directives/textarea-autoresize.directive';
 
 const URL = '/api/';
 
@@ -39,7 +40,8 @@ declare var $: any; // for using jQuery within this angular component
     FORM_DIRECTIVES,
     REACTIVE_FORM_DIRECTIVES,
     MaterializeDirective,
-    InputWakeUp]
+    InputWakeUp,
+    TextareaAutoresize]
 })
 export class UploadResourceComponent implements OnInit, DoCheck {
 
@@ -49,7 +51,22 @@ export class UploadResourceComponent implements OnInit, DoCheck {
   // *https://scotch.io/tutorials/how-to-build-nested-model-driven-forms-in-angular-2
 
   // WORKING HERE....next steps:
-  // - use event emitter to back-propagate stuff
+  // - use event emitter to back-propagate stuff...
+  //   TRICK: put some files in the images folder, and make those the ones that get 'uploaded';
+  //   ...then should be able to update the data, and have the new version show up!
+  // - reconfigure the EDIT button for editing resources (i.e., get rid of the link)
+  // - launch the ADD resource modal properly...that is, without issuing a click event
+  //   on the empty anchor tag :(
+  // - (partly done) the upload queue card only needs to show up if there are actually things in the queue;
+  //   a bit tricky, though...how about if something has been uploaded? not sure what happens
+  //   to its actual status in the queue at that point, but presumably at that point we would
+  //   want its card to show up, and we would want to remove it by clicking on the X for the card(?)
+  // ISSUES:
+  // - if the 'edit/upload' modal is in the foreground and you click and drag,
+  //   it appears that you can pick up one of the 'dragula' components in the background(!);
+  //   ...seems like that could be bad!  rearrange the order of the parent elements while
+  //   editing the child!  yikes....
+  //
 
   public uploader:FileUploader = new FileUploader({url: URL});
   public hasBaseDropZoneOver:boolean = false;
@@ -91,6 +108,13 @@ export class UploadResourceComponent implements OnInit, DoCheck {
     }
   }
 
+  showQueue(){
+    if (this.uploader.queue.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   onClick(){
     console.log(this.uploader);
@@ -104,7 +128,7 @@ export class UploadResourceComponent implements OnInit, DoCheck {
       caption:'',
       type:'image',
       fileName:this.uploader.queue[i]._file.name,
-      copyrightInfo:'...and a copyright thing'
+      copyrightInfo:''
     }
     this.addResource(resource);
     console.log(this.resourceCollectionForm);

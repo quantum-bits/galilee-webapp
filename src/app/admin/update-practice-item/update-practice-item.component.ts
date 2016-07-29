@@ -116,9 +116,11 @@ export class UpdatePracticeItemComponent implements OnInit, OnDestroy {
     // the following is a bit of a hack that puts the method
     // call to autoResizeTextArea() at the end of the queue; otherwise
     // there is a problem in that the resizing gets done prematurely and
-    // doesn't always give a large enough text area;
-    // the 'delay' is 0 ms; the important thing is that the method call now gets put
-    // at the end of the queue
+    // doesn't always give a large enough text area (probably because the 'drawer' is
+    // still sliding open...?); the 'delay' is 0 ms; the important thing is
+    // that the method call now gets put at the end of the queue.
+    // NOTE: apparently using the custom textarea-autoresize tag doesn't work, because
+    //       of the animation involved with the drawer....
     setTimeout(()=> this.autoResizeTextArea(), 0);
   }
 

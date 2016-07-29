@@ -44,7 +44,15 @@ const READINGS = [
         'purus proin fringilla sit phasellus. Quis ligula lorem ' +
         'sollicitudin, nibh sit nec et ante. Eu porttitor elit, ' +
         'risus eget leo, consectetuer vitae et non, malesuada hac ' +
-        'ut suscipit pulvinar ut.',
+        'ut suscipit pulvinar ut. ' +
+        'Lorem ipsum dolor sit amet, ligula interdum, cras in ' +
+        'purus proin fringilla sit phasellus. Quis ligula lorem ' +
+        'sollicitudin, nibh sit nec et ante. Eu porttitor elit, ' +
+        'risus eget leo, consectetuer vitae et non, malesuada hac ' +
+        'Lorem ipsum dolor sit amet, ligula interdum, cras in ' +
+        'purus proin fringilla sit phasellus. Quis ligula lorem ' +
+        'sollicitudin, nibh sit nec et ante. Eu porttitor elit, ' +
+        'risus eget leo, consectetuer vitae et non, malesuada hac.',
         resources: [
           {
             id: 1,
@@ -64,8 +72,8 @@ const READINGS = [
       },//end of this resource collection
       {
         id: 1,
-        title: 'Golgotha',
-        description: 'Golgotha is the location where Christ was crucified. ' +
+        title: 'The Ark',
+        description: 'Noah took the animals two by two. ' +
         'Lorem ipsum dolor sit amet, ligula interdum, cras in ' +
         'purus proin fringilla sit phasellus. Quis ligula lorem ' +
         'sollicitudin, nibh sit nec et ante. Eu porttitor elit, ' +

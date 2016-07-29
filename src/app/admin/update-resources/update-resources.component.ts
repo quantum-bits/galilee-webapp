@@ -31,8 +31,8 @@ export class UpdateResourcesComponent implements OnInit {
   @ViewChild('myModalResourcePicker') input: ElementRef;
 
   private initialResourceCollection: ResourceCollection = {
-    title: 'try this title for fun!',
-    description: 'this is a description',
+    title: '',
+    description: '',
     resources: []
   }
 
@@ -127,5 +127,5 @@ export class UpdateResourcesComponent implements OnInit {
     let [el, source] = args;
     // do something else
   }
-  
+
 }
