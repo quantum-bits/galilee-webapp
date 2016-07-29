@@ -49,11 +49,7 @@ export class UploadResourceComponent implements OnInit, DoCheck {
   // *https://scotch.io/tutorials/how-to-build-nested-model-driven-forms-in-angular-2
 
   // WORKING HERE....next steps:
-  // - use jQuery thing to auto-resize the text caption or something when the content
-  //   is added dynamically(!)
-  // - check validation stuff and maybe rewrite things for the submit
   // - use event emitter to back-propagate stuff
-  // - colour submit button grey when submission is not yet allowed(!)
 
   public uploader:FileUploader = new FileUploader({url: URL});
   public hasBaseDropZoneOver:boolean = false;
@@ -105,7 +101,7 @@ export class UploadResourceComponent implements OnInit, DoCheck {
     // >>>should somehow wait for success of the upload<<<
     let resource: Resource;
     resource = {
-      caption:'here is a caption!',
+      caption:'',
       type:'image',
       fileName:this.uploader.queue[i]._file.name,
       copyrightInfo:'...and a copyright thing'
@@ -156,16 +152,15 @@ export class UploadResourceComponent implements OnInit, DoCheck {
     console.log(model);
   }
 
-  focusInput(){
-    //let textareaID = '#textareaAdvice'+this.practice.id;
-    //console.log(id);
-    console.log('got here');
-    //$('#caption').trigger('focus');
-    $('#caption').trigger('change');
+  /*
+  showCaptionErrorMessage(i: number){
+    var showMessage=false;
+    if (!this.resourceCollectionForm.controls.resources.controls[i].controls.caption.valid){
+      showMessage=true;
+    }
+    return showMessage;
   }
-
-
-
+  */
 
   onSubmit(): void {
     //this.editModeOn = false;

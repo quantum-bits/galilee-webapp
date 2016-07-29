@@ -11,18 +11,30 @@
             <div class="row">
               <div class="input-field col s12">
                 <!-- title -->
-                <input id="title" type="text" formControlName="title">
+                <input
+                  [class.warning-background]="!(resourceCollectionForm.controls.title.valid||!resourceCollectionForm.controls.title.touched)"
+                  id="title"
+                  type="text"
+                  formControlName="title">
                 <!--display error message if name is not valid-->
-                <small *ngIf="!resourceCollectionForm.controls.title.valid" class="text-danger">
+                <small
+                  class="warning"
+                  [hidden]="resourceCollectionForm.controls.title.valid||!resourceCollectionForm.controls.title.touched">
                   Title is required.
                 </small>
                 <label for="title">Title for Collection</label>
               </div>
               <div class="input-field col s12">
                 <!--  description -->
-                <textarea id="textarea1" class="materialize-textarea" formControlName="description"></textarea>
+                <textarea
+                  [class.warning-background]="!(resourceCollectionForm.controls.description.valid||!resourceCollectionForm.controls.description.touched)"
+                  id="textarea1"
+                  class="materialize-textarea"
+                  formControlName="description"></textarea>
                 <!--display error message if name is not valid-->
-                <small *ngIf="!resourceCollectionForm.controls.description.valid" class="text-danger">
+                <small
+                  class="warning"
+                  [hidden]="resourceCollectionForm.controls.description.valid||!resourceCollectionForm.controls.description.touched">
                   Description is required.
                 </small>
                 <label for="textarea1">Description</label>
@@ -132,9 +144,16 @@
                     <!--caption-->
 
                     <div class="input-field col s12">
-                      <input [input-wake-up]="'captionInModal'+i" id="captionInModal{{i}}" type="text" formControlName="caption">
+                      <input
+                        [input-wake-up]="'captionInModal'+i"
+                        id="captionInModal{{i}}"
+                        type="text"
+                        [class.warning-background]="!(resourceCollectionForm.controls.resources.controls[i].controls.caption.valid||!resourceCollectionForm.controls.resources.controls[i].controls.caption.touched)"
+                        formControlName="caption">
                       <label [attr.for]="'captionInModal'+i">Caption</label>
-                      <small [hidden]="resourceCollectionForm.controls.resources.controls[i].controls.caption.valid">
+                      <small
+                        class="warning"
+                        [hidden]="resourceCollectionForm.controls.resources.controls[i].controls.caption.valid||!resourceCollectionForm.controls.resources.controls[i].controls.caption.touched">
                         Caption is required
                       </small>
                     </div>
@@ -151,13 +170,19 @@
           </div>
         </div>
       </div>
-
-      <button class="btn btn-flat" (click)="onClick()">info about file(s)</button>
-
-      <button class="btn" (click)="focusInput()">label fix?</button>
-      <button class="btn" type="submit" [disabled]="!resourceCollectionForm.valid">Submit</button>
-
     </div>
+    <div class="row">
+      <div class="col s12">
+        <button class="btn btn-flat" (click)="onClick()">info about file(s)</button>
+
+        <button
+          class="btn right"
+          type="submit"
+          [class.disabled]="!resourceCollectionForm.valid"
+          [disabled]="!resourceCollectionForm.valid">Submit</button>
+      </div>
+    </div>
+
   </form>
 
 </div>

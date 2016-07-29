@@ -65,3 +65,12 @@ i.icon-teal {
 i.icon-red {
   color: #c62828; /* darken-3 */
 }
+
+/* invalid color */
+.warning {
+  color: #c62828;
+}
+
+.warning-background {
+  background-color: rgba(255,0,0,0.1);
+}
