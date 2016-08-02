@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck, Input } from '@angular/core';
+import { Component, EventEmitter, OnInit, DoCheck, Input, Output } from '@angular/core';
 //import {CORE_DIRECTIVES, FORM_DIRECTIVES, NgClass, NgStyle} from '@angular/common';
 import {FILE_UPLOAD_DIRECTIVES, FileUploader} from 'ng2-file-upload';
 import {MaterializeDirective} from "angular2-materialize";
@@ -18,6 +18,8 @@ import { ResourceCollection } from '../../shared/interfaces/resource-collection.
 
 import { InputWakeUp } from '../../shared/directives/input-wake-up.directive';
 import { TextareaAutoresize } from '../../shared/directives/textarea-autoresize.directive';
+
+import {UpdateResourceItemBindingService} from '../update-resource-item-binding.service';
 
 const URL = '/api/';
 
@@ -74,8 +76,11 @@ export class UploadResourceComponent implements OnInit, DoCheck {
 
   private numFiles = 0;
 
+  @Input() newCollection: boolean;//true if this is a new collection; false if editing an existing collection
   @Input() resourceCollection: ResourceCollection;
   @Input() resourcePath: string;
+  @Input() modalID: string;
+  @Output() onFinished = new EventEmitter<string>();
 
   public resourceCollectionForm: FormGroup; // our model driven form
   public submitted: boolean; // keep track of whether form is submitted
@@ -90,11 +95,13 @@ export class UploadResourceComponent implements OnInit, DoCheck {
   }
 
   constructor(
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private updateResourceItemBindingService: UpdateResourceItemBindingService) {
   }
 
   ngOnInit() {
     this.resourceCollectionForm = this.formBuilder.group({
+      id: [this.resourceCollection.id, [<any>Validators.required]],
       title: [this.resourceCollection.title, [<any>Validators.required]],
       description: [this.resourceCollection.description, [<any>Validators.required]],
       resources: this.formBuilder.array(
@@ -125,6 +132,7 @@ export class UploadResourceComponent implements OnInit, DoCheck {
     // >>>should somehow wait for success of the upload<<<
     let resource: Resource;
     resource = {
+      id: 0,// not sure what to do with this at the moment....presumably it will eventually be assigned on the server side
       caption:'',
       type:'image',
       fileName:this.uploader.queue[i]._file.name,
@@ -149,6 +157,7 @@ export class UploadResourceComponent implements OnInit, DoCheck {
     console.log('about to initialize new resource');
     console.log(resourceInfo);
     return this.formBuilder.group({
+      id: [resourceInfo.id, Validators.required],
       caption: [resourceInfo.caption, Validators.required],
       type: [resourceInfo.type, Validators.required],// 'image', 'video', etc.
       fileName: [resourceInfo.fileName, Validators.required],
@@ -168,35 +177,32 @@ export class UploadResourceComponent implements OnInit, DoCheck {
     control.removeAt(i);
   }
 
-  save(model: ResourceCollection) {
+  save(resourceCollection: ResourceCollection) {
+    //var newResourceCollection:
     this.submitted = true; // set form submit to true
 
-    // check if model is valid
-    // if valid, call API to save customer
-    console.log(model);
-  }
+    console.log(resourceCollection);
+    // now send the data back, via the update-resource-item-binding service....
 
-  /*
-  showCaptionErrorMessage(i: number){
-    var showMessage=false;
-    if (!this.resourceCollectionForm.controls.resources.controls[i].controls.caption.valid){
-      showMessage=true;
+    let dataPacket = {
+      resourceCollection: resourceCollection,
+      newCollection: this.newCollection // true if we are adding a new collection, false if we are editing an existing one
     }
-    return showMessage;
-  }
-  */
-
-  onSubmit(): void {
-    //this.editModeOn = false;
-    // now propagate the change up to edit-reading-resources....
-    //this.updatePracticeItemBindingService.updatePractice(
-    //  {
-    //    practice: this.practice,
-    //    advice: this.practiceText.value
-    //  }
-    //);
+    this.updateResourceItemBindingService.updateResource(dataPacket);
+    this.closeModal(this.modalID);
   }
 
+  closeModal(modalID: string) {
+    /*
+      This emits an event that the parent component listens for; the parent uses
+      the modalID to close the modal.
+      Note: The parent component must declare the following in order to close
+            the modal programmatically:
+                declare var $: any;
+     */
+    console.log('about to emit the close signal');
+    this.onFinished.emit(modalID);
+  }
 
 }
 

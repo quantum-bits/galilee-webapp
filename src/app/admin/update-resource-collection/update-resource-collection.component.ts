@@ -17,6 +17,8 @@ import { UploadResourceComponent } from '../upload-resource';
 
 import {MaterializeDirective} from "angular2-materialize";
 
+declare var $: any; // for using jQuery within this angular component
+
 @Component({
   moduleId: module.id,
   selector: 'app-update-resource-collection',
@@ -67,6 +69,7 @@ export class UpdateResourceCollectionComponent implements OnInit {
   initResource(resourceInfo: Resource) {
     // initialize our address
     return this.formBuilder.group({
+      id: [resourceInfo.id],
       caption: [resourceInfo.caption, Validators.required],
       type: [resourceInfo.type, Validators.required],// 'image', 'video', etc.
       fileName: [resourceInfo.fileName, Validators.required],
@@ -74,33 +77,12 @@ export class UpdateResourceCollectionComponent implements OnInit {
     });
   }
 
-  addResource() {
-    // add address to the list
-    const control = <FormArray>this.resourceCollectionForm.controls['resources'];
-    let resource: Resource;
-    resource = {
-      caption:'',
-      type:'',
-      fileName:'',
-      copyrightInfo:''
-    }
-    control.push(this.initResource(resource));
+  onModalFinished(modalID: string){
+    // Note: must include the following declaration (above) in component:
+    //          declare var $: any;
+    console.log('about to close the modal....');
+    console.log('#'+modalID);
+    $('#'+modalID).closeModal();
   }
-
-  removeResource(i: number) {
-    // remove address from the list
-    const control = <FormArray>this.resourceCollectionForm.controls['resources'];
-    control.removeAt(i);
-  }
-
-  save(model: ResourceCollection) {
-    this.submitted = true; // set form submit to true
-
-    // check if model is valid
-    // if valid, call API to save customer
-    console.log(model);
-  }
-
-
-
+  
 }

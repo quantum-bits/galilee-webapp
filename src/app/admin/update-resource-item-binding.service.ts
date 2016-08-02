@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Subject }    from 'rxjs/Subject';
 
+import { ResourceCollection } from '../shared/interfaces/resource-collection.interface';
 
 @Injectable()
 export class UpdateResourceItemBindingService {
@@ -18,10 +19,10 @@ export class UpdateResourceItemBindingService {
 
   // Service message command(s)
 
-  updateResource(resource) {
+  updateResource(dataPacket) {
     console.log('inside the service');
-    console.log(resource);
-    this.resourceUpdatedSource.next(resource);
+    console.log(dataPacket);
+    this.resourceUpdatedSource.next(dataPacket);
   }
 
   deleteResource(resourceID) {

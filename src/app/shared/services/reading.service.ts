@@ -37,7 +37,7 @@ const READINGS = [
     ],
     resourceCollections: [
       {
-        id: 1,//id of the resource type? or the resource object? should both be here?
+        id: 1,//id of the resource object in the db
         title: 'Golgotha',
         description: 'Golgotha is the location where Christ was crucified. ' +
         'Lorem ipsum dolor sit amet, ligula interdum, cras in ' +
@@ -71,7 +71,7 @@ const READINGS = [
         ]//end resources
       },//end of this resource collection
       {
-        id: 1,
+        id: 2,
         title: 'The Ark',
         description: 'Noah took the animals two by two. ' +
         'Lorem ipsum dolor sit amet, ligula interdum, cras in ' +
@@ -81,14 +81,14 @@ const READINGS = [
         'ut suscipit pulvinar ut.',
         resources: [
           {
-            id: 1,
+            id: 3,
             caption: 'image of the cross',
             type: 'image',
             fileName: 'cross_image.jpeg',
             copyrightInfo: 'Zondervan Publishing, 2009.'
           },
           {
-            id: 2,
+            id: 4,
             caption: 'image of the ark',
             type: 'image',
             fileName: 'ark.jpeg',

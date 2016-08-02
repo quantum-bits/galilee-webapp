@@ -11,6 +11,8 @@ import { ResourceCollection } from '../../shared/interfaces/resource-collection.
 import {MaterializeDirective} from "angular2-materialize";
 import {Dragula, DragulaService} from 'ng2-dragula/ng2-dragula';
 
+declare var $: any; // for using jQuery within this angular component
+
 @Component({
   moduleId: module.id,
   selector: 'app-update-resources',
@@ -31,6 +33,7 @@ export class UpdateResourcesComponent implements OnInit {
   @ViewChild('myModalResourcePicker') input: ElementRef;
 
   private initialResourceCollection: ResourceCollection = {
+    id: 0, // this will eventually need to be managed by the server-side code
     title: '',
     description: '',
     resources: []
@@ -91,9 +94,24 @@ export class UpdateResourcesComponent implements OnInit {
     console.log(this.resourceCollectionsThisReading);
   }
 
+  ngOnChanges() {
+    console.log('change detected by update-resources');
+    //this.fetchUnusedPractices();
+    //this.buttonDisabled = this.noUnusedPractices();
+  }
+
+
   addResource(resource) {
     this.renderer.invokeElementMethod(this.input.nativeElement,
       'click');
+  }
+
+  onModalFinished(modalID: string){
+    // Note: must include the following declaration (above) in component:
+    //          declare var $: any;
+    console.log('about to close the modal....');
+    console.log('#'+modalID);
+    $('#'+modalID).closeModal();
   }
 
   private onDrag(args) {

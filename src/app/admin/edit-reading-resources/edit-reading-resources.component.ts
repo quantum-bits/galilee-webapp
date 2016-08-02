@@ -4,11 +4,13 @@ import {Location} from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 
 import {UpdatePracticeItemBindingService} from '../update-practice-item-binding.service';
+import {UpdateResourceItemBindingService} from '../update-resource-item-binding.service';
 
 import {MaterializeDirective} from "angular2-materialize";
 
 import {ReadingService} from '../../shared/services/reading.service';
 import {Reading} from '../../shared/models/reading.model';
+import { ResourceCollection } from '../../shared/interfaces/resource-collection.interface';
 
 import { UpdatePracticesComponent } from '../update-practices';
 import {UpdateResourcesComponent} from '../update-resources';
@@ -21,7 +23,7 @@ import {UpdateResourcesComponent} from '../update-resources';
   selector: 'app-edit-practices',
   templateUrl: 'edit-reading-resources.component.html',
   styleUrls: ['edit-reading-resources.component.css'],
-  providers: [ReadingService, UpdatePracticeItemBindingService],
+  providers: [ReadingService, UpdatePracticeItemBindingService, UpdateResourceItemBindingService],
   directives: [
     ROUTER_DIRECTIVES,
     MaterializeDirective,
@@ -31,6 +33,16 @@ import {UpdateResourcesComponent} from '../update-resources';
 })
 export class EditReadingResourcesComponent implements OnInit {
 
+  /*
+    NOTE: When we start storing the practice and resource information in the database,
+          we will need to update the onUpdatePractice() and onUpdateResourceCollection()
+          methods.  Not clear to me if we simply make the change to the db, and then reload
+          the page to let everything refresh, or if we want to make the changes locally
+          in order to minimize trips to the database.  In any case, we will need to take
+          a look at those methods to see if they make sense....
+   */
+
+
   date:Date;
   readings:Reading[] = [];
   currentReading:any;//reading being shown in current tab
@@ -39,7 +51,8 @@ export class EditReadingResourcesComponent implements OnInit {
   constructor(//private _location:Location,
     //private practiceService:PracticeService,
     private readingService:ReadingService,
-    private updatePracticeItemBindingService:UpdatePracticeItemBindingService) {
+    private updatePracticeItemBindingService:UpdatePracticeItemBindingService,
+    private updateResourceItemBindingService:UpdateResourceItemBindingService) {
     updatePracticeItemBindingService.practiceUpdated$.subscribe(
       practiceWithAdvice => {
         this.onUpdatePractice(practiceWithAdvice);
@@ -47,6 +60,10 @@ export class EditReadingResourcesComponent implements OnInit {
     updatePracticeItemBindingService.practiceDeleted$.subscribe(
       practiceID => {
         this.onDeletePractice(practiceID);
+      });
+    updateResourceItemBindingService.resourceUpdated$.subscribe(
+      resourceCollection => {
+        this.onUpdateResourceCollection(resourceCollection);
       });
   }
 
@@ -82,7 +99,7 @@ export class EditReadingResourcesComponent implements OnInit {
 
   onUpdatePractice(response) {
     this.changeTracker++;
-    console.log('practice updated!');
+    console.log('practice updated! inside edit-reading-resources component');
     console.log(this.currentReading);
     console.log(response);
     console.log()
@@ -133,6 +150,29 @@ export class EditReadingResourcesComponent implements OnInit {
     }
   }
 
+  onUpdateResourceCollection(dataPacket) {
+    this.changeTracker++;
+    console.log('updating resource collection');
+    console.log(dataPacket);
+    let newCollection = dataPacket.newCollection;
+    let resourceCollection: ResourceCollection = dataPacket.resourceCollection;
+    let collectionID: number;
+    let collectionIndex: number;
+    if (newCollection) {// new entry
+      this.currentReading.resourceCollections.push(resourceCollection);
+    } else {//editing existing entry...need to find it by its id
+      for (let i in this.currentReading.resourceCollections){
+        if (resourceCollection.id === this.currentReading.resourceCollections[i].id){
+          collectionIndex = +i;//using the '+' to cast the string as a number
+          console.log('index:');
+          console.log(collectionIndex);
+        }
+      }
+      this.currentReading.resourceCollections[collectionIndex] = resourceCollection;
+    }
+    console.log('here is the new version of current reading:');
+    console.log(this.currentReading);
+  }
 
 
 

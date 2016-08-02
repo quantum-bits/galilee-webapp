@@ -1,5 +1,5 @@
 export interface Resource {
-  //id: number;
+  id: number;
   caption?: string;
   type: string;// 'image', 'video', etc.
   fileName: string;
