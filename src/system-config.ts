@@ -76,6 +76,8 @@ const barrels: string[] = [
   'app/end-user/resource-item',
   'app/end-user/reading-resource',
   'app/admin/update-resource-collection',
+  'app/authentication/login',
+  'app/authentication/signup',
   /** @cli-barrel */
 ];
 

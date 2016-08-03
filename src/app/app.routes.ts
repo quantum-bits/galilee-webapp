@@ -2,6 +2,7 @@ import { provideRouter, RouterConfig } from '@angular/router';
 
 import { EndUserRoutes } from './end-user/end-user.routes';
 import { AdminRoutes } from './admin/admin.routes';
+import { AuthenticationRoutes } from './authentication/authentication.routes';
 import { ReadingsComponent } from './end-user/readings/readings.component';
 //import { ReadingPracticeComponent } from './end-user/reading-detail/reading-practice.component';
 
@@ -22,6 +23,7 @@ export const routes: RouterConfig = [
   { path: '', redirectTo: 'end-user', pathMatch: 'full'},
   ...AdminRoutes,
   ...EndUserRoutes,
+  ...AuthenticationRoutes,
 ];
 
 export const APP_ROUTER_PROVIDERS = [

@@ -20,7 +20,8 @@ module.exports = function(defaults) {
       'angular2-materialize/**/*',
       'ng2-file-upload/**/*.js',
       'dragula/**/*.+(js|css)',
-      'ng2-dragula/**/*.js'
+      'ng2-dragula/**/*.js',
+      'angular2-jwt/**/*.js'
     ]
   });
 };
