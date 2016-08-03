@@ -1,16 +1,16 @@
 <div *ngIf="resource">
-<div class="card">
-  <div class="card-image waves-effect waves-block waves-light">
-    <img class="activator" src={{resourcePath}}{{resource.fileName}} alt="Image">
+  <div class="card">
+    <div class="card-image waves-effect waves-block waves-light">
+      <img class="activator" src={{resourcePath}}{{resource.fileName}} alt="Image">
+    </div>
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4">{{resource.title}}<i class="material-icons right">more_vert</i></span>
+      <p>{{resource.description | truncate : 9 }}</p>
+    </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4">{{resource.title}}<i class="material-icons right">close</i></span>
+      <p>{{resource.description}}</p>
+      <p *ngIf="resource.copyrightInfo">Image: <i class="tiny material-icons">copyright</i>{{resource.copyrightInfo}} </p>
+    </div>
   </div>
-  <div class="card-content">
-    <span class="card-title activator grey-text text-darken-4">{{resource.title}}<i class="material-icons right">more_vert</i></span>
-    <p>{{resource.description | truncate : 9 }}</p>
-  </div>
-  <div class="card-reveal">
-    <span class="card-title grey-text text-darken-4">{{resource.title}}<i class="material-icons right">close</i></span>
-    <p>{{resource.description}}</p>
-    <p *ngIf="resource.copyrightInfo">Image: <i class="tiny material-icons">copyright</i>{{resource.copyrightInfo}} </p>
-  </div>
-</div>
 </div>

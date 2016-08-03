@@ -127,6 +127,10 @@ export class UploadResourceComponent implements OnInit, DoCheck {
     console.log(this.uploader);
   }
 
+  //WORKING HERE: Should probably have (yet!) another component for the resource elements
+  // in this modal...?  Not sure, but somehow each card/element needs to know if it is an
+  // element in the queue or not.  If so, it needs to know its status.
+
   uploadItem(i: number) {
     this.uploader.queue[i].upload();//this is a fileUploader method
     // >>>should somehow wait for success of the upload<<<
@@ -174,16 +178,14 @@ export class UploadResourceComponent implements OnInit, DoCheck {
   removeResource(i: number) {
     // remove address from the list
     const control = <FormArray>this.resourceCollectionForm.controls['resources'];
+    // remove element from the form....
     control.removeAt(i);
+    // ...and also from the uploader queue, if appropriate
   }
 
   save(resourceCollection: ResourceCollection) {
-    //var newResourceCollection:
     this.submitted = true; // set form submit to true
-
-    console.log(resourceCollection);
     // now send the data back, via the update-resource-item-binding service....
-
     let dataPacket = {
       resourceCollection: resourceCollection,
       newCollection: this.newCollection // true if we are adding a new collection, false if we are editing an existing one
@@ -194,7 +196,7 @@ export class UploadResourceComponent implements OnInit, DoCheck {
 
   closeModal(modalID: string) {
     /*
-      This emits an event that the parent component listens for; the parent uses
+      This emits an event that the parent component listens for; then the parent uses
       the modalID to close the modal.
       Note: The parent component must declare the following in order to close
             the modal programmatically:
