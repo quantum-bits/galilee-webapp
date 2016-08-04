@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, ROUTER_DIRECTIVES} from '@angular/router';
 
+import {MaterializeDirective} from "angular2-materialize";
+
 import {ReadingService} from './shared/services/reading.service';
 import {Reading} from './shared/models/reading.model';
 import {PracticeService} from './shared/services/practice.service';
@@ -16,7 +18,7 @@ import {UserService} from './authentication/user.service';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css'],
   providers: [ReadingService, PracticeService, ResourceService],
-  directives: [ROUTER_DIRECTIVES],
+  directives: [ROUTER_DIRECTIVES, MaterializeDirective],
 })
 export class AppComponent implements OnInit {
   title = 'app works!';

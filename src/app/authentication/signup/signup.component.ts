@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ROUTER_DIRECTIVES } from '@angular/router';
 
-//import { Validators } from '@angular/common';
-//import { REACTIVE_FORM_DIRECTIVES, FormGroup, FormControl, FormBuilder } from '@angular/forms';
-
 import {
   FORM_DIRECTIVES,
   REACTIVE_FORM_DIRECTIVES,
@@ -34,7 +31,8 @@ export class SignupComponent implements OnInit {
 
   // see: https://github.com/auth0-blog/angular2-authentication-sample
   //      https://medium.com/@blacksonic86/angular-2-authentication-revisited-611bf7373bf9#.vwfc7gq9v
-
+  // currently using the following server to mock authentication, etc.:
+  //      https://github.com/auth0-blog/nodejs-jwt-authentication-sample
   public signupForm: FormGroup; // model driven form
   private signinServerError: any;
 
