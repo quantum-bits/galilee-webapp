@@ -15,24 +15,38 @@
                   formControlName="username">
               </div>
             </div>
-            <div class="row">
-              <div class="input-field col s12">
-                <label for="password">Password</label>
-                <input
-                  [input-wake-up]="'password'"
-                  id="password"
-                  type="password"
-                  formControlName="password">
+            <div formGroupName="passwords">
+              <div class="row">
+                <div class="input-field col s12">
+                  <label for="password">Password</label>
+                  <input
+                    [input-wake-up]="'password'"
+                    [class.warning-background] = "signupForm.controls.passwords.errors && signupForm.controls.passwords.controls.password.touched && signupForm.controls.passwords.controls.password2.touched"
+                    id="password"
+                    type="password"
+                    formControlName="password">
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <label for="password2">Reenter Password</label>
+                  <input
+                    [input-wake-up]="'password2'"
+                    [class.warning-background] = "signupForm.controls.passwords.errors && signupForm.controls.passwords.controls.password.touched && signupForm.controls.passwords.controls.password2.touched"
+                    id="password2"
+                    type="password"
+                    formControlName="password2">
+                </div>
+                <div *ngIf="signupForm.controls.passwords.errors && signupForm.controls.passwords.controls.password.touched && signupForm.controls.passwords.controls.password2.touched ">
+                  <small class="warning">
+                    {{signupForm.controls.passwords.errors.error}}
+                  </small>
+                </div>
               </div>
             </div>
-            <div class="row">
-              <div class="input-field col s12">
-                <label for="password2">Reenter Password</label>
-                <input
-                  [input-wake-up]="'password2'"
-                  id="password2"
-                  type="password"
-                  formControlName="password2">
+            <div *ngIf="signinServerError" class="row">
+              <div class="input-field col s12 user-exists-warning red-text text-darken-2 red lighten-3">
+                {{signinServerError._body}}
               </div>
             </div>
           </div>
@@ -47,5 +61,9 @@
       </div>
     </div>
   </form>
-  <a [routerLink]="['/login']">Click here to Login</a>
+  <div class="row">
+    <div class="col s12 m6 offset-m3 l6 offset-l3 center">
+      <a [routerLink]="['/login']">Click here to Login</a>
+    </div>
+  </div>
 </div>

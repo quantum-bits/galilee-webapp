@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
   //      https://scotch.io/tutorials/using-angular-2s-model-driven-forms-with-formgroup-and-formcontrol
 
   public loginForm: FormGroup; // model driven form
+  private signinServerError: any;
 
   constructor(private userService: UserService,
               private router: Router,
@@ -45,15 +46,22 @@ export class LoginComponent implements OnInit {
     //var username: string;
     //var password: string;
     if (this.loginForm.valid){
+      this.signinServerError = null;//reinitialize it....
       this.userService.login(
         this.loginForm.value.username,
-        this.loginForm.value.password).subscribe((result) => {
-        console.log('back in the login component');
-        console.log(result);
-        if (result) {
-          this.router.navigate(['/end-user']);
-        }
-      });
+        this.loginForm.value.password).subscribe(
+        (result) => {
+          console.log('back in the login component');
+          console.log(result);
+          if (result) {
+            this.router.navigate(['/end-user']);
+          }
+      },
+        (error) => {
+          console.log('there was an error');
+          console.log(error);
+          this.signinServerError = error;
+        });
     }
   }
 

@@ -26,6 +26,11 @@
                   formControlName="password">
               </div>
             </div>
+            <div *ngIf="signinServerError" class="row">
+              <div class="input-field col s12 login-error red-text text-darken-2 red lighten-3">
+                {{signinServerError._body}}
+              </div>
+            </div>
           </div>
           <div class="card-action">
             <button
@@ -38,5 +43,9 @@
       </div>
     </div>
   </form>
-  <a [routerLink]="['/signup']">Click here to Signup</a>
+  <div class="row">
+    <div class="col s12 m6 offset-m3 l6 offset-l3 center">
+      <a [routerLink]="['/signup']">Click here to Signup</a>
+    </div>
+  </div>
 </div>
