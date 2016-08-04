@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {ROUTER_DIRECTIVES} from '@angular/router';
+import {Router, ROUTER_DIRECTIVES} from '@angular/router';
 
 import {ReadingService} from './shared/services/reading.service';
 import {Reading} from './shared/models/reading.model';
 import {PracticeService} from './shared/services/practice.service';
 import {Practice} from './shared/models/practice.model';
 import {ResourceService} from './shared/services/resource.service';
+import {UserService} from './authentication/user.service';
 
 //import { ReadingService } from './shared';
 
@@ -30,7 +31,9 @@ export class AppComponent implements OnInit {
   public managePage = false;
 
   constructor(private readingService:ReadingService,
-              private practiceService:PracticeService) {
+              private practiceService:PracticeService,
+              private user: UserService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -53,22 +56,13 @@ export class AppComponent implements OnInit {
 
   }
 
-  gotoDetails() {
-    this.detailsPage = true;
-    this.managePage = false;
-    this.landingPage = false;
+  isLoggedIn(){
+    return this.user.isLoggedIn();
   }
 
-  goBack() {
-    this.detailsPage = false;
-    this.managePage = false;
-    this.landingPage = true;
-  }
-
-  gotoManage() {
-    this.detailsPage = false;
-    this.managePage = true;
-    this.landingPage = false;
+  logout(){
+    this.user.logout();
+    this.router.navigate(['/login']);
   }
 
 }

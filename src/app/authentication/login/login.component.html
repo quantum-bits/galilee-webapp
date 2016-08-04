@@ -1,20 +1,42 @@
-<p>
-  login works!
-</p>
-
-
-<div class="login jumbotron center-block">
-  <h1>Login</h1>
-  <form role="form" (submit)="login($event, username.value, password.value)">
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input type="text" #username class="form-control" id="username" placeholder="Username">
+<div class="container">
+  <form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col s12 m6 offset-m3 l4 offset-l4">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">Login</span>
+            <div class="row">
+              <div class="input-field col s12">
+                <label for="username">Username</label>
+                <input
+                  [input-wake-up]="'username'"
+                  id="username"
+                  type="text"
+                  formControlName="username">
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <label for="password">Password</label>
+                <input
+                  [input-wake-up]="'password'"
+                  id="password"
+                  type="password"
+                  class="validate"
+                  formControlName="password">
+              </div>
+            </div>
+          </div>
+          <div class="card-action">
+            <button
+              class="waves-effect waves-light btn"
+              type="submit"
+              [class.disabled]="!loginForm.valid"
+              [disabled]="!loginForm.valid">Submit</button>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" #password class="form-control" id="password" placeholder="Password">
-    </div>
-    <button type="submit" class="btn btn-default">Submit</button>
-    <a [routerLink]="['/signup']">Click here to Signup</a>
   </form>
+  <a [routerLink]="['/signup']">Click here to Signup</a>
 </div>

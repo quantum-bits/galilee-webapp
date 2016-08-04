@@ -3,8 +3,9 @@
     <div class="nav-wrapper">
       <span class="brand-logo left">Scripture Engagement</span>
       <span class="brand-logo right">
-        <a [routerLink]="['/end-user']"><i class="material-icons left">perm_identity</i> </a>
+        <a *ngIf="isLoggedIn()" (click)="logout()"><i class="material-icons right">power_settings_new</i></a>
         <a [routerLink]="['/admin']"><i class="material-icons right">settings</i> </a>
+        <a [routerLink]="['/end-user']"><i class="material-icons right">perm_identity</i> </a>
       </span>
     </div>
   </div>
