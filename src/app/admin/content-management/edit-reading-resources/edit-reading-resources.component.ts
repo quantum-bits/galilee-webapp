@@ -8,9 +8,9 @@ import {UpdateResourceItemBindingService} from '../update-resource-item-binding.
 
 import {MaterializeDirective} from "angular2-materialize";
 
-import {ReadingService} from '../../shared/services/reading.service';
-import {Reading} from '../../shared/models/reading.model';
-import { ResourceCollection } from '../../shared/interfaces/resource-collection.interface';
+import {ReadingService} from '../../../shared/services/reading.service';
+import {Reading} from '../../../shared/models/reading.model';
+import { ResourceCollection } from '../../../shared/interfaces/resource-collection.interface';
 
 import { UpdatePracticesComponent } from '../update-practices';
 import {UpdateResourcesComponent} from '../update-resources';

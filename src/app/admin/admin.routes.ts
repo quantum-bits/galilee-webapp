@@ -1,5 +1,5 @@
 import {AdminComponent} from './admin.component';
-import {EditReadingResourcesComponent} from './edit-reading-resources/edit-reading-resources.component';
+import {EditReadingResourcesComponent} from './content-management/edit-reading-resources/edit-reading-resources.component';
 
 import { AuthGuard } from '../authentication/common/auth.guard';
 

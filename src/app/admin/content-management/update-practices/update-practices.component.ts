@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges, EventEmitter, Input, Output } from '@angular/core';
 
-import {PracticeService} from '../../shared/services/practice.service';
-import {Practice} from '../../shared/models/practice.model';
+import {PracticeService} from '../../../shared/services/practice.service';
+import {Practice} from '../../../shared/models/practice.model';
 
 import { UpdatePracticeItemComponent } from '../update-practice-item';
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Subject }    from 'rxjs/Subject';
 
-import { ResourceCollection } from '../shared/interfaces/resource-collection.interface';
+import { ResourceCollection } from '../../shared/interfaces/resource-collection.interface';
 
 @Injectable()
 export class UpdateResourceItemBindingService {

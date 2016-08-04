@@ -13,11 +13,11 @@ import {
   FormControl
 } from '@angular/forms';
 
-import { Resource } from '../../shared/interfaces/resource.interface';
-import { ResourceCollection } from '../../shared/interfaces/resource-collection.interface';
+import { Resource } from '../../../shared/interfaces/resource.interface';
+import { ResourceCollection } from '../../../shared/interfaces/resource-collection.interface';
 
-import { InputWakeUp } from '../../shared/directives/input-wake-up.directive';
-import { TextareaAutoresize } from '../../shared/directives/textarea-autoresize.directive';
+import { InputWakeUp } from '../../../shared/directives/input-wake-up.directive';
+import { TextareaAutoresize } from '../../../shared/directives/textarea-autoresize.directive';
 
 import {UpdateResourceItemBindingService} from '../update-resource-item-binding.service';
 

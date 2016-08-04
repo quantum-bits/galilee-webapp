@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 
-import { Resource } from '../../shared/interfaces/resource.interface';
-import { ResourceCollection } from '../../shared/interfaces/resource-collection.interface';
+import { Resource } from '../../../shared/interfaces/resource.interface';
+import { ResourceCollection } from '../../../shared/interfaces/resource-collection.interface';
 import { UpdateResourceItemComponent } from '../update-resource-item';
 import { UploadResourceComponent } from '../upload-resource';
 

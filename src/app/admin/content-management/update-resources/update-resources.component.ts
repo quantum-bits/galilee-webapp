@@ -1,12 +1,12 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, Renderer } from '@angular/core';
 
-import {ResourceService} from '../../shared/services/resource.service';
+import {ResourceService} from '../../../shared/services/resource.service';
 //import { UpdateResourceItemComponent } from '../update-resource-item';
 import { UpdateResourceCollectionComponent } from '../update-resource-collection';
 import { UploadResourceComponent } from '../upload-resource';
 
-import { Resource } from '../../shared/interfaces/resource.interface';
-import { ResourceCollection } from '../../shared/interfaces/resource-collection.interface';
+import { Resource } from '../../../shared/interfaces/resource.interface';
+import { ResourceCollection } from '../../../shared/interfaces/resource-collection.interface';
 
 import {MaterializeDirective} from "angular2-materialize";
 import {Dragula, DragulaService} from 'ng2-dragula/ng2-dragula';
