@@ -5,7 +5,7 @@
       <ul id="nav-mobile" class="right">
         <li>
           <a [routerLink]="['/end-user']">
-            <i class="material-icons">perm_identity</i>
+            <i class="material-icons">book</i>
           </a>
         </li>
         <li>
@@ -21,6 +21,12 @@
             <i class="material-icons">power_settings_new</i>
           </a>
         </li>
+        <li>
+          <a *ngIf="!isLoggedIn()"
+             [routerLink]="['/login']">
+            <i class="material-icons">perm_identity</i>
+          </a>
+        </li>
       </ul>
     </div>
   </div>
@@ -31,8 +37,8 @@
 
 <!-- Dropdown Structure -->
 <ul id='adminDropdownMenu' class='dropdown-content'>
-  <li><a [routerLink]="['/admin']">Practices & Resources</a></li>
-  <li><a href="#!">Manage Users</a></li>
+  <li><a [routerLink]="['/admin/edit-reading-resources']">Practices & Resources</a></li>
+  <li><a [routerLink]="['/admin/manage-users']">Manage Users</a></li>
   <li class="divider"></li>
   <li><a href="#!">Other...?</a></li>
 </ul>

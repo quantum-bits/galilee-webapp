@@ -21,6 +21,7 @@ module.exports = function(defaults) {
       'ng2-file-upload/**/*.js',
       'dragula/**/*.+(js|css)',
       'ng2-dragula/**/*.js',
+      'ng2-pagination/**/*.js',
       'angular2-jwt/**/*.js'
     ]
   });

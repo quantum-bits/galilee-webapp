@@ -1,0 +1,105 @@
+<div class="container">
+  <span class="row">
+    <div class="input-field col s3">
+              <select [(ngModel)]="filterBy" materialize="material_select" [materializeSelectOptions]="filterSelectOptions">
+                <option *ngFor="let option of filterSelectOptions" [value]="option.value">{{option.name}}</option>
+              </select>
+              <label>filter by</label>
+    </div>
+
+    <!-- having problems getting this to work....
+    <div class="input-field col s3">
+              <select [(ngModel)]="config.itemsPerPage" materialize="material_select" [materializeSelectOptions]="itemsPerPageOptions">
+                <option *ngFor="let option of itemsPerPageOptions" [value]="option.value">{{option.name}}</option>
+              </select>
+              <label>items per page</label>
+    </div>
+    -->
+    </span>
+    <span class="row">
+      <div class="input-field col s6">
+        <label for="filter">Filter</label>
+        <input id="filter" type="text" class="input" [(ngModel)]="filter" (keyup)="onKey()">
+      </div>
+
+    </span>
+    <span class="row">
+
+    <div class="col s12">
+      <table class="striped">
+        <thead>
+          <tr>
+              <th data-field="lastName">Last Name</th>
+              <th data-field="firstName">First Name</th>
+              <th data-field="email">Email</th>
+              <th data-field="edit">Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of filteredUsers | paginate: config">
+              <td>{{ user.lastName }}</td>
+              <td>{{ user.firstName }}</td>
+              <td>{{ user.email }}</td>
+              <td></td>
+            </tr>
+        </tbody>
+      </table>
+      <div class="center">
+          <pagination-controls #p
+            [id]="config.id"
+            (pageChange)="onPageChange($event)">
+
+            <ul class="pagination">
+              <li class="disabled" *ngIf="p.isFirstPage()">
+                <a>
+                  <i class="material-icons">chevron_left</i>
+                </a>
+              </li>
+              <li class="waves-effect" *ngIf="!p.isFirstPage()">
+                <a (click)="p.previous()">
+                  <i class="material-icons">chevron_left</i>
+                </a>
+              </li>
+              <span *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
+                <li *ngIf="p.getCurrent() !== page.value" class="waves-effect">
+                  <a (click)="p.setCurrent(page.value)">
+                      <span>{{ page.label }}</span>
+                  </a>
+                </li>
+                <li *ngIf="p.getCurrent() === page.value" class="active">
+                      <span>{{ page.label }}</span>
+                </li>
+              </span>
+              <li class="disabled" *ngIf="p.isLastPage()">
+                <a>
+                  <i class="material-icons">chevron_right</i>
+                </a>
+              </li>
+              <li class="waves-effect" *ngIf="!p.isLastPage()">
+                <a (click)="p.next()">
+                  <i class="material-icons">chevron_right</i>
+                </a>
+              </li>
+            </ul>
+
+          </pagination-controls>
+      </div>
+      <div *ngIf="length" class="center">
+        <div *ngIf="length == 1">
+          {{length}} record found
+        </div>
+        <div *ngIf="length > 1">
+          {{length}} records found
+        </div>
+      </div>
+      <div *ngIf="!length" class="center">
+          No records found
+      </div>
+
+      Items Per Page: {{config.itemsPerPage}}
+
+
+    </div>
+  </span>
+</div>
+

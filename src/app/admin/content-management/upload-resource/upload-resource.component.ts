@@ -21,7 +21,7 @@ import { TextareaAutoresize } from '../../../shared/directives/textarea-autoresi
 
 import {UpdateResourceItemBindingService} from '../update-resource-item-binding.service';
 
-const URL = '/api/';
+const URL = 'http://localhost:3000/resources';
 
 declare var $: any; // for using jQuery within this angular component
 

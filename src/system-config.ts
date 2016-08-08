@@ -12,7 +12,8 @@ const map: any = {
   'angular2-materialize': 'vendor/angular2-materialize',
   'ng2-file-upload': 'vendor/ng2-file-upload/ng2-file-upload.js',
   'dragula': 'vendor/dragula/dist/dragula.js',
-  'ng2-dragula': 'vendor/ng2-dragula'
+  'ng2-dragula': 'vendor/ng2-dragula',
+  'ng2-pagination': 'vendor/ng2-pagination/index.js'
 };
 
 /** User packages configuration. */
@@ -31,6 +32,9 @@ const packages: any = {
     defaultExtension: 'js'
   },
   'vendor/ng2-dragula': {
+    defaultExtension: 'js'
+  },
+  'vendor/ng2-pagination': {
     defaultExtension: 'js'
   }
 };
@@ -78,6 +82,7 @@ const barrels: string[] = [
   'app/admin/content-management/update-resource-collection',
   'app/authentication/login',
   'app/authentication/signup',
+  'app/admin/user-management/manage-users',
   /** @cli-barrel */
 ];
 
