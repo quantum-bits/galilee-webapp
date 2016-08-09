@@ -19,6 +19,9 @@ export class ManageUsersComponent implements OnInit {
 
   // other helpful examples (including async call to server)
   // using the pagination package: http://michaelbromley.github.io/ng2-pagination/
+  // BUG: if change FilterBy, it doesn't recheck the filter...oops!
+
+
 
   private users: any;//use interface(!)
   private filteredUsers: any;//use interface(!)
@@ -89,7 +92,6 @@ export class ManageUsersComponent implements OnInit {
       () => console.log("Users fetched"));
   }
 
-
   onKey(){
     this.eventCounter+=1;
     console.log(this.eventCounter);
@@ -113,6 +115,15 @@ export class ManageUsersComponent implements OnInit {
     this.length = this.filteredUsers.length;
   }
 
+  onSelect(optionValue){
+    // can use ngModel in the template, but the click handler seems to get confused
+    // (maybe it gets called before the value is actually changed?) and the list doesn
+    // not end up getting refreshed....  here we are making the change by hand, and
+    // it seems to work well
+    this.filterBy = optionValue;
+    this.filterList();
+  }
+  
   onPageChange(number: number) {
     console.log('change to page', number);
     this.config.currentPage = number;
