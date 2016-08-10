@@ -1,52 +1,173 @@
-<div class="container">
+<div materialize class="container">
   <div class="card">
     <div class="card-content">
       <div class="card-title">
         Manage Users
       </div>
 
-      <span class="row">
-        <div class="input-field col s3">
-          <select #selectedOption
-            materialize="material_select"
-            [materializeSelectOptions]="filterSelectOptions" (change)="onSelect(selectedOption.value)">
-            <option *ngFor="let option of filterSelectOptions"
-                    [value]="option.value">{{option.name}}</option>
-          </select>
-          <label>Filter By</label>
-        </div>
+      <div class="row">
+        <div class = "card col s10 offset-s1">
+          <div class = "card-content">
+            <div class="row">
+              <div class="col s4">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <select #selectedOption
+                            materialize="material_select"
+                            [materializeSelectOptions]="filterSelectOptions" (change)="onSelect(selectedOption.value)">
+                      <option *ngFor="let option of filterSelectOptions"
+                              [value]="option.value">{{option.name}}</option>
+                    </select>
+                    <label>Filter By</label>
+                  </div>
 
-        <!-- having problems getting this to work....
-        <div class="input-field col s3">
-                  <select [(ngModel)]="config.itemsPerPage" materialize="material_select" [materializeSelectOptions]="itemsPerPageOptions">
-                    <option *ngFor="let option of itemsPerPageOptions" [value]="option.value">{{option.name}}</option>
-                  </select>
-                  <label>items per page</label>
-        </div>
-        -->
-        </span>
-        <span class="row">
-          <div class="input-field col s6">
-            <label for="filter">Filter</label>
-            <input
-              id="filter"
-              type="text"
-              class="input"
-              [(ngModel)]="filter"
-              (keyup)="onKey()">
+                  <div class="input-field col s12">
+                    <label for="filter">Filter</label>
+                    <input
+                      id="filter"
+                      type="text"
+                      class="input"
+                      [(ngModel)]="filter"
+                      (keyup)="onKey()">
+                  </div>
+                </div>
+              </div>
+
+              <div class="col s7 offset-s1">
+                <table class="centered striped">
+                  <thead>
+                    <tr>
+                      <th data-field="permissionType"> Permission</th>
+                      <th data-field="permission-can"> can </th>
+                      <th data-field="permission-cannot"> cannot </th>
+                      <th data-field="permission-either"> either </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let permissionFilter of permissionFilters; let i=index">
+                      <td>{{permissionFilter.title}}</td>
+                      <td>
+                        <input type="radio"
+                             name="permissionFilter{{permissionFilter.id}}"
+                             id="permissionFilter_{{i}}_1"
+                             class="with-gap"
+                             (click)="selectPermissionFilter(permissionFilter, permissionFilterType.can)"
+                             [checked] = "permissionFilters[i].filter === permissionFilterType.can">
+                        <label [attr.for]="'permissionFilter_' + i+'_1'"></label>
+                      </td>
+                      <td>
+                        <input type="radio"
+                               name="permissionFilter{{permissionFilter.id}}"
+                               id="permissionFilter_{{i}}_2"
+                               class="with-gap"
+                               (click)="selectPermissionFilter(permissionFilter, permissionFilterType.can)"
+                               [checked] = "permissionFilters[i].filter === permissionFilterType.cannot">
+                        <label [attr.for]="'permissionFilter_' + i+'_2'"></label>
+                      </td>
+                      <td>
+                        <input type="radio"
+                               name="permissionFilter{{permissionFilter.id}}"
+                               id="permissionFilter_{{i}}_3"
+                               class="with-gap"
+                               (click)="selectPermissionFilter(permissionFilter, permissionFilterType.can)"
+                               [checked] = "permissionFilters[i].filter === permissionFilterType.either">
+                        <label [attr.for]="'permissionFilter_' + i+'_3'"></label>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+
+            <!--
+
+            <div materialize class="row">
+              <div class="card col s12 m6 offset-m3 l6 offset-l3">
+                <div class="card-content">
+                  <p>{{questionNumber+1}}. {{multipleChoiceQuestion.question}}</p>
+
+                  <div *ngFor="let answer of multipleChoiceQuestion.answers; let i=index">
+                    <input type="radio"
+                           name="{{multipleChoiceQuestion.uuid}}"
+                           id="f_{{i}}{{multipleChoiceQuestion.uuid}}"
+                           class="with-gap"
+                           (click)="selectAnswer(multipleChoiceQuestion.uuid, answer.id)"
+                           [checked] = "answer.id===checkedAnswerID">
+                    <label [attr.for]="'f_' + i+multipleChoiceQuestion.uuid">{{answer.answer}} </label>
+                  </div>
+
+
+
+                </div>
+              </div>
+            </div>
+
+            -->
+
+
+
+
+
           </div>
-
-        </span>
-        <span class="row">
+        </div>
+      </div>
+      <span class="row">
 
         <div class="col s12">
           <table class="striped">
             <thead>
               <tr>
-                  <th data-field="lastName">Last Name</th>
-                  <th data-field="firstName">First Name</th>
-                  <th data-field="email">Email</th>
-                  <th data-field="edit">Edit</th>
+                <th data-field="lastName">
+                  <a class="grey-text text-darken-4" (click)="toggleSort('lastName')">Last Name
+                    <span *ngIf="sortColumn == 'lastName'">
+                      <span *ngIf="sortAscending">
+                        <i class="material-icons">keyboard_arrow_up</i>
+                      </span>
+                      <span *ngIf="!sortAscending">
+                        <i class="material-icons">keyboard_arrow_down</i>
+                      </span>
+                    </span>
+                  </a>
+                </th>
+                <th data-field="firstName">
+                  <a class="grey-text text-darken-4" (click)="toggleSort('firstName')">First Name
+                    <span *ngIf="sortColumn == 'firstName'">
+                      <span *ngIf="sortAscending">
+                        <i class="material-icons">keyboard_arrow_up</i>
+                      </span>
+                      <span *ngIf="!sortAscending">
+                        <i class="material-icons">keyboard_arrow_down</i>
+                      </span>
+                    </span>
+                  </a>
+                </th>
+                <th data-field="email">
+                  <a class="grey-text text-darken-4" (click)="toggleSort('email')">Email
+                    <span *ngIf="sortColumn == 'email'">
+                      <span *ngIf="sortAscending">
+                        <i class="material-icons">keyboard_arrow_up</i>
+                      </span>
+                      <span *ngIf="!sortAscending">
+                        <i class="material-icons">keyboard_arrow_down</i>
+                      </span>
+                    </span>
+                  </a>
+                </th>
+                <th data-field="enabled">
+                  <a class="grey-text text-darken-4" (click)="toggleEnabled()">
+                    <span *ngIf="viewEnabledUsers == userEnabledChoices[0]">
+                      Enabled?
+                    </span>
+                    <span *ngIf="viewEnabledUsers == userEnabledChoices[1]">
+                      Enabled (only)
+                    </span>
+                    <span *ngIf="viewEnabledUsers == userEnabledChoices[2]">
+                      Not Enabled
+                    </span>
+                  </a>
+                </th>
+                <th data-field="edit">Edit</th>
               </tr>
             </thead>
             <tbody>
@@ -54,7 +175,14 @@
                   <td>{{ user.lastName }}</td>
                   <td>{{ user.firstName }}</td>
                   <td>{{ user.email }}</td>
-                  <td></td>
+                  <td>
+                    <span *ngIf="user.enabled">
+                      <i class="material-icons">check_circle</i>
+                    </span>
+                  </td>
+                  <td>
+                    <i class="material-icons">edit</i>
+                  </td>
                 </tr>
             </tbody>
           </table>
@@ -115,3 +243,47 @@
   </div>
 </div>
 
+<div>
+  <input type="checkbox" class="filled-in" id="showHiddenItems"  [(ngModel)]="showHidden"/>
+  <label for="showHiddenItems">Show Hidden</label>
+</div>
+
+<!--
+<div materialize class="row">
+  <div class="card col s12 m6 offset-m3 l6 offset-l3">
+    <div class="card-content">
+      <p>{{questionNumber+1}}. {{multipleChoiceQuestion.question}}</p>
+
+      <div *ngFor="let answer of multipleChoiceQuestion.answers; let i=index">
+        <input type="radio"
+               name="{{multipleChoiceQuestion.uuid}}"
+               id="f_{{i}}{{multipleChoiceQuestion.uuid}}"
+               class="with-gap"
+               (click)="selectAnswer(multipleChoiceQuestion.uuid, answer.id)"
+               [checked] = "answer.id===checkedAnswerID">
+         <label [attr.for]="'f_' + i+multipleChoiceQuestion.uuid">{{answer.answer}} </label>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>
+-->
+
+<!--
+<div materialize *ngFor="let permissionFilter of permissionFilters; let i=index">
+              {{permissionFilter.title}}
+              <span>
+                <input type="radio"
+                       name="permissionFilter{{permissionFilter.id}}"
+                       id="permissionFilter_{{i}}_1"
+                       class="with-gap"
+                       (click)="select()"
+                       [checked] = "permissionFilters[i].filter === 0">
+                <label [attr.for]="'permissionFilter_' + i+'_1'"> </label>
+
+              </span>
+
+            </div>
+-->

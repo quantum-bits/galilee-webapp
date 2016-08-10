@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 
+import {Observable} from 'rxjs/Rx';
+
 import { Http, Headers } from '@angular/http';
 import { contentHeaders } from './common/headers';
+
+import {User} from '../shared/models/user.model';
+import {Permission} from '../shared/models/permission.model';
+
 //import localStorage from 'localStorage'; // I'm not sure why, but we apparently don't need to do this....
 
 // Some examples of sending authenticated requests to the server may be found here:
@@ -12,6 +18,352 @@ import { contentHeaders } from './common/headers';
 //       former approach sends an authenticated request without the help of the angular2-jwt package.
 
 const baseUrl = 'http://localhost:3001';
+
+// MOCK
+
+const USERS: User[] = [
+  {
+    id: 1,
+    email: 'john@gmail.com',
+    password: 'hash?',
+    firstName: 'John',
+    lastName: 'Ztgmail',
+    joinedOn: 'date-format',
+    enabled: false,
+    preferredVersionID: 1,
+    permission: [
+      {
+        title: 'Edit Resources',
+        id: 'EDIT_RES',
+        enabled: false
+      },
+      {
+        title: 'Edit Practices',
+        id: 'EDIT_PRAC',
+        enabled: true
+      },
+      {
+        title: 'Admin',
+        id: 'ADMIN',
+        enabled: false
+      }
+    ]
+  },
+  {
+    id: 2,
+    email: 'jane@gmail.com',
+    password: 'hash?',
+    firstName: 'Jane',
+    lastName: 'Atgmaal',
+    joinedOn: 'date-format',
+    enabled: true,
+    preferredVersionID: 2,
+    permission: [
+      {
+        title: 'Edit Resources',
+        id: 'EDIT_RES',
+        enabled: true
+      },
+      {
+        title: 'Edit Practices',
+        id: 'EDIT_PRAC',
+        enabled: false
+      },
+      {
+        title: 'Admin',
+        id: 'ADMIN',
+        enabled: true
+      }
+    ]
+  },
+  {
+    id: 3,
+    email: 'jean@gmail.com',
+    password: 'hash?',
+    firstName: 'Ali',
+    lastName: 'Atthemall',
+    joinedOn: 'date-format',
+    enabled: false,
+    preferredVersionID: 14,
+    permission: [
+      {
+        title: 'Edit Resources',
+        id: 'EDIT_RES',
+        enabled: false
+      },
+      {
+        title: 'Edit Practices',
+        id: 'EDIT_PRAC',
+        enabled: true
+      },
+      {
+        title: 'Admin',
+        id: 'ADMIN',
+        enabled: true
+      }
+    ]
+  },
+  {
+    id: 4,
+    email: 'ali@gmail.com',
+    password: 'hash?',
+    firstName: 'Aali',
+    lastName: 'Btthemall',
+    joinedOn: 'date-format',
+    enabled: true,
+    preferredVersionID: 14,
+    permission: [
+      {
+        title: 'Edit Resources',
+        id: 'EDIT_RES',
+        enabled: true
+      },
+      {
+        title: 'Edit Practices',
+        id: 'EDIT_PRAC',
+        enabled: false
+      },
+      {
+        title: 'Admin',
+        id: 'ADMIN',
+        enabled: false
+      }
+    ]
+  },
+  {
+    id: 5,
+    email: 'jean@gmail.com',
+    password: 'hash?',
+    firstName: 'Bba',
+    lastName: 'Btthemall',
+    joinedOn: 'date-format',
+    enabled: true,
+    preferredVersionID: 14,
+    permission: [
+      {
+        title: 'Edit Resources',
+        id: 'EDIT_RES',
+        enabled: false
+      },
+      {
+        title: 'Edit Practices',
+        id: 'EDIT_PRAC',
+        enabled: false
+      },
+      {
+        title: 'Admin',
+        id: 'ADMIN',
+        enabled: true
+      }
+    ]
+  },
+  {
+    id: 6,
+    email: 'celeste@gmail.com',
+    password: 'hash?',
+    firstName: 'Celeste',
+    lastName: 'Ctthemall',
+    joinedOn: 'date-format',
+    enabled: true,
+    preferredVersionID: 14,
+    permission: [
+      {
+        title: 'Edit Resources',
+        id: 'EDIT_RES',
+        enabled: true
+      },
+      {
+        title: 'Edit Practices',
+        id: 'EDIT_PRAC',
+        enabled: true
+      },
+      {
+        title: 'Admin',
+        id: 'ADMIN',
+        enabled: true
+      }
+    ]
+  },
+  {
+    id: 7,
+    email: 'jean@gmail.com',
+    password: 'hash?',
+    firstName: 'Zoe',
+    lastName: 'Dtthemall',
+    joinedOn: 'date-format',
+    enabled: true,
+    preferredVersionID: 14,
+    permission: [
+      {
+        title: 'Edit Resources',
+        id: 'EDIT_RES',
+        enabled: false
+      },
+      {
+        title: 'Edit Practices',
+        id: 'EDIT_PRAC',
+        enabled: false
+      },
+      {
+        title: 'Admin',
+        id: 'ADMIN',
+        enabled: true
+      }
+    ]
+  },
+  {
+    id: 8,
+    email: 'bbdoni@gmail.com',
+    password: 'hash?',
+    firstName: 'Doni',
+    lastName: 'Dtthemall',
+    joinedOn: 'date-format',
+    enabled: true,
+    preferredVersionID: 14,
+    permission: [
+      {
+        title: 'Edit Resources',
+        id: 'EDIT_RES',
+        enabled: true
+      },
+      {
+        title: 'Edit Practices',
+        id: 'EDIT_PRAC',
+        enabled: false
+      },
+      {
+        title: 'Admin',
+        id: 'ADMIN',
+        enabled: true
+      }
+    ]
+  },
+  {
+    id: 9,
+    email: 'zzjean@gmail.com',
+    password: 'hash?',
+    firstName: 'Jean',
+    lastName: 'Etthemall',
+    joinedOn: 'date-format',
+    enabled: true,
+    preferredVersionID: 14,
+    permission: [
+      {
+        title: 'Edit Resources',
+        id: 'EDIT_RES',
+        enabled: false
+      },
+      {
+        title: 'Edit Practices',
+        id: 'EDIT_PRAC',
+        enabled: true
+      },
+      {
+        title: 'Admin',
+        id: 'ADMIN',
+        enabled: true
+      }
+    ]
+  },
+  {
+    id: 10,
+    email: 'yyajean@gmail.com',
+    password: 'hash?',
+    firstName: 'Jean',
+    lastName: 'BBtthemall',
+    joinedOn: 'date-format',
+    enabled: true,
+    preferredVersionID: 14,
+    permission: [
+      {
+        title: 'Edit Resources',
+        id: 'EDIT_RES',
+        enabled: false
+      },
+      {
+        title: 'Edit Practices',
+        id: 'EDIT_PRAC',
+        enabled: true
+      },
+      {
+        title: 'Admin',
+        id: 'ADMIN',
+        enabled: false
+      }
+    ]
+  },
+  {
+    id: 11,
+    email: 'lean@gmail.com',
+    password: 'hash?',
+    firstName: 'AAJean',
+    lastName: 'Fgtthemall',
+    joinedOn: 'date-format',
+    enabled: true,
+    preferredVersionID: 14,
+    permission: [
+      {
+        title: 'Edit Resources',
+        id: 'EDIT_RES',
+        enabled: true
+      },
+      {
+        title: 'Edit Practices',
+        id: 'EDIT_PRAC',
+        enabled: false
+      },
+      {
+        title: 'Admin',
+        id: 'ADMIN',
+        enabled: false
+      }
+    ]
+  },
+  {
+    id: 12,
+    email: 'gean@gmail.com',
+    password: 'hash?',
+    firstName: 'aaJean',
+    lastName: 'aatthemall',
+    joinedOn: 'date-format',
+    enabled: true,
+    preferredVersionID: 14,
+    permission: [
+      {
+        title: 'Edit Resources',
+        id: 'EDIT_RES',
+        enabled: true
+      },
+      {
+        title: 'Edit Practices',
+        id: 'EDIT_PRAC',
+        enabled: true
+      },
+      {
+        title: 'Admin',
+        id: 'ADMIN',
+        enabled: false
+      }
+    ]
+  }
+];
+
+//MOCK
+const PERMISSION_TYPES: Permission[] = [
+  {
+    title: 'Edit Resources',
+    id: 'EDIT_RES',
+  },
+  {
+    title: 'Edit Practices',
+    id: 'EDIT_PRAC',
+  },
+  {
+    title: 'Admin',
+    id: 'ADMIN',
+  }
+];
+
 
 @Injectable()
 export class UserService {
@@ -70,4 +422,22 @@ export class UserService {
   isLoggedIn() {
     return this.loggedIn;
   }
+
+  /*
+  getUser(id)
+  can(PERMISSION) method, etc.
+   */
+
+  getUsers() {
+    var promise = Promise.resolve(USERS);// Observable.just(USERS);
+    return Observable.fromPromise(promise);
+  }
+
+  getPermissionTypes(){
+    var promise = Promise.resolve(PERMISSION_TYPES);// Observable.just(USERS);
+    return Observable.fromPromise(promise);
+  }
+
+
+
 }
