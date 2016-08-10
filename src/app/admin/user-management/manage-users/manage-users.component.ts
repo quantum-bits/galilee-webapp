@@ -38,6 +38,10 @@ export class ManageUsersComponent implements OnInit {
   // filterpermission extends permission...it gets a filter ENUM as well
   // 3-way state for ENUM is: 'can' 'cannot' 'either'
 
+
+  // TODO:
+  // - fix sortColumn (make an array, etc.)
+
   private users: User[];
   private filteredUsers: User[];//use interface(!)
   private userEnabledChoices = ['all', 'onlyEnabled', 'onlyNonenabled'];
@@ -131,8 +135,9 @@ export class ManageUsersComponent implements OnInit {
 
   filterList(){
     /*
-     A string filter; slightly modified from:
+     Applies a string filter; slightly modified from:
         https://github.com/michaelbromley/ng2-pagination/blob/master/demo/src/string-filter-pipe.ts
+     ...also applies filters on the users' permissions and on whether or not the user is 'enabled'
      NOTE: The Angular 2 documentation recommends against using a pipe for
            filtering or sorting (see: https://angular.io/docs/ts/latest/guide/pipes.html#!#no-filter-pipe);
            instead, the recommendation is to do it in the component or service itself....
@@ -143,20 +148,40 @@ export class ManageUsersComponent implements OnInit {
       this.filteredUsers = this.users;
     }
     // apply 'user enabled' filter, as appropriate....
-
-    if (this.viewEnabledUsers !== this.userEnabledChoices[0]){// 'all'
+    if (this.viewEnabledUsers !== this.userEnabledChoices[0]){// not 'all'
       if (this.viewEnabledUsers === this.userEnabledChoices[1]){// 'onlyEnabled'
         this.filteredUsers = this.filteredUsers.filter(item => item.enabled);
       } else { // 'onlyNonenabled'
         this.filteredUsers = this.filteredUsers.filter(item => !item.enabled);
       }
     }
-
-
+    // apply permission filters, as appropriate....
+    for (let permissionFilter of this.permissionFilters) {
+      if (permissionFilter.filter !== PermissionFilterType.either){// not 'either'
+        if (permissionFilter.filter === PermissionFilterType.can){// 'only those with the permission'
+          this.filteredUsers = this.filteredUsers.filter(user => this.userHasPermission(user, permissionFilter));
+        } else { // 'onlyNonenabled'
+          this.filteredUsers = this.filteredUsers.filter(user => !this.userHasPermission(user, permissionFilter));
+        }
+      }
+    }
 
     this.length = this.filteredUsers.length;
     this.sortList();
     this.config.currentPage = 1;// need to set the current page to 1, in case the page we are on suddenly doesn't exist anymore....
+  }
+
+
+  userHasPermission(user: User, permissionFilter) {
+    var index;
+    for (let i in user.permission){
+      if (user.permission[i].id === permissionFilter.id) {
+        index = i;
+      }
+    }
+    if (index !== undefined) {
+      return user.permission[index].enabled;
+    }
   }
 
   sortList() {
@@ -213,10 +238,19 @@ export class ManageUsersComponent implements OnInit {
     this.filterList();
   }
 
-  selectPermissionFilter(permissionFilter, permissionFilterType){
-    console.log(permissionFilter);
-    console.log(permissionFilterType);
-
+  //
+  selectPermissionFilter(permissionFilter, permissionFilterTypeValue){
+    var index;
+    for (let i in this.permissionFilters) {
+      if (this.permissionFilters[i].id === permissionFilter.id) {
+        index = i;
+      }
+    }
+    if (index !== undefined) {
+      this.permissionFilters[index].filter = permissionFilterTypeValue;
+    }
+    console.log(this.permissionFilters);
+    this.filterList();
   }
 
   togglePermission(permissionTypeID: string) {}

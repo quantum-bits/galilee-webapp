@@ -60,7 +60,7 @@
                                name="permissionFilter{{permissionFilter.id}}"
                                id="permissionFilter_{{i}}_2"
                                class="with-gap"
-                               (click)="selectPermissionFilter(permissionFilter, permissionFilterType.can)"
+                               (click)="selectPermissionFilter(permissionFilter, permissionFilterType.cannot)"
                                [checked] = "permissionFilters[i].filter === permissionFilterType.cannot">
                         <label [attr.for]="'permissionFilter_' + i+'_2'"></label>
                       </td>
@@ -69,7 +69,7 @@
                                name="permissionFilter{{permissionFilter.id}}"
                                id="permissionFilter_{{i}}_3"
                                class="with-gap"
-                               (click)="selectPermissionFilter(permissionFilter, permissionFilterType.can)"
+                               (click)="selectPermissionFilter(permissionFilter, permissionFilterType.either)"
                                [checked] = "permissionFilters[i].filter === permissionFilterType.either">
                         <label [attr.for]="'permissionFilter_' + i+'_3'"></label>
                       </td>
@@ -79,35 +79,6 @@
               </div>
 
             </div>
-
-            <!--
-
-            <div materialize class="row">
-              <div class="card col s12 m6 offset-m3 l6 offset-l3">
-                <div class="card-content">
-                  <p>{{questionNumber+1}}. {{multipleChoiceQuestion.question}}</p>
-
-                  <div *ngFor="let answer of multipleChoiceQuestion.answers; let i=index">
-                    <input type="radio"
-                           name="{{multipleChoiceQuestion.uuid}}"
-                           id="f_{{i}}{{multipleChoiceQuestion.uuid}}"
-                           class="with-gap"
-                           (click)="selectAnswer(multipleChoiceQuestion.uuid, answer.id)"
-                           [checked] = "answer.id===checkedAnswerID">
-                    <label [attr.for]="'f_' + i+multipleChoiceQuestion.uuid">{{answer.answer}} </label>
-                  </div>
-
-
-
-                </div>
-              </div>
-            </div>
-
-            -->
-
-
-
-
 
           </div>
         </div>
@@ -156,14 +127,10 @@
                 </th>
                 <th data-field="enabled">
                   <a class="grey-text text-darken-4" (click)="toggleEnabled()">
-                    <span *ngIf="viewEnabledUsers == userEnabledChoices[0]">
-                      Enabled?
-                    </span>
-                    <span *ngIf="viewEnabledUsers == userEnabledChoices[1]">
-                      Enabled (only)
-                    </span>
-                    <span *ngIf="viewEnabledUsers == userEnabledChoices[2]">
-                      Not Enabled
+                    <span [ngSwitch]="viewEnabledUsers">
+                      <span *ngSwitchCase="userEnabledChoices[0]">Enabled?</span>
+                      <span *ngSwitchCase="userEnabledChoices[1]">Enabled (only)</span>
+                      <span *ngSwitchCase="userEnabledChoices[2]">Not Enabled</span>
                     </span>
                   </a>
                 </th>
@@ -226,64 +193,15 @@
 
               </pagination-controls>
           </div>
-          <div *ngIf="length" class="center">
-            <div *ngIf="length == 1">
-              {{length}} record found
-            </div>
-            <div *ngIf="length > 1">
-              {{length}} records found
-            </div>
+
+          <div [ngSwitch]="length" class="center">
+            <div *ngSwitchCase="1">{{length}} record found</div>
+            <div *ngSwitchCase="0">No records found</div>
+            <div *ngSwitchDefault>{{length}} records found</div>
           </div>
-          <div *ngIf="!length" class="center">
-              No records found
-          </div>
+
         </div>
       </span>
     </div>
   </div>
 </div>
-
-<div>
-  <input type="checkbox" class="filled-in" id="showHiddenItems"  [(ngModel)]="showHidden"/>
-  <label for="showHiddenItems">Show Hidden</label>
-</div>
-
-<!--
-<div materialize class="row">
-  <div class="card col s12 m6 offset-m3 l6 offset-l3">
-    <div class="card-content">
-      <p>{{questionNumber+1}}. {{multipleChoiceQuestion.question}}</p>
-
-      <div *ngFor="let answer of multipleChoiceQuestion.answers; let i=index">
-        <input type="radio"
-               name="{{multipleChoiceQuestion.uuid}}"
-               id="f_{{i}}{{multipleChoiceQuestion.uuid}}"
-               class="with-gap"
-               (click)="selectAnswer(multipleChoiceQuestion.uuid, answer.id)"
-               [checked] = "answer.id===checkedAnswerID">
-         <label [attr.for]="'f_' + i+multipleChoiceQuestion.uuid">{{answer.answer}} </label>
-      </div>
-
-
-
-    </div>
-  </div>
-</div>
--->
-
-<!--
-<div materialize *ngFor="let permissionFilter of permissionFilters; let i=index">
-              {{permissionFilter.title}}
-              <span>
-                <input type="radio"
-                       name="permissionFilter{{permissionFilter.id}}"
-                       id="permissionFilter_{{i}}_1"
-                       class="with-gap"
-                       (click)="select()"
-                       [checked] = "permissionFilters[i].filter === 0">
-                <label [attr.for]="'permissionFilter_' + i+'_1'"> </label>
-
-              </span>
-
-            </div>
--->
