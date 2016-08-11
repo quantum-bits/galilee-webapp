@@ -37,7 +37,7 @@ const READINGS = [
     ],
     resourceCollections: [
       {
-        id: 1,//id of the resource object in the db
+        id: 'collection-aaaa',//id of the resource object in the db
         title: 'Golgotha',
         description: 'Golgotha is the location where Christ was crucified. ' +
         'Lorem ipsum dolor sit amet, ligula interdum, cras in ' +
@@ -55,18 +55,20 @@ const READINGS = [
         'risus eget leo, consectetuer vitae et non, malesuada hac.',
         resources: [
           {
-            id: 1,
+            resourceId: 'resource-bbbb',
             caption: 'image of the cross',
-            type: 'image',
+            typeId: 4,
             fileName: 'cross_image.jpeg',
-            copyrightInfo: 'Zondervan Publishing, 2009.'
+            copyrightOwner: 'Zondervan Publishing',
+            copyrightYear: 2009
           },
           {
-            id: 2,
+            resourceId: 'resource-cccc',
             caption: 'image of the ark',
-            type: 'image',
+            typeId: 4,
             fileName: 'ark.jpeg',
-            copyrightInfo: 'Zondervan Publishing, 2012.'
+            copyrightOwner: 'Zondervan Publishing',
+            copyrightYear: 2009
           }
         ]//end resources
       },//end of this resource collection
@@ -81,18 +83,20 @@ const READINGS = [
         'ut suscipit pulvinar ut.',
         resources: [
           {
-            id: 3,
+            resourceId: 'resource-dddd',
             caption: 'image of the cross',
-            type: 'image',
+            typeId: 4,
             fileName: 'cross_image.jpeg',
-            copyrightInfo: 'Zondervan Publishing, 2009.'
+            copyrightOwner: 'Zondervan Publishing',
+            copyrightYear: 2009
           },
           {
-            id: 4,
+            resourceId: 'resource-eeee',
             caption: 'image of the ark',
-            type: 'image',
+            typeId: 4,
             fileName: 'ark.jpeg',
-            copyrightInfo: 'Zondervan Publishing, 2012.'
+            copyrightOwner: 'Zondervan Publishing',
+            copyrightYear: 2009
           }
         ]//end resources
       }//end of this resource collection

@@ -1,6 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Http} from '@angular/http';
+import {Injectable} from '@angular/core';
 
-import {Observable} from 'rxjs/Rx';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 
 // MOCK
 const RESOURCES = [
@@ -27,7 +29,20 @@ const PATH = 'app/images_temp/';
 @Injectable()
 export class ResourceService {
 
-  constructor() {}
+  constructor(private http:Http) {
+  }
+
+  /**
+   * Retrieve a list of the resource types.
+   * @returns {Observable<R>}
+   */
+  getResourceTypes():Observable<any> {
+    return this.http.get('http://localhost:3000/resources/types')
+      .map(res => res.json());
+  }
+
+  createCollection(title, description) {
+  }
 
   getResources() {
     var promise = Promise.resolve(RESOURCES);// Observable.just(READINGS);
@@ -38,9 +53,4 @@ export class ResourceService {
     var promise = Promise.resolve(PATH);// Observable.just(READINGS);
     return Observable.fromPromise(promise);
   }
-
-
-
-
-
 }

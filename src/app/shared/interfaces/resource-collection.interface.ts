@@ -1,4 +1,4 @@
-import {Resource} from './resource.interface';
+import {Resource} from '../models/resource.model';
 
 export interface ResourceCollection {
   id: number;

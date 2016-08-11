@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, DoCheck, Input, Output } from '@angular/core';
+import {Component, EventEmitter, OnInit, DoCheck, Input, Output} from '@angular/core';
 //import {CORE_DIRECTIVES, FORM_DIRECTIVES, NgClass, NgStyle} from '@angular/common';
 import {FILE_UPLOAD_DIRECTIVES, FileUploader} from 'ng2-file-upload';
 import {MaterializeDirective} from "angular2-materialize";
@@ -13,11 +13,11 @@ import {
   FormControl
 } from '@angular/forms';
 
-import { Resource } from '../../../shared/interfaces/resource.interface';
-import { ResourceCollection } from '../../../shared/interfaces/resource-collection.interface';
+import {Resource} from '../../../shared/models/resource.model';
+import {ResourceCollection} from '../../../shared/interfaces/resource-collection.interface';
 
-import { InputWakeUp } from '../../../shared/directives/input-wake-up.directive';
-import { TextareaAutoresize } from '../../../shared/directives/textarea-autoresize.directive';
+import {InputWakeUp} from '../../../shared/directives/input-wake-up.directive';
+import {TextareaAutoresize} from '../../../shared/directives/textarea-autoresize.directive';
 
 import {UpdateResourceItemBindingService} from '../update-resource-item-binding.service';
 
@@ -70,9 +70,8 @@ export class UploadResourceComponent implements OnInit, DoCheck {
   //   editing the child!  yikes....
   //
 
-  public uploader:FileUploader = new FileUploader({url: URL});
-  public hasBaseDropZoneOver:boolean = false;
-  public hasAnotherDropZoneOver:boolean = false;
+  public uploader: FileUploader;
+  public hasBaseDropZoneOver: boolean = false;
 
   private numFiles = 0;
 
@@ -85,46 +84,39 @@ export class UploadResourceComponent implements OnInit, DoCheck {
   public resourceCollectionForm: FormGroup; // our model driven form
   public submitted: boolean; // keep track of whether form is submitted
 
-
-  public fileOverBase(e:any):void {
-    this.hasBaseDropZoneOver = e;
-  }
-
-  public fileOverAnother(e:any):void {
-    this.hasAnotherDropZoneOver = e;
-  }
-
-  constructor(
-    private formBuilder: FormBuilder,
-    private updateResourceItemBindingService: UpdateResourceItemBindingService) {
+  constructor(private fb: FormBuilder,
+              private updateResourceItemBindingService: UpdateResourceItemBindingService) {
   }
 
   ngOnInit() {
-    this.resourceCollectionForm = this.formBuilder.group({
-      id: [this.resourceCollection.id, [<any>Validators.required]],
-      title: [this.resourceCollection.title, [<any>Validators.required]],
-      description: [this.resourceCollection.description, [<any>Validators.required]],
-      resources: this.formBuilder.array(
-        this.initResourceArray(this.resourceCollection.resources)),
-    });
+    this.initResourceCollectionForm();
+    this.initFileUploader();
   }
 
-  ngDoCheck(){
+  ngDoCheck() {
     if (this.uploader.queue) {
       this.numFiles = this.uploader.queue.length;
     }
   }
 
-  showQueue(){
-    if (this.uploader.queue.length > 0) {
-      return true;
-    } else {
-      return false;
-    }
+  showQueue() {
+    return this.uploader.queue.length > 0;
   }
 
-  onClick(){
+  fileOverBase(e: any): void {
+    this.hasBaseDropZoneOver = e;
+  }
+
+  // TODO: Remove me.
+  dumpUploaderDetails() {
     console.log(this.uploader);
+  }
+
+  initFileUploader() {
+    this.uploader = new FileUploader({url: URL});
+    this.uploader.onAfterAddingFile = fileItem => {
+      this.addResource(new Resource(fileItem));
+    }
   }
 
   //WORKING HERE: Should probably have (yet!) another component for the resource elements
@@ -132,47 +124,57 @@ export class UploadResourceComponent implements OnInit, DoCheck {
   // element in the queue or not.  If so, it needs to know its status.
 
   uploadItem(i: number) {
+    this.uploader.onBuildItemForm = (item, form) => {
+      form.append('collectionId', 42);
+      form.append('caption', 'This is a test');
+    };
     this.uploader.queue[i].upload();//this is a fileUploader method
     // >>>should somehow wait for success of the upload<<<
-    let resource: Resource;
-    resource = {
-      id: 0,// not sure what to do with this at the moment....presumably it will eventually be assigned on the server side
-      caption:'',
-      type:'image',
-      fileName:this.uploader.queue[i]._file.name,
-      copyrightInfo:''
-    }
-    this.addResource(resource);
+    // let resource: Resource;
+    // resource = {
+    //   id: 0,// not sure what to do with this at the moment....presumably it will eventually be assigned on the server side
+    //   caption: '',
+    //   type: 'image',
+    //   fileName: this.uploader.queue[i]._file.name,
+    //   copyrightInfo: ''
+    // }
+    // this.addResource(resource);
     console.log(this.resourceCollectionForm);
   }
 
+  initResourceCollectionForm() {
+    this.resourceCollectionForm = this.fb.group({
+      id: [this.resourceCollection.id, [<any>Validators.required]],
+      title: [this.resourceCollection.title, [<any>Validators.required]],
+      description: [this.resourceCollection.description, [<any>Validators.required]],
+      resources: this.fb.array(
+        this.initResourceFormArray(this.resourceCollection.resources)),
+    });
+  }
 
-  initResourceArray(resources: Resource[]) {
+  initResourceFormArray(resources: Resource[]) {
     console.log(resources);
     let resourceArray = [];
     for (let resource of resources) {
-      resourceArray.push(this.initResource(resource));
+      resourceArray.push(this.initResourceForm(resource));
     }
     return resourceArray;
   }
 
-  initResource(resourceInfo: Resource) {
-    // initialize our resource
+  initResourceForm(resource: Resource) {
     console.log('about to initialize new resource');
-    console.log(resourceInfo);
-    return this.formBuilder.group({
-      id: [resourceInfo.id, Validators.required],
-      caption: [resourceInfo.caption, Validators.required],
-      type: [resourceInfo.type, Validators.required],// 'image', 'video', etc.
-      fileName: [resourceInfo.fileName, Validators.required],
-      copyrightInfo: [resourceInfo.copyrightInfo]
+    console.log(resource);
+    return this.fb.group({
+      caption: [resource.caption, Validators.required],
+      copyrightYear: [resource.copyrightYear],
+      copyrightOwner: [resource.copyrightOwner]
     });
   }
 
   addResource(resource: Resource) {
     // add resource to the list
     const control = <FormArray>this.resourceCollectionForm.controls['resources'];
-    control.push(this.initResource(resource));
+    control.push(this.initResourceForm(resource));
   }
 
   removeResource(i: number) {
@@ -196,11 +198,11 @@ export class UploadResourceComponent implements OnInit, DoCheck {
 
   closeModal(modalID: string) {
     /*
-      This emits an event that the parent component listens for; then the parent uses
-      the modalID to close the modal.
-      Note: The parent component must declare the following in order to close
-            the modal programmatically:
-                declare var $: any;
+     This emits an event that the parent component listens for; then the parent uses
+     the modalID to close the modal.
+     Note: The parent component must declare the following in order to close
+     the modal programmatically:
+     declare var $: any;
      */
     console.log('about to emit the close signal');
     this.onFinished.emit(modalID);

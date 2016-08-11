@@ -44,18 +44,19 @@
                 </div>
                 <label for="textarea1">Description</label>
               </div>
-
             </div>
           </div>
-          <!-- file drop/browse area -->
 
+          <!-- file drop/browse area -->
           <div *ngIf="resourceCollectionForm.controls.title.valid && resourceCollectionForm.controls.description.valid">
             <div class="col s4">
+
               <div class="row">
                 <div class="col s12 drop-title">
                   <strong>Drop or browse file(s)</strong>
                 </div>
               </div>
+
               <div class="row">
                 <div class="col s12">
                   <div ng2FileDrop
@@ -67,16 +68,18 @@
                   </div>
                 </div>
               </div>
+
               <div class="row">
                 <div class="col s12">
                   <!-- overriding native styling in css by setting display: none
                   (see: http://stackoverflow.com/questions/572768/styling-an-input-type-file-button) -->
                   <label class="btn waves-light">
                     Browse
-                    <input type="file" ng2FileSelect [uploader]="uploader" multiple  /><br/>
+                    <input type="file" ng2FileSelect [uploader]="uploader" multiple/><br/>
                   </label>
                 </div>
               </div>
+
             </div>
           </div>
 
@@ -139,6 +142,7 @@
           </div>
         </div>
       </div>
+
       <!-- copyrights and captions for individual files -->
       <div formArrayName="resources">
         <div *ngFor="let resource of resourceCollectionForm.controls.resources.controls; let i=index" class="col s6">
@@ -173,13 +177,23 @@
                     </div>
 
                     <div class="input-field col s12">
-                      <label [attr.for]="'copyrightInfoInModal'+i">Copyright (not reqd)</label>
+                      <label [attr.for]="'copyrightOwnerInModal'+i">Copyright (not reqd)</label>
                       <input
                         class="valid-background"
-                        [input-wake-up]="'copyrightInfoInModal'+i"
-                        id="copyrightInfoInModal{{i}}"
+                        [input-wake-up]="'copyrightOwnerInModal'+i"
+                        id="copyrightOwnerInModal{{i}}"
                         type="text"
-                        formControlName="copyrightInfo">
+                        formControlName="copyrightOwner">
+                    </div>
+
+                    <div class="input-field col s12">
+                      <label [attr.for]="'copyrightYearInModal'+i">Copyright (not reqd)</label>
+                      <input
+                        class="valid-background"
+                        [input-wake-up]="'copyrightYearInModal'+i"
+                        id="copyrightYearInModal{{i}}"
+                        type="text"
+                        formControlName="copyrightYear">
                     </div>
 
                   </div>
@@ -190,18 +204,20 @@
         </div>
       </div>
     </div>
+
     <div class="row">
       <div class="col s12">
         <button
           class="btn right"
           type="submit"
           [class.disabled]="!resourceCollectionForm.valid"
-          [disabled]="!resourceCollectionForm.valid">Submit</button>
+          [disabled]="!resourceCollectionForm.valid">Submit
+        </button>
       </div>
     </div>
 
   </form>
 
-  <button class="btn btn-flat" (click)="onClick()">info about file(s)</button>
+  <button class="btn btn-flat" (click)="dumpUploaderDetails()">info about file(s)</button>
 
 </div>

@@ -10,7 +10,8 @@
     <div class="card-reveal">
       <span class="card-title grey-text text-darken-4">{{resource.title}}<i class="material-icons right">close</i></span>
       <p>{{resource.description}}</p>
-      <p *ngIf="resource.copyrightInfo">Image: <i class="tiny material-icons">copyright</i>{{resource.copyrightInfo}} </p>
+      <p *ngIf="resource.copyrightOwner">Image: <i class="tiny material-icons">copyright</i>{{resource.copyrightOwner}}
+      </p>
     </div>
   </div>
 </div>

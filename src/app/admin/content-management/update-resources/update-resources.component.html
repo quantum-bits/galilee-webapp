@@ -12,7 +12,7 @@
       <ul id='dropdownAddNewResource' class='dropdown-content'>
         <li *ngFor="let resourceType of resourceTypes; let i = index">
           <a (click)="addResource(resourceType)">
-            {{ resourceType.type }}
+            {{ resourceType.title }}
           </a>
         </li>
       </ul>
