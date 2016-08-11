@@ -7,6 +7,7 @@ import { contentHeaders } from './common/headers';
 
 import {User} from '../shared/models/user.model';
 import {Permission} from '../shared/models/permission.model';
+import {UserPermission} from '../shared/models/user-permission.model';
 
 //import localStorage from 'localStorage'; // I'm not sure why, but we apparently don't need to do this....
 
@@ -429,7 +430,58 @@ export class UserService {
    */
 
   getUsers() {
-    var promise = Promise.resolve(USERS);// Observable.just(USERS);
+    let users: User[] = [];
+
+    for (let user of USERS) {
+      let userPermissions: UserPermission[] = [];
+      for (let permission of user.permissions) {
+        userPermissions.push(new UserPermission(
+          {
+            enabled: permission.enabled,
+            id: permission.id,
+            title: permission.title
+          }
+          )
+        )
+      };
+
+      users.push(new User(
+        {
+          id: user.id,
+          email: user.email,
+          password: user.password,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          joinedOn: user.joinedOn,
+          enabled: user.enabled,
+          preferredVersionID: user.preferredVersionID,
+          permissions: userPermissions
+        })
+      )
+    }
+
+    console.log('user objects coming up INSIDE the service....');
+    console.log(users);
+    console.log(users[0]);
+    console.log(users[0].can('EDIT_RES'));
+    console.log(users[0].can('EDIT_PRAC'));
+    console.log(users[0].can('ADMIN'));
+
+    console.log(users[1]);
+    console.log(users[1].can('EDIT_RES'));
+    console.log(users[1].can('EDIT_PRAC'));
+    console.log(users[1].can('ADMIN'));
+
+
+
+
+
+
+
+
+
+
+    var promise = Promise.resolve(users);// Observable.just(USERS);
     return Observable.fromPromise(promise);
   }
 

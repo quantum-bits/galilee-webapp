@@ -13,5 +13,5 @@ export class PermissionFilter extends Permission {
     super({id: obj.id, title: obj.title});
     this.filter = obj.filter;
   }
-  
+
 }

@@ -101,9 +101,13 @@ export class ManageUsersComponent implements OnInit {
   ngOnInit() {
     this.userService.getUsers().subscribe(
       users => {
-        //this.users = users;
+        this.users = users;
+        console.log('inside the component now');
+        console.log(this.users);
+        console.log(this.users[0].can('EDIT_RES'));
         //this.filteredUsers = this.users;
 
+/*
         this.users = [];
         for (let user of users) {
           let userPermissions: UserPermission[] = [];
@@ -144,6 +148,7 @@ export class ManageUsersComponent implements OnInit {
         console.log(this.users[1].can('EDIT_PRAC'));
         console.log(this.users[1].can('EDIT_ADMIN'));
 
+*/
         this.filteredUsers = this.users;
         // may need to build the filteredUsers list up from scratch...?!?
 
