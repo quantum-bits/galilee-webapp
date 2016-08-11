@@ -8,4 +8,10 @@ export const enum PermissionFilterType {
 
 export class PermissionFilter extends Permission {
   filter: PermissionFilterType;
+
+  constructor(obj){
+    super({id: obj.id, title: obj.title});
+    this.filter = obj.filter;
+  }
+  
 }

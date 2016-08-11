@@ -3,20 +3,17 @@ import { Component, OnInit, Input } from '@angular/core';
 import {MaterializeDirective} from 'angular2-materialize';
 import {PaginatePipe, PaginationControlsCmp, PaginationService, IPaginationInstance} from 'ng2-pagination';
 
+import {EditUserComponent} from '../edit-user';
+
 import {User} from '../../../shared/models/user.model';
 import {Permission} from '../../../shared/models/permission.model';
 import {PermissionFilter} from '../../../shared/models/permission-filter.model';
 import {PermissionFilterType} from '../../../shared/models/permission-filter.model';
 
+import {UserPermission} from '../../../shared/models/user-permission.model';
+
 import { UserService } from '../../../authentication/user.service';
 
-/*
-const enum permissionFilterTypes {
-  can,
-  cannot,
-  either
-}
-*/
 
 @Component({
   moduleId: module.id,
@@ -24,7 +21,7 @@ const enum permissionFilterTypes {
   templateUrl: 'manage-users.component.html',
   styleUrls: ['manage-users.component.css'],
   providers: [UserService, PaginationService],
-  directives: [MaterializeDirective, PaginationControlsCmp],
+  directives: [MaterializeDirective, PaginationControlsCmp, EditUserComponent],
   pipes: [PaginatePipe],
 })
 export class ManageUsersComponent implements OnInit {
@@ -32,17 +29,10 @@ export class ManageUsersComponent implements OnInit {
   // other helpful examples (including async call to server)
   // using the pagination package: http://michaelbromley.github.io/ng2-pagination/
 
-  // WORKING HERE....
-  // permission class: title and id (const)
-  // userpermission extends permission ...it gets an 'enabled' field as well
-  // filterpermission extends permission...it gets a filter ENUM as well
-  // 3-way state for ENUM is: 'can' 'cannot' 'either'
-
-
-  // TODO:
-  // - fix sortColumn (make an array, etc.)
-
   private users: User[];
+
+  private user1: User;
+
   private filteredUsers: User[];//use interface(!)
   private userEnabledChoices = ['all', 'onlyEnabled', 'onlyNonenabled'];
   private viewEnabledUsers = this.userEnabledChoices[0];
@@ -58,10 +48,21 @@ export class ManageUsersComponent implements OnInit {
     either: PermissionFilterType.either
   };
 
-  @Input('data') meals: string[] = [];
+  /*
+  private initialUser: User = {
+    id: 0, // this will eventually need to be managed by the server-side code
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    joinedOn: '',
+    enabled: true,
+    preferredVersionID: 0,
+    permission: []
+  }
+  */
 
-  private sortColumn = 'lastName'; // can be 'lastName', 'firstName' or 'email'
-  private sortAscending = true;
+  @Input('data') meals: string[] = [];
 
   private eventCounter = 0;
   public filter: string = '';
@@ -89,6 +90,9 @@ export class ManageUsersComponent implements OnInit {
       name: 'Email'
     }
   ];
+  private sortColumn = this.filterSelectOptions[0].value; // can be 'lastName', 'firstName', 'email'; if '', then do no sorting
+  private sortAscending = true;
+
 
   private filterBy = 'lastName';
 
@@ -97,10 +101,70 @@ export class ManageUsersComponent implements OnInit {
   ngOnInit() {
     this.userService.getUsers().subscribe(
       users => {
-        this.users = users;
+        //this.users = users;
+        //this.filteredUsers = this.users;
+
+        this.users = [];
+        for (let user of users) {
+          let userPermissions: UserPermission[] = [];
+          for (let permission of user.permissions) {
+            userPermissions.push(new UserPermission(
+                {
+                  enabled: permission.enabled,
+                  id: permission.id,
+                  title: permission.title
+                }
+              )
+            )
+          };
+
+          this.users.push(new User(
+            {
+              id: user.id,
+              email: user.email,
+              password: user.password,
+              firstName: user.firstName,
+              lastName: user.lastName,
+              joinedOn: user.joinedOn,
+              enabled: user.enabled,
+              preferredVersionID: user.preferredVersionID,
+              permissions: userPermissions
+            })
+          )
+        }
+
+        console.log('user objects coming up....');
+        console.log(this.users);
+        console.log(this.users[0]);
+        console.log(this.users[0].can('EDIT_RES'));
+        console.log(this.users[0].can('EDIT_PRAC'));
+        console.log(this.users[0].can('EDIT_ADMIN'));
+
+        console.log(this.users[1].can('EDIT_RES'));
+        console.log(this.users[1].can('EDIT_PRAC'));
+        console.log(this.users[1].can('EDIT_ADMIN'));
+
         this.filteredUsers = this.users;
+        // may need to build the filteredUsers list up from scratch...?!?
+
+
         this.sortList();
+
+        console.log(this.filteredUsers);
+
         this.length = this.filteredUsers.length;
+
+        this.user1 = this.users[0];
+        console.log('user1:');
+        console.log(this.user1);
+
+
+        console.log('user objects coming up again....');
+        console.log(this.users);
+        console.log(this.users[0]);
+
+
+        //console.log(this.user1.isEnabled());
 
         this.userService.getPermissionTypes().subscribe(
           permissions => {
@@ -174,13 +238,13 @@ export class ManageUsersComponent implements OnInit {
 
   userHasPermission(user: User, permissionFilter) {
     var index;
-    for (let i in user.permission){
-      if (user.permission[i].id === permissionFilter.id) {
+    for (let i in user.permissions){
+      if (user.permissions[i].id === permissionFilter.id) {
         index = i;
       }
     }
     if (index !== undefined) {
-      return user.permission[index].enabled;
+      return user.permissions[index].enabled;
     }
   }
 
@@ -275,5 +339,12 @@ export class ManageUsersComponent implements OnInit {
     console.log('change to page', number);
     this.config.currentPage = number;
   }
+
+  onModalFinished(event) {
+    //see update-resources component for an example....
+  }
+
+
+
 
 }

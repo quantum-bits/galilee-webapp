@@ -36,44 +36,44 @@
               <div class="col s7 offset-s1">
                 <table class="centered striped">
                   <thead>
-                    <tr>
-                      <th data-field="permissionType"> Permission</th>
-                      <th data-field="permission-can"> can </th>
-                      <th data-field="permission-cannot"> cannot </th>
-                      <th data-field="permission-either"> either </th>
-                    </tr>
+                  <tr>
+                    <th data-field="permissionType"> Permission</th>
+                    <th data-field="permission-can"> can </th>
+                    <th data-field="permission-cannot"> cannot </th>
+                    <th data-field="permission-either"> either </th>
+                  </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let permissionFilter of permissionFilters; let i=index">
-                      <td>{{permissionFilter.title}}</td>
-                      <td>
-                        <input type="radio"
+                  <tr *ngFor="let permissionFilter of permissionFilters; let i=index">
+                    <td>{{permissionFilter.title}}</td>
+                    <td>
+                      <input type="radio"
                              name="permissionFilter{{permissionFilter.id}}"
                              id="permissionFilter_{{i}}_1"
                              class="with-gap"
                              (click)="selectPermissionFilter(permissionFilter, permissionFilterType.can)"
                              [checked] = "permissionFilters[i].filter === permissionFilterType.can">
-                        <label [attr.for]="'permissionFilter_' + i+'_1'"></label>
-                      </td>
-                      <td>
-                        <input type="radio"
-                               name="permissionFilter{{permissionFilter.id}}"
-                               id="permissionFilter_{{i}}_2"
-                               class="with-gap"
-                               (click)="selectPermissionFilter(permissionFilter, permissionFilterType.cannot)"
-                               [checked] = "permissionFilters[i].filter === permissionFilterType.cannot">
-                        <label [attr.for]="'permissionFilter_' + i+'_2'"></label>
-                      </td>
-                      <td>
-                        <input type="radio"
-                               name="permissionFilter{{permissionFilter.id}}"
-                               id="permissionFilter_{{i}}_3"
-                               class="with-gap"
-                               (click)="selectPermissionFilter(permissionFilter, permissionFilterType.either)"
-                               [checked] = "permissionFilters[i].filter === permissionFilterType.either">
-                        <label [attr.for]="'permissionFilter_' + i+'_3'"></label>
-                      </td>
-                    </tr>
+                      <label [attr.for]="'permissionFilter_' + i+'_1'"></label>
+                    </td>
+                    <td>
+                      <input type="radio"
+                             name="permissionFilter{{permissionFilter.id}}"
+                             id="permissionFilter_{{i}}_2"
+                             class="with-gap"
+                             (click)="selectPermissionFilter(permissionFilter, permissionFilterType.cannot)"
+                             [checked] = "permissionFilters[i].filter === permissionFilterType.cannot">
+                      <label [attr.for]="'permissionFilter_' + i+'_2'"></label>
+                    </td>
+                    <td>
+                      <input type="radio"
+                             name="permissionFilter{{permissionFilter.id}}"
+                             id="permissionFilter_{{i}}_3"
+                             class="with-gap"
+                             (click)="selectPermissionFilter(permissionFilter, permissionFilterType.either)"
+                             [checked] = "permissionFilters[i].filter === permissionFilterType.either">
+                      <label [attr.for]="'permissionFilter_' + i+'_3'"></label>
+                    </td>
+                  </tr>
                   </tbody>
                 </table>
               </div>
@@ -93,10 +93,10 @@
                   <a class="grey-text text-darken-4" (click)="toggleSort('lastName')">Last Name
                     <span *ngIf="sortColumn == 'lastName'">
                       <span *ngIf="sortAscending">
-                        <i class="material-icons">keyboard_arrow_up</i>
+                        <i class="material-icons arrow">keyboard_arrow_up</i>
                       </span>
                       <span *ngIf="!sortAscending">
-                        <i class="material-icons">keyboard_arrow_down</i>
+                        <i class="material-icons arrow">keyboard_arrow_down</i>
                       </span>
                     </span>
                   </a>
@@ -105,10 +105,10 @@
                   <a class="grey-text text-darken-4" (click)="toggleSort('firstName')">First Name
                     <span *ngIf="sortColumn == 'firstName'">
                       <span *ngIf="sortAscending">
-                        <i class="material-icons">keyboard_arrow_up</i>
+                        <i class="material-icons arrow">keyboard_arrow_up</i>
                       </span>
                       <span *ngIf="!sortAscending">
-                        <i class="material-icons">keyboard_arrow_down</i>
+                        <i class="material-icons arrow">keyboard_arrow_down</i>
                       </span>
                     </span>
                   </a>
@@ -117,10 +117,10 @@
                   <a class="grey-text text-darken-4" (click)="toggleSort('email')">Email
                     <span *ngIf="sortColumn == 'email'">
                       <span *ngIf="sortAscending">
-                        <i class="material-icons">keyboard_arrow_up</i>
+                        <i class="material-icons arrow">keyboard_arrow_up</i>
                       </span>
                       <span *ngIf="!sortAscending">
-                        <i class="material-icons">keyboard_arrow_down</i>
+                        <i class="material-icons arrow">keyboard_arrow_down</i>
                       </span>
                     </span>
                   </a>
@@ -155,8 +155,8 @@
           </table>
           <div class="center">
               <pagination-controls #p
-                [id]="config.id"
-                (pageChange)="onPageChange($event)">
+                                   [id]="config.id"
+                                   (pageChange)="onPageChange($event)">
 
                 <ul class="pagination">
                   <li class="disabled" *ngIf="p.isFirstPage()">
@@ -205,3 +205,30 @@
     </div>
   </div>
 </div>
+
+<!-- fab -->
+
+<div class="fixed-action-btn">
+  <a materialize="leanModal" [materializeParams]="[{dismissible: true}]"
+     class="btn-floating btn-large waves-effect waves-light red modal-trigger"
+     href="#modalAddNewUser">
+    <i class="large material-icons">add</i>
+  </a>
+</div>
+
+<!-- Modal Structure -->
+<div id="modalAddNewUser" class="modal">
+  <div class="modal-content">
+    <h4>Create User</h4>
+    <app-edit-user
+      [newUser]="true"
+      [modalID]="'modalAddNewUser'"
+      (onFinished)="onModalFinished($event)"
+      [user]="initialUser">
+    </app-edit-user>
+  </div>
+</div>
+
+
+
+

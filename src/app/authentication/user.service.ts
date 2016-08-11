@@ -21,7 +21,7 @@ const baseUrl = 'http://localhost:3001';
 
 // MOCK
 
-const USERS: User[] = [
+const USERS = [
   {
     id: 1,
     email: 'john@gmail.com',
@@ -31,7 +31,7 @@ const USERS: User[] = [
     joinedOn: 'date-format',
     enabled: false,
     preferredVersionID: 1,
-    permission: [
+    permissions: [
       {
         title: 'Edit Resources',
         id: 'EDIT_RES',
@@ -58,7 +58,7 @@ const USERS: User[] = [
     joinedOn: 'date-format',
     enabled: true,
     preferredVersionID: 2,
-    permission: [
+    permissions: [
       {
         title: 'Edit Resources',
         id: 'EDIT_RES',
@@ -85,7 +85,7 @@ const USERS: User[] = [
     joinedOn: 'date-format',
     enabled: false,
     preferredVersionID: 14,
-    permission: [
+    permissions: [
       {
         title: 'Edit Resources',
         id: 'EDIT_RES',
@@ -112,7 +112,7 @@ const USERS: User[] = [
     joinedOn: 'date-format',
     enabled: true,
     preferredVersionID: 14,
-    permission: [
+    permissions: [
       {
         title: 'Edit Resources',
         id: 'EDIT_RES',
@@ -139,7 +139,7 @@ const USERS: User[] = [
     joinedOn: 'date-format',
     enabled: true,
     preferredVersionID: 14,
-    permission: [
+    permissions: [
       {
         title: 'Edit Resources',
         id: 'EDIT_RES',
@@ -166,7 +166,7 @@ const USERS: User[] = [
     joinedOn: 'date-format',
     enabled: true,
     preferredVersionID: 14,
-    permission: [
+    permissions: [
       {
         title: 'Edit Resources',
         id: 'EDIT_RES',
@@ -193,7 +193,7 @@ const USERS: User[] = [
     joinedOn: 'date-format',
     enabled: true,
     preferredVersionID: 14,
-    permission: [
+    permissions: [
       {
         title: 'Edit Resources',
         id: 'EDIT_RES',
@@ -220,7 +220,7 @@ const USERS: User[] = [
     joinedOn: 'date-format',
     enabled: true,
     preferredVersionID: 14,
-    permission: [
+    permissions: [
       {
         title: 'Edit Resources',
         id: 'EDIT_RES',
@@ -247,7 +247,7 @@ const USERS: User[] = [
     joinedOn: 'date-format',
     enabled: true,
     preferredVersionID: 14,
-    permission: [
+    permissions: [
       {
         title: 'Edit Resources',
         id: 'EDIT_RES',
@@ -274,7 +274,7 @@ const USERS: User[] = [
     joinedOn: 'date-format',
     enabled: true,
     preferredVersionID: 14,
-    permission: [
+    permissions: [
       {
         title: 'Edit Resources',
         id: 'EDIT_RES',
@@ -301,7 +301,7 @@ const USERS: User[] = [
     joinedOn: 'date-format',
     enabled: true,
     preferredVersionID: 14,
-    permission: [
+    permissions: [
       {
         title: 'Edit Resources',
         id: 'EDIT_RES',
@@ -328,7 +328,7 @@ const USERS: User[] = [
     joinedOn: 'date-format',
     enabled: true,
     preferredVersionID: 14,
-    permission: [
+    permissions: [
       {
         title: 'Edit Resources',
         id: 'EDIT_RES',
@@ -425,7 +425,7 @@ export class UserService {
 
   /*
   getUser(id)
-  can(PERMISSION) method, etc.
+  can(permissions) method, etc.
    */
 
   getUsers() {

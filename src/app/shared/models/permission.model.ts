@@ -5,5 +5,10 @@ export const ADMIN = 'ADMIN';
 export class Permission {
   id: string;
   title: string;
+
+  constructor (obj){
+    this.id = obj.id;
+    this.title = obj.title;
+  }
 }
 

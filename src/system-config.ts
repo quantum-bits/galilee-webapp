@@ -83,6 +83,7 @@ const barrels: string[] = [
   'app/authentication/login',
   'app/authentication/signup',
   'app/admin/user-management/manage-users',
+  'app/admin/user-management/edit-user',
   /** @cli-barrel */
 ];
 
