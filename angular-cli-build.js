@@ -22,7 +22,9 @@ module.exports = function(defaults) {
       'dragula/**/*.+(js|css)',
       'ng2-dragula/**/*.js',
       'ng2-pagination/**/*.js',
-      'angular2-jwt/**/*.js'
+      'angular2-jwt/**/*.js',
+      'angular2-moment/**/*.js',
+      'moment/**/*.js'
     ]
   });
 };

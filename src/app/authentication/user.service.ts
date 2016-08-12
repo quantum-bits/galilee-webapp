@@ -18,6 +18,10 @@ import {UserPermission} from '../shared/models/user-permission.model';
 //       installed that package, but it is not set up all the way yet (gives errors).  The
 //       former approach sends an authenticated request without the help of the angular2-jwt package.
 
+// dates:
+//       ISO-8601 standard: YYYY-MM-DDTHH:mm:ss.sssZ
+//       ref: http://www.w3schools.com/jsref/jsref_tojson.asp
+
 const baseUrl = 'http://localhost:3001';
 
 // MOCK
@@ -29,7 +33,7 @@ const USERS = [
     password: 'hash?',
     firstName: 'John',
     lastName: 'Ztgmail',
-    joinedOn: 'date-format',
+    joinedOn: '2016-08-11T19:13:27.360Z',
     enabled: false,
     preferredVersionID: 1,
     permissions: [
@@ -56,7 +60,7 @@ const USERS = [
     password: 'hash?',
     firstName: 'Jane',
     lastName: 'Atgmaal',
-    joinedOn: 'date-format',
+    joinedOn: '2016-06-11T19:13:27.360Z',
     enabled: true,
     preferredVersionID: 2,
     permissions: [
@@ -83,7 +87,7 @@ const USERS = [
     password: 'hash?',
     firstName: 'Ali',
     lastName: 'Atthemall',
-    joinedOn: 'date-format',
+    joinedOn: '2014-08-11T19:13:27.360Z',
     enabled: false,
     preferredVersionID: 14,
     permissions: [
@@ -110,7 +114,7 @@ const USERS = [
     password: 'hash?',
     firstName: 'Aali',
     lastName: 'Btthemall',
-    joinedOn: 'date-format',
+    joinedOn: '2011-06-11T19:13:27.360Z',
     enabled: true,
     preferredVersionID: 14,
     permissions: [
@@ -137,7 +141,7 @@ const USERS = [
     password: 'hash?',
     firstName: 'Bba',
     lastName: 'Btthemall',
-    joinedOn: 'date-format',
+    joinedOn: '2016-08-11T17:13:27.360Z',
     enabled: true,
     preferredVersionID: 14,
     permissions: [
@@ -164,7 +168,7 @@ const USERS = [
     password: 'hash?',
     firstName: 'Celeste',
     lastName: 'Ctthemall',
-    joinedOn: 'date-format',
+    joinedOn: '2016-08-11T19:56:27.360Z',
     enabled: true,
     preferredVersionID: 14,
     permissions: [
@@ -191,7 +195,7 @@ const USERS = [
     password: 'hash?',
     firstName: 'Zoe',
     lastName: 'Dtthemall',
-    joinedOn: 'date-format',
+    joinedOn: '2016-08-11T19:13:27.360Z',
     enabled: true,
     preferredVersionID: 14,
     permissions: [
@@ -218,7 +222,7 @@ const USERS = [
     password: 'hash?',
     firstName: 'Doni',
     lastName: 'Dtthemall',
-    joinedOn: 'date-format',
+    joinedOn: '2016-08-11T19:13:27.360Z',
     enabled: true,
     preferredVersionID: 14,
     permissions: [
@@ -245,7 +249,7 @@ const USERS = [
     password: 'hash?',
     firstName: 'Jean',
     lastName: 'Etthemall',
-    joinedOn: 'date-format',
+    joinedOn: '2016-08-11T19:13:27.360Z',
     enabled: true,
     preferredVersionID: 14,
     permissions: [
@@ -272,7 +276,7 @@ const USERS = [
     password: 'hash?',
     firstName: 'Jean',
     lastName: 'BBtthemall',
-    joinedOn: 'date-format',
+    joinedOn: '2016-08-11T19:13:27.360Z',
     enabled: true,
     preferredVersionID: 14,
     permissions: [
@@ -299,7 +303,7 @@ const USERS = [
     password: 'hash?',
     firstName: 'AAJean',
     lastName: 'Fgtthemall',
-    joinedOn: 'date-format',
+    joinedOn: '2016-08-10T19:11:27.360Z',
     enabled: true,
     preferredVersionID: 14,
     permissions: [
@@ -326,7 +330,7 @@ const USERS = [
     password: 'hash?',
     firstName: 'aaJean',
     lastName: 'aatthemall',
-    joinedOn: 'date-format',
+    joinedOn: '2016-08-11T19:13:27.360Z',
     enabled: true,
     preferredVersionID: 14,
     permissions: [
@@ -443,7 +447,7 @@ export class UserService {
           }
           )
         )
-      };
+      }
 
       users.push(new User(
         {
@@ -459,27 +463,6 @@ export class UserService {
         })
       )
     }
-
-    console.log('user objects coming up INSIDE the service....');
-    console.log(users);
-    console.log(users[0]);
-    console.log(users[0].can('EDIT_RES'));
-    console.log(users[0].can('EDIT_PRAC'));
-    console.log(users[0].can('ADMIN'));
-
-    console.log(users[1]);
-    console.log(users[1].can('EDIT_RES'));
-    console.log(users[1].can('EDIT_PRAC'));
-    console.log(users[1].can('ADMIN'));
-
-
-
-
-
-
-
-
-
 
     var promise = Promise.resolve(users);// Observable.just(USERS);
     return Observable.fromPromise(promise);

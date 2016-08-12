@@ -13,7 +13,9 @@ const map: any = {
   'ng2-file-upload': 'vendor/ng2-file-upload/ng2-file-upload.js',
   'dragula': 'vendor/dragula/dist/dragula.js',
   'ng2-dragula': 'vendor/ng2-dragula',
-  'ng2-pagination': 'vendor/ng2-pagination/index.js'
+  'ng2-pagination': 'vendor/ng2-pagination/index.js',
+  'angular2-moment': 'vendor/angular2-moment/index.js',
+  'moment': 'vendor/moment/moment.js'
 };
 
 /** User packages configuration. */
@@ -35,6 +37,13 @@ const packages: any = {
     defaultExtension: 'js'
   },
   'vendor/ng2-pagination': {
+    defaultExtension: 'js'
+  },
+  'vendor/angular2-moment': {
+    defaultExtension: 'js'
+  }
+  ,
+  'vendor/moment': {
     defaultExtension: 'js'
   }
 };
