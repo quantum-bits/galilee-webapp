@@ -36,11 +36,20 @@ import { UserService } from '../../../authentication/user.service';
 })
 export class EditUserComponent implements OnInit {
 
-  @Input() newUser: boolean; //true if this is a new user; false if editing an existing user
-  @Input() modalID: string;
-  @Input() userData: any; // comes in as a User-formatted dictionary, but it is not a true User object (complete with methods, etc.)
-  @Output() onFinished = new EventEmitter<string>();
+  //@Input() newUser: boolean; //true if this is a new user; false if editing an existing user
+  //@Input() modalID: string;
+  //@Input() userData: any; // comes in as a User-formatted dictionary, but it is not a true User object (complete with methods, etc.)
+  //@Output() onFinished = new EventEmitter<string>();
 
+  newUser: boolean = true; //true if this is a new user; false if editing an existing user
+  //@Input() modalID: string;
+  userData: any; // comes in as a User-formatted dictionary, but it is not a true User object (complete with methods, etc.)
+
+  someText: string = 'i am some text in edit-user-component';
+
+  close = new EventEmitter();
+
+  @Output() onFinished = new EventEmitter<string>();
 
   private initialUserPermissions: UserPermission[];
   public userForm: FormGroup; // our model driven form
@@ -173,8 +182,10 @@ export class EditUserComponent implements OnInit {
           console.log('back in the login component');
           console.log(result);
           //this.router.navigate(['/end-user']);
+
           if (result.ok) {
-            this.closeModal(this.modalID);
+            this.close.emit('event');
+          //  this.closeModal(this.modalID);
           }
         },
         (error) => {

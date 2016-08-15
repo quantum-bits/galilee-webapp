@@ -1,5 +1,6 @@
 <div *ngIf="userForm">
 
+  <h3>{{someText}}</h3>
   <div class="container">
 
     <form [formGroup]="userForm" novalidate (ngSubmit)="onSubmit()">

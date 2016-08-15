@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import {MaterializeDirective} from 'angular2-materialize';
 import {PaginatePipe, PaginationControlsCmp, PaginationService, IPaginationInstance} from 'ng2-pagination';
@@ -6,6 +6,8 @@ import {PaginatePipe, PaginationControlsCmp, PaginationService, IPaginationInsta
 import {TimeAgoPipe} from 'angular2-moment';
 
 import {EditUserComponent} from '../edit-user';
+
+import { EditUserAnchorDirective } from '../edit-user-anchor.directive';
 
 import {User} from '../../../shared/models/user.model';
 import {Permission} from '../../../shared/models/permission.model';
@@ -31,11 +33,16 @@ declare var $: any; // for using jQuery within this angular component
   templateUrl: 'manage-users.component.html',
   styleUrls: ['manage-users.component.css'],
   providers: [UserService, PaginationService],
-  directives: [MaterializeDirective, PaginationControlsCmp, EditUserComponent],
+  directives: [
+    MaterializeDirective,
+    PaginationControlsCmp,
+    EditUserComponent,
+    EditUserAnchorDirective],
   pipes: [PaginatePipe, TimeAgoPipe],
 })
 export class ManageUsersComponent implements OnInit {
 
+  @ViewChild(EditUserAnchorDirective) editUserAnchor: EditUserAnchorDirective;
   // other helpful examples (including async call to server)
   // using the pagination package: http://michaelbromley.github.io/ng2-pagination/
 
@@ -266,5 +273,14 @@ export class ManageUsersComponent implements OnInit {
     console.log(this.filteredUsers);
   }
 
+
+  createNewUser() {
+    this.editUserAnchor
+      .createDialog(EditUserComponent)
+      .then((editUserComponentRef) => {
+          editUserComponentRef.instance.someText = "overwriting the text!";
+        }
+      );
+  }
 
 }

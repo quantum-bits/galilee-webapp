@@ -1,45 +1,38 @@
-import { Directive, ComponentResolver, ComponentFactory, ComponentRef } from '@angular/core';
+import { Directive, ComponentFactoryResolver, ComponentFactory, ComponentRef } from '@angular/core';
 
 import { ViewContainerRef } from '@angular/core';
-import { DialogComponent } from './dialog.component.ts';
+import { EditUserComponent } from './edit-user';
 
 @Directive({
   selector: '[edit-user-anchor]'
 })
-export class EditUserAnchor {
+export class EditUserAnchorDirective {
 
-  constructor() {}
-
-}
-
-
-import { Directive, ComponentResolver, ComponentFactory, ComponentRef } from '@angular/core';
-
-import { ViewContainerRef } from '@angular/core';
-import { DialogComponent } from './dialog.component.ts';
-
-@Directive({ selector: '[dialogAnchor]' })
-export class DialogAnchorDirective {
-  constructor(
-    private viewContainer: ViewContainerRef,
-    private componentResolver: ComponentResolver
+  constructor(private viewContainer: ViewContainerRef,
+              private componentFactoryResolver: ComponentFactoryResolver
   ) {}
 
-  createDialog(dialogComponent: { new(): DialogComponent }):Promise<ComponentRef<DialogComponent>> {
+
+  createDialog(
+    editUserComponent: EditUserComponent
+    //editUserComponent: { new(): EditUserComponent }
+    ):Promise<ComponentRef<EditUserComponent>> {
     this.viewContainer.clear();
 
-    let componentCreated = this.componentResolver
-      .resolveComponent(dialogComponent)
-      .then((dialogComponentFactory: ComponentFactory<DialogComponent>) => {
-        return this.viewContainer.createComponent(dialogComponentFactory);
+    let componentCreated = this.componentFactoryResolver
+      .resolveComponentFactory(editUserComponent)
+      .then((editUserComponentFactory: ComponentFactory<EditUserComponent>) => {
+        return this.viewContainer.createComponent(editUserComponentFactory);
       });
 
-    componentCreated.then((dialogComponentRef: ComponentRef<DialogComponent>) => {
-      dialogComponentRef.instance.close.subscribe(() => {
-        dialogComponentRef.destroy();
+    componentCreated.then((editUserComponentRef: ComponentRef<EditUserComponent>) => {
+      editUserComponentRef.instance.close.subscribe(() => {
+        editUserComponentRef.destroy();
       });
     });
 
     return componentCreated;
   }
+
+
 }

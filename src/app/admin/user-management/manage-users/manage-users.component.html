@@ -210,17 +210,23 @@
   </a>
 </div>
 
-<!-- Modal Structure -->
+<!-- Modal Structure
 <div id="modalAddNewUser" class="modal">
   <div class="modal-content">
     <app-edit-user
       [newUser]="true"
       [modalID]="'modalAddNewUser'"
       (onFinished)="onModalFinished($event)"
-      [userData]=""><!-- userData would be the user's actual data if this were editing a user -->
+      [userData]=""><!-- userData would be the user's actual data if this were editing a user
     </app-edit-user>
   </div>
 </div>
+
+-->
+
+<div edit-user-anchor></div>
+
+<button class="btn" (click)="createNewUser()">add user</button>
 
 <button class="btn" (click)="logUserLists()">user list</button>
 
