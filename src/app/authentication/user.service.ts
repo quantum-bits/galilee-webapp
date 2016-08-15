@@ -428,11 +428,6 @@ export class UserService {
     return this.loggedIn;
   }
 
-  /*
-  getUser(id)
-  can(permissions) method, etc.
-   */
-
   getUsers() {
     let users: User[] = [];
 
@@ -448,7 +443,6 @@ export class UserService {
           )
         )
       }
-
       users.push(new User(
         {
           id: user.id,
@@ -470,6 +464,21 @@ export class UserService {
 
   getPermissionTypes(){
     var promise = Promise.resolve(PERMISSION_TYPES);// Observable.just(USERS);
+    return Observable.fromPromise(promise);
+  }
+
+  getInitialUserPermissions(){// returns an UserPermission-like dictionary with initial data; used to populate the form for creating a new user
+    var initialUserPermissions = [];
+
+    for (let permission of PERMISSION_TYPES) {
+      initialUserPermissions.push({
+        title: permission.title,
+        id: permission.id,
+        enabled: false
+      });
+    }
+
+    var promise = Promise.resolve(initialUserPermissions);
     return Observable.fromPromise(promise);
   }
 

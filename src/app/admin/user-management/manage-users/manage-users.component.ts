@@ -23,6 +23,7 @@ import { UserService } from '../../../authentication/user.service';
 // - static method for class-level comparisons
 // ...or just put a static method on the user class
 
+declare var $: any; // for using jQuery within this angular component
 
 @Component({
   moduleId: module.id,
@@ -50,20 +51,6 @@ export class ManageUsersComponent implements OnInit {
     cannot: PermissionFilterType.cannot,
     either: PermissionFilterType.either
   };
-
-  /*
-  private initialUser: User = {
-    id: 0, // this will eventually need to be managed by the server-side code
-    email: '',
-    password: '',
-    firstName: '',
-    lastName: '',
-    joinedOn: '',
-    enabled: true,
-    preferredVersionID: 0,
-    permission: []
-  }
-  */
 
   //private eventCounter = 0;
   public maxSize: number = 5;//used by pagination component (max # of pages indicated, including the '...')
@@ -266,8 +253,12 @@ export class ManageUsersComponent implements OnInit {
     this.refreshFilteredUsers();
   }
 
-  onModalFinished(event) {
-    //see update-resources component for an example....
+  onModalFinished(modalID: string){
+    // Note: must include the following declaration (above) in component:
+    //          declare var $: any;
+    console.log('about to close the modal....');
+    console.log('#'+modalID);
+    $('#'+modalID).closeModal();
   }
 
   logUserLists(){

@@ -213,12 +213,11 @@
 <!-- Modal Structure -->
 <div id="modalAddNewUser" class="modal">
   <div class="modal-content">
-    <h4>Create User</h4>
     <app-edit-user
       [newUser]="true"
       [modalID]="'modalAddNewUser'"
       (onFinished)="onModalFinished($event)"
-      [user]="initialUser">
+      [userData]=""><!-- userData would be the user's actual data if this were editing a user -->
     </app-edit-user>
   </div>
 </div>
