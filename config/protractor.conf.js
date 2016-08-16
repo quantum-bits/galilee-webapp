@@ -17,7 +17,7 @@ exports.config = {
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,
-    defaultTimeoutInterval: 300000,
+    defaultTimeoutInterval: 30000,
     print: function() {}
   },
   useAllAngular2AppRoots: true,
@@ -28,6 +28,5 @@ exports.config = {
   },
   onPrepare: function() {
     jasmine.getEnv().addReporter(new SpecReporter());
-    browser.manage().window().setSize(1600, 1000);
   }
 };

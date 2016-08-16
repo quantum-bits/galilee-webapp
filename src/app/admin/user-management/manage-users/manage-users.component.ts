@@ -1,7 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 import {MaterializeDirective} from 'angular2-materialize';
-import {PaginatePipe, PaginationControlsCmp, PaginationService, IPaginationInstance} from 'ng2-pagination';
+import {
+  PaginatePipe,
+  //PaginationControlsCmp,
+  PaginationService,
+  IPaginationInstance
+} from 'ng2-pagination';
 
 import {TimeAgoPipe} from 'angular2-moment';
 
@@ -35,7 +40,7 @@ declare var $: any; // for using jQuery within this angular component
   providers: [UserService, PaginationService],
   directives: [
     MaterializeDirective,
-    PaginationControlsCmp,
+    //PaginationControlsCmp,
     EditUserComponent,
     EditUserAnchorDirective],
   pipes: [PaginatePipe, TimeAgoPipe],

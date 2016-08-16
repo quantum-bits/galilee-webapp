@@ -6,7 +6,10 @@ import {
   expect, it, xit,
   async, inject
 } from '@angular/core/testing';
-//import { EditUserAnchor } from './edit-user-anchor.directive';
+//
+//
+//
+// import { EditUserAnchor } from './edit-user-anchor.directive';
 
 describe('EditUserAnchor Directive', () => {
   //it('should create an instance', () => {

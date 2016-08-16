@@ -1,4 +1,4 @@
-import { provideRouter, RouterConfig } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 
 import { EndUserRoutes } from './end-user/end-user.routes';
 import { AdminRoutes } from './admin/admin.routes';
@@ -17,7 +17,7 @@ To Do:
 3. Possible to use routerLink to get an actual url with a parameter?
  */
 
-export const routes: RouterConfig = [
+const routes: Routes = [
 //  { path: '', redirectTo: 'login', terminal: true },
 //  { path: 'login', component: LoginComponent },
   { path: '', redirectTo: 'end-user', pathMatch: 'full'},
@@ -26,6 +26,4 @@ export const routes: RouterConfig = [
   ...AuthenticationRoutes,
 ];
 
-export const APP_ROUTER_PROVIDERS = [
-  provideRouter(routes)
-];
+export const routing = RouterModule.forRoot(routes);
