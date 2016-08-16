@@ -11,7 +11,7 @@ export class EditUserAnchorDirective {
   constructor(private viewContainer: ViewContainerRef,
               private componentFactoryResolver: ComponentFactoryResolver
   ) {}
-
+/*
 
   createDialog(
     editUserComponent: EditUserComponent
@@ -33,6 +33,6 @@ export class EditUserAnchorDirective {
 
     return componentCreated;
   }
-
+*/
 
 }

@@ -275,12 +275,14 @@ export class ManageUsersComponent implements OnInit {
 
 
   createNewUser() {
+    /*
     this.editUserAnchor
       .createDialog(EditUserComponent)
       .then((editUserComponentRef) => {
           editUserComponentRef.instance.someText = "overwriting the text!";
         }
       );
+      */
   }
 
 }
