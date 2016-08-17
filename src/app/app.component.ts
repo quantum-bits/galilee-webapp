@@ -11,10 +11,16 @@ import {ResourceService} from './shared/services/resource.service';
 import {UserService} from './authentication/user.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.css']
+    selector: 'app-root',
+    templateUrl: 'app.component.html',
+    styleUrls: ['app.component.css']
 })
 export class AppComponent {
-  title = 'app works!';
+    title = 'app works!';
+
+    // FIXME: This is only here to work around a compile-time error.
+    // Presumably it should hit a method on the user service.
+    isLoggedIn() {
+        return true;
+    }
 }
