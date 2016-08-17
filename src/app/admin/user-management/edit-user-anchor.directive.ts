@@ -1,4 +1,6 @@
-import { Directive, ComponentFactoryResolver, ComponentFactory, ComponentRef } from '@angular/core';
+import { Directive, ComponentFactoryResolver, ComponentRef
+// , ComponentFactory, ComponentRef
+} from '@angular/core';
 
 import { ViewContainerRef } from '@angular/core';
 import { EditUserComponent } from './edit-user';
@@ -10,7 +12,25 @@ export class EditUserAnchorDirective {
 
   constructor(private viewContainer: ViewContainerRef,
               private componentFactoryResolver: ComponentFactoryResolver
-  ) {}
+  ) {
+    console.log('inside constructor');
+  }
+
+  createDialog(editUserComponent: { new(): EditUserComponent }): Promise<ComponentRef<EditUserComponent>> {
+    this.viewContainer.clear();
+
+    let editUserComponentFactory = this.componentFactoryResolver.resolveComponentFactory(editUserComponent);
+
+    let componentCreated = this.viewContainer.createComponent(editUserComponentFactory);
+
+    componentCreated.instance.close.subscribe(() => {
+      componentCreated.destroy();
+    });
+
+    return componentCreated;
+  }
+
+
 /*
 
   createDialog(

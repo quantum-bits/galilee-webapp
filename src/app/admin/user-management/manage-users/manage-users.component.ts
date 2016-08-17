@@ -280,6 +280,14 @@ export class ManageUsersComponent implements OnInit {
 
 
   createNewUser() {
+
+
+    let the_dialog = this.editUserAnchor.createDialog(EditUserComponent).instance;
+    //the_dialog.title = "Overridden Title";
+    //the_dialog.message = "I'm an overridden message.";
+
+
+
     /*
     this.editUserAnchor
       .createDialog(EditUserComponent)
