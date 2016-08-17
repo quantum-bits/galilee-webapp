@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, DoCheck, Input, Output } from '@angular/core';
 //import {CORE_DIRECTIVES, FORM_DIRECTIVES, NgClass, NgStyle} from '@angular/common';
-import {FILE_UPLOAD_DIRECTIVES, FileUploader} from 'ng2-file-upload';
-import {MaterializeDirective} from "angular2-materialize";
+import {FileUploader} from 'ng2-file-upload';
+//import {MaterializeDirective} from "angular2-materialize";
 
 import {
   FORM_DIRECTIVES,
@@ -16,8 +16,8 @@ import {
 import { Resource } from '../../../shared/interfaces/resource.interface';
 import { ResourceCollection } from '../../../shared/interfaces/resource-collection.interface';
 
-import { InputWakeUp } from '../../../shared/directives/input-wake-up.directive';
-import { TextareaAutoresize } from '../../../shared/directives/textarea-autoresize.directive';
+//import { InputWakeUp } from '../../../shared/directives/input-wake-up.directive';
+//import { TextareaAutoresize } from '../../../shared/directives/textarea-autoresize.directive';
 
 import {UpdateResourceItemBindingService} from '../update-resource-item-binding.service';
 
@@ -34,15 +34,16 @@ declare var $: any; // for using jQuery within this angular component
   templateUrl: 'upload-resource.component.html',
   styleUrls: ['upload-resource.component.css'],
   directives: [
-    FILE_UPLOAD_DIRECTIVES,
+    //FILE_UPLOAD_DIRECTIVES,
     //NgClass,
     //NgStyle,
     //CORE_DIRECTIVES,
     FORM_DIRECTIVES,
     REACTIVE_FORM_DIRECTIVES,
-    MaterializeDirective,
-    InputWakeUp,
-    TextareaAutoresize]
+    //MaterializeDirective,
+    //InputWakeUp,
+    //TextareaAutoresize
+  ]
 })
 export class UploadResourceComponent implements OnInit, DoCheck {
 

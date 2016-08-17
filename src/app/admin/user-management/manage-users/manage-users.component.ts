@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-import {MaterializeDirective} from 'angular2-materialize';
+//import {MaterializeDirective} from 'angular2-materialize';
 import {
   PaginatePipe,
   //PaginationControlsCmp,
@@ -10,7 +10,7 @@ import {
 
 import {TimeAgoPipe} from 'angular2-moment';
 
-import {EditUserComponent} from '../edit-user';
+//import {EditUserComponent} from '../edit-user';
 
 import { EditUserAnchorDirective } from '../edit-user-anchor.directive';
 
@@ -38,10 +38,11 @@ declare var $: any; // for using jQuery within this angular component
   styleUrls: ['manage-users.component.css'],
   providers: [UserService, PaginationService],
   directives: [
-    MaterializeDirective,
+    //MaterializeDirective,
     //PaginationControlsCmp,
-    EditUserComponent,
-    EditUserAnchorDirective],
+    //EditUserComponent,
+    EditUserAnchorDirective
+  ],
   pipes: [PaginatePipe, TimeAgoPipe],
 })
 export class ManageUsersComponent implements OnInit {

@@ -2,14 +2,14 @@ import { Component, OnInit, Input, ViewChild, ElementRef, Renderer } from '@angu
 
 import {ResourceService} from '../../../shared/services/resource.service';
 //import { UpdateResourceItemComponent } from '../update-resource-item';
-import { UpdateResourceCollectionComponent } from '../update-resource-collection';
-import { UploadResourceComponent } from '../upload-resource';
+//import { UpdateResourceCollectionComponent } from '../update-resource-collection';
+//import { UploadResourceComponent } from '../upload-resource';
 
 import { Resource } from '../../../shared/interfaces/resource.interface';
 import { ResourceCollection } from '../../../shared/interfaces/resource-collection.interface';
 
-import {MaterializeDirective} from "angular2-materialize";
-import {Dragula, DragulaService} from 'ng2-dragula/ng2-dragula';
+//import {MaterializeDirective} from "angular2-materialize";
+import {DragulaService} from 'ng2-dragula/ng2-dragula';
 
 declare var $: any; // for using jQuery within this angular component
 
@@ -19,10 +19,10 @@ declare var $: any; // for using jQuery within this angular component
   styleUrls: ['update-resources.component.css'],
   providers: [DragulaService],
   directives: [
-    MaterializeDirective,
-    UpdateResourceCollectionComponent,
-    UploadResourceComponent,
-    Dragula
+    //MaterializeDirective,
+    //UpdateResourceCollectionComponent,
+    //UploadResourceComponent,
+    //Dragula
   ],
 })
 export class UpdateResourcesComponent implements OnInit {

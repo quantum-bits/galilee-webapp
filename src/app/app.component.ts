@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Router, ROUTER_DIRECTIVES} from '@angular/router';
+//import {Router, ROUTER_DIRECTIVES} from '@angular/router';
 
-import {MaterializeDirective} from "angular2-materialize";
+//import {MaterializeDirective} from "angular2-materialize";
 
 import {ReadingService} from './shared/services/reading.service';
 import {Reading} from './shared/models/reading.model';
@@ -9,6 +9,9 @@ import {PracticeService} from './shared/services/practice.service';
 import {Practice} from './shared/models/practice.model';
 import {ResourceService} from './shared/services/resource.service';
 import {UserService} from './authentication/user.service';
+
+import "angular2-materialize";//don't know if this is required
+import "ng2-file-upload";//don't know if this is required
 
 @Component({
     selector: 'app-root',

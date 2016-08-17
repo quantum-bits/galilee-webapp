@@ -5,7 +5,7 @@ import { ResourceCollection } from '../../../shared/interfaces/resource-collecti
 import { UpdateResourceItemComponent } from '../update-resource-item';
 import { UploadResourceComponent } from '../upload-resource';
 
-import {MaterializeDirective} from "angular2-materialize";
+//import {MaterializeDirective} from "angular2-materialize";
 
 declare var $: any; // for using jQuery within this angular component
 
@@ -14,7 +14,7 @@ declare var $: any; // for using jQuery within this angular component
   templateUrl: 'update-resource-collection.component.html',
   styleUrls: ['update-resource-collection.component.css'],
   directives: [
-    MaterializeDirective,
+    //MaterializeDirective,
     UpdateResourceItemComponent,
     UploadResourceComponent],
 })

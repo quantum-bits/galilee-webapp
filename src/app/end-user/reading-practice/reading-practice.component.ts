@@ -1,23 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router';
+//import { ROUTER_DIRECTIVES } from '@angular/router';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { ReadingService } from '../../shared/services/reading.service';
 import { PracticeService } from '../../shared/services/practice.service';
 import { Reading } from '../../shared/models/reading.model';
-import { ReadingItemComponent } from '../reading-item';
-import { PracticeItemComponent } from '../practice-item';
+//import { ReadingItemComponent } from '../reading-item';
+//import { PracticeItemComponent } from '../practice-item';
 
 @Component({
   selector: 'app-reading-practice',
   templateUrl: 'reading-practice.component.html',
   styleUrls: ['reading-practice.component.css'],
   providers: [ReadingService, PracticeService],
-  directives: [
-    ROUTER_DIRECTIVES,
-    ReadingItemComponent,
-    PracticeItemComponent,
-  ],
+  directives: [],
 })
 export class ReadingPracticeComponent implements OnInit {
 

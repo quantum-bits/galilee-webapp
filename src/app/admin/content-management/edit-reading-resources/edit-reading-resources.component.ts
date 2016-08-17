@@ -1,5 +1,5 @@
 import {Component, OnInit, EventEmitter} from '@angular/core';
-import {ROUTER_DIRECTIVES} from '@angular/router';
+//import {ROUTER_DIRECTIVES} from '@angular/router';
 import {Location} from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 
@@ -12,8 +12,8 @@ import {ReadingService} from '../../../shared/services/reading.service';
 import {Reading} from '../../../shared/models/reading.model';
 import { ResourceCollection } from '../../../shared/interfaces/resource-collection.interface';
 
-import { UpdatePracticesComponent } from '../update-practices';
-import {UpdateResourcesComponent} from '../update-resources';
+//import { UpdatePracticesComponent } from '../update-practices';
+//import {UpdateResourcesComponent} from '../update-resources';
 
 // useful resource for using Materialize components that require js:
 // https://github.com/InfomediaLtd/angular2-materialize/tree/master/app/components
@@ -24,10 +24,10 @@ import {UpdateResourcesComponent} from '../update-resources';
   styleUrls: ['edit-reading-resources.component.css'],
   providers: [ReadingService, UpdatePracticeItemBindingService, UpdateResourceItemBindingService],
   directives: [
-    ROUTER_DIRECTIVES,
-    MaterializeDirective,
-    UpdatePracticesComponent,
-    UpdateResourcesComponent,
+    //ROUTER_DIRECTIVES,
+    //MaterializeDirective,
+    //UpdatePracticesComponent,
+    //UpdateResourcesComponent,
   ],
 })
 export class EditReadingResourcesComponent implements OnInit {

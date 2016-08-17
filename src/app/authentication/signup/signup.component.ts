@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ROUTER_DIRECTIVES } from '@angular/router';
 
+/*
+  Not clear if we still need to import the Router stuff here; it doesn't seem to
+  work otherwise, since we use Router.navigate below....
+ */
+
 import {
   FORM_DIRECTIVES,
   REACTIVE_FORM_DIRECTIVES,
@@ -13,7 +18,7 @@ import {
 
 
 import { UserService } from '../user.service';
-import { InputWakeUp } from '../../shared/directives/input-wake-up.directive';
+//import { InputWakeUp } from '../../shared/directives/input-wake-up.directive';
 
 @Component({
   selector: 'app-signup',
@@ -21,10 +26,9 @@ import { InputWakeUp } from '../../shared/directives/input-wake-up.directive';
   styleUrls: ['signup.component.css'],
   //directives: [ ROUTER_DIRECTIVES, REACTIVE_FORM_DIRECTIVES, FormBuilder, InputWakeUp ],
   directives: [
-    ROUTER_DIRECTIVES,
     FORM_DIRECTIVES,
     REACTIVE_FORM_DIRECTIVES,
-    InputWakeUp]
+    ROUTER_DIRECTIVES]
 })
 export class SignupComponent implements OnInit {
 

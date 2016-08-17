@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import {MaterializeDirective} from "angular2-materialize";
+//import {MaterializeDirective} from "angular2-materialize";
 import { TruncatePipe } from '../../shared/pipes/truncate.pipe';
 
 @Component({
@@ -8,7 +8,7 @@ import { TruncatePipe } from '../../shared/pipes/truncate.pipe';
   templateUrl: 'resource-item.component.html',
   styleUrls: ['resource-item.component.css'],
   pipes: [TruncatePipe],
-  directives: [MaterializeDirective],
+  directives: [],
 })
 export class ResourceItemComponent implements OnInit {
 

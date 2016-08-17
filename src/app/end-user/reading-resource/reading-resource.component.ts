@@ -1,24 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ROUTER_DIRECTIVES } from '@angular/router';
+//import { ROUTER_DIRECTIVES } from '@angular/router';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { ReadingService } from '../../shared/services/reading.service';
 import { ResourceService } from '../../shared/services/resource.service';
 import { Reading } from '../../shared/models/reading.model';
-import { ReadingItemComponent } from '../reading-item';
-import { ResourceItemComponent } from '../resource-item';
+//import { ReadingItemComponent } from '../reading-item';
+//import { ResourceItemComponent } from '../resource-item';
 
 @Component({
   selector: 'app-reading-resource',
   templateUrl: 'reading-resource.component.html',
   styleUrls: ['reading-resource.component.css'],
   providers: [ReadingService, ResourceService],
-  directives: [
-    ROUTER_DIRECTIVES,
-    ReadingItemComponent,
-    ResourceItemComponent,
-  ],
+  directives: [],
 })
 export class ReadingResourceComponent implements OnInit {
 

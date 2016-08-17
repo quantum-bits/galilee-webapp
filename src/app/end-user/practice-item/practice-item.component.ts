@@ -1,12 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import {MaterializeDirective} from "angular2-materialize";
+//import {MaterializeDirective} from "angular2-materialize";
 
 @Component({
   selector: 'app-practice-item',
   templateUrl: 'practice-item.component.html',
   styleUrls: ['practice-item.component.css'],
-  directives: [MaterializeDirective],
+  directives: [],
 })
 export class PracticeItemComponent implements OnInit {
 

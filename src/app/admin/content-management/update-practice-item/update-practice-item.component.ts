@@ -10,7 +10,7 @@ import {
 
 import {UpdatePracticeItemBindingService} from '../update-practice-item-binding.service';
 
-import {MaterializeDirective} from "angular2-materialize";
+//import {MaterializeDirective} from "angular2-materialize";
 
 declare var $: any; // for using jQuery within this angular component
 
@@ -19,7 +19,9 @@ declare var $: any; // for using jQuery within this angular component
   templateUrl: 'update-practice-item.component.html',
   styleUrls: ['update-practice-item.component.css'],
   providers: [],
-  directives: [MaterializeDirective, FORM_DIRECTIVES, REACTIVE_FORM_DIRECTIVES]
+  directives: [
+    //MaterializeDirective,
+    FORM_DIRECTIVES, REACTIVE_FORM_DIRECTIVES]
 })
 export class UpdatePracticeItemComponent implements OnInit, OnDestroy {
 

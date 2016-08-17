@@ -1,18 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ROUTER_DIRECTIVES } from '@angular/router';
 
+// probably should use the Validators in @angular/forms...?
 import { Validators } from '@angular/common';
 import { REACTIVE_FORM_DIRECTIVES, FormGroup, FormControl, FormBuilder } from '@angular/forms';
 
 
 import { UserService } from '../user.service';
-import { InputWakeUp } from '../../shared/directives/input-wake-up.directive';
+//import { InputWakeUp } from '../../shared/directives/input-wake-up.directive';
 
 @Component({
   selector: 'app-login',
   templateUrl: 'login.component.html',
   styleUrls: ['login.component.css'],
-  directives: [ ROUTER_DIRECTIVES, REACTIVE_FORM_DIRECTIVES, InputWakeUp ],
+  directives: [ ROUTER_DIRECTIVES, REACTIVE_FORM_DIRECTIVES,
+    //InputWakeUp
+  ],
 })
 export class LoginComponent implements OnInit {
 

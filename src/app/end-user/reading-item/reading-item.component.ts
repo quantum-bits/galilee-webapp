@@ -1,13 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router';
+//import { ROUTER_DIRECTIVES } from '@angular/router';
 import { Router, ActivatedRoute } from '@angular/router';
-import {MaterializeDirective} from "angular2-materialize";
+//import {MaterializeDirective} from "angular2-materialize";
 
 @Component({
   selector: 'app-reading-item',
   templateUrl: 'reading-item.component.html',
   styleUrls: ['reading-item.component.css'],
-  directives: [ROUTER_DIRECTIVES, MaterializeDirective]
+  directives: []
 })
 export class ReadingItemComponent implements OnInit {
 

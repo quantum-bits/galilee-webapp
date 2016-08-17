@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 //import { Router, ROUTER_DIRECTIVES } from '@angular/router';
 
-import {MaterializeDirective} from 'angular2-materialize';
+//import {MaterializeDirective} from 'angular2-materialize';
 
 import {
   FORM_DIRECTIVES,
@@ -13,7 +13,7 @@ import {
   FormControl
 } from '@angular/forms';
 
-import { InputWakeUp } from '../../../shared/directives/input-wake-up.directive';
+//import { InputWakeUp } from '../../../shared/directives/input-wake-up.directive';
 
 import {User} from '../../../shared/models/user.model';
 import {UserPermission} from '../../../shared/models/user-permission.model';
@@ -29,8 +29,8 @@ import { UserService } from '../../../authentication/user.service';
     //ROUTER_DIRECTIVES,
     FORM_DIRECTIVES,
     REACTIVE_FORM_DIRECTIVES,
-    MaterializeDirective,
-    InputWakeUp
+    //MaterializeDirective,
+    //InputWakeUp
   ]
 })
 export class EditUserComponent implements OnInit {
