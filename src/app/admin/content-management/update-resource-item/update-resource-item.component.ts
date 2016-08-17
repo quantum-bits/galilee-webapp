@@ -5,7 +5,6 @@ import {UpdateResourceItemBindingService} from '../update-resource-item-binding.
 import {MaterializeDirective} from "angular2-materialize";
 
 @Component({
-  moduleId: module.id,
   selector: 'app-update-resource-item',
   templateUrl: 'update-resource-item.component.html',
   styleUrls: ['update-resource-item.component.css'],

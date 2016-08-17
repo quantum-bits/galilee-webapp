@@ -14,7 +14,6 @@ import {Dragula, DragulaService} from 'ng2-dragula/ng2-dragula';
 declare var $: any; // for using jQuery within this angular component
 
 @Component({
-  moduleId: module.id,
   selector: 'app-update-resources',
   templateUrl: 'update-resources.component.html',
   styleUrls: ['update-resources.component.css'],

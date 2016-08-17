@@ -16,7 +16,6 @@ import { UserService } from '../user.service';
 import { InputWakeUp } from '../../shared/directives/input-wake-up.directive';
 
 @Component({
-  moduleId: module.id,
   selector: 'app-signup',
   templateUrl: 'signup.component.html',
   styleUrls: ['signup.component.css'],

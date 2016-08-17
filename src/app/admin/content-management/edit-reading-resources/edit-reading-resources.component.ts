@@ -19,7 +19,6 @@ import {UpdateResourcesComponent} from '../update-resources';
 // https://github.com/InfomediaLtd/angular2-materialize/tree/master/app/components
 
 @Component({
-  moduleId: module.id,
   selector: 'app-edit-practices',
   templateUrl: 'edit-reading-resources.component.html',
   styleUrls: ['edit-reading-resources.component.css'],

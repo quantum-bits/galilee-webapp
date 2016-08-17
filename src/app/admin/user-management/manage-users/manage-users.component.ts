@@ -33,7 +33,6 @@ import { UserService } from '../../../authentication/user.service';
 declare var $: any; // for using jQuery within this angular component
 
 @Component({
-  moduleId: module.id,
   selector: 'app-manage-users',
   templateUrl: 'manage-users.component.html',
   styleUrls: ['manage-users.component.css'],

@@ -7,7 +7,6 @@ import { Reading } from '../../shared/models/reading.model';
 import { ReadingItemComponent } from '../reading-item';
 
 @Component({
-  moduleId: module.id,
   selector: 'app-readings',
   templateUrl: 'readings.component.html',
   styleUrls: ['readings.component.css'],

@@ -15,7 +15,6 @@ import {MaterializeDirective} from "angular2-materialize";
 declare var $: any; // for using jQuery within this angular component
 
 @Component({
-  moduleId: module.id,
   selector: 'app-update-practice-item',
   templateUrl: 'update-practice-item.component.html',
   styleUrls: ['update-practice-item.component.css'],

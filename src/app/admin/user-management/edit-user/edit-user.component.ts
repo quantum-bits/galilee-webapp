@@ -22,7 +22,6 @@ import { UserService } from '../../../authentication/user.service';
 
 
 @Component({
-  moduleId: module.id,
   selector: 'app-edit-user',
   templateUrl: 'edit-user.component.html',
   styleUrls: ['edit-user.component.css'],

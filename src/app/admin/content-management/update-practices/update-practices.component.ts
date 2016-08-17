@@ -9,7 +9,6 @@ import {MaterializeDirective} from "angular2-materialize";
 import {Dragula, DragulaService} from 'ng2-dragula/ng2-dragula';
 
 @Component({
-  moduleId: module.id,
   selector: 'app-update-practices',
   templateUrl: 'update-practices.component.html',
   styleUrls: ['update-practices.component.css'],

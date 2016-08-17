@@ -9,7 +9,6 @@ import { ReadingItemComponent } from '../reading-item';
 import { PracticeItemComponent } from '../practice-item';
 
 @Component({
-  moduleId: module.id,
   selector: 'app-reading-practice',
   templateUrl: 'reading-practice.component.html',
   styleUrls: ['reading-practice.component.css'],

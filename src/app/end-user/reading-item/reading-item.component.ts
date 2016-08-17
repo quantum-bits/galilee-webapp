@@ -4,7 +4,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import {MaterializeDirective} from "angular2-materialize";
 
 @Component({
-  moduleId: module.id,
   selector: 'app-reading-item',
   templateUrl: 'reading-item.component.html',
   styleUrls: ['reading-item.component.css'],

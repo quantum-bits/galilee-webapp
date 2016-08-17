@@ -4,7 +4,6 @@ import {MaterializeDirective} from "angular2-materialize";
 import { TruncatePipe } from '../../shared/pipes/truncate.pipe';
 
 @Component({
-  moduleId: module.id,
   selector: 'app-resource-item',
   templateUrl: 'resource-item.component.html',
   styleUrls: ['resource-item.component.css'],

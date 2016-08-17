@@ -10,7 +10,6 @@ import { ReadingItemComponent } from '../reading-item';
 import { ResourceItemComponent } from '../resource-item';
 
 @Component({
-  moduleId: module.id,
   selector: 'app-reading-resource',
   templateUrl: 'reading-resource.component.html',
   styleUrls: ['reading-resource.component.css'],

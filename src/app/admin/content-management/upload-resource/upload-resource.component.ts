@@ -30,7 +30,6 @@ declare var $: any; // for using jQuery within this angular component
 //      ...for some helpful comments
 
 @Component({
-  moduleId: module.id,
   selector: 'app-upload-resource',
   templateUrl: 'upload-resource.component.html',
   styleUrls: ['upload-resource.component.css'],
