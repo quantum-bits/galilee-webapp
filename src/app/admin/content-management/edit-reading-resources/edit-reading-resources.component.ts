@@ -19,6 +19,7 @@ import { ResourceCollection } from '../../../shared/interfaces/resource-collecti
 // https://github.com/InfomediaLtd/angular2-materialize/tree/master/app/components
 
 @Component({
+
   selector: 'app-edit-practices',
   templateUrl: 'edit-reading-resources.component.html',
   styleUrls: ['edit-reading-resources.component.css'],

@@ -1,35 +1,35 @@
 <nav>
-  <div class="toolbar-wrapper">
-    <div class="nav-wrapper">
-      <span class="brand-logo left">Scripture Engagement</span>
-      <ul id="nav-mobile" class="right">
-        <li>
-          <a [routerLink]="['/end-user']">
-            <i class="material-icons">book</i>
-          </a>
-        </li>
-        <li>
-          <a materialize="dropdown"
-             class='dropdown-button'
-             data-activates='adminDropdownMenu'>
-            <i class="material-icons">settings</i>
-          </a>
-        </li>
-        <li>
-          <a *ngIf="isLoggedIn()"
-             (click)="logout()">
-            <i class="material-icons">power_settings_new</i>
-          </a>
-        </li>
-        <li>
-          <a *ngIf="!isLoggedIn()"
-             [routerLink]="['/login']">
-            <i class="material-icons">perm_identity</i>
-          </a>
-        </li>
-      </ul>
+    <div class="toolbar-wrapper">
+        <div class="nav-wrapper">
+            <span class="brand-logo left">Scripture Engagement</span>
+            <ul id="nav-mobile" class="right">
+                <li>
+                    <a [routerLink]="['/end-user']">
+                        <i class="material-icons">book</i>
+                    </a>
+                </li>
+                <li>
+                    <a materialize="dropdown"
+                       class='dropdown-button'
+                       data-activates='adminDropdownMenu'>
+                        <i class="material-icons">settings</i>
+                    </a>
+                </li>
+                <li>
+                    <a *ngIf="isLoggedIn()"
+                       (click)="logout()">
+                        <i class="material-icons">power_settings_new</i>
+                    </a>
+                </li>
+                <li>
+                    <a *ngIf="!isLoggedIn()"
+                       [routerLink]="['/login']">
+                        <i class="material-icons">perm_identity</i>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
-  </div>
 </nav>
 
 
@@ -37,8 +37,8 @@
 
 <!-- Dropdown Structure -->
 <ul id='adminDropdownMenu' class='dropdown-content'>
-  <li><a [routerLink]="['/admin/edit-reading-resources']">Practices & Resources</a></li>
-  <li><a [routerLink]="['/admin/manage-users']">Manage Users</a></li>
-  <li class="divider"></li>
-  <li><a href="#!">Other...?</a></li>
+    <li><a [routerLink]="['/admin/edit-reading-resources']">Practices & Resources</a></li>
+    <li><a [routerLink]="['/admin/manage-users']">Manage Users</a></li>
+    <li class="divider"></li>
+    <li><a href="#!">Other...?</a></li>
 </ul>
