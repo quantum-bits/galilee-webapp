@@ -36,7 +36,10 @@ export class DialogComponent implements OnInit {
 
   constructor(){}
 
-  ngOnInit() {}
+  ngOnInit() {
+    // this gets called every time the dialog is instantiated...good!
+    console.log('inside ngOnInit for dialog component');
+  }
 
 
   onClickedExit() {

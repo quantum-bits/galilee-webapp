@@ -6,6 +6,7 @@ import { Router, ROUTER_DIRECTIVES } from '@angular/router';
   work otherwise, since we use Router.navigate below....
  */
 
+/*
 import {
   FORM_DIRECTIVES,
   REACTIVE_FORM_DIRECTIVES,
@@ -16,6 +17,7 @@ import {
   FormControl
 } from '@angular/forms';
 
+*/
 
 import { UserService } from '../user.service';
 //import { InputWakeUp } from '../../shared/directives/input-wake-up.directive';
@@ -26,8 +28,8 @@ import { UserService } from '../user.service';
   styleUrls: ['signup.component.css'],
   //directives: [ ROUTER_DIRECTIVES, REACTIVE_FORM_DIRECTIVES, FormBuilder, InputWakeUp ],
   directives: [
-    FORM_DIRECTIVES,
-    REACTIVE_FORM_DIRECTIVES,
+    //FORM_DIRECTIVES,
+    //REACTIVE_FORM_DIRECTIVES,
     ROUTER_DIRECTIVES]
 })
 export class SignupComponent implements OnInit {
@@ -40,10 +42,12 @@ export class SignupComponent implements OnInit {
   private signinServerError: any;
 
   constructor(private userService: UserService,
-              private router: Router,
-              private _fb: FormBuilder) {}
+              private router: Router
+              //private _fb: FormBuilder
+  ) {}
 
   ngOnInit() {
+    /*
     this.signupForm = this._fb.group({
       username: ['', [<any>Validators.required]],
       passwords:
@@ -54,6 +58,7 @@ export class SignupComponent implements OnInit {
     });
 
     console.log(this.signupForm);
+    */
   }
 
   onSubmit() {
@@ -62,7 +67,7 @@ export class SignupComponent implements OnInit {
     // 2. give an error message for the 400, 401, etc., errors
     // 3. make sure the logic makes sense for both positive and negative results!!!
     // 4. double-check login for #3....
-
+/*
     if (this.signupForm.valid){
       this.signinServerError = null;//reinitialize it....
       this.userService.signup(
@@ -80,8 +85,10 @@ export class SignupComponent implements OnInit {
         }
       );
     }
+    */
   }
 
+  /*
   areEqual(group) {
     if (group.value.password === group.value.password2) {
       return null;
@@ -89,5 +96,6 @@ export class SignupComponent implements OnInit {
       return {error: 'Passwords must match.'};
     }
   }
+  */
 
 }
