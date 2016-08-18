@@ -47,6 +47,9 @@ export class User {
     }
   }
 
+  fullName(){
+    return this.firstName+' '+this.lastName;
+  }
 
   static compare(element1: User, element2: User, fieldName: string, sortAscending: boolean){
     // fieldName should be 'firstName', 'lastName', 'email', or 'joinedOn';

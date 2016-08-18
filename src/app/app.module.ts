@@ -31,8 +31,8 @@ import { UpdateResourceCollectionComponent } from './admin/content-management/up
 
 import {DialogComponent} from './admin/temp/dialog.component';
 
-
 import { AuthGuard } from './authentication/common/auth.guard';
+import {UserService}  from './authentication/user.service';
 
 import {routing} from './app.routes';
 
@@ -67,7 +67,7 @@ import {routing} from './app.routes';
       FormsModule,
       HttpModule
     ],
-    providers: [AuthGuard, FormBuilder],
+    providers: [AuthGuard, FormBuilder, UserService],
     //NOTE: (1) AuthGuard has been commented out in admin.routes for the moment
     //      (2) I don't know if this is the correct place to put the AuthGuard declaration...in rc4 it was included as part of the bootstrapping process
     entryComponents: [AppComponent, EditUserComponent, DialogComponent],// not sure if EditUserComponent needs to be here....

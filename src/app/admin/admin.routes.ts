@@ -8,7 +8,7 @@ export const AdminRoutes = [
   {
     path: 'admin',
     component: AdminComponent,
-    //canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     children:[
       {path: '', redirectTo: 'edit-reading-resources', terminal: true},
       {

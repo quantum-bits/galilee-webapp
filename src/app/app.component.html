@@ -3,6 +3,9 @@
         <div class="nav-wrapper">
             <span class="brand-logo left">Scripture Engagement</span>
             <ul id="nav-mobile" class="right">
+              <li *ngIf="currentUser">
+                +{{currentUser.fullName()}}
+              </li>
                 <li>
                     <a [routerLink]="['/end-user']">
                         <i class="material-icons">book</i>

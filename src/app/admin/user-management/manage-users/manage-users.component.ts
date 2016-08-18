@@ -41,7 +41,7 @@ declare var $: any; // for using jQuery within this angular component
   selector: 'app-manage-users',
   templateUrl: 'manage-users.component.html',
   styleUrls: ['manage-users.component.css'],
-  providers: [UserService, PaginationService],
+  providers: [PaginationService],
   directives: [
     //MaterializeDirective,
     //PaginationControlsCmp,

@@ -38,8 +38,6 @@ export class SignupComponent implements OnInit {
   //      https://medium.com/@blacksonic86/angular-2-authentication-revisited-611bf7373bf9#.vwfc7gq9v
   // currently using the following server to mock authentication, etc.:
   //      https://github.com/auth0-blog/nodejs-jwt-authentication-sample
-  public signupForm: FormGroup; // model driven form
-  private signinServerError: any;
 
   constructor(private userService: UserService,
               private router: Router
