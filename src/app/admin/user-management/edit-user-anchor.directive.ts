@@ -5,8 +5,23 @@ import { Directive, ComponentFactoryResolver, ComponentRef
 import { ViewContainerRef } from '@angular/core';
 import { EditUserComponent } from './edit-user';
 
+import {
+  FORM_DIRECTIVES,
+  REACTIVE_FORM_DIRECTIVES,
+  FormBuilder,
+  FormGroup,
+  FormArray,
+  Validators, // used to make a field required
+  FormControl
+} from '@angular/forms';
+
+import { UserService } from '../../authentication/user.service';
+
+
+
 @Directive({
-  selector: '[edit-user-anchor]'
+  selector: '[editUserAnchor]',
+  //directives: [FORM_DIRECTIVES,REACTIVE_FORM_DIRECTIVES,]
 })
 export class EditUserAnchorDirective {
 
@@ -16,7 +31,7 @@ export class EditUserAnchorDirective {
     console.log('inside constructor');
   }
 
-  createDialog(editUserComponent: { new(): EditUserComponent }): Promise<ComponentRef<EditUserComponent>> {
+  createDialog(editUserComponent: { new(): EditUserComponent }): ComponentRef<EditUserComponent> {
     this.viewContainer.clear();
 
     let editUserComponentFactory = this.componentFactoryResolver.resolveComponentFactory(editUserComponent);

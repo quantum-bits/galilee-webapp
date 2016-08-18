@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 //import { Router, ROUTER_DIRECTIVES } from '@angular/router';
 
 //import {MaterializeDirective} from 'angular2-materialize';
@@ -48,7 +48,12 @@ export class EditUserComponent implements OnInit {
 
   close = new EventEmitter();
 
-  @Output() onFinished = new EventEmitter<string>();
+  onFinished = new EventEmitter<string>();
+
+  title: string = 'Dialog box';
+  message: string = 'Hello, I\'m a dialog box!';
+
+
 
   private initialUserPermissions: UserPermission[];
   public userForm: FormGroup; // our model driven form
@@ -60,12 +65,14 @@ export class EditUserComponent implements OnInit {
   private date = new Date();
   // date.toISOString()
 
-
-  constructor(//private router: Router,
-              private formBuilder: FormBuilder,
+  constructor(private formBuilder: FormBuilder,
               private userService: UserService) {}
 
   ngOnInit() {
+    console.log('inside ngOnInit of edit-user');
+    console.log(this.formBuilder);
+
+
     this.userService.getInitialUserPermissions().subscribe(
       permissions => {
         this.initialUserPermissions = permissions;
@@ -201,6 +208,11 @@ export class EditUserComponent implements OnInit {
   displayForm(){
     console.log(this.userForm);
     //console.log(this.userForm.controls.passwords.controls.password2.touched && !this.userForm.controls.passwords.controls.valid);
+  }
+
+
+  onClickedExit() {
+    this.close.emit('event');
   }
 
 }

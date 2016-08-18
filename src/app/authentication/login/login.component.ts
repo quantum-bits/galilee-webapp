@@ -2,8 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ROUTER_DIRECTIVES } from '@angular/router';
 
 // probably should use the Validators in @angular/forms...?
-import { Validators } from '@angular/common';
-import { REACTIVE_FORM_DIRECTIVES, FormGroup, FormControl, FormBuilder } from '@angular/forms';
+//import { Validators } from '@angular/common';
+
+import {
+  FORM_DIRECTIVES,
+  REACTIVE_FORM_DIRECTIVES,
+  FormBuilder,
+  FormGroup,
+  FormArray,
+  Validators, // used to make a field required
+  FormControl
+} from '@angular/forms';
 
 
 import { UserService } from '../user.service';

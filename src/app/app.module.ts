@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule, ApplicationRef} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, FormBuilder} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
 import {AppComponent} from './app.component';
@@ -29,6 +29,8 @@ import { UpdateResourceItemComponent } from './admin/content-management/update-r
 import { UploadResourceComponent } from './admin/content-management/upload-resource';
 import { UpdateResourceCollectionComponent } from './admin/content-management/update-resource-collection';
 
+import {DialogComponent} from './admin/temp/dialog.component';
+
 
 import { AuthGuard } from './authentication/common/auth.guard';
 
@@ -55,7 +57,8 @@ import {routing} from './app.routes';
       UpdateResourcesComponent,
       UpdateResourceItemComponent,
       UploadResourceComponent,
-      UpdateResourceCollectionComponent
+      UpdateResourceCollectionComponent,
+      DialogComponent
     ],
     imports: [
       BrowserModule,
@@ -64,10 +67,10 @@ import {routing} from './app.routes';
       FormsModule,
       HttpModule
     ],
-    providers: [AuthGuard],
+    providers: [AuthGuard, FormBuilder],
     //NOTE: (1) AuthGuard has been commented out in admin.routes for the moment
     //      (2) I don't know if this is the correct place to put the AuthGuard declaration...in rc4 it was included as part of the bootstrapping process
-    entryComponents: [AppComponent, EditUserComponent],// not sure if EditUserComponent needs to be here....
+    entryComponents: [AppComponent, EditUserComponent, DialogComponent],// not sure if EditUserComponent needs to be here....
     bootstrap: [AppComponent]
 })
 export class AppModule {

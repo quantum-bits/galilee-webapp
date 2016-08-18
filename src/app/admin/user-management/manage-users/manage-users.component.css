@@ -4,3 +4,19 @@
   padding-left: 10px;
 }
 
+
+
+
+
+
+.open-button {
+  padding: 5px;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+[dialogAnchor] {
+  display: none;
+}
+
+

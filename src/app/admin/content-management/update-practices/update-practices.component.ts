@@ -52,6 +52,8 @@ export class UpdatePracticesComponent implements OnInit, OnChanges {
   constructor(
     private practiceService:PracticeService,
     private dragulaService: DragulaService) {
+    console.log('inside update-practices constructor');
+
     dragulaService.drag.subscribe((value) => {
       console.log(`drag: ${value[0]}`);
       this.onDrag(value.slice(1));

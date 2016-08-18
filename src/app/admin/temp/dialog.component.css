@@ -1,0 +1,31 @@
+.dialog {
+  width: 500px;
+  position: absolute;
+  border: 1px dashed red;
+  border-radius: 5px;
+  overflow: hidden;
+  position: fixed;
+  left: calc(50% - 125px);
+  top: 100px;
+}
+
+.dialog p {
+  text-align: center;
+}
+
+.dialog header {
+  border-bottom: 1px solid red;
+  font-size: 12px;
+  padding: 5px;
+  display: flex;
+}
+
+.dialog header .title {
+  flex-grow: 1;
+  cursor: default;
+}
+
+.dialog header .exit-button {
+  cursor: pointer;
+  padding: 0 5px;
+}

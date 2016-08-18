@@ -10,9 +10,14 @@ import {
 
 import {TimeAgoPipe} from 'angular2-moment';
 
-//import {EditUserComponent} from '../edit-user';
+import {EditUserComponent} from '../edit-user';
 
 import { EditUserAnchorDirective } from '../edit-user-anchor.directive';
+
+
+import {DialogComponent} from '../../temp/dialog.component';
+import {DialogAnchorDirective} from '../../temp/dialoganchor.directive';
+
 
 import {User} from '../../../shared/models/user.model';
 import {Permission} from '../../../shared/models/permission.model';
@@ -40,8 +45,9 @@ declare var $: any; // for using jQuery within this angular component
   directives: [
     //MaterializeDirective,
     //PaginationControlsCmp,
-    //EditUserComponent,
-    EditUserAnchorDirective
+    EditUserComponent,
+    EditUserAnchorDirective,
+    DialogComponent, DialogAnchorDirective
   ],
   pipes: [PaginatePipe, TimeAgoPipe],
 })
@@ -50,6 +56,9 @@ export class ManageUsersComponent implements OnInit {
   @ViewChild(EditUserAnchorDirective) editUserAnchor: EditUserAnchorDirective;
   // other helpful examples (including async call to server)
   // using the pagination package: http://michaelbromley.github.io/ng2-pagination/
+
+  @ViewChild(DialogAnchorDirective) dialogAnchor: DialogAnchorDirective;
+
 
   private users: User[]; // will stay the same throughout
   private filteredUsers: User[]; // the list of filtered/sorted users displayed on the page
@@ -297,5 +306,13 @@ export class ManageUsersComponent implements OnInit {
       );
       */
   }
+
+  openDialogBox() {
+    let the_dialog = this.dialogAnchor.createDialog(DialogComponent).instance;
+    the_dialog.title = "Overridden Title";
+    the_dialog.message = "I'm an overridden message.";
+  }
+
+
 
 }

@@ -53,6 +53,8 @@ export class EditReadingResourcesComponent implements OnInit {
     private readingService:ReadingService,
     private updatePracticeItemBindingService:UpdatePracticeItemBindingService,
     private updateResourceItemBindingService:UpdateResourceItemBindingService) {
+    console.log('inside edit-reading-resources constructor');
+
     updatePracticeItemBindingService.practiceUpdated$.subscribe(
       practiceWithAdvice => {
         this.onUpdatePractice(practiceWithAdvice);
