@@ -31,7 +31,7 @@ export class EditUserAnchorDirective {
     console.log('inside constructor');
   }
 
-  createDialog(editUserComponent: { new(): EditUserComponent }): ComponentRef<EditUserComponent> {
+  createDialog(editUserComponent) {
     this.viewContainer.clear();
 
     let editUserComponentFactory = this.componentFactoryResolver.resolveComponentFactory(editUserComponent);

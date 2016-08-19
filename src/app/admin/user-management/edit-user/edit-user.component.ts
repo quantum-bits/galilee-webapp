@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input } from '@angular/core';
 //import { Router, ROUTER_DIRECTIVES } from '@angular/router';
 
 //import {MaterializeDirective} from 'angular2-materialize';
@@ -34,15 +34,16 @@ import { UserService } from '../../../authentication/user.service';
   ]
 })
 export class EditUserComponent implements OnInit {
-
+  @Input() newUser: boolean; //true if this is a new user; false if editing an existing user
+  @Input() userData: any; // comes in as a User-formatted dictionary, but it is not a true User object (complete with methods, etc.)
   //@Input() newUser: boolean; //true if this is a new user; false if editing an existing user
   //@Input() modalID: string;
   //@Input() userData: any; // comes in as a User-formatted dictionary, but it is not a true User object (complete with methods, etc.)
   //@Output() onFinished = new EventEmitter<string>();
 
-  newUser: boolean = true; //true if this is a new user; false if editing an existing user
+  //newUser: boolean = true; //true if this is a new user; false if editing an existing user
   //@Input() modalID: string;
-  userData: any; // comes in as a User-formatted dictionary, but it is not a true User object (complete with methods, etc.)
+  //userData: any; // comes in as a User-formatted dictionary, but it is not a true User object (complete with methods, etc.)
 
   someText: string = 'i am some text in edit-user-component';
 
@@ -168,7 +169,7 @@ export class EditUserComponent implements OnInit {
     if (!EMAIL_REGEXP.test(control.value)) {
       return {invalidEmail: true};
     }
-}
+  }
 
 
   onSubmit(){
@@ -213,6 +214,10 @@ export class EditUserComponent implements OnInit {
 
   onClickedExit() {
     this.close.emit('event');
+  }
+
+  displayCurrentUser(){
+    console.log(this.userService.getCurrentUser());
   }
 
 }

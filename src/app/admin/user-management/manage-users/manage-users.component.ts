@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
+import {Compiler, ViewContainerRef, ComponentRef, ComponentFactory, ComponentFactoryResolver} from '@angular/core'
+
+
 //import {MaterializeDirective} from 'angular2-materialize';
 import {
   PaginatePipe,
@@ -58,6 +61,13 @@ export class ManageUsersComponent implements OnInit {
   // using the pagination package: http://michaelbromley.github.io/ng2-pagination/
 
   @ViewChild(DialogAnchorDirective) dialogAnchor: DialogAnchorDirective;
+
+  @ViewChild('placeholder', {read: ViewContainerRef}) viewContainerRef;
+  private componentFactory: ComponentFactory<any>;
+
+  // http://stackoverflow.com/questions/36325212/angular-2-dynamic-tabs-with-user-click-chosen-components/36325468#36325468
+  // http://plnkr.co/edit/3dzkMVXe4AGSRhk11TXG?p=preview
+
 
 
   private users: User[]; // will stay the same throughout
@@ -122,7 +132,11 @@ export class ManageUsersComponent implements OnInit {
   private filterBy = this.filterSelectOptionsDropdown[0].value; //used for deciding which column to use for textual filtering
   public filter: string = '';//bound to textual input in template that is used for filtering the list of users by name, etc.
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService,
+              componentFactoryResolver: ComponentFactoryResolver,
+              compiler: Compiler) {
+    this.componentFactory = componentFactoryResolver.resolveComponentFactory(EditUserComponent);
+  }
 
   ngOnInit() {
     this.userService.getPermissionTypes().subscribe(
@@ -313,6 +327,8 @@ export class ManageUsersComponent implements OnInit {
     the_dialog.message = "I'm an overridden message.";
   }
 
-
+  addItem(){
+    this.viewContainerRef.createComponent(this.componentFactory, 0);
+  }
 
 }
