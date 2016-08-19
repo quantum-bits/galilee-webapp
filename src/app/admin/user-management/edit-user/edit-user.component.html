@@ -9,7 +9,12 @@
         <div class="col s12 ">
           <div class="card">
             <div class="card-content">
-              <span class="card-title">Create Account</span>
+              <span *ngIf="newUser" class="card-title">
+                Create Account
+              </span>
+              <span *ngIf="!newUser" class="card-title">
+                Update Account
+              </span>
 
               <div class="row">
                 <div class="input-field col s12">
@@ -145,3 +150,4 @@
 
 <button class="btn" (click)="displayCurrentUser()">current user is?</button>
 
+{{message}}

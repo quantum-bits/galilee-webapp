@@ -19,7 +19,8 @@ import {
 
 */
 
-import { UserService } from '../user.service';
+//import { UserService } from '../user.service';
+
 //import { InputWakeUp } from '../../shared/directives/input-wake-up.directive';
 
 @Component({
@@ -39,24 +40,12 @@ export class SignupComponent implements OnInit {
   // currently using the following server to mock authentication, etc.:
   //      https://github.com/auth0-blog/nodejs-jwt-authentication-sample
 
-  constructor(private userService: UserService,
+  constructor(//private userService: UserService,
               private router: Router
               //private _fb: FormBuilder
   ) {}
 
   ngOnInit() {
-    /*
-    this.signupForm = this._fb.group({
-      username: ['', [<any>Validators.required]],
-      passwords:
-        this._fb.group({
-          password: ['', [<any>Validators.required]],
-          password2: ['', [<any>Validators.required]]
-        }, {validator: this.areEqual})
-    });
-
-    console.log(this.signupForm);
-    */
   }
 
   onSubmit() {

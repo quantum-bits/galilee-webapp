@@ -64,6 +64,7 @@ export class ManageUsersComponent implements OnInit {
 
   @ViewChild('placeholder', {read: ViewContainerRef}) viewContainerRef;
   private componentFactory: ComponentFactory<any>;
+  //componentRef: ComponentRef;
 
   // http://stackoverflow.com/questions/36325212/angular-2-dynamic-tabs-with-user-click-chosen-components/36325468#36325468
   // http://plnkr.co/edit/3dzkMVXe4AGSRhk11TXG?p=preview
@@ -136,6 +137,7 @@ export class ManageUsersComponent implements OnInit {
               componentFactoryResolver: ComponentFactoryResolver,
               compiler: Compiler) {
     this.componentFactory = componentFactoryResolver.resolveComponentFactory(EditUserComponent);
+    console.log(this.componentFactory);
   }
 
   ngOnInit() {
@@ -328,7 +330,8 @@ export class ManageUsersComponent implements OnInit {
   }
 
   addItem(){
-    this.viewContainerRef.createComponent(this.componentFactory, 0);
+    let componentRef = this.viewContainerRef.createComponent(this.componentFactory, 0);
+    componentRef.instance.message = 'I am definitely not a dialog box!';
   }
 
 }

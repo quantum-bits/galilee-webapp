@@ -35,6 +35,7 @@ import { AuthGuard } from './authentication/common/auth.guard';
 import {UserService}  from './authentication/user.service';
 
 import {routing} from './app.routes';
+import { SelfUpdateComponent } from './authentication/self-update/self-update.component';
 
 //import "angular2-materialize";
 
@@ -58,7 +59,8 @@ import {routing} from './app.routes';
       UpdateResourceItemComponent,
       UploadResourceComponent,
       UpdateResourceCollectionComponent,
-      DialogComponent
+      DialogComponent,
+      SelfUpdateComponent
     ],
     imports: [
       BrowserModule,

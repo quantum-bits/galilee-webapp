@@ -55,7 +55,6 @@ export class EditUserComponent implements OnInit {
   message: string = 'Hello, I\'m a dialog box!';
 
 
-
   private initialUserPermissions: UserPermission[];
   public userForm: FormGroup; // our model driven form
   private signinServerError: any;
@@ -67,13 +66,31 @@ export class EditUserComponent implements OnInit {
   // date.toISOString()
 
   constructor(private formBuilder: FormBuilder,
-              private userService: UserService) {}
+              private userService: UserService) {
+    console.log('inside edit-user constructor');
+  }
 
   ngOnInit() {
     console.log('inside ngOnInit of edit-user');
+    console.log(this.newUser);
+    console.log(!this.newUser);
+    console.log(!!this.newUser);
+    if(this.newUser===undefined){
+      // sometimes this component is instantiated with the @Input fields specified,
+      // but if it is launched 'on the fly', those fields are not set, so we set them here
+      // FIXME?  seems a bit wonky
+      this.newUser = true;
+      this.userData="";// probably unnecessary
+      console.log('newUser has been set:');
+      console.log(this.newUser);
+    }
     console.log(this.formBuilder);
+    this.initializeForm();
+  }
 
-
+  initializeForm(){
+    // FIXME need to make sure only to show user permissions in the form if the current
+    // user is an admin
     this.userService.getInitialUserPermissions().subscribe(
       permissions => {
         this.initialUserPermissions = permissions;
