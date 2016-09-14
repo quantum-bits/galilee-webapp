@@ -331,7 +331,17 @@ export class ManageUsersComponent implements OnInit {
 
   addItem(){
     let componentRef = this.viewContainerRef.createComponent(this.componentFactory, 0);
-    componentRef.instance.message = 'I am definitely not a dialog box!';
+
+    // FIXME should do some clean-up on the edit-user component upon exit; see here:
+    // http://stackoverflow.com/questions/36325212/angular-2-dynamic-tabs-with-user-click-chosen-components/36325468#36325468
+
   }
 
+  editUser(user: User) {
+    let componentRef = this.viewContainerRef.createComponent(this.componentFactory, 0);
+    // FIXME is it safe to fix these after the fact like this?  how do we know it
+    // will get done before OnInit?  Could put it in OnChanges as well, as a back-up;
+    // should probably put in a delay, and see if it will fire up OnChanges that way....
+    componentRef.instance.userData = user;
+  }
 }

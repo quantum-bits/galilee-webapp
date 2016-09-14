@@ -15,6 +15,14 @@ import { Reading } from '../../shared/models/reading.model';
 })
 export class ReadingsComponent implements OnInit {
 
+  // NOTE: to add a modal-type of full view for images, do the following:
+  // https://github.com/InfomediaLtd/angular2-materialize/issues/88
+  // http://materializecss.com/media.html
+  // In particular....
+  //ngAfterViewInit(){
+  //  $('.materialboxed').materialbox();
+  //}
+
   date: Date;
   readings: Reading[] = [];
   includeBackButton = false;

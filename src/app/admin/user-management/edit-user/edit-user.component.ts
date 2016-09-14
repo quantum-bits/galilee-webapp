@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, OnChanges } from '@angular/core';
 //import { Router, ROUTER_DIRECTIVES } from '@angular/router';
 
 //import {MaterializeDirective} from 'angular2-materialize';
@@ -33,27 +33,21 @@ import { UserService } from '../../../authentication/user.service';
     //InputWakeUp
   ]
 })
-export class EditUserComponent implements OnInit {
-  @Input() newUser: boolean; //true if this is a new user; false if editing an existing user
-  @Input() userData: any; // comes in as a User-formatted dictionary, but it is not a true User object (complete with methods, etc.)
-  //@Input() newUser: boolean; //true if this is a new user; false if editing an existing user
-  //@Input() modalID: string;
-  //@Input() userData: any; // comes in as a User-formatted dictionary, but it is not a true User object (complete with methods, etc.)
-  //@Output() onFinished = new EventEmitter<string>();
-
-  //newUser: boolean = true; //true if this is a new user; false if editing an existing user
-  //@Input() modalID: string;
-  //userData: any; // comes in as a User-formatted dictionary, but it is not a true User object (complete with methods, etc.)
-
-  someText: string = 'i am some text in edit-user-component';
+export class EditUserComponent implements OnInit, OnChanges {
+  /*
+    Use cases for userData:
+    - new user: do not set userData
+    - updating existing user: set userData to the user's User object
+    - updating existing user, but launching 'on the fly' (using @ViewChild, etc.):
+         set userData after the fact (see manage-users.component for an example)
+   */
+  @Input() userData: any;
 
   close = new EventEmitter();
 
   onFinished = new EventEmitter<string>();
 
-  title: string = 'Dialog box';
   message: string = 'Hello, I\'m a dialog box!';
-
 
   private initialUserPermissions: UserPermission[];
   public userForm: FormGroup; // our model driven form
@@ -71,32 +65,24 @@ export class EditUserComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('inside ngOnInit of edit-user');
-    console.log(this.newUser);
-    console.log(!this.newUser);
-    console.log(!!this.newUser);
-    if(this.newUser===undefined){
-      // sometimes this component is instantiated with the @Input fields specified,
-      // but if it is launched 'on the fly', those fields are not set, so we set them here
-      // FIXME?  seems a bit wonky
-      this.newUser = true;
-      this.userData="";// probably unnecessary
-      console.log('newUser has been set:');
-      console.log(this.newUser);
-    }
-    console.log(this.formBuilder);
+    console.log('inside ngOnInit of edit-user, here is userData:');
+    console.log(this.userData);
     this.initializeForm();
   }
 
+  ngOnChanges(){
+    console.log('change detected in edit-user!');
+  }
+
   initializeForm(){
-    // FIXME need to make sure only to show user permissions in the form if the current
+    // FIXME need to make sure only to show user permissions in the form only if the current
     // user is an admin
     this.userService.getInitialUserPermissions().subscribe(
       permissions => {
         this.initialUserPermissions = permissions;
         console.log(this.initialUserPermissions);
 
-        if (this.newUser) {
+        if (this.userData===undefined) {
           this.createEmptyUserData(); // fills userData with initial values
           console.log(this.userData);
         }
