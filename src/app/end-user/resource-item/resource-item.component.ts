@@ -1,14 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-//import {MaterializeDirective} from "angular2-materialize";
 import { TruncatePipe } from '../../shared/pipes/truncate.pipe';
 
 @Component({
   selector: 'app-resource-item',
   templateUrl: 'resource-item.component.html',
-  styleUrls: ['resource-item.component.css'],
-  pipes: [TruncatePipe],
-  directives: [],
+  styleUrls: ['resource-item.component.css']
 })
 export class ResourceItemComponent implements OnInit {
 

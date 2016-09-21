@@ -5,19 +5,13 @@ import {Practice} from '../../../shared/models/practice.model';
 
 //import { UpdatePracticeItemComponent } from '../update-practice-item';
 
-//import {MaterializeDirective} from "angular2-materialize";
 import {DragulaService} from 'ng2-dragula/ng2-dragula';
 
 @Component({
   selector: 'app-update-practices',
   templateUrl: 'update-practices.component.html',
   styleUrls: ['update-practices.component.css'],
-  providers: [DragulaService],
-  directives: [
-    //MaterializeDirective,
-    //UpdatePracticeItemComponent,
-    //Dragula
-  ]
+  providers: [DragulaService]
 })
 export class UpdatePracticesComponent implements OnInit, OnChanges {
 

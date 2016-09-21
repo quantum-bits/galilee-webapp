@@ -1,8 +1,6 @@
 import {Component, OnInit, EventEmitter} from '@angular/core';
 
 import {
-  FORM_DIRECTIVES,
-  REACTIVE_FORM_DIRECTIVES,
   FormBuilder,
   FormGroup,
   FormArray,
@@ -21,11 +19,7 @@ import { UserService } from '../../authentication/user.service';
 @Component({
   selector: 'dlg',
   templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.css'],
-  directives: [
-    FORM_DIRECTIVES,
-    REACTIVE_FORM_DIRECTIVES,
-  ]
+  styleUrls: ['./dialog.component.css']
 })
 export class DialogComponent implements OnInit {
   close = new EventEmitter();

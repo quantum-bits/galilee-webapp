@@ -13,8 +13,7 @@ import { Reading } from '../../shared/models/reading.model';
   selector: 'app-reading-resource',
   templateUrl: 'reading-resource.component.html',
   styleUrls: ['reading-resource.component.css'],
-  providers: [ReadingService, ResourceService],
-  directives: [],
+  providers: [ReadingService, ResourceService]
 })
 export class ReadingResourceComponent implements OnInit {
 

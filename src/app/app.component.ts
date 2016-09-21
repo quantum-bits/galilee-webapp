@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router, ROUTER_DIRECTIVES} from '@angular/router';
-
-//import {MaterializeDirective} from "angular2-materialize";
+import {Router} from '@angular/router';
 
 import {ReadingService} from './shared/services/reading.service';
 import {Reading} from './shared/models/reading.model';
@@ -11,7 +9,6 @@ import {ResourceService} from './shared/services/resource.service';
 import {UserService} from './authentication/user.service';
 import {User} from './shared/models/user.model';
 
-import "angular2-materialize";//don't know if this is required
 import "ng2-file-upload";//don't know if this is required
 
 @Component({

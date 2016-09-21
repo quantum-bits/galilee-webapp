@@ -1,11 +1,7 @@
 import { Component, OnInit, EventEmitter, Input, OnChanges } from '@angular/core';
 //import { Router, ROUTER_DIRECTIVES } from '@angular/router';
 
-//import {MaterializeDirective} from 'angular2-materialize';
-
 import {
-  FORM_DIRECTIVES,
-  REACTIVE_FORM_DIRECTIVES,
   FormBuilder,
   FormGroup,
   FormArray,
@@ -24,14 +20,7 @@ import { UserService } from '../../../authentication/user.service';
 @Component({
   selector: 'app-edit-user',
   templateUrl: 'edit-user.component.html',
-  styleUrls: ['edit-user.component.css'],
-  directives: [
-    //ROUTER_DIRECTIVES,
-    FORM_DIRECTIVES,
-    REACTIVE_FORM_DIRECTIVES,
-    //MaterializeDirective,
-    //InputWakeUp
-  ]
+  styleUrls: ['edit-user.component.css']
 })
 export class EditUserComponent implements OnInit, OnChanges {
   /*

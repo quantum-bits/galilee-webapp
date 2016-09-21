@@ -2,8 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 
 import {Compiler, ViewContainerRef, ComponentRef, ComponentFactory, ComponentFactoryResolver} from '@angular/core'
 
-
-//import {MaterializeDirective} from 'angular2-materialize';
 import {
   PaginatePipe,
   //PaginationControlsCmp,
@@ -44,15 +42,7 @@ declare var $: any; // for using jQuery within this angular component
   selector: 'app-manage-users',
   templateUrl: 'manage-users.component.html',
   styleUrls: ['manage-users.component.css'],
-  providers: [PaginationService],
-  directives: [
-    //MaterializeDirective,
-    //PaginationControlsCmp,
-    EditUserComponent,
-    EditUserAnchorDirective,
-    DialogComponent, DialogAnchorDirective
-  ],
-  pipes: [PaginatePipe, TimeAgoPipe],
+  providers: [PaginationService]
 })
 export class ManageUsersComponent implements OnInit {
 

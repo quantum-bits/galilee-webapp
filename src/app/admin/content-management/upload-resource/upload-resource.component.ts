@@ -1,11 +1,7 @@
 import { Component, EventEmitter, OnInit, DoCheck, Input, Output } from '@angular/core';
-//import {CORE_DIRECTIVES, FORM_DIRECTIVES, NgClass, NgStyle} from '@angular/common';
 import {FileUploader} from 'ng2-file-upload';
-//import {MaterializeDirective} from "angular2-materialize";
 
 import {
-  FORM_DIRECTIVES,
-  REACTIVE_FORM_DIRECTIVES,
   FormBuilder,
   FormGroup,
   FormArray,
@@ -32,18 +28,7 @@ declare var $: any; // for using jQuery within this angular component
 @Component({
   selector: 'app-upload-resource',
   templateUrl: 'upload-resource.component.html',
-  styleUrls: ['upload-resource.component.css'],
-  directives: [
-    //FILE_UPLOAD_DIRECTIVES,
-    //NgClass,
-    //NgStyle,
-    //CORE_DIRECTIVES,
-    FORM_DIRECTIVES,
-    REACTIVE_FORM_DIRECTIVES,
-    //MaterializeDirective,
-    //InputWakeUp,
-    //TextareaAutoresize
-  ]
+  styleUrls: ['upload-resource.component.css']
 })
 export class UploadResourceComponent implements OnInit, DoCheck {
 

@@ -6,8 +6,6 @@ import { ViewContainerRef } from '@angular/core';
 import { EditUserComponent } from './edit-user';
 
 import {
-  FORM_DIRECTIVES,
-  REACTIVE_FORM_DIRECTIVES,
   FormBuilder,
   FormGroup,
   FormArray,
@@ -20,8 +18,7 @@ import {
 
 
 @Directive({
-  selector: '[editUserAnchor]',
-  //directives: [FORM_DIRECTIVES,REACTIVE_FORM_DIRECTIVES,]
+  selector: '[editUserAnchor]'
 })
 export class EditUserAnchorDirective {
 
@@ -38,9 +35,10 @@ export class EditUserAnchorDirective {
 
     let componentCreated = this.viewContainer.createComponent(editUserComponentFactory);
 
-    componentCreated.instance.close.subscribe(() => {
-      componentCreated.destroy();
-    });
+    // TODO - This is causing compile errors [nurk 2016-09-20]
+    // componentCreated.instance.close.subscribe(() => {
+    //   componentCreated.destroy();
+    // });
 
     return componentCreated;
   }

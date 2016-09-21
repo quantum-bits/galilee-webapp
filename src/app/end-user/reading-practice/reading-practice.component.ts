@@ -12,8 +12,7 @@ import { Reading } from '../../shared/models/reading.model';
   selector: 'app-reading-practice',
   templateUrl: 'reading-practice.component.html',
   styleUrls: ['reading-practice.component.css'],
-  providers: [ReadingService, PracticeService],
-  directives: [],
+  providers: [ReadingService, PracticeService]
 })
 export class ReadingPracticeComponent implements OnInit {
 

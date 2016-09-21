@@ -1,7 +1,5 @@
 import { Component, OnInit, OnDestroy, Input} from '@angular/core';
 import {
-  FORM_DIRECTIVES,
-  REACTIVE_FORM_DIRECTIVES,
   FormBuilder,
   FormGroup,
   // Validators, // not currently being used, but could be used to make a field required
@@ -10,18 +8,13 @@ import {
 
 import {UpdatePracticeItemBindingService} from '../update-practice-item-binding.service';
 
-//import {MaterializeDirective} from "angular2-materialize";
-
 declare var $: any; // for using jQuery within this angular component
 
 @Component({
   selector: 'app-update-practice-item',
   templateUrl: 'update-practice-item.component.html',
   styleUrls: ['update-practice-item.component.css'],
-  providers: [],
-  directives: [
-    //MaterializeDirective,
-    FORM_DIRECTIVES, REACTIVE_FORM_DIRECTIVES]
+  providers: []
 })
 export class UpdatePracticeItemComponent implements OnInit, OnDestroy {
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ROUTER_DIRECTIVES } from '@angular/router';
+import { Router } from '@angular/router';
+import {FormGroup} from '@angular/forms';
 
 /*
   Not clear if we still need to import the Router stuff here; it doesn't seem to
@@ -8,8 +9,6 @@ import { Router, ROUTER_DIRECTIVES } from '@angular/router';
 
 /*
 import {
-  FORM_DIRECTIVES,
-  REACTIVE_FORM_DIRECTIVES,
   FormBuilder,
   FormGroup,
   FormArray,
@@ -26,12 +25,7 @@ import {
 @Component({
   selector: 'app-signup',
   templateUrl: 'signup.component.html',
-  styleUrls: ['signup.component.css'],
-  //directives: [ ROUTER_DIRECTIVES, REACTIVE_FORM_DIRECTIVES, FormBuilder, InputWakeUp ],
-  directives: [
-    //FORM_DIRECTIVES,
-    //REACTIVE_FORM_DIRECTIVES,
-    ROUTER_DIRECTIVES]
+  styleUrls: ['signup.component.css']
 })
 export class SignupComponent implements OnInit {
 

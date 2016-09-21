@@ -1,10 +1,11 @@
-export class GalileePage {
+import { browser, element, by } from 'protractor/globals';
+
+export class MigrationProjectPage {
   navigateTo() {
     return browser.get('/');
   }
 
-  getToolbar() {
-    return $('nav').getText();
+  getParagraphText() {
+    return element(by.css('app-root h1')).getText();
   }
-
 }

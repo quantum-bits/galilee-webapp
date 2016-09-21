@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ROUTER_DIRECTIVES } from '@angular/router';
+import { Router } from '@angular/router';
 
 // probably should use the Validators in @angular/forms...?
 //import { Validators } from '@angular/common';
 
 import {
-  FORM_DIRECTIVES,
-  REACTIVE_FORM_DIRECTIVES,
   FormBuilder,
   FormGroup,
   FormArray,
@@ -21,10 +19,7 @@ import { UserService } from '../user.service';
 @Component({
   selector: 'app-login',
   templateUrl: 'login.component.html',
-  styleUrls: ['login.component.css'],
-  directives: [ ROUTER_DIRECTIVES, REACTIVE_FORM_DIRECTIVES,
-    //InputWakeUp
-  ],
+  styleUrls: ['login.component.css']
 })
 export class LoginComponent implements OnInit {
 

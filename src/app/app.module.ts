@@ -4,11 +4,12 @@ import {CommonModule} from '@angular/common';
 import {FormsModule, FormBuilder} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
+import {MaterializeModule} from "angular2-materialize";
+
 import {AppComponent} from './app.component';
 
 import {PaginationControlsCmp} from 'ng2-pagination';
-import {MaterializeDirective} from 'angular2-materialize';
-import {Dragula} from 'ng2-dragula/ng2-dragula';
+import {DragulaModule} from 'ng2-dragula/ng2-dragula';
 import {FILE_UPLOAD_DIRECTIVES} from 'ng2-file-upload';
 
 // end-user components
@@ -37,14 +38,10 @@ import {UserService}  from './authentication/user.service';
 import {routing} from './app.routes';
 import { SelfUpdateComponent } from './authentication/self-update/self-update.component';
 
-//import "angular2-materialize";
-
 @NgModule({
     declarations: [
       AppComponent,
-      MaterializeDirective,
       PaginationControlsCmp,
-      Dragula,
       FILE_UPLOAD_DIRECTIVES,
       InputWakeUp,
       TextareaAutoresize,
@@ -67,7 +64,9 @@ import { SelfUpdateComponent } from './authentication/self-update/self-update.co
       routing,
       CommonModule,
       FormsModule,
-      HttpModule
+      HttpModule,
+      MaterializeModule,
+      DragulaModule
     ],
     providers: [AuthGuard, FormBuilder, UserService],
     //NOTE: (1) AuthGuard has been commented out in admin.routes for the moment

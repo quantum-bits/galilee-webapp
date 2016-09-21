@@ -1,12 +1,9 @@
 import {Component, OnInit, EventEmitter} from '@angular/core';
-//import {ROUTER_DIRECTIVES} from '@angular/router';
 import {Location} from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 
 import {UpdatePracticeItemBindingService} from '../update-practice-item-binding.service';
 import {UpdateResourceItemBindingService} from '../update-resource-item-binding.service';
-
-import {MaterializeDirective} from "angular2-materialize";
 
 import {ReadingService} from '../../../shared/services/reading.service';
 import {Reading} from '../../../shared/models/reading.model';
@@ -15,22 +12,14 @@ import { ResourceCollection } from '../../../shared/interfaces/resource-collecti
 //import { UpdatePracticesComponent } from '../update-practices';
 //import {UpdateResourcesComponent} from '../update-resources';
 
-// useful resource for using Materialize components that require js:
-// https://github.com/InfomediaLtd/angular2-materialize/tree/master/app/components
-
 @Component({
 
   selector: 'app-edit-practices',
   templateUrl: 'edit-reading-resources.component.html',
   styleUrls: ['edit-reading-resources.component.css'],
-  providers: [ReadingService, UpdatePracticeItemBindingService, UpdateResourceItemBindingService],
-  directives: [
-    //ROUTER_DIRECTIVES,
-    //MaterializeDirective,
-    //UpdatePracticesComponent,
-    //UpdateResourcesComponent,
-  ],
+  providers: [ReadingService, UpdatePracticeItemBindingService, UpdateResourceItemBindingService]
 })
+
 export class EditReadingResourcesComponent implements OnInit {
 
   /*

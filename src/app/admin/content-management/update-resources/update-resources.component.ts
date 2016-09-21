@@ -8,7 +8,6 @@ import {ResourceService} from '../../../shared/services/resource.service';
 import { Resource } from '../../../shared/interfaces/resource.interface';
 import { ResourceCollection } from '../../../shared/interfaces/resource-collection.interface';
 
-//import {MaterializeDirective} from "angular2-materialize";
 import {DragulaService} from 'ng2-dragula/ng2-dragula';
 
 declare var $: any; // for using jQuery within this angular component
@@ -17,13 +16,7 @@ declare var $: any; // for using jQuery within this angular component
   selector: 'app-update-resources',
   templateUrl: 'update-resources.component.html',
   styleUrls: ['update-resources.component.css'],
-  providers: [DragulaService],
-  directives: [
-    //MaterializeDirective,
-    //UpdateResourceCollectionComponent,
-    //UploadResourceComponent,
-    //Dragula
-  ],
+  providers: [DragulaService]
 })
 export class UpdateResourcesComponent implements OnInit {
 

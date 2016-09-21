@@ -10,8 +10,7 @@ import { Reading } from '../../shared/models/reading.model';
   selector: 'app-readings',
   templateUrl: 'readings.component.html',
   styleUrls: ['readings.component.css'],
-  providers: [ReadingService],
-  directives: [],
+  providers: [ReadingService]
 })
 export class ReadingsComponent implements OnInit {
 
