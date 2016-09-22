@@ -52,7 +52,7 @@ import { AuthGuard } from './authentication/common/auth.guard';
 import {UserService}  from './authentication/user.service';
 
 import {routing} from './app.routes';
-  
+
 @NgModule({
     declarations: [
       AppComponent,
