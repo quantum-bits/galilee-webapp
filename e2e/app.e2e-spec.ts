@@ -1,10 +1,10 @@
-import { MigrationProjectPage } from './app.po';
+import { GalileeWebappPage } from './app.po';
 
-describe('migration-project App', function() {
-  let page: MigrationProjectPage;
+describe('foo App', function() {
+  let page: GalileeWebappPage;
 
   beforeEach(() => {
-    page = new MigrationProjectPage();
+    page = new GalileeWebappPage();
   });
 
   it('should display message saying app works', () => {
