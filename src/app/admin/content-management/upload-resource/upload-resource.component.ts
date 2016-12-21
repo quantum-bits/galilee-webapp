@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, DoCheck, Input, Output } from '@angular/core';
-import {FileUploader} from 'ng2-file-upload';
+import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
 
 import {
   FormBuilder,
@@ -27,8 +27,8 @@ declare var $: any; // for using jQuery within this angular component
 
 @Component({
   selector: 'app-upload-resource',
-  templateUrl: 'upload-resource.component.html',
-  styleUrls: ['upload-resource.component.css']
+  templateUrl: './upload-resource.component.html',
+  styleUrls: ['./upload-resource.component.css']
 })
 export class UploadResourceComponent implements OnInit, DoCheck {
 

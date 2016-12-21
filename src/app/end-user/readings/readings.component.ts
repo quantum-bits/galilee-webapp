@@ -8,8 +8,8 @@ import { Reading } from '../../shared/models/reading.model';
 
 @Component({
   selector: 'app-readings',
-  templateUrl: 'readings.component.html',
-  styleUrls: ['readings.component.css'],
+  templateUrl: './readings.component.html',
+  styleUrls: ['./readings.component.css'],
   providers: [ReadingService]
 })
 export class ReadingsComponent implements OnInit {

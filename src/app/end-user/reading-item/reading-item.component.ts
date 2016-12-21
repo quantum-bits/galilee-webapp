@@ -4,8 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-reading-item',
-  templateUrl: 'reading-item.component.html',
-  styleUrls: ['reading-item.component.css']
+  templateUrl: './reading-item.component.html',
+  styleUrls: ['./reading-item.component.css']
 })
 export class ReadingItemComponent implements OnInit {
 

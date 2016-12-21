@@ -9,8 +9,8 @@ declare var $: any; // for using jQuery within this angular component
 
 @Component({
   selector: 'app-update-resource-collection',
-  templateUrl: 'update-resource-collection.component.html',
-  styleUrls: ['update-resource-collection.component.css']
+  templateUrl: './update-resource-collection.component.html',
+  styleUrls: ['./update-resource-collection.component.css']
 })
 export class UpdateResourceCollectionComponent implements OnInit {
 

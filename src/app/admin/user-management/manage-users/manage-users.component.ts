@@ -6,7 +6,7 @@ import {
   PaginatePipe,
   //PaginationControlsCmp,
   PaginationService,
-  IPaginationInstance
+  PaginationInstance
 } from 'ng2-pagination';
 
 import {TimeAgoPipe} from 'angular2-moment';
@@ -40,8 +40,8 @@ declare var $: any; // for using jQuery within this angular component
 
 @Component({
   selector: 'app-manage-users',
-  templateUrl: 'manage-users.component.html',
-  styleUrls: ['manage-users.component.css'],
+  templateUrl: './manage-users.component.html',
+  styleUrls: ['./manage-users.component.css'],
   providers: [PaginationService]
 })
 export class ManageUsersComponent implements OnInit {
@@ -78,7 +78,7 @@ export class ManageUsersComponent implements OnInit {
   public maxSize: number = 5;//used by pagination component (max # of pages indicated, including the '...')
   public directionLinks: boolean = true;//used by pagination component
   public autoHide: boolean = false;//used by pagination component
-  public config: IPaginationInstance = {//used by pagination component
+  public config: PaginationInstance = {//used by pagination component
     id: 'advanced',
     itemsPerPage: 5,
     currentPage: 1

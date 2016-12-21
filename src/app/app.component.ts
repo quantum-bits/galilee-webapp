@@ -9,12 +9,10 @@ import {ResourceService} from './shared/services/resource.service';
 import {UserService} from './authentication/user.service';
 import {User} from './shared/models/user.model';
 
-import "ng2-file-upload";//don't know if this is required
-
 @Component({
     selector: 'app-root',
-    templateUrl: 'app.component.html',
-    styleUrls: ['app.component.css'],
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css'],
     providers: [
       //UserService,
       ReadingService, PracticeService, ResourceService]

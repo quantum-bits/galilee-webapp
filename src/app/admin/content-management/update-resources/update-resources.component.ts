@@ -14,8 +14,8 @@ declare var $: any; // for using jQuery within this angular component
 
 @Component({
   selector: 'app-update-resources',
-  templateUrl: 'update-resources.component.html',
-  styleUrls: ['update-resources.component.css'],
+  templateUrl: './update-resources.component.html',
+  styleUrls: ['./update-resources.component.css'],
   providers: [DragulaService]
 })
 export class UpdateResourcesComponent implements OnInit {

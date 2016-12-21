@@ -11,8 +11,8 @@ import { Reading } from '../../shared/models/reading.model';
 
 @Component({
   selector: 'app-reading-resource',
-  templateUrl: 'reading-resource.component.html',
-  styleUrls: ['reading-resource.component.css'],
+  templateUrl: './reading-resource.component.html',
+  styleUrls: ['./reading-resource.component.css'],
   providers: [ReadingService, ResourceService]
 })
 export class ReadingResourceComponent implements OnInit {

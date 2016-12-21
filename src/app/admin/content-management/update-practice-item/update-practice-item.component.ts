@@ -12,8 +12,8 @@ declare var $: any; // for using jQuery within this angular component
 
 @Component({
   selector: 'app-update-practice-item',
-  templateUrl: 'update-practice-item.component.html',
-  styleUrls: ['update-practice-item.component.css'],
+  templateUrl: './update-practice-item.component.html',
+  styleUrls: ['./update-practice-item.component.css'],
   providers: []
 })
 export class UpdatePracticeItemComponent implements OnInit, OnDestroy {

@@ -8,13 +8,13 @@ import {MaterializeModule} from "angular2-materialize";
 
 import {TruncatePipe} from './shared/pipes/truncate.pipe';
 import {PaginatePipe} from 'ng2-pagination';
+import {FileUploadModule} from 'ng2-file-upload';
 import {MomentModule} from 'angular2-moment';
 
 import {AppComponent} from './app.component';
 
-import {PaginationControlsCmp} from 'ng2-pagination';
+import {Ng2PaginationModule} from 'ng2-pagination';
 import {DragulaModule} from 'ng2-dragula/ng2-dragula';
-import {FILE_UPLOAD_DIRECTIVES} from 'ng2-file-upload';
 
 // end-user components
 import {ReadingItemComponent} from './end-user/reading-item';
@@ -56,8 +56,6 @@ import {routing} from './app.routes';
 @NgModule({
     declarations: [
       AppComponent,
-      PaginationControlsCmp,
-      FILE_UPLOAD_DIRECTIVES,
       InputWakeUp,
       TextareaAutoresize,
       ReadingItemComponent,

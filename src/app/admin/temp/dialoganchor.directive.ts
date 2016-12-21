@@ -1,7 +1,7 @@
 import {Directive, ComponentFactoryResolver, ComponentRef} from '@angular/core';
 
 import {ViewContainerRef} from '@angular/core';
-import {DialogComponent} from './dialog.component.ts';
+import {DialogComponent} from './dialog.component';
 
 @Directive({selector: '[dialogAnchor]'})
 export class DialogAnchorDirective {

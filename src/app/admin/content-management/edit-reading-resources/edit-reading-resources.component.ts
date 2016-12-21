@@ -15,8 +15,8 @@ import { ResourceCollection } from '../../../shared/interfaces/resource-collecti
 @Component({
 
   selector: 'app-edit-practices',
-  templateUrl: 'edit-reading-resources.component.html',
-  styleUrls: ['edit-reading-resources.component.css'],
+  templateUrl: './edit-reading-resources.component.html',
+  styleUrls: ['./edit-reading-resources.component.css'],
   providers: [ReadingService, UpdatePracticeItemBindingService, UpdateResourceItemBindingService]
 })
 

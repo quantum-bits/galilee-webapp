@@ -9,8 +9,8 @@ import {DragulaService} from 'ng2-dragula/ng2-dragula';
 
 @Component({
   selector: 'app-update-practices',
-  templateUrl: 'update-practices.component.html',
-  styleUrls: ['update-practices.component.css'],
+  templateUrl: './update-practices.component.html',
+  styleUrls: ['./update-practices.component.css'],
   providers: [DragulaService]
 })
 export class UpdatePracticesComponent implements OnInit, OnChanges {
