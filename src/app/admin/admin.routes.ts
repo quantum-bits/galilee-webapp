@@ -10,7 +10,11 @@ export const AdminRoutes = [
     component: AdminComponent,
     canActivate: [AuthGuard],
     children:[
-      {path: '', redirectTo: 'edit-reading-resources', terminal: true},
+      {
+        path: '',
+        redirectTo: 'edit-reading-resources',
+        pathMatch: 'full'
+      },
       {
         path: 'edit-reading-resources',
         component: EditReadingResourcesComponent,

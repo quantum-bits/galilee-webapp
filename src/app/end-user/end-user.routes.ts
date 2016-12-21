@@ -9,7 +9,11 @@ export const EndUserRoutes = [
     path: 'end-user',
     component: EndUserComponent,
     children: [
-      { path: '', redirectTo: 'readings', terminal: true },
+      {
+        path: '',
+        redirectTo: 'readings',
+        pathMatch: 'full'
+      },
       {
         path: 'readings',
         component: ReadingsComponent,

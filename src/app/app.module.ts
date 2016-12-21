@@ -7,7 +7,6 @@ import {HttpModule} from '@angular/http';
 import {MaterializeModule} from "angular2-materialize";
 
 import {TruncatePipe} from './shared/pipes/truncate.pipe';
-import {PaginatePipe} from 'ng2-pagination';
 import {FileUploadModule} from 'ng2-file-upload';
 import {MomentModule} from 'angular2-moment';
 
@@ -51,7 +50,8 @@ import {DialogComponent} from './admin/temp/dialog.component';
 import { AuthGuard } from './authentication/common/auth.guard';
 import {UserService}  from './authentication/user.service';
 
-import {routing} from './app.routes';
+import {appRoutes} from './app.routes';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
     declarations: [
@@ -80,19 +80,20 @@ import {routing} from './app.routes';
       ReadingResourceComponent,
       LoginComponent,
       SignupComponent,
-      TruncatePipe,
-      PaginatePipe
+      TruncatePipe
     ],
     imports: [
       BrowserModule,
-      routing,
+      RouterModule.forRoot(appRoutes),
       CommonModule,
       FormsModule,
       ReactiveFormsModule,
       HttpModule,
       MaterializeModule,
       DragulaModule,
-      MomentModule
+      MomentModule,
+      FileUploadModule,
+      Ng2PaginationModule
     ],
     providers: [AuthGuard, FormBuilder, UserService],
     //NOTE: (1) AuthGuard has been commented out in admin.routes for the moment

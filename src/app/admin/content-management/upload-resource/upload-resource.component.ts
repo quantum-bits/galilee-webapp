@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, DoCheck, Input, Output } from '@angular/core';
-import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
+import { FileUploader } from 'ng2-file-upload';
 
 import {
   FormBuilder,
