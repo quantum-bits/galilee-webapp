@@ -1,6 +1,6 @@
-import { GalileeWebappPage } from './app.po';
+import {GalileeWebappPage} from './app.po';
 
-describe('foo App', function() {
+describe('foo App', function () {
   let page: GalileeWebappPage;
 
   beforeEach(() => {
@@ -9,6 +9,6 @@ describe('foo App', function() {
 
   it('should display message saying app works', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
+    expect(page.getParagraphText()).toEqual('Scripture Engagement');
   });
 });

@@ -1,15 +1,13 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
-//import { ROUTER_DIRECTIVES } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
 })
 export class AdminComponent implements OnInit {
-
-  constructor() {}
+  constructor() {
+  }
 
   ngOnInit() {
   }
-
 }
