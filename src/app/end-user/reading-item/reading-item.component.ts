@@ -1,28 +1,21 @@
-import { Component, OnInit, Input } from '@angular/core';
-//import { ROUTER_DIRECTIVES } from '@angular/router';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Component, Input} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-reading-item',
   templateUrl: './reading-item.component.html',
   styleUrls: ['./reading-item.component.css']
 })
-export class ReadingItemComponent implements OnInit {
-
+export class ReadingItemComponent {
   @Input() reading: any;
   @Input() practices: any;
   @Input() resourceCollections: any;
   @Input() includeBackButton: boolean;
 
-  idVal = 'dropDownMenu';
-
-
-  constructor(private router: Router) {}
-
-  ngOnInit() {
+  constructor(private router: Router) {
   }
 
-  displayInfo(reading){
+  displayInfo(reading) {
     console.log(reading);
   }
 
