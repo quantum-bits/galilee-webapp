@@ -1,5 +1,4 @@
 import { Component, OnInit, EventEmitter, Input, OnChanges } from '@angular/core';
-//import { Router, ROUTER_DIRECTIVES } from '@angular/router';
 
 import {
   FormBuilder,
@@ -9,13 +8,10 @@ import {
   FormControl
 } from '@angular/forms';
 
-//import { InputWakeUp } from '../../../shared/directives/input-wake-up.directive';
-
 import {User} from '../../../shared/models/user.model';
 import {UserPermission} from '../../../shared/models/user-permission.model';
 
 import { UserService } from '../../../authentication/user.service';
-
 
 @Component({
   selector: 'app-edit-user',
@@ -43,7 +39,6 @@ export class EditUserComponent implements OnInit, OnChanges {
   private signinServerError: any;
 
   public submitted: boolean; // keep track of whether form is submitted
-
 
   private date = new Date();
   // date.toISOString()

@@ -1,47 +1,43 @@
 import {Component, OnInit, EventEmitter} from '@angular/core';
 import {Location} from '@angular/common';
-import { Observable } from 'rxjs/Observable';
+import {Observable} from 'rxjs/Observable';
 
 import {UpdatePracticeItemBindingService} from '../update-practice-item-binding.service';
 import {UpdateResourceItemBindingService} from '../update-resource-item-binding.service';
 
 import {ReadingService} from '../../../shared/services/reading.service';
 import {Reading} from '../../../shared/models/reading.model';
-import { ResourceCollection } from '../../../shared/interfaces/resource-collection.interface';
+import {ResourceCollection} from '../../../shared/interfaces/resource-collection.interface';
 
 //import { UpdatePracticesComponent } from '../update-practices';
 //import {UpdateResourcesComponent} from '../update-resources';
 
 @Component({
-
   selector: 'app-edit-practices',
   templateUrl: './edit-reading-resources.component.html',
   styleUrls: ['./edit-reading-resources.component.css'],
   providers: [ReadingService, UpdatePracticeItemBindingService, UpdateResourceItemBindingService]
 })
-
 export class EditReadingResourcesComponent implements OnInit {
-
   /*
-    NOTE: When we start storing the practice and resource information in the database,
-          we will need to update the onUpdatePractice() and onUpdateResourceCollection()
-          methods.  Not clear to me if we simply make the change to the db, and then reload
-          the page to let everything refresh, or if we want to make the changes locally
-          in order to minimize trips to the database.  In any case, we will need to take
-          a look at those methods to see if they make sense....
+   NOTE: When we start storing the practice and resource information in the database,
+   we will need to update the onUpdatePractice() and onUpdateResourceCollection()
+   methods.  Not clear to me if we simply make the change to the db, and then reload
+   the page to let everything refresh, or if we want to make the changes locally
+   in order to minimize trips to the database.  In any case, we will need to take
+   a look at those methods to see if they make sense....
    */
 
-
-  date:Date;
-  readings:Reading[] = [];
-  currentReading:any;//reading being shown in current tab
+  date: Date;
+  readings: Reading[] = [];
+  currentReading: any;//reading being shown in current tab
   private changeTracker = 0;//this is a hack to get ngOnChanges to fire when the practices are updated...it doesn't fire if something deep in a nested object changes
 
   constructor(//private _location:Location,
     //private practiceService:PracticeService,
-    private readingService:ReadingService,
-    private updatePracticeItemBindingService:UpdatePracticeItemBindingService,
-    private updateResourceItemBindingService:UpdateResourceItemBindingService) {
+    private readingService: ReadingService,
+    private updatePracticeItemBindingService: UpdatePracticeItemBindingService,
+    private updateResourceItemBindingService: UpdateResourceItemBindingService) {
     console.log('inside edit-reading-resources constructor');
 
     updatePracticeItemBindingService.practiceUpdated$.subscribe(
@@ -72,13 +68,11 @@ export class EditReadingResourcesComponent implements OnInit {
       () => console.log("Readings fetched"));
   }
 
-
   updateTab(reading) {
     this.currentReading = reading;
     this.changeTracker++;
     //this.fetchUnusedPractices();
   }
-
 
   // true if the reading passed in is the current reading being shown in the tab
   isActive(reading) {
@@ -109,11 +103,11 @@ export class EditReadingResourcesComponent implements OnInit {
     }
     if (practiceAlreadyInUse) { //update the practice and associated advice
       this.currentReading.practices[practiceArrayIndex] =
-      {
-        id: practice.id,
-        title: practice.title,
-        advice: advice
-      }
+        {
+          id: practice.id,
+          title: practice.title,
+          advice: advice
+        }
     } else { //add the new practice and associated advice
       this.currentReading.practices.push(
         {
@@ -137,7 +131,7 @@ export class EditReadingResourcesComponent implements OnInit {
       }
     }
     if (practiceArrayIndex !== null) { //update the practice and associated advice
-      this.currentReading.practices.splice(practiceArrayIndex,1);
+      this.currentReading.practices.splice(practiceArrayIndex, 1);
     }
   }
 
@@ -152,8 +146,8 @@ export class EditReadingResourcesComponent implements OnInit {
     if (newCollection) {// new entry
       this.currentReading.resourceCollections.push(resourceCollection);
     } else {//editing existing entry...need to find it by its id
-      for (let i in this.currentReading.resourceCollections){
-        if (resourceCollection.id === this.currentReading.resourceCollections[i].id){
+      for (let i in this.currentReading.resourceCollections) {
+        if (resourceCollection.id === this.currentReading.resourceCollections[i].id) {
           collectionIndex = +i;//using the '+' to cast the string as a number
           console.log('index:');
           console.log(collectionIndex);
@@ -164,7 +158,4 @@ export class EditReadingResourcesComponent implements OnInit {
     console.log('here is the new version of current reading:');
     console.log(this.currentReading);
   }
-
-
-
 }
