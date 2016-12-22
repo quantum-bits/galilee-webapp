@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 
 import {
-  beforeEach, beforeEachProviders,
+  beforeEach,
   describe, xdescribe,
   expect, it, xit,
   async, inject
