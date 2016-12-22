@@ -4,7 +4,7 @@ import { By }           from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import {
-  beforeEach, beforeEachProviders,
+  beforeEach,
   describe, xdescribe,
   expect, it, xit,
   async, inject

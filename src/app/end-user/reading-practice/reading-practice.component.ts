@@ -11,7 +11,6 @@ import { Reading } from '../../shared/models/reading.model';
 @Component({
   selector: 'app-reading-practice',
   templateUrl: './reading-practice.component.html',
-  styleUrls: ['./reading-practice.component.css'],
   providers: [ReadingService, PracticeService]
 })
 export class ReadingPracticeComponent implements OnInit {

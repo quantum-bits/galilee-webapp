@@ -4,8 +4,7 @@ import {UpdateResourceItemBindingService} from '../update-resource-item-binding.
 
 @Component({
   selector: 'app-update-resource-item',
-  templateUrl: './update-resource-item.component.html',
-  styleUrls: ['./update-resource-item.component.css']
+  templateUrl: './update-resource-item.component.html'
 })
 export class UpdateResourceItemComponent implements OnInit, OnDestroy {
 

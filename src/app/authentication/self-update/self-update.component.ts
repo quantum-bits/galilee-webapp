@@ -6,8 +6,7 @@ import {User} from '../../shared/models/user.model';
 
 @Component({
   selector: 'app-self-update',
-  templateUrl: './self-update.component.html',
-  styleUrls: ['./self-update.component.css']
+  templateUrl: './self-update.component.html'
 })
 export class SelfUpdateComponent implements OnInit {
 

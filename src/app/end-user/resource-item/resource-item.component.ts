@@ -3,8 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-resource-item',
-  templateUrl: './resource-item.component.html',
-  styleUrls: ['./resource-item.component.css']
+  templateUrl: './resource-item.component.html'
 })
 export class ResourceItemComponent implements OnInit {
 

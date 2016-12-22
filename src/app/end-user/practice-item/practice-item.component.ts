@@ -2,8 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-practice-item',
-  templateUrl: './practice-item.component.html',
-  styleUrls: ['./practice-item.component.css']
+  templateUrl: './practice-item.component.html'
 })
 export class PracticeItemComponent implements OnInit {
 
