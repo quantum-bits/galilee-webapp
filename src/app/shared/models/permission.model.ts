@@ -2,8 +2,7 @@ export const EDIT_RES = 'EDIT_RES';
 export const EDIT_PRAC = 'EDIT_PRAC';
 export const ADMIN = 'ADMIN';
 
-/*
-maybe switch to something more like this:
+/* Maybe switch to something more like this:
 
  class PermissionType {
     static EDIT_RES: string = "EDIT_RES";
@@ -16,7 +15,7 @@ export class Permission {
   id: string;
   title: string;
 
-  constructor (obj){
+  constructor(obj) {
     this.id = obj.id;
     this.title = obj.title;
   }

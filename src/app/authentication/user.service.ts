@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
-import { Subject }    from 'rxjs/Subject';
+import {Subject}    from 'rxjs/Subject';
 
 import {Http, Headers} from '@angular/http';
 import {contentHeaders} from './common/headers';
@@ -14,22 +14,22 @@ import {UserPermission} from '../shared/models/user-permission.model';
 //import localStorage from 'localStorage'; // I'm not sure why, but we apparently don't need to do this....
 
 /*
-  Some examples of sending authenticated requests to the server may be found here:
+ Some examples of sending authenticated requests to the server may be found here:
 
-    https://medium.com/@blacksonic86/angular-2-authentication-revisited-611bf7373bf9#.6y6tryhmo
-    https://github.com/auth0-blog/angular2-authentication-sample/blob/master/src/home/home.ts
+ https://medium.com/@blacksonic86/angular-2-authentication-revisited-611bf7373bf9#.6y6tryhmo
+ https://github.com/auth0-blog/angular2-authentication-sample/blob/master/src/home/home.ts
 
-  NOTE: The latter uses authHttp, which (I think) uses the angular2-jwt package.  We have
-         installed that package, but it is not set up all the way yet (gives errors).  The
-         former approach sends an authenticated request without the help of the angular2-jwt package.
+ NOTE: The latter uses authHttp, which (I think) uses the angular2-jwt package.  We have
+ installed that package, but it is not set up all the way yet (gives errors).  The
+ former approach sends an authenticated request without the help of the angular2-jwt package.
 
-  dates:
-         ISO-8601 standard: YYYY-MM-DDTHH:mm:ss.sssZ
-         ref: http://www.w3schools.com/jsref/jsref_tojson.asp
+ dates:
+ ISO-8601 standard: YYYY-MM-DDTHH:mm:ss.sssZ
+ ref: http://www.w3schools.com/jsref/jsref_tojson.asp
 
-  broadcasting: ReplaySubject (for cases when the receiver may have missed the broadcast):
-    https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/subjects/replaysubject.md
-*/
+ broadcasting: ReplaySubject (for cases when the receiver may have missed the broadcast):
+ https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/subjects/replaysubject.md
+ */
 const baseUrl = 'http://localhost:3001';
 
 // MOCK
@@ -377,10 +377,8 @@ const PERMISSION_TYPES: Permission[] = [
   }
 ];
 
-
 @Injectable()
 export class UserService {
-
   private currentUser: User;
   private loggedIn = false;
 
@@ -390,17 +388,14 @@ export class UserService {
   // Observable user stream
   userAnnounced$ = this.userAnnouncedSource.asObservable();
 
-
-
   constructor(private http: Http) {
     this.loggedIn = !!localStorage.getItem('id_token');
     console.log('inside the user service constructor; user logged in?');
     console.log(this.loggedIn);
-    if (this.loggedIn){
+    if (this.loggedIn) {
       console.log('inside the user service constructor; logging user out, for starters....');
       this.logout();
     }
-
   }
 
   login(username, password) {
@@ -425,13 +420,12 @@ export class UserService {
          */
         let userPermissions: UserPermission[] = [];
         for (let permission of PERMISSION_TYPES) {
-          userPermissions.push(new UserPermission(
-            {
+          userPermissions.push(
+            new UserPermission({
               enabled: false,
               id: permission.id,
               title: permission.title
-            }
-            )
+            })
           )
         }
 
@@ -531,7 +525,9 @@ export class UserService {
     return Observable.fromPromise(promise);
   }
 
-  getInitialUserPermissions() {// returns an UserPermission-like dictionary with initial data; used to populate the form for creating a new user
+  getInitialUserPermissions() {
+    // Return a UserPermission-like dictionary with initial data;
+    // used to populate the form for creating a new user.
     var initialUserPermissions = [];
 
     for (let permission of PERMISSION_TYPES) {
@@ -545,6 +541,5 @@ export class UserService {
     var promise = Promise.resolve(initialUserPermissions);
     return Observable.fromPromise(promise);
   }
-
 
 }

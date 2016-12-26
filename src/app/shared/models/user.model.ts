@@ -28,27 +28,22 @@ export class User {
   }
 
   indexOfPermission(permissionID: string) {
-    // fetches the array index for the permission with the given id
-    var index;
+    // Fetch the array index for the permission with the given id.
     for (let i in this.permissions){
       if (this.permissions[i].id === permissionID) {
-        index = i;
+        return i;
       }
     }
-    return index;
+    throw new Error(`No permission with ID ${permissionID}`);
   }
 
   can(permissionID: string){
-    var index = this.indexOfPermission(permissionID);
-    if (index !== undefined) {
-      return this.permissions[index].can();
-    } else {
-      return false;// in case the permission is not found in the array of permissions, return false...this shouldn't happen though!
-    }
+    let index = this.indexOfPermission(permissionID);
+    return this.permissions[index].can();
   }
 
   fullName(){
-    return this.firstName+' '+this.lastName;
+    return `${this.firstName} ${this.lastName}`;
   }
 
   static compare(element1: User, element2: User, fieldName: string, sortAscending: boolean){
@@ -82,5 +77,4 @@ export class User {
 
     return returnVal;
   }
-
 }

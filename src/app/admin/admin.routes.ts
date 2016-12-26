@@ -2,7 +2,7 @@ import {AdminComponent} from './admin.component';
 import {EditReadingResourcesComponent} from './content-management/edit-reading-resources/edit-reading-resources.component';
 import {ManageUsersComponent} from './user-management/manage-users/manage-users.component';
 
-import { AuthGuard } from '../authentication/common/auth.guard';
+import { AuthGuard } from '../authentication/auth.guard';
 
 export const AdminRoutes = [
   {

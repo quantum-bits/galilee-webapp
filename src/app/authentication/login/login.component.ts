@@ -1,20 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 
-// probably should use the Validators in @angular/forms...?
-//import { Validators } from '@angular/common';
-
-import {
-  FormBuilder,
-  FormGroup,
-  FormArray,
-  Validators, // used to make a field required
-  FormControl
-} from '@angular/forms';
-
-
-import { UserService } from '../user.service';
-//import { InputWakeUp } from '../../shared/directives/input-wake-up.directive';
+import {AuthService} from '../authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -22,54 +10,30 @@ import { UserService } from '../user.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
   // see: https://github.com/auth0-blog/angular2-authentication-sample
   //      https://medium.com/@blacksonic86/angular-2-authentication-revisited-611bf7373bf9#.vwfc7gq9v
   //      https://scotch.io/tutorials/using-angular-2s-model-driven-forms-with-formgroup-and-formcontrol
 
-  public loginForm: FormGroup; // model driven form
+  public loginForm: FormGroup;
   private signinServerError: any;
 
-  constructor(private userService: UserService,
+  constructor(private auth: AuthService,
               private router: Router,
-              private _fb: FormBuilder) {}
+              private formBuilder: FormBuilder) {
+  }
 
   ngOnInit() {
-    this.loginForm = this._fb.group({
+    this.loginForm = this.formBuilder.group({
       username: ['', [<any>Validators.required]],
       password: ['', [<any>Validators.required]]
     });
-
   }
 
-  // QUESTION: Do we need to use event.preventDefault()...?  See the login
-  //           component in https://github.com/auth0-blog/angular2-authentication-sample ....
-  // NOTE: Not currently using angular2-jwt.
+  onLogin() {
+    this.signinServerError = null;
 
-  onSubmit() {
-    //event.preventDefault();
-    //console.log(this.loginForm);
-    //var username: string;
-    //var password: string;
-    if (this.loginForm.valid){
-      this.signinServerError = null;//reinitialize it....
-      this.userService.login(
-        this.loginForm.value.username,
-        this.loginForm.value.password).subscribe(
-        (result) => {
-          console.log('back in the login component');
-          console.log(result);
-          if (result) {
-            this.router.navigate(['/end-user']);
-          }
-      },
-        (error) => {
-          console.log('there was an error');
-          console.log(error);
-          this.signinServerError = error;
-        });
+    if (this.loginForm.valid) {
+      this.auth.login(this.loginForm.value.username, this.loginForm.value.password);
     }
   }
-
 }
-

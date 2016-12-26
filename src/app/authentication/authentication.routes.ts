@@ -1,18 +1,18 @@
-import { LoginComponent } from './login';
-import { SignupComponent } from './signup';
-import { SelfUpdateComponent } from './self-update';
+import {LoginComponent} from './login';
+import {SignupComponent} from './signup';
+import {SelfUpdateComponent} from './self-update';
 
 export const AuthenticationRoutes = [
   {
     path: 'login',
-    component: LoginComponent,
+    component: LoginComponent
   },
   {
     path: 'signup',
-    component: SignupComponent,
+    component: SignupComponent
   },
   {
     path: 'update-preferences',
-    component: SelfUpdateComponent,
+    component: SelfUpdateComponent
   },
 ];
