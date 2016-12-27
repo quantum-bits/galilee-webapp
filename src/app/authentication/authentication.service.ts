@@ -16,8 +16,8 @@ export class AuthService {
               private http: Http) {
   }
 
-  login(username: string, password: string) {
-    this.http.post('http://localhost:3000/authenticate', {username, password})
+  login(email: string, password: string) {
+    this.http.post('http://localhost:3000/authenticate', {email, password})
       .map(res => res.json())
       .subscribe(
         // We're assuming the response will be an object
