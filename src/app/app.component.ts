@@ -10,30 +10,30 @@ import {UserService} from './authentication/user.service';
 import {User} from './shared/models/user.model';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    providers: [
-      //UserService,
-      ReadingService, PracticeService, ResourceService]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  providers: [
+    //UserService,
+    ReadingService, PracticeService, ResourceService]
 })
 export class AppComponent {
   title = 'app works!';
 
-  date:Date;
-  readings:Reading[] = [];
-  practices:Practice[] = [];
-  singleReading:Reading;
+  date: Date;
+  readings: Reading[] = [];
+  practices: Practice[] = [];
+  singleReading: Reading;
   currentUser: User;
 
-  constructor(private readingService:ReadingService,
-              private practiceService:PracticeService,
+  constructor(private readingService: ReadingService,
+              private practiceService: PracticeService,
               private userService: UserService,
               private router: Router) {
   }
 
   ngOnInit() {
     // grab current user info if it exists....
-    if (this.userService.isLoggedIn()){
+    if (this.userService.isLoggedIn()) {
       this.currentUser = this.userService.getCurrentUser();
       console.log('inside ngOnInit, and the user is logged in already');
       console.log(this.currentUser);
@@ -49,19 +49,20 @@ export class AppComponent {
         console.log(this.currentUser);
       });
     /*
-    if(this.isLoggedIn()) {
-      //this.currentUserName = this.user.currentUser.fullName();
-      console.log()
-    }
-    */
+     if(this.isLoggedIn()) {
+     //this.currentUserName = this.user.currentUser.fullName();
+     console.log()
+     }
+     */
 
     this.date = new Date();
     // FIXME hardcoded readings
-    this.readingService.getTodaysReadings().then(
-      (readings) => {
-        this.readings = readings;
-      }
-    );
+    this.readingService
+      .getTodaysReadings()
+      .subscribe(readings => {
+          this.readings = readings
+        }
+      );
     this.readingService.getSingleReading().then(
       (reading) => {
         this.singleReading = reading;
@@ -75,21 +76,18 @@ export class AppComponent {
   }
 
 
-
-    // FIXME: This is only here to work around a compile-time error.
-    // Presumably it should hit a method on the user service.
-    //isLoggedIn() {
-    //    return true;
-    //}
-
+  // FIXME: This is only here to work around a compile-time error.
+  // Presumably it should hit a method on the user service.
+  //isLoggedIn() {
+  //    return true;
+  //}
 
 
-
-  isLoggedIn(){
+  isLoggedIn() {
     return this.userService.isLoggedIn();
   }
 
-  logout(){
+  logout() {
     this.userService.logout();
     this.router.navigate(['/login']);
   }

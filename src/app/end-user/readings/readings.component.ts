@@ -1,10 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-//import { ROUTER_DIRECTIVES } from '@angular/router';
-//import { Router, ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
 
-import { ReadingService } from '../../shared/services/reading.service';
-import { Reading } from '../../shared/models/reading.model';
-//import { ReadingItemComponent } from '../reading-item';
+import {ReadingService} from '../../shared/services/reading.service';
+import {Reading} from '../../shared/models/reading.model';
 
 @Component({
   selector: 'app-readings',
@@ -21,25 +18,14 @@ export class ReadingsComponent implements OnInit {
   //  $('.materialboxed').materialbox();
   //}
 
-  date: Date;
-  readings: Reading[] = [];
+  readings: Reading[];
   includeBackButton = false;
 
-  constructor(
-    //private router: Router,
-    private readingService: ReadingService){
+  constructor(private readingService: ReadingService) {
   }
 
   ngOnInit() {
-    this.date = new Date();
-    // FIXME hardcoded readings
-    this.readingService.getTodaysReadings().then(
-      (readings) => {
-        this.readings = readings;
-      }
-    );
-
+    this.readingService.getTodaysReadings()
+      .subscribe(readings => this.readings = readings);
   }
-
 }
-
