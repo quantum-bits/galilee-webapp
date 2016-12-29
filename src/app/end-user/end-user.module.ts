@@ -12,7 +12,10 @@ import {ResourceItemComponent} from './resource-item';
 
 import {MaterializeModule} from "angular2-materialize";
 
+
+import {SimpleModalComponent} from './readings/simple-modal.component';
 import {TruncatePipe} from '../shared/pipes/truncate.pipe';
+
 
 @NgModule({
   declarations: [
@@ -23,6 +26,7 @@ import {TruncatePipe} from '../shared/pipes/truncate.pipe';
     ReadingResourceComponent,
     ReadingsComponent,
     ResourceItemComponent,
+    SimpleModalComponent,
 
     TruncatePipe
   ],
@@ -30,6 +34,6 @@ import {TruncatePipe} from '../shared/pipes/truncate.pipe';
     BrowserModule,
     RouterModule,
     MaterializeModule
-  ],
+  ]
 })
 export class EndUserModule { }

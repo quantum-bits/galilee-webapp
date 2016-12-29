@@ -1,13 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
 
-//import { ROUTER_DIRECTIVES } from '@angular/router';
-import { Router, ActivatedRoute } from '@angular/router';
-
-import { ReadingService } from '../../shared/services/reading.service';
-import { ResourceService } from '../../shared/services/resource.service';
-import { Reading } from '../../shared/models/reading.model';
-//import { ReadingItemComponent } from '../reading-item';
-//import { ResourceItemComponent } from '../resource-item';
+import {ReadingService} from '../../shared/services/reading.service';
+import {ResourceService} from '../../shared/services/resource.service';
+import {Reading} from '../../shared/models/reading.model';
 
 @Component({
   selector: 'app-reading-resource',
@@ -15,18 +11,16 @@ import { Reading } from '../../shared/models/reading.model';
   providers: [ReadingService, ResourceService]
 })
 export class ReadingResourceComponent implements OnInit {
-
   date: Date;
   singleReading: Reading;
   resource: any;
   resourcePath: string;
   includeBackButton = true;
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private readingService: ReadingService,
-    private resourceService: ResourceService){
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private readingService: ReadingService,
+              private resourceService: ResourceService) {
   }
 
   ngOnInit() {
@@ -35,15 +29,16 @@ export class ReadingResourceComponent implements OnInit {
       let readingID = +params['readingID'];
       let resourceID = +params['resourceID'];
       console.log(resourceID);
-      this.readingService.getReading(readingID)
-        .then(//FIXME convert to Observable - subscribe (?)
-          reading => {
+
+      this.readingService.getReadingById(readingID)
+        .subscribe(reading => {
             this.singleReading = reading;
             console.log('got here');
             this.fetchResource(this.singleReading, resourceID);
             console.log(this.resource);
           }
         );
+
       this.resourceService.getResourcePath().subscribe(
         path => {
           this.resourcePath = path;
@@ -62,7 +57,4 @@ export class ReadingResourceComponent implements OnInit {
       }
     }
   }
-
-
-
 }

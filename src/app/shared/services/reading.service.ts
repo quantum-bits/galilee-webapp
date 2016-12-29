@@ -7,6 +7,10 @@ import {Reading} from '../models/reading.model';
 
 const READINGS = [];   // DELETE ME
 
+function todaysDate(): string {
+  return new Date().toISOString().substring(0, 10);
+}
+
 @Injectable()
 export class ReadingService {
   reading: string;    // DELETE ME
@@ -14,33 +18,17 @@ export class ReadingService {
   constructor(private http: Http) {
   }
 
-  getTodaysReadings(): Observable<Array<Reading>> {
+  getTodaysReadings(date?: string): Observable<Array<Reading>> {
+    date = date || todaysDate();
     return this.http
-      .get('http://localhost:3000/readings')
+      .get(`http://localhost:3000/readingday/${date}`)
       .map(res => res.json());
   }
 
-  getSingleReading() {
-    return Promise.resolve(READINGS[0]);
-  }
-
-  getReading(id: number) {// typescript for loop: https://basarat.gitbooks.io/typescript/content/docs/for...of.html
-    for (var readingItem of READINGS) {
-      if (readingItem.id === id) {
-        this.reading = readingItem;
-      }
-    }
-    //FIXME convert to Observable
-    return Promise.resolve(
-      this.reading //FIXME need to add error trapping!
-    );
-    /*
-     this.getTodaysReadings()
-     .then(readings => {
-     readings.filter(reading => reading.id === id)[0];
-     console.log('hey, i got here');
-     });
-     */
+  getReadingById(id: number): Observable<Reading> {
+    return this.http
+      .get(`http://localhost:3000/reading/${id}`)
+      .map(res => res.json());
   }
 
   getTodaysReadingsAsObservable() {
