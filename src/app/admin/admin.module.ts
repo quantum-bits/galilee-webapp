@@ -22,6 +22,7 @@ import {UpdateResourceCollectionComponent} from './content-management/update-res
 import {UpdateResourceItemComponent} from './content-management/update-resource-item';
 import {UpdateResourcesComponent} from './content-management/update-resources';
 import {UploadResourceComponent} from './content-management/upload-resource';
+import { ManageReadingComponent } from './content-management/manage-reading/manage-reading.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {UploadResourceComponent} from './content-management/upload-resource';
     UpdateResourceCollectionComponent,
     UpdateResourceItemComponent,
     UpdateResourcesComponent,
-    UploadResourceComponent
+    UploadResourceComponent,
+    ManageReadingComponent
   ],
   exports: [
     EditUserComponent

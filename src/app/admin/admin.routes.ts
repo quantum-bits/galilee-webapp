@@ -3,12 +3,13 @@ import {EditReadingResourcesComponent} from './content-management/edit-reading-r
 import {ManageUsersComponent} from './user-management/manage-users/manage-users.component';
 
 import { AuthGuard } from '../authentication/auth.guard';
+import {ManageReadingComponent} from "./content-management/manage-reading/manage-reading.component";
 
 export const AdminRoutes = [
   {
     path: 'admin',
     component: AdminComponent,
-    canActivate: [AuthGuard],
+//    canActivate: [AuthGuard],
     children:[
       {
         path: '',
@@ -18,13 +19,18 @@ export const AdminRoutes = [
       {
         path: 'edit-reading-resources',
         component: EditReadingResourcesComponent,
-        index: true,
+        index: true
       },
       {
         path: 'manage-users',
         component: ManageUsersComponent,
-        index: true,
+        index: true
       },
+      {
+        path: 'manage-readings',
+        component: ManageReadingComponent,
+        index: true
+      }
     ]
   },
 ];

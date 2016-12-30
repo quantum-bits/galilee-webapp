@@ -54,10 +54,13 @@ export class EditReadingResourcesComponent implements OnInit {
       });
   }
 
+  // TODO - Don't use a fake date!
+  FAKE_DATE: string = '2016-12-28';
+
   ngOnInit() {
     this.date = new Date();
     // FIXME hardcoded readings; assumes there is at least one reading...FIX!!!
-    this.readingService.getTodaysReadingsAsObservable().subscribe(
+    this.readingService.getTodaysReadings(this.FAKE_DATE).subscribe(
       readings => {
         this.readings = readings;
         var reading = this.readings[0];
