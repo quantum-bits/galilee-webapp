@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+
 import {BibleInfo} from '../../bg_bible_info';
 
 @Component({
@@ -8,8 +10,21 @@ import {BibleInfo} from '../../bg_bible_info';
 })
 export class ManageReadingComponent {
   private bible_info: BibleInfo;
+  private passageForm: FormGroup;
 
-  constructor() {
+  constructor(fb: FormBuilder) {
     this.bible_info = new BibleInfo();
+
+    this.passageForm = fb.group({
+      "book": [""],
+      "start-chapter": [""],
+      "start-verse": [""],
+      "end-chapter": [""],
+      "end-verse": [""],
+    });
+  }
+
+  passageChosen() {
+    console.log(this.passageForm);
   }
 }

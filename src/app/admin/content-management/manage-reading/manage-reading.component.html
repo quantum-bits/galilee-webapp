@@ -1,3 +1,12 @@
+<h2>Pick-a-Passage</h2>
+<form [formGroup]="passageForm"
+      (ngSubmit)="passageChosen()">
+  <div class="input-field">
+    <input id="book" type="text" formControlName="book">
+    <label for="book" class="label-wrapper">Book</label>
+  </div>
+</form>
+
 <p>
   Bible Info <<{{bible_info}}>>
 </p>
@@ -6,3 +15,14 @@
     {{book_name}}
   </li>
 </ul>
+
+
+<div class="input-field text-area-wrapper">
+  <label class="label-wrapper" [attr.for]="'textareaAdvice'+practice.id">Advice for {{practice.title}}
+  </label>
+  <textarea [formControl]="practiceText"
+            id="textareaAdvice{{practice.id}}"
+            class="materialize-textarea"
+            #myInput2>
+              </textarea>
+</div>
