@@ -1,49 +1,41 @@
 <div *ngIf="reading">
-<div class="card ">
-  <div class="card-content ">
-    <span class="card-title">{{ reading.title }}</span>
-    <!--<div class="card-item">-->
-    <p><b>{{ reading.description }}</b></p>
-    <br>
-    <p>{{ reading.text}}</p>
-    <!--</div>-->
-
-  </div>
-  <div class="card-action">
-    <a materialize="dropdown"
-       class="drop-down"
-       [attr.data-activates]="'dropdownViewPractice'+reading.id">
-      Practices</a>
-    <a materialize="dropdown"
-       class="drop-down"
-       [attr.data-activates]="'dropdownViewResource'+reading.id">
-      Resources</a>
-
-    <div *ngIf="includeBackButton" class="right"><a [routerLink]="['/end-user/readings']">Back</a></div>
-    <!--<p><a (click)="displayInfo(reading)">Display Info</a></p>-->
-
-  </div>
-</div>
-
-<!-- Dropdown Structure for Choosing Practice -->
-<ul [id]="'dropdownViewPractice'+reading.id" class='dropdown-content'>
-  <li *ngFor="let practice of practices">
-    <a (click)="onSelectPractice(reading, practice)">{{practice.title}}</a>
-  </li>
-</ul>
-
-<!-- Dropdown Structure for Choosing Resource -->
-<ul [id]="'dropdownViewResource'+reading.id" class='dropdown-content'>
-  <li *ngFor="let resourceCollection of resourceCollections">
-    <a (click)="onSelectResource(reading, resourceCollection)">{{resourceCollection.title}}</a>
-  </li>
-</ul>
-
-</div>
-
-
-<!-- <br>
-    <div *ngFor="let resource of resources">
-      <a (click)="onSelectResource(reading, resource)">{{resource.title}} ({{resource.type}})</a>
+  <div class="card ">
+    <div class="card-content ">
+      <span class="card-title">{{ reading.title }}</span>
+      <!--<div class="card-item">-->
+      <p><b>{{ reading.description }}</b></p>
+      <br>
+      <p [innerHTML]="reading.text"></p>
+      <!--</div>-->
     </div>
-    -->
+    <div class="card-action">
+      <a materialize="dropdown"
+         class="drop-down"
+         [attr.data-activates]="'dropdownViewPractice'+reading.id">
+        Practices</a>
+      <a materialize="dropdown"
+         class="drop-down"
+         [attr.data-activates]="'dropdownViewResource'+reading.id">
+        Resources</a>
+
+      <div *ngIf="includeBackButton" class="right"><a [routerLink]="['/end-user/readings']">Back</a></div>
+      <!--<p><a (click)="displayInfo(reading)">Display Info</a></p>-->
+
+    </div>
+  </div>
+
+  <!-- Dropdown Structure for Choosing Practice -->
+  <ul [id]="'dropdownViewPractice'+reading.id" class='dropdown-content'>
+    <li *ngFor="let practice of practices">
+      <a (click)="onSelectPractice(reading, practice)">{{practice.title}}</a>
+    </li>
+  </ul>
+
+  <!-- Dropdown Structure for Choosing Resource -->
+  <ul [id]="'dropdownViewResource'+reading.id" class='dropdown-content'>
+    <li *ngFor="let resourceCollection of resourceCollections">
+      <a (click)="onSelectResource(reading, resourceCollection)">{{resourceCollection.title}}</a>
+    </li>
+  </ul>
+
+</div>

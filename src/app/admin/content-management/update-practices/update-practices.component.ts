@@ -3,18 +3,15 @@ import { Component, OnInit, OnChanges, EventEmitter, Input, Output } from '@angu
 import {PracticeService} from '../../../shared/services/practice.service';
 import {Practice} from '../../../shared/models/practice.model';
 
-import { UpdatePracticeItemComponent } from '../update-practice-item';
+//import { UpdatePracticeItemComponent } from '../update-practice-item';
 
-import {MaterializeDirective} from "angular2-materialize";
-import {Dragula, DragulaService} from 'ng2-dragula/ng2-dragula';
+import {DragulaService} from 'ng2-dragula/ng2-dragula';
 
 @Component({
-  moduleId: module.id,
   selector: 'app-update-practices',
-  templateUrl: 'update-practices.component.html',
-  styleUrls: ['update-practices.component.css'],
-  providers: [DragulaService],
-  directives: [MaterializeDirective, UpdatePracticeItemComponent, Dragula]
+  templateUrl: './update-practices.component.html',
+  styleUrls: ['./update-practices.component.css'],
+  providers: [DragulaService]
 })
 export class UpdatePracticesComponent implements OnInit, OnChanges {
 
@@ -49,6 +46,8 @@ export class UpdatePracticesComponent implements OnInit, OnChanges {
   constructor(
     private practiceService:PracticeService,
     private dragulaService: DragulaService) {
+    console.log('inside update-practices constructor');
+
     dragulaService.drag.subscribe((value) => {
       console.log(`drag: ${value[0]}`);
       this.onDrag(value.slice(1));
@@ -75,6 +74,7 @@ export class UpdatePracticesComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    console.log('update practices oninit');
     this.practiceService.getPractices().subscribe(
       practices => {
         this.practices = practices;

@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ROUTER_DIRECTIVES } from '@angular/router';
+import { Router } from '@angular/router';
+import {FormGroup} from '@angular/forms';
 
+/*
+  Not clear if we still need to import the Router stuff here; it doesn't seem to
+  work otherwise, since we use Router.navigate below....
+ */
+
+/*
 import {
-  FORM_DIRECTIVES,
-  REACTIVE_FORM_DIRECTIVES,
   FormBuilder,
   FormGroup,
   FormArray,
@@ -11,21 +16,15 @@ import {
   FormControl
 } from '@angular/forms';
 
+*/
 
-import { UserService } from '../user.service';
-import { InputWakeUp } from '../../shared/directives/input-wake-up.directive';
+//import { UserService } from '../user.service';
+
+//import { InputWakeUp } from '../../shared/directives/input-wake-up.directive';
 
 @Component({
-  moduleId: module.id,
   selector: 'app-signup',
-  templateUrl: 'signup.component.html',
-  styleUrls: ['signup.component.css'],
-  //directives: [ ROUTER_DIRECTIVES, REACTIVE_FORM_DIRECTIVES, FormBuilder, InputWakeUp ],
-  directives: [
-    ROUTER_DIRECTIVES,
-    FORM_DIRECTIVES,
-    REACTIVE_FORM_DIRECTIVES,
-    InputWakeUp]
+  templateUrl: './signup.component.html'
 })
 export class SignupComponent implements OnInit {
 
@@ -33,24 +32,13 @@ export class SignupComponent implements OnInit {
   //      https://medium.com/@blacksonic86/angular-2-authentication-revisited-611bf7373bf9#.vwfc7gq9v
   // currently using the following server to mock authentication, etc.:
   //      https://github.com/auth0-blog/nodejs-jwt-authentication-sample
-  public signupForm: FormGroup; // model driven form
-  private signinServerError: any;
 
-  constructor(private userService: UserService,
-              private router: Router,
-              private _fb: FormBuilder) {}
+  constructor(//private userService: UserService,
+              private router: Router
+              //private _fb: FormBuilder
+  ) {}
 
   ngOnInit() {
-    this.signupForm = this._fb.group({
-      username: ['', [<any>Validators.required]],
-      passwords:
-        this._fb.group({
-          password: ['', [<any>Validators.required]],
-          password2: ['', [<any>Validators.required]]
-        }, {validator: this.areEqual})
-    });
-
-    console.log(this.signupForm);
   }
 
   onSubmit() {
@@ -59,7 +47,7 @@ export class SignupComponent implements OnInit {
     // 2. give an error message for the 400, 401, etc., errors
     // 3. make sure the logic makes sense for both positive and negative results!!!
     // 4. double-check login for #3....
-
+/*
     if (this.signupForm.valid){
       this.signinServerError = null;//reinitialize it....
       this.userService.signup(
@@ -77,8 +65,10 @@ export class SignupComponent implements OnInit {
         }
       );
     }
+    */
   }
 
+  /*
   areEqual(group) {
     if (group.value.password === group.value.password2) {
       return null;
@@ -86,5 +76,6 @@ export class SignupComponent implements OnInit {
       return {error: 'Passwords must match.'};
     }
   }
+  */
 
 }

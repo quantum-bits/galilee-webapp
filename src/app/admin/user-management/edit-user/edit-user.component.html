@@ -1,3 +1,153 @@
-<p>
-  edit-user works!
-</p>
+<div *ngIf="userForm">
+
+  <!--<h3>{{someText}}</h3>-->
+  <div class="container">
+
+    <form [formGroup]="userForm" novalidate (ngSubmit)="onSubmit()">
+
+      <div class="row">
+        <div class="col s12 ">
+          <div class="card">
+            <div class="card-content">
+              <span *ngIf="newUser" class="card-title">
+                Create Account
+              </span>
+              <span *ngIf="!newUser" class="card-title">
+                Update Account
+              </span>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <label for="firstName">First Name</label>
+                  <input
+                    [input-wake-up]="'firstName'"
+                    [class.warning-background] = "userForm.controls.firstName.errors && userForm.controls.firstName.touched"
+                    id="firstName"
+                    type="text"
+                    formControlName="firstName">
+                </div>
+                <div *ngIf="userForm.controls.firstName.errors && userForm.controls.firstName.touched">
+                  <small class="warning">
+                    This field is required.
+                  </small>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <label for="lastName">Last Name</label>
+                  <input
+                    [input-wake-up]="'lastName'"
+                    [class.warning-background] = "userForm.controls.lastName.errors && userForm.controls.lastName.touched"
+                    id="lastName"
+                    type="text"
+                    formControlName="lastName">
+                </div>
+                <div *ngIf="userForm.controls.lastName.errors && userForm.controls.lastName.touched">
+                  <small class="warning">
+                    This field is required.
+                  </small>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <label for="email">Email</label>
+                  <input
+                    [input-wake-up]="'email'"
+                    [class.warning-background] = "userForm.controls.email.errors && userForm.controls.email.touched"
+                    id="email"
+                    type="text"
+                    formControlName="email">
+                </div>
+                <div *ngIf="userForm.controls.email.errors && userForm.controls.email.touched">
+                  <small class="warning">
+                    This field must have the form of an email address.
+                  </small>
+                </div>
+              </div>
+              <div formGroupName="passwords">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <label for="password">Password</label>
+                    <input
+                      [input-wake-up]="'password'"
+                      [class.warning-background] = "(userForm.controls.passwords.controls.password.touched && !userForm.controls.passwords.controls.password.valid) || (userForm.controls.passwords.errors && userForm.controls.passwords.controls.password.touched && userForm.controls.passwords.controls.password2.touched)"
+                      id="password"
+                      type="password"
+                      formControlName="password">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <label for="password2">Reenter Password</label>
+                    <input
+                      [input-wake-up]="'password2'"
+                      [class.warning-background] = "(userForm.controls.passwords.controls.password2.touched && !userForm.controls.passwords.controls.password2.valid) || (userForm.controls.passwords.errors && userForm.controls.passwords.controls.password.touched && userForm.controls.passwords.controls.password2.touched)"
+                      id="password2"
+                      type="password"
+                      formControlName="password2">
+                  </div>
+                  <div *ngIf="userForm.controls.passwords.errors && userForm.controls.passwords.controls.password.touched && userForm.controls.passwords.controls.password2.touched ">
+                    <small class="warning">
+                      {{userForm.controls.passwords.errors.error}}
+                    </small>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="signinServerError" class="row">
+                <div class="input-field col s12 user-exists-warning red-text text-darken-2 red lighten-3">
+                  {{signinServerError._body}}
+                </div>
+              </div>
+
+              <!-- Permission Checkboxes -->
+
+              <div class="row">
+                <div class="col s12">
+                  Permissions
+                </div>
+              </div>
+              <div formArrayName="permissions">
+                <div *ngFor="let permission of userForm.controls.permissions.controls; let i=index">
+                  <!-- Angular assigns array index as group name by default 0, 1, 2, ... -->
+                  <div class="row">
+                    <div class="col s12">
+
+                      <div [formGroupName]="i">
+
+                        <p>
+                          <input
+                            type="checkbox"
+                            class="filled-in"
+                            id="permissionCheckbox{{i}}"
+                            formControlName="enabled"/>
+                          <label [attr.for]="'permissionCheckbox'+i">{{permission.value.title}}</label>
+                        </p>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-action">
+              <button
+                class="waves-effect waves-light btn"
+                type="submit"
+                [class.disabled]="!userForm.valid"
+                [disabled]="!userForm.valid">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+<button class="btn" (click)="displayCurrentUser()">current user is?</button>
+
+{{message}}

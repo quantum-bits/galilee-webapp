@@ -1,20 +1,23 @@
-/* tslint:disable:no-unused-variable */
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { By }           from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import {EditReadingResourcesComponent} from './edit-reading-resources.component';
 
-import {
-  beforeEach, beforeEachProviders,
-  describe, xdescribe,
-  expect, it, xit,
-  async, inject
-} from '@angular/core/testing';
+describe('Edit reading resources component', () => {
+  let component: EditReadingResourcesComponent;
+  let fixture: ComponentFixture<EditReadingResourcesComponent>;
 
-import { EditReadingResourcesComponent } from './edit-reading-resources.component';
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        EditReadingResourcesComponent
+      ]
+    });
 
-describe('Component: EditReadingResources', () => {
+    fixture = TestBed.createComponent(EditReadingResourcesComponent);
+    component = fixture.componentInstance;
+  });
+
   it('should create an instance', () => {
-    // let component = new EditReadingResourcesComponent();
-    // expect(component).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 });

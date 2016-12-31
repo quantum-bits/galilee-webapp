@@ -5,19 +5,12 @@ import { ResourceCollection } from '../../../shared/interfaces/resource-collecti
 import { UpdateResourceItemComponent } from '../update-resource-item';
 import { UploadResourceComponent } from '../upload-resource';
 
-import {MaterializeDirective} from "angular2-materialize";
-
 declare var $: any; // for using jQuery within this angular component
 
 @Component({
-  moduleId: module.id,
   selector: 'app-update-resource-collection',
-  templateUrl: 'update-resource-collection.component.html',
-  styleUrls: ['update-resource-collection.component.css'],
-  directives: [
-    MaterializeDirective,
-    UpdateResourceItemComponent,
-    UploadResourceComponent],
+  templateUrl: './update-resource-collection.component.html',
+  styleUrls: ['./update-resource-collection.component.css']
 })
 export class UpdateResourceCollectionComponent implements OnInit {
 

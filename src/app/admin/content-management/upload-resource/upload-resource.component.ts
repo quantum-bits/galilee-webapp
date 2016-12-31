@@ -1,11 +1,7 @@
-import {Component, EventEmitter, OnInit, DoCheck, Input, Output} from '@angular/core';
-//import {CORE_DIRECTIVES, FORM_DIRECTIVES, NgClass, NgStyle} from '@angular/common';
-import {FILE_UPLOAD_DIRECTIVES, FileUploader} from 'ng2-file-upload';
-import {MaterializeDirective} from "angular2-materialize";
+import { Component, EventEmitter, OnInit, DoCheck, Input, Output } from '@angular/core';
+import { FileUploader } from 'ng2-file-upload';
 
 import {
-  FORM_DIRECTIVES,
-  REACTIVE_FORM_DIRECTIVES,
   FormBuilder,
   FormGroup,
   FormArray,
@@ -13,11 +9,11 @@ import {
   FormControl
 } from '@angular/forms';
 
-import {Resource} from '../../../shared/models/resource.model';
-import {ResourceCollection} from '../../../shared/interfaces/resource-collection.interface';
+import { Resource } from '../../../shared/interfaces/resource.interface';
+import { ResourceCollection } from '../../../shared/interfaces/resource-collection.interface';
 
-import {InputWakeUp} from '../../../shared/directives/input-wake-up.directive';
-import {TextareaAutoresize} from '../../../shared/directives/textarea-autoresize.directive';
+//import { InputWakeUp } from '../../../shared/directives/input-wake-up.directive';
+//import { TextareaAutoresize } from '../../../shared/directives/textarea-autoresize.directive';
 
 import {UpdateResourceItemBindingService} from '../update-resource-item-binding.service';
 
@@ -30,20 +26,9 @@ declare var $: any; // for using jQuery within this angular component
 //      ...for some helpful comments
 
 @Component({
-  moduleId: module.id,
   selector: 'app-upload-resource',
-  templateUrl: 'upload-resource.component.html',
-  styleUrls: ['upload-resource.component.css'],
-  directives: [
-    FILE_UPLOAD_DIRECTIVES,
-    //NgClass,
-    //NgStyle,
-    //CORE_DIRECTIVES,
-    FORM_DIRECTIVES,
-    REACTIVE_FORM_DIRECTIVES,
-    MaterializeDirective,
-    InputWakeUp,
-    TextareaAutoresize]
+  templateUrl: './upload-resource.component.html',
+  styleUrls: ['./upload-resource.component.css']
 })
 export class UploadResourceComponent implements OnInit, DoCheck {
 
@@ -70,8 +55,9 @@ export class UploadResourceComponent implements OnInit, DoCheck {
   //   editing the child!  yikes....
   //
 
-  public uploader: FileUploader;
-  public hasBaseDropZoneOver: boolean = false;
+  public uploader:FileUploader = new FileUploader({url: URL});
+  public hasBaseDropZoneOver:boolean = false;
+  public hasAnotherDropZoneOver:boolean = false;
 
   private numFiles = 0;
 
@@ -84,13 +70,28 @@ export class UploadResourceComponent implements OnInit, DoCheck {
   public resourceCollectionForm: FormGroup; // our model driven form
   public submitted: boolean; // keep track of whether form is submitted
 
-  constructor(private fb: FormBuilder,
-              private updateResourceItemBindingService: UpdateResourceItemBindingService) {
+
+  public fileOverBase(e:any):void {
+    this.hasBaseDropZoneOver = e;
+  }
+
+  public fileOverAnother(e:any):void {
+    this.hasAnotherDropZoneOver = e;
+  }
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private updateResourceItemBindingService: UpdateResourceItemBindingService) {
   }
 
   ngOnInit() {
-    this.initResourceCollectionForm();
-    this.initFileUploader();
+    this.resourceCollectionForm = this.formBuilder.group({
+      id: [this.resourceCollection.id, [<any>Validators.required]],
+      title: [this.resourceCollection.title, [<any>Validators.required]],
+      description: [this.resourceCollection.description, [<any>Validators.required]],
+      resources: this.formBuilder.array(
+        this.initResourceArray(this.resourceCollection.resources)),
+    });
   }
 
   ngDoCheck() {

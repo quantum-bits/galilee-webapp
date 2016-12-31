@@ -1,30 +1,22 @@
-import {Component, OnInit, Input, ViewChild, ElementRef, Renderer} from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, Renderer } from '@angular/core';
 
 import {ResourceService} from '../../../shared/services/resource.service';
 //import { UpdateResourceItemComponent } from '../update-resource-item';
-import {UpdateResourceCollectionComponent} from '../update-resource-collection';
-import {UploadResourceComponent} from '../upload-resource';
+//import { UpdateResourceCollectionComponent } from '../update-resource-collection';
+//import { UploadResourceComponent } from '../upload-resource';
 
-import {Resource} from '../../../shared/models/resource.model';
-import {ResourceCollection} from '../../../shared/interfaces/resource-collection.interface';
+import { Resource } from '../../../shared/interfaces/resource.interface';
+import { ResourceCollection } from '../../../shared/interfaces/resource-collection.interface';
 
-import {MaterializeDirective} from "angular2-materialize";
-import {Dragula, DragulaService} from 'ng2-dragula/ng2-dragula';
+import {DragulaService} from 'ng2-dragula/ng2-dragula';
 
 declare var $: any; // for using jQuery within this angular component
 
 @Component({
-  moduleId: module.id,
   selector: 'app-update-resources',
-  templateUrl: 'update-resources.component.html',
-  styleUrls: ['update-resources.component.css'],
-  providers: [DragulaService],
-  directives: [
-    MaterializeDirective,
-    UpdateResourceCollectionComponent,
-    UploadResourceComponent,
-    Dragula
-  ],
+  templateUrl: './update-resources.component.html',
+  styleUrls: ['./update-resources.component.css'],
+  providers: [DragulaService]
 })
 export class UpdateResourcesComponent implements OnInit {
 
@@ -73,12 +65,14 @@ export class UpdateResourcesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.resourceService.getResourceTypes()
-      .subscribe(
-        types => { this.resourceTypes = types },
-        err => console.log("ERROR", err),
-        () => console.log(`Resource Types fetched: ${this.resourceTypes}`));
-
+    this.resourceService.getResources().subscribe(
+      resources => {
+        this.resourceTypes = resources;
+        console.log(this.resourceTypes);
+        //this.buttonDisabled = this.noUnusedPractices();
+      },
+      err => console.log("ERROR", err),
+      () => console.log("Resource Types fetched"));
     this.resourceService.getResourcePath().subscribe(
       path => {
         this.resourcePath = path;
@@ -104,12 +98,12 @@ export class UpdateResourcesComponent implements OnInit {
       'click');
   }
 
-  onModalFinished(modalID: string) {
+  onModalFinished(modalID: string){
     // Note: must include the following declaration (above) in component:
     //          declare var $: any;
     console.log('about to close the modal....');
-    console.log('#' + modalID);
-    $('#' + modalID).closeModal();
+    console.log('#'+modalID);
+    $('#'+modalID).closeModal();
   }
 
   private onDrag(args) {

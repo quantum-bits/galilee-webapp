@@ -1,9 +1,24 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
-import {MaterializeDirective} from 'angular2-materialize';
-import {PaginatePipe, PaginationControlsCmp, PaginationService, IPaginationInstance} from 'ng2-pagination';
+import {Compiler, ViewContainerRef, ComponentRef, ComponentFactory, ComponentFactoryResolver} from '@angular/core'
+
+import {
+  PaginatePipe,
+  //PaginationControlsCmp,
+  PaginationService,
+  PaginationInstance
+} from 'ng2-pagination';
+
+import {TimeAgoPipe} from 'angular2-moment';
 
 import {EditUserComponent} from '../edit-user';
+
+import { EditUserAnchorDirective } from '../edit-user-anchor.directive';
+
+
+import {DialogComponent} from '../../temp/dialog.component';
+import {DialogAnchorDirective} from '../../temp/dialoganchor.directive';
+
 
 import {User} from '../../../shared/models/user.model';
 import {Permission} from '../../../shared/models/permission.model';
@@ -14,33 +29,44 @@ import {UserPermission} from '../../../shared/models/user-permission.model';
 
 import { UserService } from '../../../authentication/user.service';
 
+// WORKING HERE:
+// - interface for UserAttribute; needs render() attribute (could use moment() for
+//   rendering...?)
+// - class extends interface and gives it the right method definitions
+// - static method for class-level comparisons
+// ...or just put a static method on the user class
+
+declare var $: any; // for using jQuery within this angular component
 
 @Component({
-  moduleId: module.id,
   selector: 'app-manage-users',
-  templateUrl: 'manage-users.component.html',
-  styleUrls: ['manage-users.component.css'],
-  providers: [UserService, PaginationService],
-  directives: [MaterializeDirective, PaginationControlsCmp, EditUserComponent],
-  pipes: [PaginatePipe],
+  templateUrl: './manage-users.component.html',
+  styleUrls: ['./manage-users.component.css'],
+  providers: [PaginationService]
 })
 export class ManageUsersComponent implements OnInit {
 
+  @ViewChild(EditUserAnchorDirective) editUserAnchor: EditUserAnchorDirective;
   // other helpful examples (including async call to server)
   // using the pagination package: http://michaelbromley.github.io/ng2-pagination/
 
-  private users: User[];
+  @ViewChild(DialogAnchorDirective) dialogAnchor: DialogAnchorDirective;
 
-  private user1: User;
+  @ViewChild('placeholder', {read: ViewContainerRef}) viewContainerRef;
+  private componentFactory: ComponentFactory<any>;
+  //componentRef: ComponentRef;
 
-  private filteredUsers: User[];//use interface(!)
+  // http://stackoverflow.com/questions/36325212/angular-2-dynamic-tabs-with-user-click-chosen-components/36325468#36325468
+  // http://plnkr.co/edit/3dzkMVXe4AGSRhk11TXG?p=preview
+
+
+
+  private users: User[]; // will stay the same throughout
+  private filteredUsers: User[]; // the list of filtered/sorted users displayed on the page
   private userEnabledChoices = ['all', 'onlyEnabled', 'onlyNonenabled'];
-  private viewEnabledUsers = this.userEnabledChoices[0];
+  private viewEnabledUsers = this.userEnabledChoices[0]; // used to filter users that are/are not enabled
 
-  private showHidden = true;
-
-  //private permissionTypes: Permission[];
-  private permissionFilters: PermissionFilter[];
+  private permissionFilters: PermissionFilter[]; // used to filter the list of users by permissions
 
   private permissionFilterType = { // this doesn't feel quite right, but otherwise can't access it in the template
     can: PermissionFilterType.can,
@@ -48,35 +74,17 @@ export class ManageUsersComponent implements OnInit {
     either: PermissionFilterType.either
   };
 
-  /*
-  private initialUser: User = {
-    id: 0, // this will eventually need to be managed by the server-side code
-    email: '',
-    password: '',
-    firstName: '',
-    lastName: '',
-    joinedOn: '',
-    enabled: true,
-    preferredVersionID: 0,
-    permission: []
-  }
-  */
-
-  @Input('data') meals: string[] = [];
-
-  private eventCounter = 0;
-  public filter: string = '';
-  public maxSize: number = 5;
-  public directionLinks: boolean = true;
-  public autoHide: boolean = false;
-  public config: IPaginationInstance = {
+  //private eventCounter = 0;
+  public maxSize: number = 5;//used by pagination component (max # of pages indicated, including the '...')
+  public directionLinks: boolean = true;//used by pagination component
+  public autoHide: boolean = false;//used by pagination component
+  public config: PaginationInstance = {//used by pagination component
     id: 'advanced',
     itemsPerPage: 5,
     currentPage: 1
   };
-  private length: number;
 
-  private filterSelectOptions = [
+  private sortableColumns = [
     {
       value: 'lastName',
       name: 'Last Name'
@@ -88,118 +96,80 @@ export class ManageUsersComponent implements OnInit {
     {
       value: 'email',
       name: 'Email'
+    },
+    {
+      value: 'joinedOn',
+      name: 'Joined'
     }
   ];
-  private sortColumn = this.filterSelectOptions[0].value; // can be 'lastName', 'firstName', 'email'; if '', then do no sorting
+  private filterSelectOptionsDropdown = [
+    {
+      value: 'lastName',
+      name: 'Last Name'
+    },
+    {
+      value: 'firstName',
+      name: 'First Name'
+    },
+    {
+      value: 'email',
+      name: 'Email'
+    },
+  ];
+
+  private sortColumn = this.sortableColumns[3].value; // used for deciding which column to sort by; can be 'lastName', 'firstName', 'email' or 'joinedOn'; if '', then do no sorting
   private sortAscending = true;
 
+  private filterBy = this.filterSelectOptionsDropdown[0].value; //used for deciding which column to use for textual filtering
+  public filter: string = '';//bound to textual input in template that is used for filtering the list of users by name, etc.
 
-  private filterBy = 'lastName';
-
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService,
+              componentFactoryResolver: ComponentFactoryResolver,
+              compiler: Compiler) {
+    this.componentFactory = componentFactoryResolver.resolveComponentFactory(EditUserComponent);
+    console.log(this.componentFactory);
+  }
 
   ngOnInit() {
-    this.userService.getUsers().subscribe(
-      users => {
-        this.users = users;
-        console.log('inside the component now');
-        console.log(this.users);
-        console.log(this.users[0].can('EDIT_RES'));
-        //this.filteredUsers = this.users;
+    this.userService.getPermissionTypes().subscribe(
+      permissions => {
+        //this.permissionTypes = permissions;
+        this.permissionFilters = [];
 
-/*
-        this.users = [];
-        for (let user of users) {
-          let userPermissions: UserPermission[] = [];
-          for (let permission of user.permissions) {
-            userPermissions.push(new UserPermission(
-                {
-                  enabled: permission.enabled,
-                  id: permission.id,
-                  title: permission.title
-                }
-              )
-            )
-          };
-
-          this.users.push(new User(
+        for (let i in permissions) {
+          this.permissionFilters.push(
             {
-              id: user.id,
-              email: user.email,
-              password: user.password,
-              firstName: user.firstName,
-              lastName: user.lastName,
-              joinedOn: user.joinedOn,
-              enabled: user.enabled,
-              preferredVersionID: user.preferredVersionID,
-              permissions: userPermissions
-            })
-          )
-        }
-
-        console.log('user objects coming up....');
-        console.log(this.users);
-        console.log(this.users[0]);
-        console.log(this.users[0].can('EDIT_RES'));
-        console.log(this.users[0].can('EDIT_PRAC'));
-        console.log(this.users[0].can('EDIT_ADMIN'));
-
-        console.log(this.users[1].can('EDIT_RES'));
-        console.log(this.users[1].can('EDIT_PRAC'));
-        console.log(this.users[1].can('EDIT_ADMIN'));
-
-*/
-        this.filteredUsers = this.users;
-        // may need to build the filteredUsers list up from scratch...?!?
-
-
-        this.sortList();
-
-        console.log(this.filteredUsers);
-
-        this.length = this.filteredUsers.length;
-
-        this.user1 = this.users[0];
-        console.log('user1:');
-        console.log(this.user1);
-
-
-        console.log('user objects coming up again....');
-        console.log(this.users);
-        console.log(this.users[0]);
-
-
-        //console.log(this.user1.isEnabled());
-
-        this.userService.getPermissionTypes().subscribe(
-          permissions => {
-            //this.permissionTypes = permissions;
-            this.permissionFilters = [];
-
-            for (let i in permissions) {
-              this.permissionFilters.push(
-                {
-                  id: permissions[i].id,
-                  title: permissions[i].title,
-                  filter: PermissionFilterType.either
-                }
-              );
+              id: permissions[i].id,
+              title: permissions[i].title,
+              filter: PermissionFilterType.either
             }
-            console.log(this.permissionFilterType);
-            console.log(this.permissionFilters);
+          );
+        }
+        this.userService.getUsers().subscribe(
+          users => {
+            this.users = users; // these are actual user objects now, along with associated methods
+            //create a copy of this.users called this.filteredUsers; this is what will be
+            //displayed, etc.
+            this.refreshFilteredUsers();
+            //this.filteredUsers = this.users;
+            // may need to build the filteredUsers list up from scratch...?!?
+            this.filterList();//sorts this.filteredUsers, but not this.users (since they are distinct in memory)
           },
           err => console.log("ERROR", err),
-          () => console.log("Permission types fetched"));
+          () => console.log("Users fetched"));
       },
       err => console.log("ERROR", err),
-      () => console.log("Users fetched"));
+      () => console.log("Permission types fetched"));
   }
 
   onKey(){
-    this.eventCounter+=1;
-    console.log(this.eventCounter);
-    console.log(this.filter);
+    //this.eventCounter+=1;
     this.filterList();
+  }
+
+  refreshFilteredUsers(){
+    // makes a copy of this.filteredUsers that is distinct from this.users
+    this.filteredUsers = this.users.filter(user => true);
   }
 
   filterList(){
@@ -214,67 +184,37 @@ export class ManageUsersComponent implements OnInit {
     if (this.filter !== '') {
       this.filteredUsers = this.users.filter(item => -1 < item[this.filterBy].toLowerCase().indexOf(this.filter.toLowerCase()));
     } else {
-      this.filteredUsers = this.users;
+      this.refreshFilteredUsers();
     }
     // apply 'user enabled' filter, as appropriate....
     if (this.viewEnabledUsers !== this.userEnabledChoices[0]){// not 'all'
       if (this.viewEnabledUsers === this.userEnabledChoices[1]){// 'onlyEnabled'
-        this.filteredUsers = this.filteredUsers.filter(item => item.enabled);
+        this.filteredUsers = this.filteredUsers.filter(user => user.isEnabled());
       } else { // 'onlyNonenabled'
-        this.filteredUsers = this.filteredUsers.filter(item => !item.enabled);
+        this.filteredUsers = this.filteredUsers.filter(user => !user.isEnabled());
       }
     }
     // apply permission filters, as appropriate....
     for (let permissionFilter of this.permissionFilters) {
       if (permissionFilter.filter !== PermissionFilterType.either){// not 'either'
         if (permissionFilter.filter === PermissionFilterType.can){// 'only those with the permission'
-          this.filteredUsers = this.filteredUsers.filter(user => this.userHasPermission(user, permissionFilter));
+          this.filteredUsers = this.filteredUsers.filter(user => user.can(permissionFilter.id));
         } else { // 'onlyNonenabled'
-          this.filteredUsers = this.filteredUsers.filter(user => !this.userHasPermission(user, permissionFilter));
+          this.filteredUsers = this.filteredUsers.filter(user => !user.can(permissionFilter.id));
         }
       }
     }
-
-    this.length = this.filteredUsers.length;
     this.sortList();
     this.config.currentPage = 1;// need to set the current page to 1, in case the page we are on suddenly doesn't exist anymore....
   }
 
-
-  userHasPermission(user: User, permissionFilter) {
-    var index;
-    for (let i in user.permissions){
-      if (user.permissions[i].id === permissionFilter.id) {
-        index = i;
-      }
-    }
-    if (index !== undefined) {
-      return user.permissions[index].enabled;
-    }
-  }
-
   sortList() {
-    var sortedArray = this.filteredUsers.sort((n1,n2) => this.compareObjects(n1, n2, this.sortColumn, this.sortAscending));
-    this.filteredUsers = sortedArray;
-  }
-
-  compareObjects(element1, element2, field: string, sortAscending: boolean) {
-    // helpful: http://stackoverflow.com/questions/21687907/typescript-sorting-an-array
-    var returnVal = 0;
-    if (element1[field].toLowerCase() > element2[field].toLowerCase()) {
-      returnVal = 1;
-    }
-    if (element1[field].toLowerCase() < element2[field].toLowerCase()) {
-      returnVal = -1;
-    }
-    if (!sortAscending) {
-      returnVal = - returnVal;
-    }
-    return returnVal;
+    this.filteredUsers = this.filteredUsers.sort((n1,n2) => User.compare(n1, n2, this.sortColumn, this.sortAscending));
   }
 
 
   onSelect(optionValue){
+    // set column name that should be used for filtering;
     // can use ngModel in the template, but the click handler seems to get confused
     // (maybe it gets called before the value is actually changed?) and the list doesn
     // not end up getting refreshed....  here we are making the change by hand, and
@@ -318,38 +258,80 @@ export class ManageUsersComponent implements OnInit {
     if (index !== undefined) {
       this.permissionFilters[index].filter = permissionFilterTypeValue;
     }
-    console.log(this.permissionFilters);
     this.filterList();
   }
 
-  togglePermission(permissionTypeID: string) {}
-
-  /*
-  togglePermission(permissionTypeID: string) {
-    var permissionIndex: any;
-    for (let i in this.permissionTypes) {
-      if (this.permissionTypes[i].id === permissionTypeID) {
-        permissionIndex = i;
-      }
-    }
-    if (permissionIndex !== undefined) {
-      this.permissionTypes[permissionIndex].filter = !this.permissionTypes[permissionIndex].filter;
-    }
-    console.log(this.permissionTypes);
-  }
-  */
-
-
   onPageChange(number: number) {
-    console.log('change to page', number);
     this.config.currentPage = number;
   }
 
-  onModalFinished(event) {
-    //see update-resources component for an example....
+  resetFilters(){
+    this.config.currentPage = 1;
+
+    this.sortColumn = this.sortableColumns[3].value; // used for deciding which column to sort by; can be 'lastName', 'firstName', 'email' or 'joinedOn'; if '', then do no sorting
+    this.sortAscending = true;
+
+    this.filterBy = this.filterSelectOptionsDropdown[0].value; //used for deciding which column to use for textual filtering
+    this.filter = '';
+
+    for (let i in this.permissionFilters) {
+      this.permissionFilters[i].filter = PermissionFilterType.either;
+    }
+    this.refreshFilteredUsers();
+  }
+
+  onModalFinished(modalID: string){
+    // Note: must include the following declaration (above) in component:
+    //          declare var $: any;
+    console.log('about to close the modal....');
+    console.log('#'+modalID);
+    $('#'+modalID).closeModal();
+  }
+
+  logUserLists(){
+    console.log(this.users);
+    console.log(this.filteredUsers);
   }
 
 
+  createNewUser() {
 
 
+    let the_dialog = this.editUserAnchor.createDialog(EditUserComponent).instance;
+    //the_dialog.title = "Overridden Title";
+    //the_dialog.message = "I'm an overridden message.";
+
+
+
+    /*
+    this.editUserAnchor
+      .createDialog(EditUserComponent)
+      .then((editUserComponentRef) => {
+          editUserComponentRef.instance.someText = "overwriting the text!";
+        }
+      );
+      */
+  }
+
+  openDialogBox() {
+    let the_dialog = this.dialogAnchor.createDialog(DialogComponent).instance;
+    the_dialog.title = "Overridden Title";
+    the_dialog.message = "I'm an overridden message.";
+  }
+
+  addItem(){
+    let componentRef = this.viewContainerRef.createComponent(this.componentFactory, 0);
+
+    // FIXME should do some clean-up on the edit-user component upon exit; see here:
+    // http://stackoverflow.com/questions/36325212/angular-2-dynamic-tabs-with-user-click-chosen-components/36325468#36325468
+
+  }
+
+  editUser(user: User) {
+    let componentRef = this.viewContainerRef.createComponent(this.componentFactory, 0);
+    // FIXME is it safe to fix these after the fact like this?  how do we know it
+    // will get done before OnInit?  Could put it in OnChanges as well, as a back-up;
+    // should probably put in a delay, and see if it will fire up OnChanges that way....
+    componentRef.instance.userData = user;
+  }
 }

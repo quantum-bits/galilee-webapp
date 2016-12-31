@@ -21,8 +21,13 @@
         </a>
       </li>
     </ul>
-    <a materialize="sideNav" [materializeParams]="[{edge:'left', closeOnClick: true}]" href="#"
-       data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu material-icons">menu</i></a>
+    <a materialize="sideNav"
+       [materializeParams]="[{edge:'left', closeOnClick: true}]"
+       href="#"
+       data-activates="slide-out"
+       class="button-collapse">
+      <i class="mdi-navigation-menu material-icons">menu</i>
+    </a>
   </nav>
 
 
@@ -55,13 +60,12 @@
         >
         </app-update-practices>
 
+
       <!-- Resources -->
         <app-update-resources
           [resourceCollectionsThisReading]="currentReading.resourceCollections"
           [changeTracker]="changeTracker">
         </app-update-resources>
-
-
 
       <!-- Other Resources -->
       <!--

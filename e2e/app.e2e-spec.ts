@@ -1,23 +1,14 @@
-import { GalileePage } from './app.po';
-import { expectToMatch } from './utils';
+import {GalileeWebappPage} from './app.po';
 
-// to run this test directly at the command line:
-// node_modules/.bin/protractor config/protractor.conf.js --specs e2e/app.e2e-spec.ts
-describe('galilee App', function() {
-  let page: GalileePage;
+describe('foo App', function () {
+  let page: GalileeWebappPage;
 
   beforeEach(() => {
-    page = new GalileePage();
+    page = new GalileeWebappPage();
+  });
+
+  it('should display message saying app works', () => {
     page.navigateTo();
+    expect(page.getParagraphText()).toEqual('Scripture Engagement');
   });
-
-  it('should have toolbar with welcome', () => {
-    let bar = page.getToolbar();
-    expectToMatch(bar, /Scripture Engagement/);
-  });
-
-  it('should redirect to end-user/readings', () => {
-    expectToMatch(browser.getCurrentUrl(), /\/end-user\/readings$/);
-  });
-
 });

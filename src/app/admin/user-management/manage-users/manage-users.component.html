@@ -4,7 +4,6 @@
       <div class="card-title">
         Manage Users
       </div>
-
       <div class="row">
         <div class = "card col s10 offset-s1">
           <div class = "card-content">
@@ -14,8 +13,8 @@
                   <div class="input-field col s12">
                     <select #selectedOption
                             materialize="material_select"
-                            [materializeSelectOptions]="filterSelectOptions" (change)="onSelect(selectedOption.value)">
-                      <option *ngFor="let option of filterSelectOptions"
+                            [materializeSelectOptions]="filterSelectOptionsDropdown" (change)="onSelect(selectedOption.value)">
+                      <option *ngFor="let option of filterSelectOptionsDropdown"
                               [value]="option.value">{{option.name}}</option>
                     </select>
                     <label>Filter By</label>
@@ -81,6 +80,13 @@
             </div>
 
           </div>
+          <div class="card-action">
+            <button class="btn-flat" (click)="resetFilters()">
+              <i class="material-icons arrow">refresh</i>
+              Reset Filters
+            </button>
+          </div>
+
         </div>
       </div>
       <span class="row">
@@ -89,33 +95,10 @@
           <table class="striped">
             <thead>
               <tr>
-                <th data-field="lastName">
-                  <a class="grey-text text-darken-4" (click)="toggleSort('lastName')">Last Name
-                    <span *ngIf="sortColumn == 'lastName'">
-                      <span *ngIf="sortAscending">
-                        <i class="material-icons arrow">keyboard_arrow_up</i>
-                      </span>
-                      <span *ngIf="!sortAscending">
-                        <i class="material-icons arrow">keyboard_arrow_down</i>
-                      </span>
-                    </span>
-                  </a>
-                </th>
-                <th data-field="firstName">
-                  <a class="grey-text text-darken-4" (click)="toggleSort('firstName')">First Name
-                    <span *ngIf="sortColumn == 'firstName'">
-                      <span *ngIf="sortAscending">
-                        <i class="material-icons arrow">keyboard_arrow_up</i>
-                      </span>
-                      <span *ngIf="!sortAscending">
-                        <i class="material-icons arrow">keyboard_arrow_down</i>
-                      </span>
-                    </span>
-                  </a>
-                </th>
-                <th data-field="email">
-                  <a class="grey-text text-darken-4" (click)="toggleSort('email')">Email
-                    <span *ngIf="sortColumn == 'email'">
+                <!-- sortable columns -->
+                <th *ngFor="let column of sortableColumns" data-field="column.value">
+                  <a class="grey-text text-darken-4" (click)="toggleSort(column.value)">{{column.name}}
+                    <span *ngIf="sortColumn == column.value">
                       <span *ngIf="sortAscending">
                         <i class="material-icons arrow">keyboard_arrow_up</i>
                       </span>
@@ -139,22 +122,32 @@
             </thead>
             <tbody>
                 <tr *ngFor="let user of filteredUsers | paginate: config">
-                  <td>{{ user.lastName }}</td>
-                  <td>{{ user.firstName }}</td>
-                  <td>{{ user.email }}</td>
+                  <td *ngFor="let column of sortableColumns">
+                    <span *ngIf="column.value === 'joinedOn'">
+                        {{ user[column.value] | amTimeAgo }}
+                    </span>
+                    <span *ngIf="column.value !== 'joinedOn'">
+                        {{ user[column.value] }}
+                    </span>
+                  </td>
                   <td>
                     <span *ngIf="user.enabled">
                       <i class="material-icons">check_circle</i>
                     </span>
                   </td>
                   <td>
-                    <i class="material-icons">edit</i>
+                    <a (click)="editUser(user)">
+                      <i class="material-icons">edit</i>
+                    </a>
                   </td>
                 </tr>
             </tbody>
           </table>
           <div class="center">
               <pagination-controls #p
+                                   [maxSize]="maxSize"
+                                   [directionLinks]="directionLinks"
+                                   [autoHide]="autoHide"
                                    [id]="config.id"
                                    (pageChange)="onPageChange($event)">
 
@@ -194,10 +187,13 @@
               </pagination-controls>
           </div>
 
-          <div [ngSwitch]="length" class="center">
-            <div *ngSwitchCase="1">{{length}} record found</div>
-            <div *ngSwitchCase="0">No records found</div>
-            <div *ngSwitchDefault>{{length}} records found</div>
+
+          <div *ngIf = "filteredUsers">
+            <div [ngSwitch]="filteredUsers.length" class="center">
+              <div *ngSwitchCase="1">{{filteredUsers.length}} record found</div>
+              <div *ngSwitchCase="0">No records found</div>
+              <div *ngSwitchDefault>{{filteredUsers.length}} records found</div>
+            </div>
           </div>
 
         </div>
@@ -216,19 +212,35 @@
   </a>
 </div>
 
-<!-- Modal Structure -->
+<!-- Modal Structure
 <div id="modalAddNewUser" class="modal">
   <div class="modal-content">
-    <h4>Create User</h4>
     <app-edit-user
       [newUser]="true"
       [modalID]="'modalAddNewUser'"
       (onFinished)="onModalFinished($event)"
-      [user]="initialUser">
+      [userData]=""><!-- userData would be the user's actual data if this were editing a user
     </app-edit-user>
   </div>
 </div>
 
+-->
 
 
+<!--
+<div editUserAnchor></div>
 
+<button class="btn" (click)="createNewUser()">add user</button>
+
+-->
+<!--
+<button class="btn" (click)="logUserLists()">user list</button>
+-->
+
+<!--
+<div dialogAnchor></div>
+<div class="open-button" (click)='openDialogBox()'>Open dialog box</div>
+-->
+
+<button class="btn" (click)="addItem()">Add User</button>
+<div #placeholder></div>

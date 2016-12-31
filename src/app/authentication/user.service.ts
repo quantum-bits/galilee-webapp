@@ -1,9 +1,11 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 import {Observable} from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
+import {Subject}    from 'rxjs/Subject';
 
-import { Http, Headers } from '@angular/http';
-import { contentHeaders } from './common/headers';
+import {Http, Headers} from '@angular/http';
+import {contentHeaders} from './common/headers';
 
 import {User} from '../shared/models/user.model';
 import {Permission} from '../shared/models/permission.model';
@@ -11,13 +13,23 @@ import {UserPermission} from '../shared/models/user-permission.model';
 
 //import localStorage from 'localStorage'; // I'm not sure why, but we apparently don't need to do this....
 
-// Some examples of sending authenticated requests to the server may be found here:
-//  https://medium.com/@blacksonic86/angular-2-authentication-revisited-611bf7373bf9#.6y6tryhmo
-//  https://github.com/auth0-blog/angular2-authentication-sample/blob/master/src/home/home.ts
-// NOTE: The latter uses authHttp, which (I think) uses the angular2-jwt package.  We have
-//       installed that package, but it is not set up all the way yet (gives errors).  The
-//       former approach sends an authenticated request without the help of the angular2-jwt package.
+/*
+ Some examples of sending authenticated requests to the server may be found here:
 
+ https://medium.com/@blacksonic86/angular-2-authentication-revisited-611bf7373bf9#.6y6tryhmo
+ https://github.com/auth0-blog/angular2-authentication-sample/blob/master/src/home/home.ts
+
+ NOTE: The latter uses authHttp, which (I think) uses the angular2-jwt package.  We have
+ installed that package, but it is not set up all the way yet (gives errors).  The
+ former approach sends an authenticated request without the help of the angular2-jwt package.
+
+ dates:
+ ISO-8601 standard: YYYY-MM-DDTHH:mm:ss.sssZ
+ ref: http://www.w3schools.com/jsref/jsref_tojson.asp
+
+ broadcasting: ReplaySubject (for cases when the receiver may have missed the broadcast):
+ https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/subjects/replaysubject.md
+ */
 const baseUrl = 'http://localhost:3001';
 
 // MOCK
@@ -29,7 +41,7 @@ const USERS = [
     password: 'hash?',
     firstName: 'John',
     lastName: 'Ztgmail',
-    joinedOn: 'date-format',
+    joinedOn: '2016-08-11T19:13:27.360Z',
     enabled: false,
     preferredVersionID: 1,
     permissions: [
@@ -56,7 +68,7 @@ const USERS = [
     password: 'hash?',
     firstName: 'Jane',
     lastName: 'Atgmaal',
-    joinedOn: 'date-format',
+    joinedOn: '2016-06-11T19:13:27.360Z',
     enabled: true,
     preferredVersionID: 2,
     permissions: [
@@ -83,7 +95,7 @@ const USERS = [
     password: 'hash?',
     firstName: 'Ali',
     lastName: 'Atthemall',
-    joinedOn: 'date-format',
+    joinedOn: '2014-08-11T19:13:27.360Z',
     enabled: false,
     preferredVersionID: 14,
     permissions: [
@@ -110,7 +122,7 @@ const USERS = [
     password: 'hash?',
     firstName: 'Aali',
     lastName: 'Btthemall',
-    joinedOn: 'date-format',
+    joinedOn: '2011-06-11T19:13:27.360Z',
     enabled: true,
     preferredVersionID: 14,
     permissions: [
@@ -137,7 +149,7 @@ const USERS = [
     password: 'hash?',
     firstName: 'Bba',
     lastName: 'Btthemall',
-    joinedOn: 'date-format',
+    joinedOn: '2016-08-11T17:13:27.360Z',
     enabled: true,
     preferredVersionID: 14,
     permissions: [
@@ -164,7 +176,7 @@ const USERS = [
     password: 'hash?',
     firstName: 'Celeste',
     lastName: 'Ctthemall',
-    joinedOn: 'date-format',
+    joinedOn: '2016-08-11T19:56:27.360Z',
     enabled: true,
     preferredVersionID: 14,
     permissions: [
@@ -191,7 +203,7 @@ const USERS = [
     password: 'hash?',
     firstName: 'Zoe',
     lastName: 'Dtthemall',
-    joinedOn: 'date-format',
+    joinedOn: '2016-08-11T19:13:27.360Z',
     enabled: true,
     preferredVersionID: 14,
     permissions: [
@@ -218,7 +230,7 @@ const USERS = [
     password: 'hash?',
     firstName: 'Doni',
     lastName: 'Dtthemall',
-    joinedOn: 'date-format',
+    joinedOn: '2016-08-11T19:13:27.360Z',
     enabled: true,
     preferredVersionID: 14,
     permissions: [
@@ -245,7 +257,7 @@ const USERS = [
     password: 'hash?',
     firstName: 'Jean',
     lastName: 'Etthemall',
-    joinedOn: 'date-format',
+    joinedOn: '2016-08-11T19:13:27.360Z',
     enabled: true,
     preferredVersionID: 14,
     permissions: [
@@ -272,7 +284,7 @@ const USERS = [
     password: 'hash?',
     firstName: 'Jean',
     lastName: 'BBtthemall',
-    joinedOn: 'date-format',
+    joinedOn: '2016-08-11T19:13:27.360Z',
     enabled: true,
     preferredVersionID: 14,
     permissions: [
@@ -299,7 +311,7 @@ const USERS = [
     password: 'hash?',
     firstName: 'AAJean',
     lastName: 'Fgtthemall',
-    joinedOn: 'date-format',
+    joinedOn: '2016-08-10T19:11:27.360Z',
     enabled: true,
     preferredVersionID: 14,
     permissions: [
@@ -326,7 +338,7 @@ const USERS = [
     password: 'hash?',
     firstName: 'aaJean',
     lastName: 'aatthemall',
-    joinedOn: 'date-format',
+    joinedOn: '2016-08-11T19:13:27.360Z',
     enabled: true,
     preferredVersionID: 14,
     permissions: [
@@ -365,46 +377,83 @@ const PERMISSION_TYPES: Permission[] = [
   }
 ];
 
-
 @Injectable()
 export class UserService {
+  private currentUser: User;
   private loggedIn = false;
+
+  // Observable user source
+  private userAnnouncedSource = new Subject<User>();
+
+  // Observable user stream
+  userAnnounced$ = this.userAnnouncedSource.asObservable();
 
   constructor(private http: Http) {
     this.loggedIn = !!localStorage.getItem('id_token');
     console.log('inside the user service constructor; user logged in?');
     console.log(this.loggedIn);
+    if (this.loggedIn) {
+      console.log('inside the user service constructor; logging user out, for starters....');
+      this.logout();
+    }
   }
 
   login(username, password) {
     return this.http
       .post(
-        baseUrl+'/sessions/create',
-        JSON.stringify({ username, password }),
-        { headers: contentHeaders }
+        baseUrl + '/sessions/create',
+        JSON.stringify({username, password}),
+        {headers: contentHeaders}
       )
       .map(res => res.json())
       .map((res) => {
         console.log(res);
         localStorage.setItem('id_token', res.id_token);
         this.loggedIn = true;
-        return this.loggedIn;
+        //return this.loggedIn;
         /* // the back-end server I'm using does not return a 'success' property....
-        if (res.success) {
-          localStorage.setItem('id_token', res.id_token);
-          this.loggedIn = true;
+         if (res.success) {
+         localStorage.setItem('id_token', res.id_token);
+         this.loggedIn = true;
+         }
+         return res.success;
+         */
+        let userPermissions: UserPermission[] = [];
+        for (let permission of PERMISSION_TYPES) {
+          userPermissions.push(
+            new UserPermission({
+              enabled: false,
+              id: permission.id,
+              title: permission.title
+            })
+          )
         }
-        return res.success;
-        */
+
+        this.currentUser = new User(
+          {
+            id: 42,
+            email: username,
+            password: password,
+            firstName: 'John',
+            lastName: 'Lennon',
+            joinedOn: '2016-08-11T19:13:27.360Z',
+            enabled: true,
+            preferredVersionID: 1,
+            permissions: userPermissions
+          }
+        );
+        console.log(this.currentUser);
+        this.announceUser();
+        return this.loggedIn;
       });
   }
 
   signup(username, password) {
     return this.http
       .post(
-        baseUrl+'/users',
-        JSON.stringify({ username, password }),
-        { headers: contentHeaders }
+        baseUrl + '/users',
+        JSON.stringify({username, password}),
+        {headers: contentHeaders}
       )
       .map(
         res => {
@@ -418,16 +467,24 @@ export class UserService {
   logout() {
     localStorage.removeItem('id_token');
     this.loggedIn = false;
+    this.currentUser = null;//correct?
+    this.announceUser();
   }
 
   isLoggedIn() {
     return this.loggedIn;
   }
 
-  /*
-  getUser(id)
-  can(permissions) method, etc.
-   */
+  // Service message command
+  announceUser() {
+    console.log('announcing user! or lack thereof....');
+    console.log(this.currentUser);
+    this.userAnnouncedSource.next(this.currentUser);
+  }
+
+  getCurrentUser() {
+    return this.currentUser;
+  }
 
   getUsers() {
     let users: User[] = [];
@@ -443,8 +500,7 @@ export class UserService {
           }
           )
         )
-      };
-
+      }
       users.push(new User(
         {
           id: user.id,
@@ -460,36 +516,30 @@ export class UserService {
       )
     }
 
-    console.log('user objects coming up INSIDE the service....');
-    console.log(users);
-    console.log(users[0]);
-    console.log(users[0].can('EDIT_RES'));
-    console.log(users[0].can('EDIT_PRAC'));
-    console.log(users[0].can('ADMIN'));
-
-    console.log(users[1]);
-    console.log(users[1].can('EDIT_RES'));
-    console.log(users[1].can('EDIT_PRAC'));
-    console.log(users[1].can('ADMIN'));
-
-
-
-
-
-
-
-
-
-
     var promise = Promise.resolve(users);// Observable.just(USERS);
     return Observable.fromPromise(promise);
   }
 
-  getPermissionTypes(){
+  getPermissionTypes() {
     var promise = Promise.resolve(PERMISSION_TYPES);// Observable.just(USERS);
     return Observable.fromPromise(promise);
   }
 
+  getInitialUserPermissions() {
+    // Return a UserPermission-like dictionary with initial data;
+    // used to populate the form for creating a new user.
+    var initialUserPermissions = [];
 
+    for (let permission of PERMISSION_TYPES) {
+      initialUserPermissions.push({
+        title: permission.title,
+        id: permission.id,
+        enabled: false
+      });
+    }
+
+    var promise = Promise.resolve(initialUserPermissions);
+    return Observable.fromPromise(promise);
+  }
 
 }
