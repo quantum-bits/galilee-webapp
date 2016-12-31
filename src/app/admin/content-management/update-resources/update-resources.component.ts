@@ -1,12 +1,12 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, Renderer } from '@angular/core';
+import {Component, OnInit, Input, ViewChild, ElementRef, Renderer} from '@angular/core';
 
 import {ResourceService} from '../../../shared/services/resource.service';
 //import { UpdateResourceItemComponent } from '../update-resource-item';
 //import { UpdateResourceCollectionComponent } from '../update-resource-collection';
 //import { UploadResourceComponent } from '../upload-resource';
 
-import { Resource } from '../../../shared/interfaces/resource.interface';
-import { ResourceCollection } from '../../../shared/interfaces/resource-collection.interface';
+import {Resource} from '../../../shared/models/resource.model';
+import {ResourceCollection} from '../../../shared/interfaces/resource-collection.interface';
 
 import {DragulaService} from 'ng2-dragula/ng2-dragula';
 
@@ -98,12 +98,12 @@ export class UpdateResourcesComponent implements OnInit {
       'click');
   }
 
-  onModalFinished(modalID: string){
+  onModalFinished(modalID: string) {
     // Note: must include the following declaration (above) in component:
     //          declare var $: any;
     console.log('about to close the modal....');
-    console.log('#'+modalID);
-    $('#'+modalID).closeModal();
+    console.log('#' + modalID);
+    $('#' + modalID).closeModal();
   }
 
   private onDrag(args) {

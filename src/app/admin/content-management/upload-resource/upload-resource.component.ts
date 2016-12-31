@@ -1,5 +1,5 @@
-import { Component, EventEmitter, OnInit, DoCheck, Input, Output } from '@angular/core';
-import { FileUploader } from 'ng2-file-upload';
+import {Component, EventEmitter, OnInit, DoCheck, Input, Output} from '@angular/core';
+import {FileUploader} from 'ng2-file-upload';
 
 import {
   FormBuilder,
@@ -9,8 +9,8 @@ import {
   FormControl
 } from '@angular/forms';
 
-import { Resource } from '../../../shared/interfaces/resource.interface';
-import { ResourceCollection } from '../../../shared/interfaces/resource-collection.interface';
+import {Resource} from '../../../shared/models/resource.model';
+import {ResourceCollection} from '../../../shared/interfaces/resource-collection.interface';
 
 //import { InputWakeUp } from '../../../shared/directives/input-wake-up.directive';
 //import { TextareaAutoresize } from '../../../shared/directives/textarea-autoresize.directive';
@@ -55,9 +55,9 @@ export class UploadResourceComponent implements OnInit, DoCheck {
   //   editing the child!  yikes....
   //
 
-  public uploader:FileUploader = new FileUploader({url: URL});
-  public hasBaseDropZoneOver:boolean = false;
-  public hasAnotherDropZoneOver:boolean = false;
+  public uploader: FileUploader = new FileUploader({url: URL});
+  public hasBaseDropZoneOver: boolean = false;
+  public hasAnotherDropZoneOver: boolean = false;
 
   private numFiles = 0;
 
@@ -71,25 +71,24 @@ export class UploadResourceComponent implements OnInit, DoCheck {
   public submitted: boolean; // keep track of whether form is submitted
 
 
-  public fileOverBase(e:any):void {
+  public fileOverBase(e: any): void {
     this.hasBaseDropZoneOver = e;
   }
 
-  public fileOverAnother(e:any):void {
+  public fileOverAnother(e: any): void {
     this.hasAnotherDropZoneOver = e;
   }
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private updateResourceItemBindingService: UpdateResourceItemBindingService) {
+  constructor(private fb: FormBuilder,
+              private updateResourceItemBindingService: UpdateResourceItemBindingService) {
   }
 
   ngOnInit() {
-    this.resourceCollectionForm = this.formBuilder.group({
+    this.resourceCollectionForm = this.fb.group({
       id: [this.resourceCollection.id, [<any>Validators.required]],
       title: [this.resourceCollection.title, [<any>Validators.required]],
       description: [this.resourceCollection.description, [<any>Validators.required]],
-      resources: this.formBuilder.array(
+      resources: this.fb.array(
         this.initResourceArray(this.resourceCollection.resources)),
     });
   }
