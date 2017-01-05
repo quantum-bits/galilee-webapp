@@ -88,8 +88,10 @@ export class UploadResourceComponent implements OnInit, DoCheck {
       id: [this.resourceCollection.id, [<any>Validators.required]],
       title: [this.resourceCollection.title, [<any>Validators.required]],
       description: [this.resourceCollection.description, [<any>Validators.required]],
+      // TODO: Check that following change made by KK was correct...
+      // this.initResourceArray -> this.initResourceFormArray
       resources: this.fb.array(
-        this.initResourceArray(this.resourceCollection.resources)),
+        this.initResourceFormArray(this.resourceCollection.resources)),
     });
   }
 
@@ -103,9 +105,11 @@ export class UploadResourceComponent implements OnInit, DoCheck {
     return this.uploader.queue.length > 0;
   }
 
-  fileOverBase(e: any): void {
-    this.hasBaseDropZoneOver = e;
-  }
+  // TODO: Not sure which of the two duplicate functions was the correct one, so I commented
+  // out this one for now (KK)
+  //fileOverBase(e: any): void {
+  //  this.hasBaseDropZoneOver = e;
+  //}
 
   // TODO: Remove me.
   dumpUploaderDetails() {
