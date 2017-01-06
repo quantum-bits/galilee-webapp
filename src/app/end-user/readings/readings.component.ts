@@ -26,8 +26,11 @@ export class ReadingsComponent implements OnInit {
   constructor(private readingService: ReadingService) {
   }
 
+  // TODO - Don't use a fake date!
+  FAKE_DATE: string = '2016-12-28';
+
   ngOnInit() {
-    this.readingService.getTodaysReadings()
+    this.readingService.getTodaysReadings(this.FAKE_DATE)
       .subscribe(
         readings => this.readings = readings,
         error => {

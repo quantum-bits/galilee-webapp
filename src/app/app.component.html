@@ -1,8 +1,45 @@
 <nav>
-    <div class="toolbar-wrapper">
+    <div class="container">
         <div class="nav-wrapper">
-            <span class="brand-logo left">Scripture Engagement</span>
+            <span class="brand-logo left">Galilee</span>
             <ul id="nav-mobile" class="right">
+              <li>
+                <a>
+                  <i class="material-icons">home</i>
+                </a>
+              </li>
+              <li>
+                <a>
+                  Today
+                </a>
+              </li>
+              <li>
+                <a>
+                  Journal
+                </a>
+              </li>
+              <li>
+                <a materialize="dropdown"
+                   class='dropdown-button'
+                   data-activates='practicesDropdownMenu'>
+                  Practices
+                  <i class="material-icons right">arrow_drop_down</i>
+                </a>
+              </li>
+              <li>
+                <a materialize="dropdown"
+                   class='dropdown-button'
+                   data-activates='resourcesDropdownMenu'>
+                  Resources
+                  <i class="material-icons right">arrow_drop_down</i>
+                </a>
+              </li>
+              <li *ngIf="currentUser">
+                <a>
+                  <i class="material-icons left">perm_identity</i>
+                  {{currentUser.fullName()}}</a>
+              </li>
+
               <li *ngIf="currentUser">
                 <a [routerLink]="['/update-preferences']">
                   +{{currentUser.fullName()}}
@@ -29,7 +66,7 @@
                 <li>
                     <a *ngIf="!isLoggedIn()"
                        [routerLink]="['/login']">
-                        <i class="material-icons">perm_identity</i>
+                        <i class="material-icons">account_circle</i>
                     </a>
                 </li>
             </ul>
@@ -37,7 +74,22 @@
     </div>
 </nav>
 
-<router-outlet></router-outlet>
+<div class="container">
+  <div class="row">
+    <div class="col s12">
+      <div class="card-panel">
+            <span class="white-text">I am a very simple card. I am good at containing small bits of information.
+            I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.
+            </span>
+      </div>
+    </div>
+  </div>
+
+
+  <router-outlet></router-outlet>
+</div>
+
+
 
 <!-- Dropdown Structure -->
 <ul id='adminDropdownMenu' class='dropdown-content'>
@@ -45,4 +97,18 @@
     <li><a [routerLink]="['/admin/manage-users']">Manage Users</a></li>
     <li class="divider"></li>
     <li><a href="#!">Other...?</a></li>
+</ul>
+
+<!-- Dropdown Structure -->
+<ul id='resourcesDropdownMenu' class='dropdown-content'>
+  <li><a>About Scripture Engagement</a></li>
+  <li class="divider"></li>
+  <li><a>Bible Study vs. Scripture Engagement</a></li>
+</ul>
+
+<!-- Dropdown Structure -->
+<ul id='practicesDropdownMenu' class='dropdown-content'>
+  <li><a>Individual</a></li>
+  <li class="divider"></li>
+  <li><a>Small Group</a></li>
 </ul>
