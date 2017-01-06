@@ -19,6 +19,7 @@ export class ReadingsComponent implements OnInit {
   //  $('.materialboxed').materialbox();
   //}
 
+
   private readings: Reading[];
 
   @ViewChild('sorry') modal: SimpleModalComponent;
@@ -29,12 +30,35 @@ export class ReadingsComponent implements OnInit {
   // TODO - Don't use a fake date!
   FAKE_DATE: string = '2016-12-28';
 
+  numberReadings: number;
+  currentReadingIndex: number; // the index # of the reading that is currently being displayed
+  initializationComplete = false;
+
   ngOnInit() {
     this.readingService.getTodaysReadings(this.FAKE_DATE)
       .subscribe(
-        readings => this.readings = readings,
+        readings => {
+          this.readings = readings;
+          this.initializeReadingInfo();
+        },
         error => {
           this.modal.openModal();
-        });
+        }
+      );
   }
+
+  initializeReadingInfo(){
+    this.numberReadings = this.readings.length;
+    console.log(this.numberReadings);
+    this.currentReadingIndex = 0;
+    this.initializationComplete = true;
+  }
+
+  onReadingUpdated(updatedReadingIndex: number) {
+    console.log('emitted event received!');
+    this.currentReadingIndex = updatedReadingIndex;
+  }
+
+
+
 }

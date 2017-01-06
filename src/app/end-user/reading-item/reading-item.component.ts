@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {Router} from '@angular/router';
 
 @Component({
@@ -8,9 +8,13 @@ import {Router} from '@angular/router';
 })
 export class ReadingItemComponent {
   @Input() reading: any;
-  @Input() practices: any;
-  @Input() resourceCollections: any;
-  @Input() includeBackButton: boolean;
+  @Input() practices: any; // DELETE?
+  @Input() resourceCollections: any; // DELETE?
+  @Input() includeBackButton: boolean; // DELETE?
+  @Input() numberReadings: number;
+  @Input() currentReadingIndex: number;
+
+  @Output() updateReadingIndex = new EventEmitter<number>();
 
   constructor(private router: Router) {
   }
@@ -25,6 +29,31 @@ export class ReadingItemComponent {
 
   onSelectResource(reading, resourceCollection) {
     this.router.navigate(['/end-user/reading-resource', reading.id, resourceCollection.id]);
+  }
+
+  showPreviousButton() {
+    if (this.currentReadingIndex > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  showNextButton() {
+    if (this.currentReadingIndex < this.numberReadings-1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  nextReading() {
+    this.updateReadingIndex.emit(this.currentReadingIndex+1);
+    console.log('going to next reading....');
+  }
+
+  previousReading() {
+    this.updateReadingIndex.emit(this.currentReadingIndex-1);
   }
 
 }

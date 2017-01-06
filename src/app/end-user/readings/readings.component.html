@@ -1,13 +1,18 @@
 <div class="container">
   <div class="row">
-    <div *ngFor="let reading of readings" class="col s12">
+    <!--<div *ngFor="let reading of readings" class="col s12">-->
+    <div *ngIf="initializationComplete ">
       <app-reading-item
         [includeBackButton]="includeBackButton"
-        [reading]="reading"
-        [practices]="reading.practices"
-        [resourceCollections]="reading.resourceCollections">
+        [reading]="readings[currentReadingIndex]"
+        [numberReadings] = "numberReadings"
+        [currentReadingIndex] = "currentReadingIndex"
+        [practices]="readings[currentReadingIndex].practices"
+        [resourceCollections]="readings[currentReadingIndex].resourceCollections"
+        (updateReadingIndex)="onReadingUpdated($event)">
       </app-reading-item>
     </div>
+    <!--</div>-->
   </div>
 </div>
 
