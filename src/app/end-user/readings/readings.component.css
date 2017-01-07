@@ -2,6 +2,11 @@
 .verticalLeftLine {
   border-left: thin solid #757575;
 }
+
 .verticalRightLine {
   border-right: thin solid #aaaaaa;
+}
+
+.dropdown-content {
+  min-width: 250px
 }

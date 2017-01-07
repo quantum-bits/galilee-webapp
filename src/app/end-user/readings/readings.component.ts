@@ -31,6 +31,7 @@ export class ReadingsComponent implements OnInit {
   // TODO - Don't use a fake date!
   FAKE_DATE: string = '2016-12-28';
 
+  readingDescriptions: Array<any> = [];//this will hold the reading descriptions for the passages other than the one that is currently being shown
   numberReadings: number;
   currentReadingIndex: number; // the index # of the reading that is currently being displayed
   initializationComplete = false;
@@ -41,6 +42,7 @@ export class ReadingsComponent implements OnInit {
         readings => {
           this.readings = readings;
           this.initializeReadingInfo();
+          console.log(this.readings);
         },
         error => {
           this.modal.openModal();
@@ -52,12 +54,47 @@ export class ReadingsComponent implements OnInit {
     this.numberReadings = this.readings.length;
     console.log(this.numberReadings);
     this.currentReadingIndex = 0;
+    this.updateReadingDescriptionMenu();
     this.initializationComplete = true;
+    /*
+    this.readingDescriptions = [];
+    var loopIndex = 0;
+    for (var reading of this.readings){
+      if (loopIndex != this.currentReadingIndex){
+        this.readingDescriptions.push(
+          {
+            'description': this.readings[loopIndex].description,
+            'index': loopIndex
+          }
+          );
+      }
+      loopIndex++;
+    }
+    //console.log(this.readingDescriptions);
+    */
+  }
+
+  updateReadingDescriptionMenu(){
+    this.readingDescriptions = [];
+    var loopIndex = 0;
+    for (var reading of this.readings){
+      if (loopIndex != this.currentReadingIndex){
+        this.readingDescriptions.push(
+          {
+            'description': this.readings[loopIndex].description,
+            'index': loopIndex
+          }
+        );
+      }
+      loopIndex++;
+    }
+    //console.log(this.readingDescriptions);
   }
 
   onReadingUpdated(updatedReadingIndex: number) {
     console.log('emitted event received!');
     this.currentReadingIndex = updatedReadingIndex;
+    this.updateReadingDescriptionMenu();
   }
 
 
