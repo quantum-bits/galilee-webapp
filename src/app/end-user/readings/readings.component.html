@@ -66,13 +66,13 @@
           [resourceCollections]="readings[currentReadingIndex].resourceCollections"
           (updateReadingIndex)="onReadingUpdated($event)">
         </app-reading-item>
-
-
-
-
       </div>
-
-
+      <div *ngIf="showPractices" class="col s4">
+        <app-practice-list
+          [reading]="readings[currentReadingIndex]"
+          >
+        </app-practice-list>
+      </div>
     </div>
     <!--</div>-->
   </div>

@@ -15,6 +15,7 @@ import {MaterializeModule} from "angular2-materialize";
 
 import {SimpleModalComponent} from './readings/simple-modal.component';
 import {TruncatePipe} from '../shared/pipes/truncate.pipe';
+import { PracticeListComponent } from './practice-list/practice-list.component';
 
 
 @NgModule({
@@ -28,7 +29,9 @@ import {TruncatePipe} from '../shared/pipes/truncate.pipe';
     ResourceItemComponent,
     SimpleModalComponent,
 
-    TruncatePipe
+    TruncatePipe,
+
+    PracticeListComponent
   ],
   imports: [
     BrowserModule,
