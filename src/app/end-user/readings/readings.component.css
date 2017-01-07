@@ -1,0 +1,7 @@
+/* http://stackoverflow.com/questions/3148415/how-to-make-a-vertical-line-in-html */
+.verticalLeftLine {
+  border-left: thin solid #757575;
+}
+.verticalRightLine {
+  border-right: thin solid #aaaaaa;
+}
