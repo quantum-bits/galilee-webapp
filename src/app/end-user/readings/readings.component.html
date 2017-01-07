@@ -24,7 +24,7 @@
             <div class="col s5 center-align verticalRightLine switch">
               <label class="card-title grey-text" >
                 Scripture Engagement
-                <input type="checkbox">
+                <input type="checkbox" [checked]="showPractices" (change)="showPractices = !showPractices">
                   <span class="lever"></span>
               </label>
             </div>
@@ -45,15 +45,34 @@
   <div class="row">
     <!--<div *ngFor="let reading of readings" class="col s12">-->
     <div *ngIf="initializationComplete ">
-      <app-reading-item
-        [includeBackButton]="includeBackButton"
-        [reading]="readings[currentReadingIndex]"
-        [numberReadings] = "numberReadings"
-        [currentReadingIndex] = "currentReadingIndex"
-        [practices]="readings[currentReadingIndex].practices"
-        [resourceCollections]="readings[currentReadingIndex].resourceCollections"
-        (updateReadingIndex)="onReadingUpdated($event)">
-      </app-reading-item>
+      <div *ngIf="!showPractices" class="col s12">
+        <app-reading-item
+          [includeBackButton]="includeBackButton"
+          [reading]="readings[currentReadingIndex]"
+          [numberReadings] = "numberReadings"
+          [currentReadingIndex] = "currentReadingIndex"
+          [practices]="readings[currentReadingIndex].practices"
+          [resourceCollections]="readings[currentReadingIndex].resourceCollections"
+          (updateReadingIndex)="onReadingUpdated($event)">
+        </app-reading-item>
+      </div>
+      <div *ngIf="showPractices" class="col s8">
+        <app-reading-item
+          [includeBackButton]="includeBackButton"
+          [reading]="readings[currentReadingIndex]"
+          [numberReadings] = "numberReadings"
+          [currentReadingIndex] = "currentReadingIndex"
+          [practices]="readings[currentReadingIndex].practices"
+          [resourceCollections]="readings[currentReadingIndex].resourceCollections"
+          (updateReadingIndex)="onReadingUpdated($event)">
+        </app-reading-item>
+
+
+
+
+      </div>
+
+
     </div>
     <!--</div>-->
   </div>
