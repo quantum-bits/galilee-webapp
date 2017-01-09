@@ -1,21 +1,23 @@
 
+<!--
 <div class="card ">
-  <!-- I can't figure out how to get a title bar in a solid color, so I'm cheating and using the card-action class -->
+  <!-- I can't figure out how to get a title bar in a solid color, so I'm cheating and using the card-action class
   <div class="card-action grey darken-1">
-    <span class="card-title white-text">Practices</span>
+    <span class="card-title white-text">Practices </span>
   </div>
   <div class="card-content">
-    <div *ngFor="let practice of reading.practices">
-      <span class="card-title">
-        {{practice.title}}
-      </span>
-    <!--<div class="card-item">-->
-      <p><b>more stuff</b></p>
-      <br>
+-->
+<ul class="collection with-header">
+  <li class="collection-header grey darken-1 white-text"><h5>Practices</h5></li>
 
-      <div class="divider"></div>
-
-    </div>
-    <!--</div>-->
-  </div>
-</div>
+  <li *ngFor="let practice of reading.practices" class="collection-item">
+    <h5>
+      <a class="grey-text text-darken-1">
+        {{practice.title}} <i class="material-icons lr-arrow">arrow_forward</i>
+      </a>
+      <a>
+        <i class="material-icons right grey-text darken-2">info_outline</i>
+      </a>
+    </h5>
+  </li>
+</ul>

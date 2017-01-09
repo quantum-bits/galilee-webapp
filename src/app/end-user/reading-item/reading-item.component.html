@@ -9,7 +9,7 @@
       <!--<div class="card-item">-->
       <p><b>{{ reading.description }}</b></p>
       <br>
-      <p [innerHTML]="reading.text"></p>
+      <p [innerHTML]="reading.text" class="flow-text"></p>
       <!--</div>-->
     </div>
 
@@ -30,9 +30,9 @@
     <!--</div>-->
 
     <div class="card-action">
-      <a *ngIf="showPreviousButton()" (click)="previousReading()"> <i class="material-icons lr-arrow">keyboard_arrow_left</i> Previous</a>
+      <a *ngIf="showPreviousButton()" (click)="previousReading()"> <i class="material-icons lr-arrow">navigate_before</i> Previous</a>
       <a></a> <!-- this is here b/c otherwise the vertical spacing gets messed up by the class="right" statement in the following (if Next is all that shows up) -->
-      <a *ngIf="showNextButton()" (click)="nextReading()" class="right">Next <i class="material-icons lr-arrow">keyboard_arrow_right</i></a>
+      <a *ngIf="showNextButton()" (click)="nextReading()" class="right">Next <i class="material-icons lr-arrow">navigate_next</i></a>
     </div>
 
   </div>
