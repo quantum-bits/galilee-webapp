@@ -3,10 +3,6 @@ import {Http} from '@angular/http';
 
 import {Observable} from 'rxjs/Rx';
 
-//import {Observable} from 'rxjs/Rx';
-//import 'rxjs/add/operator/map';
-//import {Subject}    from 'rxjs/Subject';
-
 import {Reading} from '../models/reading.model';
 
 function todaysDate(): string {
@@ -41,22 +37,7 @@ export class ReadingService {
     console.log(this.readingsData);
   }
 
-  stepExists(readingIndex: number, practiceIndex: number, stepIndex: number){
-    // checks whether a step exists for the specified practice and reading
-    // http://stackoverflow.com/questions/5113374/javascript-check-if-variable-exists-is-defined-initialized
-    console.log('inside stepExists method');
-    console.log(this.readingsData);
-    if (typeof this.readingsData === 'undefined') {
-      // the readings have not yet been defined
-      return false;
-    } else if (readingIndex >= this.readingsData.length) {
-      return false;
-    } else if (practiceIndex >= this.readingsData.readings[readingIndex].applications.length) {
-      return false;
-    } else { // still need to check the steps....
-      return true;
-    }
-  }
+
 
   /*
    getPermissionTypes() {
@@ -65,21 +46,40 @@ export class ReadingService {
    }
    */
 
-  // this method is almost identical to getTodaysReadings, but if the
-  // data already exists in memory, it returns that data instead of making
-  // a new trip to the db
+
+
+  /*
+    this method is almost identical to getTodaysReadings, but if the
+    data already exists in memory, it returns that data instead of making
+    a new trip to the db
+  */
   fetchSavedReadings(date: string): Observable<Array<Reading>> {
-    // double-check that the reading exists, etc.
+    let dateString: string;
+    let savedDateString: string;
     if (typeof this.readingsData === 'undefined') {
+      // if readingsData doesn't exist, go get it
       return this.http
-      //.get(`http://localhost:3000/readingday/${date}`)
         .get(`http://localhost:3000/daily/${date}`)
         .map(res => res.json());
     } else {
-      var promise = Promise.resolve(this.readingsData);
-      return Observable.fromPromise(promise);
-      //console.log(this.readingsData.readings[readingIndex]);
-      //return this.readingsData.readings[readingIndex];
+      // there is a readingsData object in memory, but is it for the correct date?
+      console.log(date);
+      if (date === 'today'){
+        dateString = todaysDate();
+      } else {
+        dateString = date;
+      }
+      savedDateString = this.readingsData.date.substring(0, 10);
+      if (savedDateString === dateString) {
+        // the requested date and the saved date agree; return the saved data....
+        var promise = Promise.resolve(this.readingsData);
+        return Observable.fromPromise(promise);
+      } else {
+        // date mismatch; fetch data from the db....
+        return this.http
+          .get(`http://localhost:3000/daily/${date}`)
+          .map(res => res.json());
+      }
     }
   }
 

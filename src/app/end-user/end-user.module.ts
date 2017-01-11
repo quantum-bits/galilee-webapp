@@ -17,6 +17,7 @@ import {SimpleModalComponent} from './readings/simple-modal.component';
 import {TruncatePipe} from '../shared/pipes/truncate.pipe';
 import { PracticeListComponent } from './practice-list/practice-list.component';
 import { PracticeSummaryComponent } from './practice-summary/practice-summary.component';
+import { PracticeStepComponent } from './practice-step/practice-step.component';
 
 
 @NgModule({
@@ -34,7 +35,9 @@ import { PracticeSummaryComponent } from './practice-summary/practice-summary.co
 
     PracticeListComponent,
 
-    PracticeSummaryComponent
+    PracticeSummaryComponent,
+
+    PracticeStepComponent
   ],
   imports: [
     BrowserModule,

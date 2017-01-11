@@ -1,0 +1,29 @@
+<div *ngIf="practiceData">
+  <div class="card ">
+    <!-- I can't figure out how to get a title bar in a solid color, so I'm cheating and using the card-action class -->
+    <div class="card-action grey darken-1">
+      <span class="card-title white-text">Instructions</span>
+    </div>
+    <div class="card-content">
+      <span class="card-title">{{practiceData.practice.title}}</span>
+      <!--<div class="card-item">-->
+      <!--<p><b>{{ reading.description }}</b></p>-->
+      <br>
+      <p [innerHTML]="practiceData.steps[stepIndex].description"></p>
+
+      <br>
+
+      <!--<div class="divider"></div>-->
+
+
+      <div *ngIf="includeNavigationButtons()" class="card-action">
+        <a *ngIf="showPreviousButton()" (click)="previousStep()"> <i class="material-icons lr-arrow">navigate_before</i> Previous</a>
+        <a></a> <!-- this is here b/c otherwise the vertical spacing gets messed up by the class="right" statement in the following (if Next is all that shows up) -->
+        <a *ngIf="showNextButton()" (click)="nextStep()" class="right">Next <i class="material-icons lr-arrow">navigate_next</i></a>
+      </div>
+
+
+      <!--</div>-->
+    </div>
+  </div>
+</div>

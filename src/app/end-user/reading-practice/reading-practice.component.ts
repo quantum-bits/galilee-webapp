@@ -16,6 +16,7 @@ import {SimpleModalComponent} from "../readings/simple-modal.component";
 @Component({
   selector: 'app-reading-practice',
   templateUrl: './reading-practice.component.html',
+  styleUrls: ['./reading-practice.component.css'],
   providers: [PracticeService]
 })
 export class ReadingPracticeComponent implements OnInit {
@@ -76,41 +77,33 @@ export class ReadingPracticeComponent implements OnInit {
       this.readingService.fetchSavedReadings(this.dateString)
         .subscribe(
           readingsData => {
-            this.readingsData = readingsData;//.readings[readingIndex];
+            this.readingsData = readingsData;
+
+            console.log(this.readingsData);
+
             // now check if the required reading/practice/step exists, and display
             // the page (or an error message)
             if (this.practiceExists(this.readingsData, this.readingIndex, this.practiceIndex)) {
               if (!this.displayStep) {
                 this.practiceData = this.readingsData.readings[this.readingIndex].applications[this.practiceIndex];
               } else {
-                this.practiceData = this.readingsData.readings[this.readingIndex].applications[this.practiceIndex];
-
-
-                // - check if the given step exists
-                // - if it does, find the number for the step before and after (if applicable)
-                // - get the data ready to display the step
+                let pD = this.readingsData.readings[this.readingIndex].applications[this.practiceIndex];
+                if (this.stepIndex >= 0 && this.stepIndex < pD.steps.length) {
+                  // good to go....
+                  this.practiceData = pD;
+                } else {
+                  // oops -- the requested step doesn't exist
+                  this.modal.openModal();
+                }
               }
             } else {
               this.modal.openModal();
             }
-
-            console.log(this.practiceExists(this.readingsData, this.readingIndex, this.practiceIndex));
-            //this.practice = this.singleReading.applications[practiceIndex].practice;
           },
           error => {
             this.modal.openModal();
           }
         );
-      /*
-       if (this.readingService.stepExists(readingID, practiceID, 0)) {
-       console.log('looks like step exists');
-       this.singleReading = this.readingService.fetchSavedReading(readingID);
-       this.practice = this.singleReading.applications[practiceID].practice;
-       } else {
-       // modal error message or something
-       }
-       */
-      //console.log(this.singleReading);
 
     })
   }
@@ -131,6 +124,10 @@ export class ReadingPracticeComponent implements OnInit {
 
   parseReadingPractice(){
 
+  }
+
+  goHome(){
+    this.router.navigate(['/end-user/readings', this.dateString]);
   }
 
 

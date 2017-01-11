@@ -52,15 +52,7 @@ export class ReadingsComponent implements OnInit {
           readings => {
             this.readingsData = readings;
             this.initializeReadingInfo();
-            console.log('inside ngoninit for readings; here are the readings from the service:');
-            console.log(this.readingsData);
-            console.log(this.readingService.stepExists(0, 0, 0));
             this.readingService.storeReadings(this.readingsData);
-            console.log(this.readingService.stepExists(0, 0, 0));
-            console.log(this.readingService.stepExists(0, 1, 0));
-            console.log(this.readingService.stepExists(0, 2, 0));
-            console.log(this.readingService.stepExists(1, 0, 0));
-            console.log(this.readingService.stepExists(1, 1, 0));
           },
           error => {
             this.modal.openModal();
