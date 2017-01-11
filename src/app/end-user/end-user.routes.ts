@@ -20,7 +20,8 @@ export const EndUserRoutes = [
         index: true,
       },
       {
-        path: 'reading-practice/:readingID/:practiceID',
+        //so far, the following is actually readingIndex and practiceIndex (in an array)
+        path: 'reading-practice/:readingID/:practiceID',//eventually add :stepID as well
         component: ReadingPracticeComponent
       },
       {

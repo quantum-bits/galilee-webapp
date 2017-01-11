@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
 @Component({
@@ -6,17 +6,23 @@ import {Router} from '@angular/router';
   templateUrl: './reading-item.component.html',
   styleUrls: ['./reading-item.component.css']
 })
-export class ReadingItemComponent {
+export class ReadingItemComponent implements OnInit {
   @Input() reading: any;
   @Input() practices: any; // DELETE?
   @Input() resourceCollections: any; // DELETE?
-  @Input() includeBackButton: boolean; // DELETE?
+  @Input() includeBackButton: boolean; //DELETE?
+  @Input() includeNavigationButtons: boolean;
   @Input() numberReadings: number;
   @Input() currentReadingIndex: number;
 
   @Output() updateReadingIndex = new EventEmitter<number>();
 
   constructor(private router: Router) {
+  }
+
+  ngOnInit(){
+    console.log('inside ngoninit for reading-item');
+    console.log(this.includeNavigationButtons);
   }
 
   displayInfo(reading) {

@@ -1,23 +1,24 @@
 <div class="card ">
   <div class="card-content ">
-    <span class="card-title">{{ practice.title }}
-      <!-- Modal Trigger -->
+    <span class="card-title">{{ currentPractice.title }}
+      <!-- Modal Trigger
         <a materialize="leanModal"
                class="waves-effect waves-light secondary-content modal-trigger"
                href="#modalPracticeGeneralDescription">
         <i class="material-icons right">help</i>
         </a>
+        -->
     </span>
     <div class="card-item">
       <p><b>{{ reading.description }}</b></p>
       <br>
-      <p>{{ practice.advice}}</p>
+      <p>{{ currentPractice.advice}}</p>
     </div>
   </div>
 </div>
 
 
-<!-- Modal Structure -->
+<!-- Modal Structure
 <div *ngIf="practiceGeneralInformation" id="modalPracticeGeneralDescription" class="modal">
   <div class="modal-content">
     <h5>{{practiceGeneralInformation.title}}</h5>
@@ -27,3 +28,4 @@
     <a class="modal-action modal-close waves-effect waves-green btn-flat">Dismiss</a>
   </div>
 </div>
+-->

@@ -11,12 +11,13 @@ import {Reading} from '../../shared/models/reading.model';
 @Component({
   selector: 'app-reading-practice',
   templateUrl: './reading-practice.component.html',
-  providers: [ReadingService, PracticeService]
+  providers: [PracticeService]
 })
 export class ReadingPracticeComponent implements OnInit {
 
   date: Date;
-  singleReading: Reading;
+  //singleReading: Reading; // once the format for the returned data has been finalized, we should use this
+  singleReading: any;
   practice: any;
   practiceGeneralInformation: any;
   includeBackButton = true;
@@ -25,6 +26,7 @@ export class ReadingPracticeComponent implements OnInit {
               private route: ActivatedRoute,
               private readingService: ReadingService,
               private practiceService: PracticeService) {
+    console.log('inside constructor for reading-practice');
   }
 
   // NOTE: the following might not be the most efficient way to do this; it fetches
@@ -32,6 +34,31 @@ export class ReadingPracticeComponent implements OnInit {
   // in principle, once there has been one trip to the db, we wouldn't need to hit it again
   // just to refresh which practice is being looked at
   ngOnInit() {
+    console.log('inside ngOnInit for reading-practice');
+    this.route.params.subscribe(params => {
+      console.log('received route params');
+      let readingID = +params['readingID'];
+      let practiceID = +params['practiceID'];// eventually also need to fetch the step
+      console.log(readingID);
+      console.log(practiceID);
+      if (this.readingService.stepExists(readingID, practiceID, 0)) {
+        console.log('looks like step exists');
+        this.singleReading = this.readingService.fetchSavedReading(readingID);
+        this.practice = this.singleReading.applications[practiceID].practice;
+      } else {
+        // modal error message or something
+      }
+      console.log(this.singleReading);
+
+    })
+  }
+
+    /*
+    We may need to go this route later in order to fetch back the user's "state"
+    when they made a certain journal entry, but for now we will just make a synchronous
+    method call on the Reading service, with the assumption that that service already
+    has the required data in hand....
+
     this.date = new Date();
     this.route.params.subscribe(params => {
       let readingID = +params['readingID'];
@@ -51,7 +78,7 @@ export class ReadingPracticeComponent implements OnInit {
           }
         );
     });
-  }
+    */
 
   fetchPractice(reading, practiceID) {
     for (let practice of reading.practices) {

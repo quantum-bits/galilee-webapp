@@ -5,9 +5,9 @@
       <span class="card-title white-text">Scripture</span>
     </div>
     <div class="card-content">
-      <span class="card-title">{{ reading.title }}</span>
+      <span class="card-title">{{ reading.std_ref }}</span>
       <!--<div class="card-item">-->
-      <p><b>{{ reading.description }}</b></p>
+      <!--<p><b>{{ reading.description }}</b></p>-->
       <br>
       <p [innerHTML]="reading.text" class="flow-text"></p>
       <!--</div>-->
@@ -29,7 +29,7 @@
 
     <!--</div>-->
 
-    <div class="card-action">
+    <div *ngIf="includeNavigationButtons" class="card-action">
       <a *ngIf="showPreviousButton()" (click)="previousReading()"> <i class="material-icons lr-arrow">navigate_before</i> Previous</a>
       <a></a> <!-- this is here b/c otherwise the vertical spacing gets messed up by the class="right" statement in the following (if Next is all that shows up) -->
       <a *ngIf="showNextButton()" (click)="nextReading()" class="right">Next <i class="material-icons lr-arrow">navigate_next</i></a>
@@ -37,18 +37,20 @@
 
   </div>
 
-  <!-- Dropdown Structure for Choosing Practice -->
+  <!-- Dropdown Structure for Choosing Practice
   <ul [id]="'dropdownViewPractice'+reading.id" class='dropdown-content'>
     <li *ngFor="let practice of practices">
       <a (click)="onSelectPractice(reading, practice)">{{practice.title}}</a>
     </li>
   </ul>
 
-  <!-- Dropdown Structure for Choosing Resource -->
+  <!-- Dropdown Structure for Choosing Resource
   <ul [id]="'dropdownViewResource'+reading.id" class='dropdown-content'>
     <li *ngFor="let resourceCollection of resourceCollections">
       <a (click)="onSelectResource(reading, resourceCollection)">{{resourceCollection.title}}</a>
     </li>
   </ul>
+
+  -->
 
 </div>

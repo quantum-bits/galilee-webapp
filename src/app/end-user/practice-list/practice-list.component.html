@@ -10,10 +10,10 @@
 <ul class="collection with-header">
   <li class="collection-header grey darken-1 white-text"><h5>Practices</h5></li>
 
-  <li *ngFor="let practice of reading.practices" class="collection-item">
+  <li *ngFor="let practiceData of reading.applications; let i = index" class="collection-item">
     <h5>
-      <a class="grey-text text-darken-1">
-        {{practice.title}} <i class="material-icons lr-arrow">arrow_forward</i>
+      <a class="grey-text text-darken-1" (click)="onSelectPractice(i)">
+        {{practiceData.practice.title}} <i class="material-icons lr-arrow">arrow_forward</i>
       </a>
       <a>
         <i class="material-icons right grey-text darken-2">info_outline</i>
@@ -21,3 +21,11 @@
     </h5>
   </li>
 </ul>
+
+<!--
+<ul [id]="'dropdownViewPractice'+reading.id" class='dropdown-content'>
+  <li *ngFor="let practice of practices">
+    <a (click)="onSelectPractice(reading, practice)">{{practice.title}}</a>
+  </li>
+</ul>
+-->
