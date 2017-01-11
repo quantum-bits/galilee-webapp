@@ -1,26 +1,49 @@
-<div *ngIf="singleReading">
+<div *ngIf="!displayStep && practiceData">
   <div class="container">
     <div class="row">
-      <div class="col s12 m6 l6">
-        <app-reading-item
-          [includeBackButton]="includeBackButton"
-          [reading]="singleReading"
-          [practices]="singleReading.practices"
-          [resourceCollections]="singleReading.resources">
-        </app-reading-item>
+      <div class="col s12 m6 offset-m3 l6 offset-l3">
+        <app-practice-summary
+          [practiceData] = "practiceData"
+          [dateString] = "dateString"
+          [readingIndex] = "readingIndex"
+          [practiceIndex] = "practiceIndex"
+        >
+        </app-practice-summary>
       </div>
-      <div *ngIf="practice" class="col s12 m6 l6">
-        <div *ngIf="practiceGeneralInformation">
-          <app-practice-item
-            [practice]="practice"
+    </div>
+  </div>
+</div>
+
+<div *ngIf="displayStep">
+  <div *ngIf="singleReading">
+    <div class="container">
+      <div class="row">
+        <div class="col s12 m6 l6">
+          <app-reading-item
+            [includeBackButton]="includeBackButton"
             [reading]="singleReading"
-            [practiceGeneralInformation]="practiceGeneralInformation">
-          </app-practice-item>
+            [practices]="singleReading.practices"
+            [resourceCollections]="singleReading.resources">
+          </app-reading-item>
+        </div>
+
+        <div *ngIf="practice" class="col s12 m6 l6">
+          <div *ngIf="practiceGeneralInformation">
+            <app-practice-item
+              [practice]="practice"
+              [reading]="singleReading"
+              [practiceGeneralInformation]="practiceGeneralInformation">
+            </app-practice-item>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<simple-modal #sorry header="Sorry" message="The requested practice does not exist for this reading."></simple-modal>
+
+
 
 <!--
 <div *ngIf="singleReading">

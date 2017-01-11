@@ -2,6 +2,11 @@ import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 
 import {Observable} from 'rxjs/Rx';
+
+//import {Observable} from 'rxjs/Rx';
+//import 'rxjs/add/operator/map';
+//import {Subject}    from 'rxjs/Subject';
+
 import {Reading} from '../models/reading.model';
 
 function todaysDate(): string {
@@ -53,13 +58,28 @@ export class ReadingService {
     }
   }
 
-  fetchSavedReading(readingIndex: number) {
+  /*
+   getPermissionTypes() {
+   var promise = Promise.resolve(PERMISSION_TYPES);// Observable.just(USERS);
+   return Observable.fromPromise(promise);
+   }
+   */
+
+  // this method is almost identical to getTodaysReadings, but if the
+  // data already exists in memory, it returns that data instead of making
+  // a new trip to the db
+  fetchSavedReadings(date: string): Observable<Array<Reading>> {
     // double-check that the reading exists, etc.
-    if ((typeof this.readingsData === 'undefined')||(readingIndex >= this.readingsData.length)) {
-      return [];
+    if (typeof this.readingsData === 'undefined') {
+      return this.http
+      //.get(`http://localhost:3000/readingday/${date}`)
+        .get(`http://localhost:3000/daily/${date}`)
+        .map(res => res.json());
     } else {
+      var promise = Promise.resolve(this.readingsData);
+      return Observable.fromPromise(promise);
       //console.log(this.readingsData.readings[readingIndex]);
-      return this.readingsData.readings[readingIndex];
+      //return this.readingsData.readings[readingIndex];
     }
   }
 

@@ -1,0 +1,45 @@
+<div *ngIf="practiceData">
+  <div class="card ">
+    <!-- I can't figure out how to get a title bar in a solid color, so I'm cheating and using the card-action class -->
+    <div class="card-action grey darken-1">
+      <span class="card-title white-text">{{practiceData.practice.title}}</span>
+    </div>
+    <div class="card-content">
+      <span class="card-title">Summary</span>
+      <!--<div class="card-item">-->
+      <!--<p><b>{{ reading.description }}</b></p>-->
+      <br>
+      <p [innerHTML]="practiceData.practice.summary"></p>
+
+      <br>
+
+      <!--<div class="divider"></div>-->
+
+
+      <p>
+        <input type="checkbox" class="filled-in" id="filled-in-box" />
+        <label for="filled-in-box">Thanks, I don't need to see this summary in the future.</label>
+      </p>
+
+      <br>
+
+      <div class="center">
+        <a class="waves-effect waves-light btn" (click)="beginPracticeSteps()"> Begin Practice </a>
+      </div>
+
+      <br>
+
+      <div class="card-action">
+        <div class="right">
+          <a (click)="launchPracticeDesription()">More about {{practiceData.practice.title}}
+            <i class="material-icons diag-arrow">call_made</i>
+          </a>
+        </div>
+      </div>
+
+
+
+      <!--</div>-->
+    </div>
+  </div>
+</div>

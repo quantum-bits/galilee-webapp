@@ -16,6 +16,7 @@ import {MaterializeModule} from "angular2-materialize";
 import {SimpleModalComponent} from './readings/simple-modal.component';
 import {TruncatePipe} from '../shared/pipes/truncate.pipe';
 import { PracticeListComponent } from './practice-list/practice-list.component';
+import { PracticeSummaryComponent } from './practice-summary/practice-summary.component';
 
 
 @NgModule({
@@ -31,7 +32,9 @@ import { PracticeListComponent } from './practice-list/practice-list.component';
 
     TruncatePipe,
 
-    PracticeListComponent
+    PracticeListComponent,
+
+    PracticeSummaryComponent
   ],
   imports: [
     BrowserModule,

@@ -21,7 +21,12 @@ export const EndUserRoutes = [
       },
       {
         //so far, the following is actually readingIndex and practiceIndex (in an array)
-        path: 'reading-practice/:dateString/:readingID/:practiceID',//eventually add :stepID as well
+        path: 'reading-practice/:dateString/:readingIndex/:practiceIndex',//display the summary for the practice
+        component: ReadingPracticeComponent
+      },
+      {
+        //so far, the following is actually readingIndex and practiceIndex (in an array)
+        path: 'reading-practice/:dateString/:readingIndex/:practiceIndex/:stepIndex',//display a step of the practice
         component: ReadingPracticeComponent
       },
       {
