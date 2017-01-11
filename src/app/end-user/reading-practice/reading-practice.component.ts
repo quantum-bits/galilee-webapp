@@ -37,6 +37,7 @@ export class ReadingPracticeComponent implements OnInit {
     console.log('inside ngOnInit for reading-practice');
     this.route.params.subscribe(params => {
       console.log('received route params');
+      let dateString = params['dateString'];
       let readingID = +params['readingID'];
       let practiceID = +params['practiceID'];// eventually also need to fetch the step
       console.log(readingID);

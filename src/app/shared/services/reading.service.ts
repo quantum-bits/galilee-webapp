@@ -16,9 +16,8 @@ export class ReadingService {
   constructor(private http: Http) {
   }
 
-  getTodaysReadings(date?: string): Observable<Array<Reading>> {//the type is no longer correct here
-    //date = date || todaysDate();
-    date = date || 'today';
+  getTodaysReadings(date: string): Observable<Array<Reading>> {//the type is no longer correct here
+    //date = date || 'today';
     return this.http
       //.get(`http://localhost:3000/readingday/${date}`)
       .get(`http://localhost:3000/daily/${date}`)

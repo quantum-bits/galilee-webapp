@@ -10,6 +10,7 @@ export class PracticeListComponent implements OnInit {
 
   @Input() reading: any;
   @Input() readingIndex: number; // the index of this reading in the readings array; may want to do all of this by id instead
+  @Input() dateString: string; // 'today' or 'YYYY-MM-DD'
   //@Output() viewPracticeIndex = new EventEmitter<number>();
 
 
@@ -30,7 +31,7 @@ export class PracticeListComponent implements OnInit {
   */
 
   onSelectPractice(practiceIndex: number) {
-    this.router.navigate(['/end-user/reading-practice', this.readingIndex, practiceIndex]);
+    this.router.navigate(['/end-user/reading-practice', this.dateString, this.readingIndex, practiceIndex]);
   }
   /*
   // should use IDs to navigate, once these are all stored in the array

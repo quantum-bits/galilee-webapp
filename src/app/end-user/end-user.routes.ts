@@ -11,17 +11,17 @@ export const EndUserRoutes = [
     children: [
       {
         path: '',
-        redirectTo: 'readings',
+        redirectTo: 'readings/today',
         pathMatch: 'full'
       },
       {
-        path: 'readings',
+        path: 'readings/:dateString',//dateString can be 'YYYY-MM-DD' or 'today'
         component: ReadingsComponent,
         index: true,
       },
       {
         //so far, the following is actually readingIndex and practiceIndex (in an array)
-        path: 'reading-practice/:readingID/:practiceID',//eventually add :stepID as well
+        path: 'reading-practice/:dateString/:readingID/:practiceID',//eventually add :stepID as well
         component: ReadingPracticeComponent
       },
       {

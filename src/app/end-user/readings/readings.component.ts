@@ -1,4 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
 import {ReadingService} from '../../shared/services/reading.service';
 import {Reading} from '../../shared/models/reading.model';
@@ -26,12 +27,14 @@ export class ReadingsComponent implements OnInit {
 
   @ViewChild('sorry') modal: SimpleModalComponent;
 
-  constructor(private readingService: ReadingService) {
+  constructor(private readingService: ReadingService,
+              private route: ActivatedRoute) {
   }
 
   // TODO - Don't use a fake date!
   //FAKE_DATE: string = '2016-12-28';
 
+  dateString: string;
   showPractices: boolean = false;
   //showPracticeDetailPage: boolean = false;
   readingDescriptions: Array<any> = [];//this will hold the reading descriptions for the passages other than the one that is currently being shown
@@ -41,25 +44,29 @@ export class ReadingsComponent implements OnInit {
   initializationComplete = false;
 
   ngOnInit() {
-    this.readingService.getTodaysReadings()//this.FAKE_DATE)
-      .subscribe(
-        readings => {
-          this.readingsData = readings;
-          this.initializeReadingInfo();
-          console.log('inside ngoninit for readings; here are the readings from the service:');
-          console.log(this.readingsData);
-          console.log(this.readingService.stepExists(0,0,0));
-          this.readingService.storeReadings(this.readingsData);
-          console.log(this.readingService.stepExists(0,0,0));
-          console.log(this.readingService.stepExists(0,1,0));
-          console.log(this.readingService.stepExists(0,2,0));
-          console.log(this.readingService.stepExists(1,0,0));
-          console.log(this.readingService.stepExists(1,1,0));
-        },
-        error => {
-          this.modal.openModal();
-        }
-      );
+    this.route.params.subscribe(params => {
+      console.log('readings -- received route params');
+      this.dateString = params['dateString'];
+      this.readingService.getTodaysReadings(this.dateString)
+        .subscribe(
+          readings => {
+            this.readingsData = readings;
+            this.initializeReadingInfo();
+            console.log('inside ngoninit for readings; here are the readings from the service:');
+            console.log(this.readingsData);
+            console.log(this.readingService.stepExists(0, 0, 0));
+            this.readingService.storeReadings(this.readingsData);
+            console.log(this.readingService.stepExists(0, 0, 0));
+            console.log(this.readingService.stepExists(0, 1, 0));
+            console.log(this.readingService.stepExists(0, 2, 0));
+            console.log(this.readingService.stepExists(1, 0, 0));
+            console.log(this.readingService.stepExists(1, 1, 0));
+          },
+          error => {
+            this.modal.openModal();
+          }
+        );
+    });
   }
 
   initializeReadingInfo(){
