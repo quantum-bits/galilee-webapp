@@ -3,6 +3,7 @@
 <!-- Secondary navbar -->
 <!-- NEXT: figure out how to remove vertical padding in row -->
 <!-- Might eventually want to make this secondary navbar its own component -->
+<div *ngIf="initializationComplete">
   <div class="container">
     <div class="card">
       <div class="card-content">
@@ -39,30 +40,26 @@
       </div>
     </div>
   </div>
+</div>
 
 <!-- Current reading, possibly with practice types shown -->
   <div class="container row">
     <div *ngIf="initializationComplete ">
       <div *ngIf="!showPractices" class="col s12">
         <app-reading-item
-          [includeNavigationButtons]="!showPracticeDetailPage"
-          [includeBackButton]="includeBackButton"
+          [includeNavigationBar]="'true'"
           [reading]="readingsData.readings[currentReadingIndex]"
           [numberReadings] = "numberReadings"
           [currentReadingIndex] = "currentReadingIndex"
-          [practices]="readingsData.readings[currentReadingIndex].practices"
-          [resourceCollections]="readingsData.readings[currentReadingIndex].resourceCollections"
           (updateReadingIndex)="onReadingUpdated($event)">
         </app-reading-item>
       </div>
       <div *ngIf="showPractices" class="col s12 m6 l7">
         <app-reading-item
-          [includeNavigationButtons]="!showPracticeDetailPage"
+          [includeNavigationBar]="'true'"
           [reading]="readingsData.readings[currentReadingIndex]"
           [numberReadings] = "numberReadings"
           [currentReadingIndex] = "currentReadingIndex"
-          [practices]="readingsData.readings[currentReadingIndex].practices"
-          [resourceCollections]="readingsData.readings[currentReadingIndex].resourceCollections"
           (updateReadingIndex)="onReadingUpdated($event)">
         </app-reading-item>
       </div>

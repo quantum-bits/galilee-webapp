@@ -29,7 +29,7 @@
 
     <!--</div>-->
 
-    <div *ngIf="includeNavigationButtons" class="card-action">
+    <div *ngIf="includeNavigationButtons()" class="card-action">
       <a *ngIf="showPreviousButton()" (click)="previousReading()"> <i class="material-icons lr-arrow">navigate_before</i> Previous</a>
       <a></a> <!-- this is here b/c otherwise the vertical spacing gets messed up by the class="right" statement in the following (if Next is all that shows up) -->
       <a *ngIf="showNextButton()" (click)="nextReading()" class="right">Next <i class="material-icons lr-arrow">navigate_next</i></a>

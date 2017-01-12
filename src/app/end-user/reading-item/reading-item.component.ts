@@ -8,10 +8,7 @@ import {Router} from '@angular/router';
 })
 export class ReadingItemComponent implements OnInit {
   @Input() reading: any;
-  @Input() practices: any; // DELETE?
-  @Input() resourceCollections: any; // DELETE?
-  @Input() includeBackButton: boolean; //DELETE?
-  @Input() includeNavigationButtons: boolean;
+  @Input() includeNavigationBar: boolean;
   @Input() numberReadings: number;
   @Input() currentReadingIndex: number;
 
@@ -51,6 +48,10 @@ export class ReadingItemComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+  includeNavigationButtons(){
+    return this.includeNavigationBar && (this.showPreviousButton() || this.showNextButton());
   }
 
   nextReading() {
