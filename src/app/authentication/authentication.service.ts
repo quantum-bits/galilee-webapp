@@ -5,37 +5,45 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
 import {Http} from '@angular/http';
+
+import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/do';
+
 import {tokenNotExpired} from 'angular2-jwt';
 
+import {LoginData} from '../shared/interfaces/login-data.interface';
+import {User} from '../shared/models/user.model';
+
+const TOKEN_KEY: string = 'id_token';
+
 @Injectable()
-export class AuthService {
-  constructor(private router: Router,
-              private http: Http) {
+export class AuthenticationService {
+  constructor(private http: Http) {
   }
 
-  login(email: string, password: string) {
-    this.http.post('http://localhost:3000/authenticate', {email, password})
+  login(email: string, password: string): Observable<User> {
+    return this.http.post('http://localhost:3000/authenticate', {email, password})
       .map(res => res.json())
-      .subscribe(
-        // We're assuming the response will be an object
-        // with the JWT on an id_token key
-        data => {
-          localStorage.setItem('id_token', data.id_token);
-          this.router.navigate(['/end-user']);
-        },
-        error => {
-          console.log('Error from AuthService.login:', error);
+      .do((data: LoginData) => {
+          if (data.status === "OK") {
+            localStorage.setItem(TOKEN_KEY, data[TOKEN_KEY]);
+            console.log("AUTH SUCCESS", data);
+            return data.user;
+          } else {
+            localStorage.removeItem(TOKEN_KEY);
+            console.log("AUTH FAILURE");
+            return null;
+          }
         });
   }
 
-  isloggedIn() {
+  isloggedIn(): boolean {
     return tokenNotExpired();
   }
 
   logout() {
-    localStorage.removeItem('id_token');
+    localStorage.removeItem(TOKEN_KEY);
   }
 }
