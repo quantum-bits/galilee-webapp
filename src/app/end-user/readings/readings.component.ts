@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 
 import {ReadingService} from '../../shared/services/reading.service';
 import {Reading} from '../../shared/models/reading.model';
@@ -28,6 +28,7 @@ export class ReadingsComponent implements OnInit {
   @ViewChild('sorry') modal: SimpleModalComponent;
 
   constructor(private readingService: ReadingService,
+              private router: Router,
               private route: ActivatedRoute) {
   }
 
@@ -35,24 +36,38 @@ export class ReadingsComponent implements OnInit {
   //FAKE_DATE: string = '2016-12-28';
 
   dateString: string;
-  showPractices: boolean = false;
+  engageScripture: number; // translates to boolean (0->false)
+  //showPractices: boolean = false;
   //showPracticeDetailPage: boolean = false;
   readingDescriptions: Array<any> = [];//this will hold the reading descriptions for the passages other than the one that is currently being shown
   numberReadings: number;
-  currentReadingIndex: number; // the index # of the reading that is currently being displayed
-  currentPracticeIndex: number = 0;
+  currentReadingIndex: number = 0; // the index # of the reading that is currently being displayed
   initializationComplete = false;
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       console.log('readings -- received route params');
       this.dateString = params['dateString'];
-      this.readingService.getTodaysReadings(this.dateString)
+      if ('engageScripture' in params){
+        this.engageScripture = +params['engageScripture'];
+        if ('readingIndex' in params){
+          this.currentReadingIndex = +params['readingIndex'];
+        }
+      } else {
+        this.engageScripture = 0;
+      }
+      //this.readingService.getTodaysReadings(this.dateString)
+      this.readingService.fetchSavedReadings(this.dateString)
         .subscribe(
           readings => {
             this.readingsData = readings;
-            this.initializeReadingInfo();
-            this.readingService.storeReadings(this.readingsData);
+            if (this.currentReadingExists()) {
+              this.initializeReadingInfo();
+              // the following is unnecesary if the readings were actually saved already, but OK....
+              this.readingService.storeReadings(this.readingsData);
+            } else {
+              this.modal.openModal();
+            }
           },
           error => {
             this.modal.openModal();
@@ -61,11 +76,33 @@ export class ReadingsComponent implements OnInit {
     });
   }
 
+  // could just use engageScripture as a boolean directly in the template, but this seems a bit safer
+  showPractices(engageScripture: number){
+    if (engageScripture === 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  updateScriptureEngagement(){
+    // switches the practices between "open" and "closed"
+    this.router.navigate(['/end-user/readings', this.dateString, (this.engageScripture+1)%2, this.currentReadingIndex]);
+  }
+
+  currentReadingExists(){
+    if ((this.currentReadingIndex < 0)||(this.currentReadingIndex >= this.readingsData.readings.length)) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   initializeReadingInfo(){
     console.log('inside initializeReadingInfo');
     this.numberReadings = this.readingsData.readings.length;
     console.log(this.numberReadings);
-    this.currentReadingIndex = 0;
+    //this.currentReadingIndex = 0;
     this.updateReadingDescriptionMenu();
     this.initializationComplete = true;
   }
@@ -89,21 +126,9 @@ export class ReadingsComponent implements OnInit {
 
   onReadingUpdated(updatedReadingIndex: number) {
     //console.log('emitted event received!');
-    this.currentReadingIndex = updatedReadingIndex;
-    this.updateReadingDescriptionMenu();
+    this.router.navigate(['/end-user/readings', this.dateString, this.engageScripture, updatedReadingIndex]);
+    //this.currentReadingIndex = updatedReadingIndex;
+    //this.updateReadingDescriptionMenu();
   }
-
-  /*
-  onPracticeUpdated(updatedPracticeIndex: number) {
-    console.log('emitted event received!');
-    console.log(this.currentPracticeIndex);
-    console.log(updatedPracticeIndex);
-    console.log(typeof this.currentPracticeIndex);
-    console.log(typeof updatedPracticeIndex);
-    this.currentPracticeIndex = updatedPracticeIndex;
-    this.showPracticeDetailPage = true;
-  }
-  */
-
 
 }

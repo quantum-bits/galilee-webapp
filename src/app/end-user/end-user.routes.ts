@@ -20,12 +20,20 @@ export const EndUserRoutes = [
         index: true,
       },
       {
-        //so far, the following is actually readingIndex and practiceIndex (in an array)
+        path: 'readings/:dateString/:engageScripture',//engageScripture is a boolean (0 for off)
+        component: ReadingsComponent,
+        index: true,
+      },
+      {
+        path: 'readings/:dateString/:engageScripture/:readingIndex',//show the specified reading
+        component: ReadingsComponent,
+        index: true,
+      },
+      {
         path: 'reading-practice/:dateString/:readingIndex/:practiceIndex',//display the summary for the practice (optionally) and then the Preparation page
         component: ReadingPracticeComponent
       },
       {
-        //so far, the following is actually readingIndex and practiceIndex (in an array)
         path: 'reading-practice/:dateString/:readingIndex/:practiceIndex/:stepIndex',//display a step of the practice
         component: ReadingPracticeComponent
       },

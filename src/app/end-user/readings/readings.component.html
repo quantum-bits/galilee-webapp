@@ -26,7 +26,7 @@
           <div class="col s5 center-align verticalRightLine switch">
             <label class="card-title grey-text" >
               Scripture Engagement
-              <input type="checkbox" [checked]="showPractices" (change)="showPractices = !showPractices">
+              <input type="checkbox" [checked]="showPractices(engageScripture)" (change)="updateScriptureEngagement()">
                 <span class="lever"></span>
             </label>
           </div>
@@ -45,25 +45,29 @@
 <!-- Current reading, possibly with practice types shown -->
   <div class="container row">
     <div *ngIf="initializationComplete ">
-      <div *ngIf="!showPractices" class="col s12">
+      <div *ngIf="!showPractices(engageScripture)" class="col s12">
         <app-reading-item
           [includeNavigationBar]="'true'"
           [reading]="readingsData.readings[currentReadingIndex]"
           [numberReadings] = "numberReadings"
           [currentReadingIndex] = "currentReadingIndex"
-          (updateReadingIndex)="onReadingUpdated($event)">
+          [engageScripture] = "engageScripture"
+          [dateString] = "dateString"
+        >
         </app-reading-item>
       </div>
-      <div *ngIf="showPractices" class="col s12 m6 l7">
+      <div *ngIf="showPractices(engageScripture)" class="col s12 m6 l7">
         <app-reading-item
           [includeNavigationBar]="'true'"
           [reading]="readingsData.readings[currentReadingIndex]"
           [numberReadings] = "numberReadings"
           [currentReadingIndex] = "currentReadingIndex"
-          (updateReadingIndex)="onReadingUpdated($event)">
+          [engageScripture] = "engageScripture"
+          [dateString] = "dateString"
+        >
         </app-reading-item>
       </div>
-      <div *ngIf="showPractices" class="col s12 m6 l5">
+      <div *ngIf="showPractices(engageScripture)" class="col s12 m6 l5">
         <app-practice-list
           [reading]="readingsData.readings[currentReadingIndex]"
           [readingIndex] = "currentReadingIndex"

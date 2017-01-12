@@ -117,7 +117,7 @@ export class ReadingPracticeComponent implements OnInit {
   }
 
   goHome(){
-    this.router.navigate(['/end-user/readings', this.dateString]);
+    this.router.navigate(['/end-user/readings', this.dateString, 1, this.readingIndex]);
   }
 
   initializeDisplayVariables(){

@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
 @Component({
@@ -11,8 +11,8 @@ export class ReadingItemComponent implements OnInit {
   @Input() includeNavigationBar: boolean;
   @Input() numberReadings: number;
   @Input() currentReadingIndex: number;
-
-  @Output() updateReadingIndex = new EventEmitter<number>();
+  @Input() dateString: string;
+  @Input() engageScripture: number;//0->false; 1->true
 
   constructor(private router: Router) {
   }
@@ -27,13 +27,17 @@ export class ReadingItemComponent implements OnInit {
     console.log(reading);
   }
 
+  /*
   onSelectPractice(reading, practice) {
     this.router.navigate(['/end-user/reading-practice', reading.id, practice.id]);
   }
+  */
 
+  /*
   onSelectResource(reading, resourceCollection) {
     this.router.navigate(['/end-user/reading-resource', reading.id, resourceCollection.id]);
   }
+  */
 
   showPreviousButton() {
     if (this.currentReadingIndex > 0) {
@@ -56,19 +60,19 @@ export class ReadingItemComponent implements OnInit {
   }
 
   nextReading() {
-    this.updateReadingIndex.emit(this.currentReadingIndex+1);
-    console.log('going to next reading....');
+    this.router.navigate(['/end-user/readings', this.dateString, this.engageScripture, this.currentReadingIndex+1]);
   }
 
   previousReading() {
-    this.updateReadingIndex.emit(this.currentReadingIndex-1);
+    this.router.navigate(['/end-user/readings', this.dateString, this.engageScripture, this.currentReadingIndex-1]);
   }
 
   //TODO: this might not be the best way to override the header styling;
   //I tried to do it via css, but it seems like this might not be possible when using flow-text
+  //could give up on flow-text and set the various stylings manually (for psalm text, etc.)
   modifyHeaderStyle(){
+    //console.log(this.reading.text);
     this.reading.text = this.reading.text.replace(/<h3>/g, "<h4>").replace(/<\/h3>/g, "</h4>");
-    console.log(this.reading.text);
   }
 
 }
