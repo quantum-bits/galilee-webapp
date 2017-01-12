@@ -6,28 +6,13 @@
     </div>
     <div class="card-content">
       <span class="card-title">{{ reading.std_ref }}</span>
-      <!--<div class="card-item">-->
-      <!--<p><b>{{ reading.description }}</b></p>-->
+
       <br>
-      <p [innerHTML]="reading.text" class="flow-text"></p>
-      <!--</div>-->
+      <div class="flow-text">
+        <p [innerHTML]="reading.text"></p>
+      </div>
+
     </div>
-
-    <!-- <div class="card-action">-->
-      <!--<a materialize="dropdown"
-         class="drop-down"
-         [attr.data-activates]="'dropdownViewPractice'+reading.id">
-        Practices</a>
-      <a materialize="dropdown"
-         class="drop-down"
-         [attr.data-activates]="'dropdownViewResource'+reading.id">
-        Resources</a>
-        -->
-
-      <!--<div *ngIf="includeBackButton" class="right"><a [routerLink]="['/end-user/readings']">Back</a></div> -->
-      <!--<p><a (click)="displayInfo(reading)">Display Info</a></p>-->
-
-    <!--</div>-->
 
     <div *ngIf="includeNavigationButtons()" class="card-action">
       <a *ngIf="showPreviousButton()" (click)="previousReading()"> <i class="material-icons lr-arrow">navigate_before</i> Previous</a>
@@ -36,21 +21,5 @@
     </div>
 
   </div>
-
-  <!-- Dropdown Structure for Choosing Practice
-  <ul [id]="'dropdownViewPractice'+reading.id" class='dropdown-content'>
-    <li *ngFor="let practice of practices">
-      <a (click)="onSelectPractice(reading, practice)">{{practice.title}}</a>
-    </li>
-  </ul>
-
-  <!-- Dropdown Structure for Choosing Resource
-  <ul [id]="'dropdownViewResource'+reading.id" class='dropdown-content'>
-    <li *ngFor="let resourceCollection of resourceCollections">
-      <a (click)="onSelectResource(reading, resourceCollection)">{{resourceCollection.title}}</a>
-    </li>
-  </ul>
-
-  -->
 
 </div>

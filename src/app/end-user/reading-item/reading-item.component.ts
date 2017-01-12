@@ -20,6 +20,7 @@ export class ReadingItemComponent implements OnInit {
   ngOnInit(){
     console.log('inside ngoninit for reading-item');
     console.log(this.includeNavigationButtons);
+    this.modifyHeaderStyle();
   }
 
   displayInfo(reading) {
@@ -61,6 +62,13 @@ export class ReadingItemComponent implements OnInit {
 
   previousReading() {
     this.updateReadingIndex.emit(this.currentReadingIndex-1);
+  }
+
+  //TODO: this might not be the best way to override the header styling;
+  //I tried to do it via css, but it seems like this might not be possible when using flow-text
+  modifyHeaderStyle(){
+    this.reading.text = this.reading.text.replace(/<h3>/g, "<h4>").replace(/<\/h3>/g, "</h4>");
+    console.log(this.reading.text);
   }
 
 }

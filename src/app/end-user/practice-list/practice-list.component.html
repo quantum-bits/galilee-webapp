@@ -13,7 +13,8 @@
   <li *ngFor="let practiceData of reading.applications; let i = index" class="collection-item">
     <h5>
       <a class="grey-text text-darken-1" (click)="onSelectPractice(i)">
-        {{practiceData.practice.title}} <i class="material-icons lr-arrow">arrow_forward</i>
+        {{practiceData.practice.title}}
+        <!--<i class="material-icons lr-arrow">arrow_forward</i>-->
       </a>
       <a (click)="onSelectPracticeSummary(i)">
         <i class="material-icons right grey-text darken-2">info_outline</i>
