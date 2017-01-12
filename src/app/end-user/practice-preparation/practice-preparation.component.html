@@ -1,0 +1,50 @@
+<div class="card ">
+  <!-- I can't figure out how to get a title bar in a solid color, so I'm cheating and using the card-action class -->
+  <div class="card-action grey darken-1">
+    <span class="card-title white-text">{{practiceData.practice.title}}</span>
+  </div>
+  <div class="card-content">
+    <span class="card-title">Preparation</span>
+    <!--<div class="card-item">-->
+    <!--<p><b>{{ reading.description }}</b></p>-->
+    <br>
+
+    <ul class="browser-default">
+      <li>
+        Are you in a place that is quiet?  You will need at least 15 minutes
+        of uninterrupted time.
+      </li>
+      <li>
+        Take a moment to do anything you need to prepare your heart
+        to listen to God's word.
+      </li>
+      <li>
+        Say a brief prayer to invite the Holy Spirit to come and guide
+        you through your experience.  Ask that the Lord will
+        show you his Truth and keep Satan and his distractions
+        away from you.
+      </li>
+    </ul>
+
+    <!--<div class="divider"></div>-->
+
+
+    <div class="center">
+      <a class="waves-effect waves-light btn" (click)="beginPracticeSteps()"> Begin Practice </a>
+    </div>
+
+    <br>
+
+
+    <div class="card-action">
+      <div class="right">
+        <a href="https://www.biblegateway.com/resources/scripture-engagement/" target="_blank">About {{practiceData.practice.title}}
+        </a>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+

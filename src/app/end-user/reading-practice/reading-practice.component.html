@@ -1,4 +1,4 @@
-<div *ngIf="!displayStep && practiceData">
+<div *ngIf="displaySummary && practiceData">
   <div class="container">
     <div class="row">
       <div class="col s12 m6 offset-m3 l6 offset-l3 back-link">
@@ -15,8 +15,33 @@
           [dateString] = "dateString"
           [readingIndex] = "readingIndex"
           [practiceIndex] = "practiceIndex"
+          (onSummaryClosed)="launchPreparationPage($event)"
         >
         </app-practice-summary>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="displayPreparation && practiceData">
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m6 offset-m3 l6 offset-l3 back-link">
+        <a class="grey-text text-darken-2" (click)="goHome()">
+          <i class="material-icons lr-arrow">navigate_before</i>
+          Back to Scripture Engagement
+        </a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12 m6 offset-m3 l6 offset-l3">
+        <app-practice-preparation
+          [practiceData] = "practiceData"
+          [dateString] = "dateString"
+          [readingIndex] = "readingIndex"
+          [practiceIndex] = "practiceIndex"
+        >
+        </app-practice-preparation>
       </div>
     </div>
   </div>

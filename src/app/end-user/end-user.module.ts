@@ -18,6 +18,7 @@ import {TruncatePipe} from '../shared/pipes/truncate.pipe';
 import { PracticeListComponent } from './practice-list/practice-list.component';
 import { PracticeSummaryComponent } from './practice-summary/practice-summary.component';
 import { PracticeStepComponent } from './practice-step/practice-step.component';
+import { PracticePreparationComponent } from './practice-preparation/practice-preparation.component';
 
 
 @NgModule({
@@ -37,7 +38,9 @@ import { PracticeStepComponent } from './practice-step/practice-step.component';
 
     PracticeSummaryComponent,
 
-    PracticeStepComponent
+    PracticeStepComponent,
+
+    PracticePreparationComponent
   ],
   imports: [
     BrowserModule,

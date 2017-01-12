@@ -3,8 +3,10 @@
      [materializeParams]="[{dismissible: false}]"
      [materializeActions]="modalActions">
   <div class="modal-content">
-    <h4>{{ header }}</h4>
+    <h5>{{ header }}</h5>
+    <h5>{{ optionalHeader }}</h5>
     <p>{{ message }}</p>
+    <p>{{ optionalMessage }}</p>
   </div>
   <div class="modal-footer">
     <a class="waves-effect waves-green btn-flat modal-action modal-close">Ok</a>

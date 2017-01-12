@@ -1,31 +1,25 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
-  selector: 'app-practice-summary',
-  templateUrl: './practice-summary.component.html',
-  styleUrls: ['./practice-summary.component.css']
+  selector: 'app-practice-preparation',
+  templateUrl: './practice-preparation.component.html',
+  styleUrls: ['./practice-preparation.component.css']
 })
-export class PracticeSummaryComponent implements OnInit {
+export class PracticePreparationComponent implements OnInit {
 
   @Input() practiceData: any;
   @Input() dateString: string;
   @Input() readingIndex: number;
   @Input() practiceIndex: number;
-  @Output() onSummaryClosed = new EventEmitter();
 
-  private turnOffSummary = false;
+  private stepIndex: number = 0;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
-    console.log(this.practiceData);
   }
 
-  closeSummary() {
-    this.onSummaryClosed.emit(this.turnOffSummary);
-  }
-
-  /*
   beginPracticeSteps(){
     if (this.practiceData.steps.length > 0){
       // go to the first step
@@ -35,5 +29,5 @@ export class PracticeSummaryComponent implements OnInit {
       this.router.navigate(['']);
     }
   }
-  */
+
 }

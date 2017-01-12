@@ -1,0 +1,6 @@
+/* https://github.com/Dogfalo/materialize/issues/2582 */
+
+ul.browser-default li {
+  list-style-type: initial;
+  padding-bottom: 10px;
+}

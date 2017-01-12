@@ -8,9 +8,14 @@ export class SimpleModalComponent {
   @Input() header: string;
   @Input() message: string;
 
+  optionalHeader: string;
+  optionalMessage: string;
+
   modalActions = new EventEmitter();
 
-  openModal() {
+  openModal(optionalHeader?: string, optionalMessage?: string) {
+    this.optionalHeader = optionalHeader;
+    this.optionalMessage = optionalMessage;
     this.modalActions.emit({action: "modal", params: ['open']});
   }
 

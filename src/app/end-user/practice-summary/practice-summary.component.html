@@ -13,33 +13,30 @@
 
       <br>
 
-      <!--<div class="divider"></div>-->
-
-
       <p>
-        <input type="checkbox" class="filled-in" id="filled-in-box" />
-        <label for="filled-in-box">Thanks, I don't need to see this summary in the future.</label>
+        <input
+          type="checkbox"
+          class="filled-in"
+          id="filled-in-box"
+          [checked]="turnOffSummary"
+          (change)="turnOffSummary=!turnOffSummary" />
+        <label for="filled-in-box">Got it! Don't show again</label>
       </p>
 
       <br>
 
-      <div class="center">
-        <a class="waves-effect waves-light btn" (click)="beginPracticeSteps()"> Begin Practice </a>
-      </div>
-
-      <br>
 
       <div class="card-action">
         <div class="right">
-          <a (click)="launchPracticeDesription()">More about {{practiceData.practice.title}}
-            <i class="material-icons diag-arrow">call_made</i>
+          <a href="https://www.biblegateway.com/resources/scripture-engagement/" target="_blank">About {{practiceData.practice.title}}
           </a>
         </div>
       </div>
-
-
-
-      <!--</div>-->
     </div>
   </div>
+</div>
+
+<div class="right">
+  <a class="grey-text text-darken-2" (click)="closeSummary()">
+    Preparation<i class="material-icons lr-arrow">navigate_next</i></a>
 </div>

@@ -6,11 +6,6 @@ import {ReadingService} from '../../shared/services/reading.service';
 import {PracticeService} from '../../shared/services/practice.service';
 import {Reading} from '../../shared/models/reading.model';
 
-//import {PracticeSummaryComponent} from '../practice-summary';
-
-//import { ReadingItemComponent } from '../reading-item';
-//import { PracticeItemComponent } from '../practice-item';
-
 import {SimpleModalComponent} from "../readings/simple-modal.component";
 
 @Component({
@@ -27,7 +22,9 @@ export class ReadingPracticeComponent implements OnInit {
   //singleReading: Reading; // once the format for the returned data has been finalized, we should use this
   readingsData: any;
   singleReading: any;
-  displayStep: boolean; //if false, then display the summary of a practice; if true, display a step
+  displaySummary: boolean; //if true, display the summary for the practice
+  displayPreparation: boolean; //if true, display the Preparation page
+  displayStep: boolean; //if true, display a step
 
   dateString: string;
   readingIndex: number;
@@ -40,18 +37,14 @@ export class ReadingPracticeComponent implements OnInit {
 
   constructor(private router: Router,
               private route: ActivatedRoute,
-              private readingService: ReadingService,
-              private practiceService: PracticeService) {
+              private readingService: ReadingService) {
     console.log('inside constructor for reading-practice');
   }
 
-  // NOTE: the following might not be the most efficient way to do this; it fetches
-  // the entire reading, even it if only needs to refresh the practice for that reading;
-  // in principle, once there has been one trip to the db, we wouldn't need to hit it again
-  // just to refresh which practice is being looked at
   ngOnInit() {
     console.log('inside ngOnInit for reading-practice');
     this.route.params.subscribe(params => {
+      this.initializeDisplayVariables();
       console.log('received route params');
       this.dateString = params['dateString'];
       this.readingIndex = +params['readingIndex'];
@@ -59,16 +52,20 @@ export class ReadingPracticeComponent implements OnInit {
       //http://stackoverflow.com/questions/1098040/checking-if-a-key-exists-in-a-javascript-object
       if ("stepIndex" in params) {
         this.stepIndex = +params['stepIndex'];
-        this.displayStep = true; // display a step of the practice, not the summary
+        this.displayStep = true;
+        //this.displayStep = true; // display a step of the practice, not the summary
       } else {
-        this.displayStep = false; // display the summary for the practice
+        // TODO: eventually check the readings array to see whether or not
+        // to display the summary for the given practice; if not, just display
+        // the preparation page
+        this.displaySummary = true; // display the summary for the practice
       }
       console.log(params);
       console.log(this.readingIndex);
       console.log(this.practiceIndex);
       // next, fetch the entire readingsData object from the service;
       // it'd probably be better to fetch only what we need for this component,
-      // but we have to have the flexibility to either fetch saved data or
+      // but we need the flexibility to either fetch saved data or
       // go to the db and re-fetch the data.  In the latter case, it's not obvious
       // to me how the service could intercept the transmission and parse out
       // only the required reading, etc.  One option would be to write an API endpoint
@@ -119,59 +116,25 @@ export class ReadingPracticeComponent implements OnInit {
     }
   }
 
-
-  // if (stepIndex >= this.readingsData.readings[readingIndex].applications[practiceIndex].steps.length) {
-
-  parseReadingPractice(){
-
-  }
-
   goHome(){
     this.router.navigate(['/end-user/readings', this.dateString]);
   }
 
-
-
-
-
-
-
-
-    /*
-    We may need to go this route later in order to fetch back the user's "state"
-    when they made a certain journal entry, but for now we will just make a synchronous
-    method call on the Reading service, with the assumption that that service already
-    has the required data in hand....
-
-    this.date = new Date();
-    this.route.params.subscribe(params => {
-      let readingID = +params['readingID'];
-      let practiceID = +params['practiceID'];
-      console.log(practiceID);
-      this.readingService.getReadingById(readingID)
-        .subscribe(reading => {
-            this.singleReading = reading;
-            this.fetchPractice(this.singleReading, practiceID);
-            this.practiceService.getPracticeGeneralInformation(practiceID)
-              .subscribe(
-                practice => {
-                  this.practiceGeneralInformation = practice;
-                  console.log(this.practiceGeneralInformation);
-                }
-              )
-          }
-        );
-    });
-    */
-  /*
-  fetchPractice(reading, practiceID) {
-    for (let practice of reading.practices) {
-      if (practice.id === practiceID) {
-        this.practice = practice;
-      }
-    }
+  initializeDisplayVariables(){
+    this.displaySummary = false;
+    this.displayPreparation = false;
+    this.displayStep = false;
   }
-  */
+
+  launchPreparationPage(turnOffSummary: boolean){
+    console.log('turn off summary?');
+    console.log(turnOffSummary);
+    if (turnOffSummary){
+      // turn off the summary for this practice in the db (so that the user won't see this summary in the future)
+    }
+    this.displaySummary = false;
+    this.displayPreparation = true;
+  }
 
 }
 

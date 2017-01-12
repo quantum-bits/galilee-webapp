@@ -48,7 +48,4 @@ export class PracticeStepComponent implements OnInit {
     this.router.navigate(['/end-user/reading-practice', this.dateString, this.readingIndex, this.practiceIndex, this.stepIndex -1]);
   }
 
-
-
-
 }
