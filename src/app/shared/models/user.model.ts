@@ -3,7 +3,6 @@ import {UserPermission} from './user-permission.model';
 export class User {
   id: number;
   email: string;
-  password: string;
   firstName: string;
   lastName: string;
   joinedOn: string;
@@ -14,7 +13,6 @@ export class User {
   constructor(obj){
     this.id = obj.id;
     this.email = obj.email;
-    this.password = obj.password;
     this.firstName = obj.firstName;
     this.lastName = obj.lastName;
     this.joinedOn = obj.joinedOn;

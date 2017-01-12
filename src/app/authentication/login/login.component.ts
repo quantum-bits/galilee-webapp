@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 
-import {AuthService} from '../authentication.service';
+import {UserService} from '../user.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   private signinServerError: any;
 
-  constructor(private auth: AuthService,
+  constructor(private userService: UserService,
               private router: Router,
               private formBuilder: FormBuilder) {
   }
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     this.signinServerError = null;
 
     if (this.loginForm.valid) {
-      this.auth.login(this.loginForm.value.username, this.loginForm.value.password);
+      this.userService.login(this.loginForm.value.username, this.loginForm.value.password);
     }
   }
 }

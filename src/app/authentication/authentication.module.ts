@@ -8,7 +8,7 @@ import {SharedModule} from '../shared/shared.module';
 
 import {AuthGuard} from './auth.guard';
 import {UserService}  from './user.service';
-import {AuthService} from './authentication.service';
+import {AuthenticationService} from './authentication.service';
 
 import {LoginComponent} from './login';
 import {SignupComponent} from './signup';
@@ -26,7 +26,7 @@ import {SignupComponent} from './signup';
     LoginComponent,
     SignupComponent
   ],
-  providers: [AuthGuard, AuthService, UserService]
+  providers: [AuthGuard, AuthenticationService, UserService]
 })
 export class AuthenticationModule {
 }
