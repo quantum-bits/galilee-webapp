@@ -8,6 +8,8 @@ import {Practice} from './shared/models/practice.model';
 import {ResourceService} from './shared/services/resource.service';
 import {UserService} from './authentication/user.service';
 import {User} from './shared/models/user.model';
+import {JournalService} from './shared/services/journal.service';
+import {JournalEntry} from './shared/models/journal-entry.model';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +18,8 @@ import {User} from './shared/models/user.model';
   providers: [
     ReadingService,
     PracticeService,
-    ResourceService
+    ResourceService,
+    JournalService
   ]
 })
 export class AppComponent {
@@ -30,6 +33,7 @@ export class AppComponent {
 
   constructor(private readingService: ReadingService,
               private practiceService: PracticeService,
+              private journalService: JournalService,
               private userService: UserService,
               private router: Router) {
   }
@@ -78,5 +82,9 @@ export class AppComponent {
   logout() {
     this.userService.logout();
     this.router.navigate(['/login']);
+  }
+
+  goToJournal(){
+    this.router.navigate(['/end-user/journal-entries']);
   }
 }

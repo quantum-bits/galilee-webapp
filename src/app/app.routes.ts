@@ -4,7 +4,7 @@ import { EndUserRoutes } from './end-user/end-user.routes';
 import { AdminRoutes } from './admin/admin.routes';
 import { AuthenticationRoutes } from './authentication/authentication.routes';
 
-import { ReadingsComponent } from './end-user/readings/readings.component';
+//import { ReadingsComponent } from './end-user/readings/readings.component';
 //import { ReadingPracticeComponent } from './end-user/reading-detail/reading-practice.component';
 import { AdminComponent } from './admin/admin.component';
 

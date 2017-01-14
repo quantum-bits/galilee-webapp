@@ -105,6 +105,7 @@ export class ReadingPracticeComponent implements OnInit {
     })
   }
 
+  // TODO: make this a method on the model instead
   practiceExists(readingsData, readingIndex, practiceIndex){
     // checks if the requested reading/practice exists in readingsData
     if (readingIndex >= this.readingsData.length) {
@@ -126,6 +127,7 @@ export class ReadingPracticeComponent implements OnInit {
     this.displayStep = false;
   }
 
+  //TODO: allow the user to "turn" off the practice summary
   launchPreparationPage(turnOffSummary: boolean){
     console.log('turn off summary?');
     console.log(turnOffSummary);

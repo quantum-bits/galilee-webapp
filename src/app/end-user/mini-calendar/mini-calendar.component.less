@@ -1,0 +1,108 @@
+/*@import '../../globals.less';*/
+
+@brand-fern: green;
+@button-checked: red;
+.vertical-center (@height) {
+	height:@height;
+	line-height:@height !important;
+	display:inline-block;
+	vertical-align:middle;
+}
+
+.border-box {
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+}
+@border-color:#CCC;
+.mini-calendar-component {
+	float:left;
+	display:block;
+	.border-box;
+	background:white;
+	width:100%;/*250px;*/
+	border:solid 1px @border-color;
+
+	@secondary-color:@brand-fern;
+	@spacing:0px;
+	@icon-width:30px;
+	@header-height:40px;
+
+	>div.header {
+		float:left;
+		width:100%;
+		background:white;
+		height:@header-height;
+		color:@secondary-color;
+		border-bottom:solid 1px @border-color;
+
+		>* {
+			.vertical-center(@header-height);
+		}
+
+		>i {
+			float:left;
+			width:@icon-width;
+			font-weight:bold;
+			position:relative;
+			.border-box;
+			padding:0 @spacing;
+			cursor:pointer;
+		}
+
+		>span {
+			float:left;
+			width:100%;
+			font-weight:bold;
+			text-transform:uppercase;
+			.border-box;
+			padding-left:@icon-width+@spacing;
+			text-align:center;
+			padding-right:@icon-width;
+			color:inherit;
+		}
+	}
+	>div.week {
+		float:left;
+		width:100%;
+
+		&:first-child {
+			border-top:none;
+		}
+
+		>span.day {
+			float:left;
+			width:100%/7;
+			.border-box;
+			font-size:0.75em;
+			text-align:center;
+			.vertical-center(30px);
+			background:white;
+			cursor:pointer;
+			color:black;
+
+			&:first-child {
+				border-left:none;
+			}
+
+			&.today {
+				background:#E3F2FF;
+			}
+
+			&.different-month {
+				color:#C0C0C0;
+			}
+
+			&.selected {
+				background:@button-checked;
+				color:white;
+			}
+
+		}
+
+		&.names>span {
+			color:@secondary-color;
+			font-weight:bold;
+			border-bottom:solid 1px @border-color;
+		}
+	}
+}

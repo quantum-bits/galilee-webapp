@@ -3,6 +3,7 @@ import { EndUserComponent } from './end-user.component';
 import { ReadingsComponent } from './readings';
 import { ReadingPracticeComponent } from './reading-practice';
 import { ReadingResourceComponent } from './reading-resource';
+import { JournalEntriesComponent } from './journal-entries';
 
 export const EndUserRoutes = [
   {
@@ -36,6 +37,10 @@ export const EndUserRoutes = [
       {
         path: 'reading-practice/:dateString/:readingIndex/:practiceIndex/:stepIndex',//display a step of the practice
         component: ReadingPracticeComponent
+      },
+      {
+        path: 'journal-entries',//display journal entries
+        component: JournalEntriesComponent
       },
       {
         path: 'reading-resource/:readingID/:resourceID',

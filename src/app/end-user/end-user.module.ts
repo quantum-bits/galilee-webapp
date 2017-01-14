@@ -2,6 +2,10 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {RouterModule} from "@angular/router";
 
+import {MomentModule} from 'angular2-moment';
+
+import {MiniCalendarComponent} from './mini-calendar/mini-calendar.component';
+
 import {EndUserComponent} from './end-user.component';
 import {PracticeItemComponent} from './practice-item';
 import {ReadingItemComponent} from './reading-item';
@@ -19,6 +23,7 @@ import { PracticeListComponent } from './practice-list/practice-list.component';
 import { PracticeSummaryComponent } from './practice-summary/practice-summary.component';
 import { PracticeStepComponent } from './practice-step/practice-step.component';
 import { PracticePreparationComponent } from './practice-preparation/practice-preparation.component';
+import { JournalEntriesComponent } from './journal-entries/journal-entries.component';
 
 
 @NgModule({
@@ -40,12 +45,16 @@ import { PracticePreparationComponent } from './practice-preparation/practice-pr
 
     PracticeStepComponent,
 
-    PracticePreparationComponent
+    PracticePreparationComponent,
+
+    JournalEntriesComponent,
+    MiniCalendarComponent
   ],
   imports: [
     BrowserModule,
     RouterModule,
-    MaterializeModule
+    MaterializeModule,
+    MomentModule
   ]
 })
 export class EndUserModule { }

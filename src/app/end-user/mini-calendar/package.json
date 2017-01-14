@@ -1,0 +1,83 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "mini-calendar",
+        "scope": null,
+        "escapedName": "mini-calendar",
+        "name": "mini-calendar",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/Users/kenkiers/galilee-webapp"
+    ]
+  ],
+  "_from": "mini-calendar@latest",
+  "_id": "mini-calendar@1.0.2",
+  "_inCache": true,
+  "_location": "/mini-calendar",
+  "_nodeVersion": "6.2.2",
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/mini-calendar-1.0.2.tgz_1473286299246_0.7669295859523118"
+  },
+  "_npmUser": {
+    "name": "blained3",
+    "email": "backmanb1@gmail.com"
+  },
+  "_npmVersion": "3.9.5",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "mini-calendar",
+    "scope": null,
+    "escapedName": "mini-calendar",
+    "name": "mini-calendar",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/mini-calendar/-/mini-calendar-1.0.2.tgz",
+  "_shasum": "74c1c7f3490550367c47a2cda268a2af1029b858",
+  "_shrinkwrap": null,
+  "_spec": "mini-calendar",
+  "_where": "/Users/kenkiers/galilee-webapp",
+  "author": {
+    "name": "Blaine Backman",
+    "email": "backmanb1@gmail.com",
+    "url": "http://blainebackman.com"
+  },
+  "dependencies": {},
+  "description": "A mini calendar for Angular 2",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "74c1c7f3490550367c47a2cda268a2af1029b858",
+    "tarball": "https://registry.npmjs.org/mini-calendar/-/mini-calendar-1.0.2.tgz"
+  },
+  "gitHead": "d01b5c17b19231f8a7e12d4bf59217e248919574",
+  "keywords": [
+    "calendar",
+    "angular",
+    "2",
+    "mini"
+  ],
+  "license": "ISC",
+  "main": "index.ts",
+  "maintainers": [
+    {
+      "name": "blained3",
+      "email": "backmanb1@gmail.com"
+    }
+  ],
+  "name": "mini-calendar",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.2"
+}
