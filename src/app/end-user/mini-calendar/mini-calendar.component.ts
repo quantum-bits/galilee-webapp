@@ -22,6 +22,7 @@ import * as moment from 'moment';
 export class MiniCalendarComponent implements OnInit {
 	@Input() showWeek;
 	@Input() selected;
+  @Input() calendarJournalEntries;
 	@Output() changeSelected = new EventEmitter();
 	month;
 
@@ -29,6 +30,7 @@ export class MiniCalendarComponent implements OnInit {
 
 	ngOnInit() {
 	  console.log(this.selected);
+    console.log(this.calendarJournalEntries);
 		this.month = moment(this.selected).clone();
     console.log(this.month.format("MMM YYYY"));
 
@@ -104,5 +106,20 @@ export class MiniCalendarComponent implements OnInit {
 			monthIndex = date.month();
 		}
 	}
+
+  entriesExistThisDay(day){
+    if (day.date.format('YYYY-MM-DD') in this.calendarJournalEntries) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  numberEntriesThisDay(day){
+    if (day.date.format('YYYY-MM-DD') in this.calendarJournalEntries) {
+      return this.calendarJournalEntries[day.date.format('YYYY-MM-DD')];
+    }
+  }
+
 
 }

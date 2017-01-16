@@ -27,7 +27,6 @@
 			<span class="grey-text">{{month.format("MMM YYYY")}}</span>
 			<i class="material-icons" (click)="next()">chevron_right</i>
 -->
-<div class="circle">1</div>
 <div class="card ">
   <!-- I can't figure out how to get a title bar in a solid color, so I'm cheating and using the card-action class -->
   <div class="card-action grey darken-1">
@@ -53,8 +52,8 @@
                   (click)="select(day)" *ngFor="let day of week.days">
             <div>{{day.numb}}</div>
             <!-- this no worky maybe try the icon alert or something from materialize css -->
-            <div class="center">
-              <div class="circle">1</div>
+            <div *ngIf="entriesExistThisDay(day)" class="center">
+              <div class="circle">{{numberEntriesThisDay(day)}}</div>
             </div>
             <!--<span class="new badge green" data-badge-caption="">2</span>-->
           </span>
