@@ -1,12 +1,27 @@
 /*@import '../../globals.less';*/
 
 @brand-fern: green;
-@button-checked: red;
+@button-checked: grey;
 .vertical-center (@height) {
 	height:@height;
 	line-height:@height !important;
 	display:inline-block;
 	vertical-align:middle;
+}
+
+/* https://bryanhadaway.com/how-to-create-circles-with-css/ */
+.circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2px;
+  /*font-size: 50px;*/
+  color: #fff;
+  line-height: 20px;
+  text-align: center;
+  background: green;
 }
 
 .border-box {
@@ -75,10 +90,22 @@
 			.border-box;
 			font-size:0.75em;
 			text-align:center;
-			.vertical-center(30px);
+			/*.vertical-center(40px);*/
+
+      border:solid 1px @border-color;
+
+      height:40px;
+      line-height:16px !important;
+      display:inline-block;
+      vertical-align: middle;
+
 			background:white;
 			cursor:pointer;
 			color:black;
+
+      &:data {
+        color:red;
+      }
 
 			&:first-child {
 				border-left:none;

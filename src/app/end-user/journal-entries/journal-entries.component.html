@@ -4,7 +4,8 @@
     <div class="col s12 m8 offset-m2 l4">
       <app-mini-calendar
         [showWeek]="'true'"
-        [selected]="'2017-01-11'">
+        [selected]="'2017-01-11'"
+        (changeSelected)="daySelected($event)">
       </app-mini-calendar>
     </div>
 

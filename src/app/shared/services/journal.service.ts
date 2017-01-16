@@ -8,13 +8,7 @@ const JOURNAL_ENTRIES = [
   {
     id: 1,
     title: 'My thoughts on the readings from today',
-    entry: 'Here are some thoughts that I was having while ' +
-            'reading and engaging today. ' +
-    'unde omnis iste natus error sit voluptatem accusantium ' +
-    'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
-    'ab illo inventore veritatis et quasi architecto beatae vitae ' +
-    'dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas ' +
-    'sit aspernatur aut odit aut fugit, sed quia',
+    entry: 'Here are some thoughts that I was having while reading this.',
     tags: ['thoughts', 'prayer', 'friends'],
     date: "2017-01-11T05:00:00.000Z"
   },

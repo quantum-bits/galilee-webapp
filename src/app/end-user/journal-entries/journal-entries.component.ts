@@ -47,5 +47,9 @@ export class JournalEntriesComponent implements OnInit {
     this.allowTruncation[entryIndex] = !this.allowTruncation[entryIndex];
   }
 
+  daySelected(day:any){
+    console.log(day);
+  }
+
 
 }

@@ -1,8 +1,12 @@
 /*
 
+Original author:
 
->>>>>>>>>Blaine Backman info >>>>>>>>>
+  Blaine Backman
+  email: backmanb1@gmail.com
+  url: http://blainebackman.com
 
+Modified by KK
 
  */
 

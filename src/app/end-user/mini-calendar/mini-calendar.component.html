@@ -27,7 +27,7 @@
 			<span class="grey-text">{{month.format("MMM YYYY")}}</span>
 			<i class="material-icons" (click)="next()">chevron_right</i>
 -->
-
+<div class="circle">1</div>
 <div class="card ">
   <!-- I can't figure out how to get a title bar in a solid color, so I'm cheating and using the card-action class -->
   <div class="card-action grey darken-1">
@@ -49,15 +49,20 @@
       <div class="col s12 center-align">
         <div class="mini-calendar-component">
         <div class="week" *ngFor="let week of weeks">
-            <span class="day" [ngClass]="{ 'today': day.isToday, 'different-month': !day.isCurrentMonth, 'selected': isInWeek(day) }"
+          <span class="day" [ngClass]="{ 'today': day.isToday, 'different-month': !day.isCurrentMonth, 'selected': isInWeek(day) }"
                   (click)="select(day)" *ngFor="let day of week.days">
-              {{day.numb}}
-            </span>
+            <div>{{day.numb}}</div>
+            <!-- this no worky maybe try the icon alert or something from materialize css -->
+            <div class="center">
+              <div class="circle">1</div>
+            </div>
+            <!--<span class="new badge green" data-badge-caption="">2</span>-->
+          </span>
         </div>
       </div>
     </div>
   </div>
-  </div>
+</div>
 
 
 
