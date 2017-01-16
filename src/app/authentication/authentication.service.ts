@@ -29,11 +29,9 @@ export class AuthenticationService {
       .do((data: LoginData) => {
           if (data.status === "OK") {
             localStorage.setItem(TOKEN_KEY, data[TOKEN_KEY]);
-            console.log("AUTH SUCCESS", data);
             return data.user;
           } else {
             localStorage.removeItem(TOKEN_KEY);
-            console.log("AUTH FAILURE");
             return null;
           }
         });

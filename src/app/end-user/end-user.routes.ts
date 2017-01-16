@@ -1,9 +1,9 @@
 import { EndUserComponent } from './end-user.component';
-
 import { ReadingsComponent } from './readings';
 import { ReadingPracticeComponent } from './reading-practice';
 import { ReadingResourceComponent } from './reading-resource';
 import { JournalEntriesComponent } from './journal-entries';
+import { AuthGuard } from '../authentication/auth.guard';
 
 export const EndUserRoutes = [
   {
@@ -39,8 +39,10 @@ export const EndUserRoutes = [
         component: ReadingPracticeComponent
       },
       {
-        path: 'journal-entries',//display journal entries
-        component: JournalEntriesComponent
+        // Display journal entries
+        path: 'journal-entries',
+        component: JournalEntriesComponent,
+        canActivate: [AuthGuard]
       },
       {
         path: 'reading-resource/:readingID/:resourceID',

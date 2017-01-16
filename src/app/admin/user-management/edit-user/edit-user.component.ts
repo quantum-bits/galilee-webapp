@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Input, OnChanges } from '@angular/core';
+import {Component, OnInit, EventEmitter, Input, OnChanges} from '@angular/core';
 
 import {
   FormBuilder,
@@ -11,7 +11,7 @@ import {
 import {User} from '../../../shared/models/user.model';
 import {UserPermission} from '../../../shared/models/user-permission.model';
 
-import { UserService } from '../../../authentication/user.service';
+import {UserService} from '../../../authentication/user.service';
 
 @Component({
   selector: 'app-edit-user',
@@ -20,11 +20,11 @@ import { UserService } from '../../../authentication/user.service';
 })
 export class EditUserComponent implements OnInit, OnChanges {
   /*
-    Use cases for userData:
-    - new user: do not set userData
-    - updating existing user: set userData to the user's User object
-    - updating existing user, but launching 'on the fly' (using @ViewChild, etc.):
-         set userData after the fact (see manage-users.component for an example)
+   Use cases for userData:
+   - new user: do not set userData
+   - updating existing user: set userData to the user's User object
+   - updating existing user, but launching 'on the fly' (using @ViewChild, etc.):
+   set userData after the fact (see manage-users.component for an example)
    */
   @Input() userData: any;
 
@@ -54,11 +54,11 @@ export class EditUserComponent implements OnInit, OnChanges {
     this.initializeForm();
   }
 
-  ngOnChanges(){
+  ngOnChanges() {
     console.log('change detected in edit-user!');
   }
 
-  initializeForm(){
+  initializeForm() {
     // FIXME need to make sure only to show user permissions in the form only if the current
     // user is an admin
     this.userService.getInitialUserPermissions().subscribe(
@@ -66,7 +66,7 @@ export class EditUserComponent implements OnInit, OnChanges {
         this.initialUserPermissions = permissions;
         console.log(this.initialUserPermissions);
 
-        if (this.userData===undefined) {
+        if (this.userData === undefined) {
           this.createEmptyUserData(); // fills userData with initial values
           console.log(this.userData);
         }
@@ -159,7 +159,7 @@ export class EditUserComponent implements OnInit, OnChanges {
   }
 
 
-  onSubmit(){
+  onSubmit() {
     console.log(this.userForm);
 
     // WORKING HERE:
@@ -167,11 +167,14 @@ export class EditUserComponent implements OnInit, OnChanges {
     // 3. make sure the logic makes sense for both positive and negative results!!!
     // 4. double-check login for #3....
 
-    if (this.userForm.valid){
+    if (this.userForm.valid) {
       this.signinServerError = null;//reinitialize it....
       this.userService.signup(
         this.userForm.value.email,
-        this.userForm.value.passwords.password).subscribe(
+        this.userForm.value.passwords.password,
+        this.userForm.value.firstName,
+        this.userForm.value.lastName
+      ).subscribe(
         (result) => {
           console.log('back in the login component');
           console.log(result);
@@ -179,7 +182,7 @@ export class EditUserComponent implements OnInit, OnChanges {
 
           if (result.ok) {
             this.close.emit('event');
-          //  this.closeModal(this.modalID);
+            //  this.closeModal(this.modalID);
           }
         },
         (error) => {
@@ -189,11 +192,9 @@ export class EditUserComponent implements OnInit, OnChanges {
         }
       );
     }
-
-
   }
 
-  displayForm(){
+  displayForm() {
     console.log(this.userForm);
     //console.log(this.userForm.controls.passwords.controls.password2.touched && !this.userForm.controls.passwords.controls.valid);
   }
@@ -203,7 +204,7 @@ export class EditUserComponent implements OnInit, OnChanges {
     this.close.emit('event');
   }
 
-  displayCurrentUser(){
+  displayCurrentUser() {
     console.log(this.userService.getCurrentUser());
   }
 

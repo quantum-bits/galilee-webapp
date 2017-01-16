@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
+import {Http} from '@angular/http';
 
 import {AuthenticationService} from './authentication.service';
-
-import {contentHeaders} from './common/headers';
 
 import {User} from '../shared/models/user.model';
 import {Permission} from '../shared/models/permission.model';
@@ -33,11 +32,12 @@ const baseUrl = 'http://localhost:3001';
 export class UserService {
   private currentUser: User;
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(private authenticationService: AuthenticationService,
+              private http: Http) {
   }
 
-  login(username, password) {
-    this.authenticationService.login(username, password)
+  login(email, password) {
+    this.authenticationService.login(email, password)
       .subscribe(user => {
         if (user) {
           this.currentUser = user;
@@ -49,20 +49,14 @@ export class UserService {
       });
   }
 
-  signup(username, password) {
-    // return this.http
-    //   .post(
-    //     baseUrl + '/users',
-    //     JSON.stringify({username, password}),
-    //     {headers: contentHeaders}
-    //   )
-    //   .map(
-    //     res => {
-    //       localStorage.setItem('id_token', res.json().id_token);
-    //       console.log(res);
-    //       this.loggedIn = true;
-    //       return res;
-    //     })
+  signup(email, password, first_name, last_name) {
+    return this.http
+      .post('http://localhost:3000/users/signup', {
+        email: email,
+        password: password,
+        first_name: first_name,
+        last_name: last_name
+      });
   }
 
   logout() {
@@ -74,64 +68,23 @@ export class UserService {
     return this.authenticationService.isloggedIn();
   }
 
-  getCurrentUser() {
+  getCurrentUser(): User {
     return this.currentUser;
   }
 
   getUsers() {
-    // let users: User[] = [];
-    //
-    // for (let user of USERS) {
-    //   let userPermissions: UserPermission[] = [];
-    //   for (let permission of user.permissions) {
-    //     userPermissions.push(new UserPermission(
-    //       {
-    //         enabled: permission.enabled,
-    //         id: permission.id,
-    //         title: permission.title
-    //       }
-    //       )
-    //     )
-    //   }
-    //   users.push(new User(
-    //     {
-    //       id: user.id,
-    //       email: user.email,
-    //       password: user.password,
-    //       firstName: user.firstName,
-    //       lastName: user.lastName,
-    //       joinedOn: user.joinedOn,
-    //       enabled: user.enabled,
-    //       preferredVersionID: user.preferredVersionID,
-    //       permissions: userPermissions
-    //     })
-    //   )
-    // }
-    //
-    // var promise = Promise.resolve(users);// Observable.just(USERS);
-    // return Observable.fromPromise(promise);
+    return this.http.get('http://localhost:3000/users')
+      .map(res => res.json());
   }
 
   getPermissionTypes() {
-    // var promise = Promise.resolve(PERMISSION_TYPES);// Observable.just(USERS);
-    // return Observable.fromPromise(promise);
+    // TODO: How do these two methods differ??
+    return this.getInitialUserPermissions();
   }
 
   getInitialUserPermissions() {
-    // Return a UserPermission-like dictionary with initial data;
-    // used to populate the form for creating a new user.
-    // var initialUserPermissions = [];
-    //
-    // for (let permission of PERMISSION_TYPES) {
-    //   initialUserPermissions.push({
-    //     title: permission.title,
-    //     id: permission.id,
-    //     enabled: false
-    //   });
-    // }
-    //
-    // var promise = Promise.resolve(initialUserPermissions);
-    // return Observable.fromPromise(promise);
+    return this.http.get('http://localhost:3000/users/permissions')
+      .map(res => res.json());
   }
 
 }
