@@ -4,6 +4,7 @@ import { ReadingsComponent } from './readings';
 import { ReadingPracticeComponent } from './reading-practice';
 import { ReadingResourceComponent } from './reading-resource';
 import { JournalEntriesComponent } from './journal-entries';
+import { UpdateJournalEntryComponent } from './update-journal-entry';
 
 export const EndUserRoutes = [
   {
@@ -45,6 +46,14 @@ export const EndUserRoutes = [
       {
         path: 'reading-resource/:readingID/:resourceID',
         component: ReadingResourceComponent
+      },
+      {
+        path: 'journal-entry',//create new journal entry
+        component: UpdateJournalEntryComponent
+      },
+      {
+        path: 'journal-entry/:journalEntryID',//update existing journal entry
+        component: UpdateJournalEntryComponent
       },
     ]
 

@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {Router} from '@angular/router';
+
+import {DeleteJournalEntryModalComponent} from '../delete-journal-entry-modal';
 
 import {JournalEntry} from '../../shared/models/journal-entry.model';
 import {JournalEntriesData} from '../../shared/interfaces/journal-entries-data.interface';
@@ -24,6 +27,8 @@ Next:
 })
 export class JournalEntriesComponent implements OnInit {
 
+  @ViewChild('deleteEntryModal') modal: DeleteJournalEntryModalComponent;
+
   //private journalEntriesData: JournalEntriesData; not currently being used
   private journalEntries: JournalEntry[];
   private truncationLimit = TRUNCATION_LIMIT; // so can use this in the template....
@@ -38,7 +43,9 @@ export class JournalEntriesComponent implements OnInit {
   private calendarJournalEntries: any;
   private calendarLookup: any;
 
-  constructor(private journalService: JournalService) { }
+  constructor(
+    private journalService: JournalService,
+    private router: Router) { }
 
   ngOnInit() {
     this.journalService.getJournalEntries(this.startIndex, DEFAULT_NUMBER_ENTRIES)
@@ -63,6 +70,16 @@ export class JournalEntriesComponent implements OnInit {
       );
   }
 
+  deleteEntry(entryID: number){
+    console.log(entryID);
+    this.modal.openModal(entryID);
+  }
+
+  deleteThisEntry(data) {
+    console.log(data);
+    //TODO: delete journal entry; then reload this page
+  }
+
   toggleAllowTruncation(entryIndex: number){
     this.allowTruncation[entryIndex] = !this.allowTruncation[entryIndex];
   }
@@ -75,10 +92,21 @@ export class JournalEntriesComponent implements OnInit {
     console.log(tag);
   }
 
+
+  newJournalEntry(){
+    this.router.navigate(['/end-user/journal-entry']);
+  }
+
+  moreEntriesMayExist(){
+    if (this.journalEntries.length === this.maxEntriesToShow) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   loadMoreEntries() {
-    if (this.maxEntriesToShow === this.journalEntries.length) {
-      // note that if this.maxEntriesToShow > this.journalEntries.length, then we
-      // already have all the data, so there's no sense trying to get more....
+    if (this.moreEntriesMayExist()) {
       this.maxEntriesToShow = this.maxEntriesToShow + DEFAULT_NUMBER_ENTRIES;
       this.journalService.getJournalEntries(this.maxEntriesToShow - DEFAULT_NUMBER_ENTRIES, DEFAULT_NUMBER_ENTRIES)
         .subscribe(
