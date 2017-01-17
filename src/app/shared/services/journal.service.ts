@@ -6,6 +6,14 @@ import {JournalEntriesData} from '../interfaces/journal-entries-data.interface';
 
 
 // MOCK
+const JOURNAL_ENTRY = {
+  id: 1,
+  title: 'My thoughts on the readings from today',
+  entry: 'Here are some thoughts that I was having while reading this.',
+  tags: ['thoughts', 'prayer', 'friends'],
+  date: "2017-01-15T05:00:00.000Z"
+}
+
 const JOURNAL_ENTRIES = [
   {
     id: 1,
@@ -86,8 +94,9 @@ const MORE_JOURNAL_DATA = {
   journalEntries: MORE_JOURNAL_ENTRIES
 }
 
+const ALL_USED_TAGS = ['thoughts','reflections','prayer', 'friends', 'doctrine', 'predestination'];
 
-@Injectable()
+  @Injectable()
 export class JournalService {
 
   constructor() { }
@@ -104,4 +113,16 @@ export class JournalService {
       return Observable.fromPromise(promise);
     }
   }
+
+  getJournalEntry(entryID: number){
+    var promise = Promise.resolve(JOURNAL_ENTRY);
+    return Observable.fromPromise(promise);
+  }
+
+  getAllUsedTags(){
+    var promise = Promise.resolve(ALL_USED_TAGS);
+    return Observable.fromPromise(promise);
+  }
+
+
 }

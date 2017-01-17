@@ -1,31 +1,141 @@
-<div class="container">
-  <div class="row">
-    <div class="col s12 m8 offset-m2 l8 offset-l2">
-      <div class="card">
-        <!-- I can't figure out how to get a title bar in a solid color, so I'm cheating and using the card-action class -->
-        <div class="card-action grey darken-1">
-          <span class="card-title white-text">New Entry</span>
-        </div>
-        <div class="card-content">
-          <div class="row">
-            <div class="col s8">
-              <div class="card-title">Title:</div>
-            </div>
-            <div class="col s4 right-align">
-              <a> <!-- (click)="deleteEntry(journalEntryID)">-->
-                <i class="material-icons grey-text darken-2">delete</i>
-              </a>
-              <i class="material-icons">mode_edit</i>
-            </div>
-          </div>
-          <div>
-            <h6>Entry:</h6>
-          </div>
+<div *ngIf="journalEntryForm">
+
+
+  <div class="container">
+    <div class="card">
+      <div class="card-content">
+        <div class="card-title">
+          Journal
         </div>
       </div>
     </div>
   </div>
+
+  <div class="container">
+
+    <form [formGroup]="journalEntryForm" novalidate (ngSubmit)="onSubmit()">
+
+      <div class="row">
+        <div class="col s12 m8 offset-m2 l6 offset-l3 ">
+          <div class="card">
+            <div class="card-content">
+              <span *ngIf="newEntry" class="card-title">
+                New Entry
+              </span>
+              <span *ngIf="!newEntry" class="card-title">
+                Update Entry
+              </span>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <label for="title">Title</label>
+                  <input
+                    [input-wake-up]="'title'"
+                    [class.warning-background] = "journalEntryForm.controls.title.errors && journalEntryForm.controls.title.touched"
+                    id="title"
+                    type="text"
+                    formControlName="title">
+                </div>
+                <div *ngIf="journalEntryForm.controls.title.errors && journalEntryForm.controls.title.touched">
+                  <small class="warning">
+                    This field is required.
+                  </small>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <label for="entry">Entry</label>
+                  <textarea
+                    class="materialize-textarea"
+                    [input-wake-up]="'entry'"
+                    [class.warning-background] = "journalEntryForm.controls.entry.errors && journalEntryForm.controls.entry.touched"
+                    id="entry"
+                    type="text"
+                    formControlName="entry">
+                  </textarea>
+                </div>
+                <div *ngIf="journalEntryForm.controls.entry.errors && journalEntryForm.controls.entry.touched">
+                  <small class="warning">
+                    This field is required.
+                  </small>
+                </div>
+              </div>
+
+              <div formArrayName="tags">
+                <div *ngFor="let tag of journalEntryForm.controls.tags.controls; let i=index">
+                  <!-- Angular assigns array index as group name by default 0, 1, 2, ... -->
+                  <div class="row">
+                    <div class="col s12">
+                      <div [formGroupName]="i">
+
+                        <div class="input-field col s12">
+                          <label [attr.for]="'tag'+i">Tag</label>
+                          <input
+                            [input-wake-up]="'tag'+i"
+                            id="tag{{i}}"
+                            type="text"
+                            formControlName="text">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                  <!-- Permission Checkboxes -->
+
+              <!--
+              <div class="row">
+                <div class="col s12">
+                  Permissions
+                </div>
+              </div>
+              <div formArrayName="permissions">
+                <div *ngFor="let permission of userForm.controls.permissions.controls; let i=index">
+                  <!-- Angular assigns array index as group name by default 0, 1, 2, ...
+                  <div class="row">
+                    <div class="col s12">
+
+                      <div [formGroupName]="i">
+
+                        <p>
+                          <input
+                            type="checkbox"
+                            class="filled-in"
+                            id="permissionCheckbox{{i}}"
+                            formControlName="enabled"/>
+                          <label [attr.for]="'permissionCheckbox'+i">{{permission.value.title}}</label>
+                        </p>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              -->
+            </div>
+
+            <div class="card-action">
+              <button
+                class="waves-effect waves-light btn"
+                type="submit"
+                [class.disabled]="!journalEntryForm.valid"
+                [disabled]="!journalEntryForm.valid">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+
+  </div>
 </div>
+
+<div class="col s4 right-align">
+  <a> <!-- (click)="deleteEntry(journalEntryID)">-->
+    <i class="material-icons grey-text darken-2">delete</i>
+  </a>
+</div>
+
 
 
 <app-delete-journal-entry-modal

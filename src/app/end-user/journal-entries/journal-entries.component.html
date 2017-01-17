@@ -34,7 +34,9 @@
               <a (click)="deleteEntry(journalEntry.id)">
                 <i class="material-icons grey-text darken-2">delete</i>
               </a>
-              <i class="material-icons">mode_edit</i>
+              <a (click)="updateEntry(journalEntry.id)">
+                <i class="material-icons grey-text darken-2">mode_edit</i>
+              </a>
             </div>
           </div>
             <div *ngIf="allowTruncation[i]">

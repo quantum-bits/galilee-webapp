@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {RouterModule} from "@angular/router";
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 
 import {MomentModule} from 'angular2-moment';
 
@@ -15,7 +16,7 @@ import {ReadingsComponent} from './readings';
 import {ResourceItemComponent} from './resource-item';
 
 import {MaterializeModule} from "angular2-materialize";
-
+import {SharedModule} from '../shared/shared.module';
 
 import {SimpleModalComponent} from './readings/simple-modal.component';
 import {TruncatePipe} from '../shared/pipes/truncate.pipe';
@@ -58,7 +59,10 @@ import { UpdateJournalEntryComponent } from './update-journal-entry/update-journ
     BrowserModule,
     RouterModule,
     MaterializeModule,
-    MomentModule
+    MomentModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class EndUserModule { }

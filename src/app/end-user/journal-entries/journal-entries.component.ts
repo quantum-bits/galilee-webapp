@@ -97,6 +97,10 @@ export class JournalEntriesComponent implements OnInit {
     this.router.navigate(['/end-user/journal-entry']);
   }
 
+  updateEntry(entryID: number){
+    this.router.navigate(['/end-user/journal-entry', entryID]);
+  }
+
   moreEntriesMayExist(){
     if (this.journalEntries.length === this.maxEntriesToShow) {
       return true;

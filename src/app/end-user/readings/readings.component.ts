@@ -5,6 +5,9 @@ import {ReadingService} from '../../shared/services/reading.service';
 import {Reading} from '../../shared/models/reading.model';
 import {SimpleModalComponent} from "./simple-modal.component";
 
+//TODO: determine translations actively
+const TRANSLATIONS = ["NLT", "NIV", "RSV", "KJV", "NKJV"];
+
 @Component({
   selector: 'app-readings',
   templateUrl: './readings.component.html',
@@ -24,6 +27,7 @@ export class ReadingsComponent implements OnInit {
 
 
   private readingsData: any;//Reading[];
+  private translations = TRANSLATIONS;
 
   @ViewChild('sorry') modal: SimpleModalComponent;
 
@@ -113,14 +117,15 @@ export class ReadingsComponent implements OnInit {
     this.readingDescriptions = [];
     var loopIndex = 0;
     for (var reading of this.readingsData.readings){
-      if (loopIndex != this.currentReadingIndex){
-        this.readingDescriptions.push(
-          {
-            'description': this.readingsData.readings[loopIndex].std_ref,
-            'index': loopIndex
-          }
-        );
-      }
+      //if (loopIndex != this.currentReadingIndex){
+      //put all of the readings in the drop-down list
+      this.readingDescriptions.push(
+        {
+          'description': this.readingsData.readings[loopIndex].std_ref,
+          'index': loopIndex
+        }
+      );
+      //}
       loopIndex++;
     }
     console.log(this.readingDescriptions);
