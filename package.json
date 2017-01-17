@@ -28,6 +28,7 @@
     "core-js": "^2.4.1",
     "jquery": "^2.2.4",
     "materialize-css": "^0.97.8",
+    "ng2-completer": "^0.4.0",
     "ng2-dragula": "^1.2.2",
     "ng2-file-upload": "^1.1.4-2",
     "ng2-pagination": "^1.0.1",

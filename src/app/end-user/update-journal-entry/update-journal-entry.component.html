@@ -26,6 +26,8 @@
                 Update Entry
               </span>
 
+
+
               <div class="row">
                 <div class="input-field col s12">
                   <label for="title">Title</label>
@@ -61,57 +63,34 @@
                 </div>
               </div>
 
-              <div formArrayName="tags">
-                <div *ngFor="let tag of journalEntryForm.controls.tags.controls; let i=index">
-                  <!-- Angular assigns array index as group name by default 0, 1, 2, ... -->
-                  <div class="row">
-                    <div class="col s12">
-                      <div [formGroupName]="i">
-
-                        <div class="input-field col s12">
-                          <label [attr.for]="'tag'+i">Tag</label>
-                          <input
-                            [input-wake-up]="'tag'+i"
-                            id="tag{{i}}"
-                            type="text"
-                            formControlName="text">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-                  <!-- Permission Checkboxes -->
-
-              <!--
               <div class="row">
-                <div class="col s12">
-                  Permissions
-                </div>
-              </div>
-              <div formArrayName="permissions">
-                <div *ngFor="let permission of userForm.controls.permissions.controls; let i=index">
-                  <!-- Angular assigns array index as group name by default 0, 1, 2, ...
-                  <div class="row">
-                    <div class="col s12">
-
-                      <div [formGroupName]="i">
-
-                        <p>
-                          <input
-                            type="checkbox"
-                            class="filled-in"
-                            id="permissionCheckbox{{i}}"
-                            formControlName="enabled"/>
-                          <label [attr.for]="'permissionCheckbox'+i">{{permission.value.title}}</label>
-                        </p>
-
-                      </div>
-                    </div>
+                <div class="input-field col s12">
+                  <div class="chip" *ngFor="let tag of tagList">
+                    {{tag}}
                   </div>
                 </div>
               </div>
-              -->
+              <div class="row">
+                <div class="col s12 card-title">
+                  Add Tag(s):
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col s6">
+                  <input
+                    #tagSelect1
+                    formControlName="newTag"
+                    placeholder="Add New Tag"
+                    (keyup)="onKey($event)"
+                    >
+                </div>
+                <div class="col s6">
+                  <!-- Dropdown Trigger -->
+                  <a class='dropdown-button btn' data-activates='tagDropdown'>Existing Tags</a>
+                </div>
+              </div>
+
             </div>
 
             <div class="card-action">
@@ -137,6 +116,14 @@
 </div>
 
 
+<div *ngIf="allUsedTags">
+  <!-- Dropdown Structure -->
+  <ul id='tagDropdown' class='dropdown-content'>
+    <li *ngFor="let tag of allUsedTags; let i=index">
+      <a class="grey-text" (click)="addTagByIndex(i)">{{tag}}</a>
+    </li>
+  </ul>
+</div>
 
 <app-delete-journal-entry-modal
   #deleteEntryModal

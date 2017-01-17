@@ -4,6 +4,7 @@ import {RouterModule} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 
 import {MomentModule} from 'angular2-moment';
+import { Ng2CompleterModule } from "ng2-completer";
 
 import {MiniCalendarComponent} from './mini-calendar/mini-calendar.component';
 
@@ -62,7 +63,8 @@ import { UpdateJournalEntryComponent } from './update-journal-entry/update-journ
     MomentModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
-  ]
+    SharedModule,
+    Ng2CompleterModule
+]
 })
 export class EndUserModule { }
