@@ -1,3 +1,4 @@
+
 <div *ngIf="journalEntryForm">
 
 
@@ -13,7 +14,7 @@
 
   <div class="container">
 
-    <form [formGroup]="journalEntryForm" novalidate (ngSubmit)="onSubmit()">
+    <form materialize [formGroup]="journalEntryForm" novalidate (ngSubmit)="onSubmit()">
 
       <div class="row">
         <div class="col s12 m8 offset-m2 l6 offset-l3 ">
@@ -65,8 +66,11 @@
 
               <div class="row">
                 <div class="input-field col s12">
-                  <div class="chip" *ngFor="let tag of tagList">
-                    {{tag}}
+                  <div class="chip" *ngFor="let tag of tagList; let j=index">
+                    <a class="grey-text" (click)="deleteTag(j)">
+                      {{tag}}
+                      <i class="material-icons lr-arrow">close</i>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -78,12 +82,15 @@
 
               <div class="row">
                 <div class="col s6">
-                  <input
-                    #tagSelect1
-                    formControlName="newTag"
-                    placeholder="Add New Tag"
-                    (keyup)="onKey($event)"
-                    >
+                  <div>
+                    <input
+                      #tagSelect
+                      (keydown)="stopPropagation($event)"
+                      formControlName="newTag"
+                      placeholder="Add New Tag (press enter)"
+                      (keyup)="onKey($event)"
+                      >
+                    </div>
                 </div>
                 <div class="col s6">
                   <!-- Dropdown Trigger -->
@@ -94,9 +101,11 @@
             </div>
 
             <div class="card-action">
+              <!-- use type="button" instead of type="submit", or else the Enter key in a text field can submit the form by accident -->
               <button
                 class="waves-effect waves-light btn"
-                type="submit"
+                type="button"
+                (click)="onSubmit()"
                 [class.disabled]="!journalEntryForm.valid"
                 [disabled]="!journalEntryForm.valid">Submit</button>
             </div>
@@ -124,6 +133,7 @@
     </li>
   </ul>
 </div>
+
 
 <app-delete-journal-entry-modal
   #deleteEntryModal

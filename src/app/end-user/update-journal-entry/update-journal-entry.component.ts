@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 
-import { CompleterCmp, CompleterService, CompleterData } from 'ng2-completer';
-
 import {
   FormBuilder,
   FormGroup,
@@ -13,6 +11,12 @@ import {
 
 import {JournalService} from '../../shared/services/journal.service';
 
+/*
+  TODO: Fix bug....
+        - the drop-down list for adding tags doesn't work when you navigate to the page from another page; only when you load it up from scratch
+ */
+
+
 @Component({
   selector: 'app-update-journal-entry',
   templateUrl: './update-journal-entry.component.html',
@@ -20,31 +24,24 @@ import {JournalService} from '../../shared/services/journal.service';
 })
 export class UpdateJournalEntryComponent implements OnInit {
 
-  @ViewChild('tagSelect1') private tagInput: any;
+  @ViewChild('tagSelect') private tagInput: any;
 
   private journalEntryData: any;
   public journalEntryForm: FormGroup; // our model driven form
 
   private tagList: string[]=[];
-  private tagSelect: string;
-  public submitted: boolean; // keep track of whether form is submitted
 
   private date = new Date();
   // date.toISOString()
   private allUsedTags: string[];
-  private newEntry: boolean;
-
-  private dataService: CompleterData;
-
+  private newEntry: boolean; // true if this is a new Journal entry; false if updating
 
   constructor(
     private formBuilder: FormBuilder,
     private journalService: JournalService,
     private route: ActivatedRoute,
-    private router: Router,
-    private completerService: CompleterService) {
+    private router: Router) {
   }
-
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -60,7 +57,6 @@ export class UpdateJournalEntryComponent implements OnInit {
                 this.tagList.push(tag);
               }
               console.log(this.tagList);
-
               this.initializeForm();
             },
             error => {
@@ -88,17 +84,13 @@ export class UpdateJournalEntryComponent implements OnInit {
         tags=> {
           this.allUsedTags = tags;
           console.log(this.allUsedTags);
-          let tagsDict = this.createTagsDict(this.allUsedTags);
-          this.dataService = this.completerService.local(tagsDict, 'text', 'text');
 
           this.journalEntryForm = this.formBuilder.group({
             id: [this.journalEntryData.id, [<any>Validators.required]],
             title: [this.journalEntryData.title, [<any>Validators.required]],
             entry: [this.journalEntryData.entry, [<any>Validators.required]],
             date: [this.journalEntryData.date, [<any>Validators.required]],
-            newTag: [this.tagSelect, [<any>Validators.required]],
-            tags: this.formBuilder.array(
-              this.initTagsArray(this.journalEntryData.tags)),
+            newTag: [''],//used to capture new tags....
           });
 
           console.log(this.journalEntryForm);
@@ -116,77 +108,43 @@ export class UpdateJournalEntryComponent implements OnInit {
       id: 0, // id will eventually need to be managed by the server-side code
       title: '',
       entry: '',
-      tags: ['','',''],
       date: this.date.toISOString()
     }
-  }
-
-  createTagsDict(tags: string[]) {
-    let tagsArray = [];
-    for (let tag of tags) {
-      tagsArray.push(
-        {'text': tag}
-      );
-    }
-    return tagsArray;
-  }
-
-  initTagsArray(tags: string[]) {
-    let tagsArray = [];
-    for (let tag of tags) {
-      tagsArray.push(
-        this.initTag(tag)
-      );
-    }
-    return tagsArray;
-  }
-
-  initTag(tag: string) {
-    // initialize our resource
-    console.log('about to initialize tag');
-    return this.formBuilder.group({
-      text: [tag],
-    });
-  }
-
-  myCallback(selectedTag){
-    console.log(selectedTag);
   }
 
   addTagByIndex(i: number){
     this.tagList.push(this.allUsedTags[i]);
   }
 
-  /*
-  addTag(event){
-    console.log(event);
-    //this.tagList.push(event.title);
-    //this.tagList.push(this.tagSelect);
-    if(event!==null){
-      this.tagList.push(event.title);
-      console.log(this.tagList);
-    }
-    let tagsDict = this.createTagsDict(this.allUsedTags);
-    this.dataService = this.completerService.local(tagsDict, 'text', 'text');
-
-  }
-  */
-
   onKey(event){
+    //event.stopPropagation();
     console.log(event);
     if (event.code==="Enter"){
       console.log('Enter key pressed');
-      console.log(this.tagInput);
-      let newTag = this.tagInput.nativeElement.value.trim();
-      if (newTag.length>0){
-        this.tagList.push(newTag);
-        this.tagInput.nativeElement.value = '';
+      if (typeof this.journalEntryForm.value.newTag ==='string'){
+        let newTag = this.journalEntryForm.value.newTag.trim();
+        if (newTag.length>0){
+          this.tagList.push(newTag);
+          // TODO: try to find a way to reset the form value without
+          //       reaching into the DOM :(
+          this.tagInput.nativeElement.value = '';
+        }
       }
     }
   }
 
+  deleteTag(arrayIndex: number){
+    this.tagList.splice(arrayIndex, 1);
+  }
+
+  stopPropagation(event){
+    console.log('key down!');
+    event.stopPropagation();
+  }
+
   onSubmit(){
     console.log(this.journalEntryForm.value);
+    console.log(this.tagList);
     // use the Journal service to send this info to the db
     this.router.navigate(['/end-user/journal-entries']);
   }
