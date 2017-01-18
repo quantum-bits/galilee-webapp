@@ -4,6 +4,7 @@ import { Subject }    from 'rxjs/Subject';
 
 import {JournalEntry} from '../models/journal-entry.model';
 import {JournalEntriesData} from '../interfaces/journal-entries-data.interface';
+import {JournalEntryQueryFilters} from '../interfaces/journal-entry-query-filters.interface';
 
 
 // MOCK
@@ -95,6 +96,21 @@ const MORE_JOURNAL_DATA = {
   journalEntries: MORE_JOURNAL_ENTRIES
 }
 
+const NO_JOURNAL_ENTRIES = [];
+
+const NO_JOURNAL_DATA = {
+  startIndex: 2,
+  count: 2,
+  mostUsedTags: ['thoughts','reflections','prayer'],
+  allUsedTags: ['thoughts','reflections','prayer', 'friends', 'doctrine', 'predestination'],
+  calendarJournalEntries: {
+    "2017-01-13": 2,
+    "2017-01-11": 1,
+    "2017-01-09": 4
+  },
+  journalEntries: NO_JOURNAL_ENTRIES
+}
+
 const ALL_USED_TAGS = ['thoughts','reflections','prayer', 'friends', 'doctrine', 'predestination'];
 
 @Injectable()
@@ -105,10 +121,14 @@ export class JournalService {
 
   constructor() { }
 
-  getJournalEntries(startIndex: number, count: number) {// : Observable<JournalEntriesData> {
+  getJournalEntries(startIndex: number, count: number, filter?: JournalEntryQueryFilters) {
     // TODO: having trouble casting the Observable to be of type JournalEntriesData; complains that
-    //       the JournalEntry pieces don't methods attached to them (which, of course, they won't --
+    //       the JournalEntry pieces don't have methods attached to them (which, of course, they won't --
     //       they'll just be JSON objects at this point....)
+
+    console.log('inside the journal service; here are the query parameters:');
+    console.log(filter);
+
     if (startIndex === 0) {
       var promise = Promise.resolve(JOURNAL_DATA);// Observable.just(JOURNAL_ENTRIES);
       return Observable.fromPromise(promise);

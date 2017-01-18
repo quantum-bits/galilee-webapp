@@ -42,7 +42,7 @@ export class MiniCalendarComponent implements OnInit {
 	}
 
 	public select(day) {
-		this.selected = day.date;
+		this.selected = day.date.format('YYYY-MM-DD');
 		this.changeSelected.emit(this.selected);
 	};
 

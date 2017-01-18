@@ -4,6 +4,7 @@ import { ReadingsComponent } from './readings';
 import { ReadingPracticeComponent } from './reading-practice';
 import { ReadingResourceComponent } from './reading-resource';
 import { JournalDashboardComponent } from './journal-dashboard';
+import { JournalEntriesSearchResultsComponent } from './journal-entries-search-results';
 import { UpdateJournalEntryComponent } from './update-journal-entry';
 
 export const EndUserRoutes = [
@@ -42,6 +43,10 @@ export const EndUserRoutes = [
       {
         path: 'journal',//display journal entries
         component: JournalDashboardComponent
+      },
+      {
+        path: 'journal/search-results',//display journal entries
+        component: JournalEntriesSearchResultsComponent
       },
       {
         path: 'reading-resource/:readingID/:resourceID',

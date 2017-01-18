@@ -1,10 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {Router} from '@angular/router';
+import {Router, NavigationExtras} from '@angular/router';
+
+import * as moment from 'moment';
 
 import {DeleteJournalEntryModalComponent} from '../delete-journal-entry-modal';
 
 import {JournalEntry} from '../../shared/models/journal-entry.model';
 import {JournalEntriesData} from '../../shared/interfaces/journal-entries-data.interface';
+import {JournalEntryQueryFilters} from '../../shared/interfaces/journal-entry-query-filters.interface';
 
 import {JournalService} from '../../shared/services/journal.service';
 
@@ -31,7 +34,6 @@ export class JournalDashboardComponent implements OnInit {
   private journalEntries: JournalEntry[];
 
   private startIndex: number = 0;
-  //private count: number = DEFAULT_NUMBER_ENTRIES;
   private maxEntriesToShow: number = DEFAULT_NUMBER_ENTRIES;
 
   private mostUsedTags: string[];
@@ -77,14 +79,25 @@ export class JournalDashboardComponent implements OnInit {
     //TODO: delete journal entry via service; then reload this page
   }
 
-  daySelected(day:any){
-    console.log(day);
+  daySelected(dateString: string){
+    let journalEntryQueryFilters: JournalEntryQueryFilters = {
+      'date': dateString
+    };
+    let navigationExtras: NavigationExtras = {
+      queryParams: journalEntryQueryFilters
+    };
+    this.router.navigate(['/end-user/journal/search-results'],navigationExtras);
   }
 
   tagSelected(tag: string){
-    console.log(tag);
+    let journalEntryQueryFilters: JournalEntryQueryFilters = {
+      'tag': tag
+    };
+    let navigationExtras: NavigationExtras = {
+      queryParams: journalEntryQueryFilters
+    };
+    this.router.navigate(['/end-user/journal/search-results'],navigationExtras);
   }
-
 
   newJournalEntry(){
     this.router.navigate(['/end-user/journal-entry']);
