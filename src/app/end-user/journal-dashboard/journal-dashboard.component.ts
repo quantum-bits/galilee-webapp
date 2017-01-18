@@ -8,7 +8,6 @@ import {JournalEntriesData} from '../../shared/interfaces/journal-entries-data.i
 
 import {JournalService} from '../../shared/services/journal.service';
 
-const TRUNCATION_LIMIT = 25; //number of words in a journal entry after which to truncate
 const DEFAULT_NUMBER_ENTRIES = 2; // default number of entries to show
 
 
@@ -20,18 +19,16 @@ const DEFAULT_NUMBER_ENTRIES = 2; // default number of entries to show
  */
 
 @Component({
-  selector: 'app-journal-entries',
-  templateUrl: './journal-entries.component.html',
-  styleUrls: ['./journal-entries.component.css']
+  selector: 'app-journal-dashboard',
+  templateUrl: './journal-dashboard.component.html',
+  styleUrls: ['./journal-dashboard.component.css']
 })
-export class JournalEntriesComponent implements OnInit {
+export class JournalDashboardComponent implements OnInit {
 
   @ViewChild('deleteEntryModal') modal: DeleteJournalEntryModalComponent;
 
   //private journalEntriesData: JournalEntriesData; not currently being used
   private journalEntries: JournalEntry[];
-  private truncationLimit = TRUNCATION_LIMIT; // so can use this in the template....
-  private allowTruncation: boolean[] = [];//allow truncation of text for a given entry
 
   private startIndex: number = 0;
   //private count: number = DEFAULT_NUMBER_ENTRIES;
@@ -40,11 +37,15 @@ export class JournalEntriesComponent implements OnInit {
   private mostUsedTags: string[];
   private allUsedTags: string[];
   private calendarJournalEntries: any;
-  private calendarLookup: any;
 
   constructor(
     private journalService: JournalService,
-    private router: Router) { }
+    private router: Router) {
+      journalService.journalEntryToBeDeleted$.subscribe(
+        journalEntryID => {
+          this.launchDeleteEntryModal(journalEntryID);
+        });
+  }
 
   ngOnInit() {
     this.journalService.getJournalEntries(this.startIndex, DEFAULT_NUMBER_ENTRIES)
@@ -54,12 +55,8 @@ export class JournalEntriesComponent implements OnInit {
           this.mostUsedTags = journalEntriesData.mostUsedTags;
           this.allUsedTags = journalEntriesData.allUsedTags;
           this.calendarJournalEntries = journalEntriesData.calendarJournalEntries;
-          //this.journalEntriesData = journalEntriesData;
           for (let entry of journalEntriesData.journalEntries) {
             this.journalEntries.push(new JournalEntry(entry));//need to use the constructor, etc., if want access to the methods
-          }
-          for (let jE of this.journalEntries){
-            this.allowTruncation.push(true);
           }
         },
         error => {
@@ -69,18 +66,15 @@ export class JournalEntriesComponent implements OnInit {
       );
   }
 
-  deleteEntry(entryID: number){
+  launchDeleteEntryModal(entryID: number){
     console.log(entryID);
     this.modal.openModal(entryID);
   }
 
-  deleteThisEntry(data) {
-    console.log(data);
-    //TODO: delete journal entry; then reload this page
-  }
-
-  toggleAllowTruncation(entryIndex: number){
-    this.allowTruncation[entryIndex] = !this.allowTruncation[entryIndex];
+  deleteEntry(entryID: number) {
+    console.log(entryID);
+    //
+    //TODO: delete journal entry via service; then reload this page
   }
 
   daySelected(day:any){
@@ -117,13 +111,9 @@ export class JournalEntriesComponent implements OnInit {
             //this.journalEntries = [];
             let newJournalEntries = [];
             for (let entry of journalEntriesData.journalEntries) {
-              newJournalEntries.push(new JournalEntry(entry));//need to use the constructor, etc., if want access to the methods
+              newJournalEntries.push(new JournalEntry(entry));
             }
             this.journalEntries = newJournalEntries.concat(this.journalEntries);
-            this.allowTruncation = [];
-            for (let jE of this.journalEntries) {
-              this.allowTruncation.push(true);
-            }
           },
           error => {
             console.log(error);

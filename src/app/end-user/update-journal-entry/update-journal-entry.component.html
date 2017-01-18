@@ -101,12 +101,21 @@
 
             <div class="card-action">
               <!-- use type="button" instead of type="submit", or else the Enter key in a text field can submit the form by accident -->
-              <button
-                class="waves-effect waves-light btn"
-                type="button"
-                (click)="onSubmit()"
-                [class.disabled]="!journalEntryForm.valid"
-                [disabled]="!journalEntryForm.valid">Submit</button>
+              <span>
+                <button
+                  class="waves-effect waves-light btn"
+                  type="button"
+                  (click)="onSubmit()"
+                  [class.disabled]="!journalEntryForm.valid"
+                  [disabled]="!journalEntryForm.valid">Save</button>
+                </span>
+              <span class="right">
+                <button
+                  class="waves-effect waves-light btn"
+                  type="button"
+                  (click)="onCancel()"
+                  >Cancel</button>
+              </span>
             </div>
 
 

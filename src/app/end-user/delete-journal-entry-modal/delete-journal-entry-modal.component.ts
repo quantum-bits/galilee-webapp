@@ -9,9 +9,10 @@ export class DeleteJournalEntryModalComponent {
 
   @Input() header: string;
   @Input() message: string;
-  @Output() deleteThisEntry = new EventEmitter();
+  @Output() deleteEntry = new EventEmitter<number>();
 
   private entryID: number;
+
   modalActions = new EventEmitter();
 
   openModal(entryID: number) {
@@ -24,13 +25,12 @@ export class DeleteJournalEntryModalComponent {
   closeModalNoDelete() {
     console.log('closing with a no!');
     this.modalActions.emit({action: "modal", params: ['close']});
-    this.deleteThisEntry.emit({journalEntryID:this.entryID, deleteEntry: false});
   }
 
   closeModalYesDelete() {
     console.log('closing with a yes!');
     this.modalActions.emit({action: "modal", params: ['close']});
-    this.deleteThisEntry.emit({journalEntryID:this.entryID, deleteEntry: true});
+    this.deleteEntry.emit(this.entryID);
   }
 
 }

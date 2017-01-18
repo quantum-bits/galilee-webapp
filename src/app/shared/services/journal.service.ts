@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
+import { Subject }    from 'rxjs/Subject';
 
 import {JournalEntry} from '../models/journal-entry.model';
 import {JournalEntriesData} from '../interfaces/journal-entries-data.interface';
@@ -39,7 +40,7 @@ const JOURNAL_ENTRIES = [
     tags: ['thoughts','reflections','prayer'],
     date: "2017-01-16T05:00:00.000Z"
   }
-]
+];
 
 const MORE_JOURNAL_ENTRIES = [
   {
@@ -66,7 +67,7 @@ const MORE_JOURNAL_ENTRIES = [
     tags: ['thoughts','reflections','prayer'],
     date: "2017-01-13T05:00:00.000Z"
   }
-]
+];
 
 const JOURNAL_DATA = {
   startIndex: 0,
@@ -96,8 +97,11 @@ const MORE_JOURNAL_DATA = {
 
 const ALL_USED_TAGS = ['thoughts','reflections','prayer', 'friends', 'doctrine', 'predestination'];
 
-  @Injectable()
+@Injectable()
 export class JournalService {
+
+  // Observable string sources
+  private journalEntryToBeDeletedSource = new Subject<number>();
 
   constructor() { }
 
@@ -124,5 +128,12 @@ export class JournalService {
     return Observable.fromPromise(promise);
   }
 
+  // Observable string streams
+  journalEntryToBeDeleted$ = this.journalEntryToBeDeletedSource.asObservable();
+
+  // Service message commands
+  announceDeletion(journalEntryID: number) {
+    this.journalEntryToBeDeletedSource.next(journalEntryID);
+  }
 
 }

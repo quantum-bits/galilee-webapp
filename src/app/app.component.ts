@@ -85,6 +85,6 @@ export class AppComponent {
   }
 
   goToJournal(){
-    this.router.navigate(['/end-user/journal-entries']);
+    this.router.navigate(['/end-user/journal']);
   }
 }

@@ -25,10 +25,12 @@ import { PracticeListComponent } from './practice-list/practice-list.component';
 import { PracticeSummaryComponent } from './practice-summary/practice-summary.component';
 import { PracticeStepComponent } from './practice-step/practice-step.component';
 import { PracticePreparationComponent } from './practice-preparation/practice-preparation.component';
-import { JournalEntriesComponent } from './journal-entries/journal-entries.component';
+import { JournalDashboardComponent } from './journal-dashboard/journal-dashboard.component';
 import { DeleteJournalEntryModalComponent } from './delete-journal-entry-modal/delete-journal-entry-modal.component';
 import { UpdateJournalEntryComponent } from './update-journal-entry/update-journal-entry.component';
 import { JournalEntriesSearchResultsComponent } from './journal-entries-search-results/journal-entries-search-results.component';
+import { JournalEntryListComponent } from './journal-entry-list/journal-entry-list.component';
+import { JournalEntryItemComponent } from './journal-entry-item/journal-entry-item.component';
 
 
 @NgModule({
@@ -52,11 +54,13 @@ import { JournalEntriesSearchResultsComponent } from './journal-entries-search-r
 
     PracticePreparationComponent,
 
-    JournalEntriesComponent,
+    JournalDashboardComponent,
     MiniCalendarComponent,
     DeleteJournalEntryModalComponent,
     UpdateJournalEntryComponent,
-    JournalEntriesSearchResultsComponent
+    JournalEntriesSearchResultsComponent,
+    JournalEntryListComponent,
+    JournalEntryItemComponent
   ],
   imports: [
     BrowserModule,

@@ -136,7 +136,11 @@ export class UpdateJournalEntryComponent implements OnInit {
     console.log(this.journalEntryForm.value);
     console.log(this.tagList);
     // use the Journal service to send this info to the db
-    this.router.navigate(['/end-user/journal-entries']);
+    this.router.navigate(['/end-user/journal']);
+  }
+
+  onCancel(){
+    this.router.navigate(['/end-user/journal']);
   }
 
 }
