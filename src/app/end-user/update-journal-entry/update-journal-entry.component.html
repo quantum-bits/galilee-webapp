@@ -87,14 +87,14 @@
                       #tagSelect
                       (keydown)="stopPropagation($event)"
                       formControlName="newTag"
-                      placeholder="Add New Tag (press enter)"
+                      placeholder="Add new tag (press enter)"
                       (keyup)="onKey($event)"
                       >
                     </div>
                 </div>
                 <div class="col s6">
                   <!-- Dropdown Trigger -->
-                  <a class='dropdown-button btn' data-activates='tagDropdown'>Existing Tags</a>
+                  <a materialize="dropdown" class='dropdown-button btn' data-activates='tagDropdown'>Previous</a>
                 </div>
               </div>
 
@@ -109,6 +109,8 @@
                 [class.disabled]="!journalEntryForm.valid"
                 [disabled]="!journalEntryForm.valid">Submit</button>
             </div>
+
+
           </div>
         </div>
       </div>
@@ -117,13 +119,6 @@
 
   </div>
 </div>
-
-<div class="col s4 right-align">
-  <a> <!-- (click)="deleteEntry(journalEntryID)">-->
-    <i class="material-icons grey-text darken-2">delete</i>
-  </a>
-</div>
-
 
 <div *ngIf="allUsedTags">
   <!-- Dropdown Structure -->
@@ -134,13 +129,5 @@
   </ul>
 </div>
 
-
-<app-delete-journal-entry-modal
-  #deleteEntryModal
-  header="Delete Entry"
-  message="Are you sure you want to delete this entry?"
-  (deleteThisEntry)="deleteThisEntry($event)"
->
-</app-delete-journal-entry-modal>
 
 

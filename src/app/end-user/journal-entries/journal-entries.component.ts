@@ -11,14 +11,13 @@ import {JournalService} from '../../shared/services/journal.service';
 const TRUNCATION_LIMIT = 25; //number of words in a journal entry after which to truncate
 const DEFAULT_NUMBER_ENTRIES = 2; // default number of entries to show
 
-/*
-Next:
- - UI requests more, goes to service, gives offset and number of entries
- */
 
 //TODO: not currently using the JournalEntriesData interface to enforce typing;
 //      transpiler says that the JournalEntry objects are incompatible, b/c they
 //      don't include the methods
+/*
+  TODO: Reverse the order of Journal Entries...?  Newest should be at the top.
+ */
 
 @Component({
   selector: 'app-journal-entries',

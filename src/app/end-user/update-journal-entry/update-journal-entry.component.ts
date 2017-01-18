@@ -11,16 +11,11 @@ import {
 
 import {JournalService} from '../../shared/services/journal.service';
 
-/*
-  TODO: Fix bug....
-        - the drop-down list for adding tags doesn't work when you navigate to the page from another page; only when you load it up from scratch
- */
-
-
 @Component({
   selector: 'app-update-journal-entry',
   templateUrl: './update-journal-entry.component.html',
-  styleUrls: ['./update-journal-entry.component.css']
+  styleUrls: ['./update-journal-entry.component.css'],
+  providers: []
 })
 export class UpdateJournalEntryComponent implements OnInit {
 
@@ -82,7 +77,7 @@ export class UpdateJournalEntryComponent implements OnInit {
     this.journalService.getAllUsedTags()
       .subscribe(
         tags=> {
-          this.allUsedTags = tags;
+          this.allUsedTags = tags.sort();
           console.log(this.allUsedTags);
 
           this.journalEntryForm = this.formBuilder.group({
@@ -135,11 +130,6 @@ export class UpdateJournalEntryComponent implements OnInit {
 
   deleteTag(arrayIndex: number){
     this.tagList.splice(arrayIndex, 1);
-  }
-
-  stopPropagation(event){
-    console.log('key down!');
-    event.stopPropagation();
   }
 
   onSubmit(){
