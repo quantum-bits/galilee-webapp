@@ -28,6 +28,7 @@ import { PracticePreparationComponent } from './practice-preparation/practice-pr
 import { JournalEntriesComponent } from './journal-entries/journal-entries.component';
 import { DeleteJournalEntryModalComponent } from './delete-journal-entry-modal/delete-journal-entry-modal.component';
 import { UpdateJournalEntryComponent } from './update-journal-entry/update-journal-entry.component';
+import { JournalEntriesSearchResultsComponent } from './journal-entries-search-results/journal-entries-search-results.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { UpdateJournalEntryComponent } from './update-journal-entry/update-journ
     JournalEntriesComponent,
     MiniCalendarComponent,
     DeleteJournalEntryModalComponent,
-    UpdateJournalEntryComponent
+    UpdateJournalEntryComponent,
+    JournalEntriesSearchResultsComponent
   ],
   imports: [
     BrowserModule,

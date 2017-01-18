@@ -85,7 +85,6 @@
                   <div>
                     <input
                       #tagSelect
-                      (keydown)="stopPropagation($event)"
                       formControlName="newTag"
                       placeholder="Add new tag (press enter)"
                       (keyup)="onKey($event)"
