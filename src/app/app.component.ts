@@ -31,6 +31,8 @@ export class AppComponent {
   // singleReading: Reading;
   // currentUser: User;
 
+  private showPracticesDropdown: boolean = false;
+
   constructor(private readingService: ReadingService,
               private practiceService: PracticeService,
               private journalService: JournalService,
@@ -87,4 +89,14 @@ export class AppComponent {
   goToJournal(){
     this.router.navigate(['/end-user/journal']);
   }
+
+  goHome(){
+    this.router.navigate(['/end-user']);
+  }
+
+  togglePracticesDropdown(event){
+    event.stopPropagation();
+    this.showPracticesDropdown = !this.showPracticesDropdown;
+  }
+
 }

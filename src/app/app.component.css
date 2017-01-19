@@ -13,3 +13,7 @@ header, main, footer {
 .dropdown-content {
   min-width: 250px
 }
+
+.nav-bar-submenu {
+  padding-left: 20px;
+}
