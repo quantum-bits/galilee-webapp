@@ -2,16 +2,43 @@
   <div class="card ">
     <!-- I can't figure out how to get a title bar in a solid color, so I'm cheating and using the card-action class -->
     <div class="card-action grey darken-1">
-      <span class="card-title white-text">Scripture</span>
+      <div class="card-title white-text">Scripture</div>
     </div>
     <div class="card-content">
-      <span class="card-title">{{ reading.std_ref }}</span>
-
-      <br>
-      <div class="flow-text">
-        <p [innerHTML]="reading.text"></p>
+      <div class="card-title">{{ reading.std_ref }}
+        <!--
+        <div class="hide-on-med-and-up">
+          <div *ngIf="hideContent">
+            <a (click)="toggleHideContent()">
+              <i class="material-icons lr-arrow">add_circle_outline</i>
+            </a>
+          </div>
+        </div>
+        -->
       </div>
+      <br>
+      <!--hideContent: {{hideContent}}-->
+      <div class="flow-text">
+        <div [innerHTML]="reading.text"></div>
+      </div>
+      <!-- <p [innerHTML]="reading.text | truncate : 25"></p> ...this truncates it, if necessary -->
 
+      <!--
+      <div class="hide-on-med-and-up">
+        small
+        <div *ngIf="!hideContent">
+          <div class="flow-text">
+            <div [innerHTML]="reading.text"></div>
+          </div>
+        </div>
+      </div>
+      <div class="hide-on-small-only">
+        med or large
+        <div class="flow-text">
+          <div [innerHTML]="reading.text"></div>
+        </div>
+      </div>
+      -->
     </div>
 
     <div *ngIf="includeNavigationButtons()" class="card-action">

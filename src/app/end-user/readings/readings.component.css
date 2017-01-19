@@ -10,3 +10,12 @@
 .dropdown-content {
   min-width: 250px
 }
+
+.secondary-nav {
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.nav-bar-submenu {
+  padding-left: 20px;
+}

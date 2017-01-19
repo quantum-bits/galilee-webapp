@@ -6,6 +6,11 @@ import {Reading} from '../../shared/models/reading.model';
 import {SimpleModalComponent} from "./simple-modal.component";
 
 //TODO: determine translations actively
+//TODO: fix BUG -- on secondary side-nav, clicking on a passage goes to the passage,
+//      but does not close the side-nav
+//TODO: when on mobile, if click SE slider, should truncate text, so that it
+//      becomes obvious that the "Practices" have shown up....
+
 const TRANSLATIONS = ["NLT", "NIV", "RSV", "KJV", "NKJV"];
 
 @Component({
@@ -28,6 +33,9 @@ export class ReadingsComponent implements OnInit {
 
   private readingsData: any;//Reading[];
   private translations = TRANSLATIONS;
+
+  private showReadingsDropdown: boolean = true;
+  private showTranslationsDropdown: boolean = false;
 
   @ViewChild('sorry') modal: SimpleModalComponent;
 
@@ -137,5 +145,19 @@ export class ReadingsComponent implements OnInit {
     //this.currentReadingIndex = updatedReadingIndex;
     //this.updateReadingDescriptionMenu();
   }
+
+  // for the secondary side-nav
+  toggleReadingsDropdown(event){
+    event.stopPropagation();
+    this.showReadingsDropdown = !this.showReadingsDropdown;
+  }
+
+  // for the secondary side-nav
+  toggleTranslationsDropdown(event){
+    event.stopPropagation();
+    this.showTranslationsDropdown = !this.showTranslationsDropdown;
+  }
+
+
 
 }
