@@ -13,6 +13,8 @@ Modified by KK
 
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import * as moment from 'moment';
+import {CalendarJournalEntry} from '../../shared/interfaces/calendar-journal-entry.interface';
+
 
 @Component({
 	selector: 'app-mini-calendar',
@@ -22,15 +24,18 @@ import * as moment from 'moment';
 export class MiniCalendarComponent implements OnInit {
 	@Input() showWeek;
 	@Input() selected;
-  @Input() calendarJournalEntries;
+  @Input() calendarJournalEntries: CalendarJournalEntry[];
 	@Output() changeSelected = new EventEmitter();
 	month;
+
+  private flattenedCalendarEntries: any;
 
 	constructor() {}
 
 	ngOnInit() {
 	  console.log(this.selected);
     console.log(this.calendarJournalEntries);
+    this.flattenCalendarJournalEntries();
 		this.month = moment(this.selected).clone();
     console.log(this.month.format("MMM YYYY"));
 
@@ -107,8 +112,15 @@ export class MiniCalendarComponent implements OnInit {
 		}
 	}
 
+  flattenCalendarJournalEntries(){
+    this.flattenedCalendarEntries = {};
+    for (let entry of this.calendarJournalEntries) {
+      this.flattenedCalendarEntries[entry.dateString] = entry.numberEntries;
+    }
+  }
+
   entriesExistThisDay(day){
-    if (day.date.format('YYYY-MM-DD') in this.calendarJournalEntries) {
+    if (day.date.format('YYYY-MM-DD') in this.flattenedCalendarEntries) {
       return true;
     } else {
       return false;
@@ -116,8 +128,8 @@ export class MiniCalendarComponent implements OnInit {
   }
 
   numberEntriesThisDay(day){
-    if (day.date.format('YYYY-MM-DD') in this.calendarJournalEntries) {
-      return this.calendarJournalEntries[day.date.format('YYYY-MM-DD')];
+    if (day.date.format('YYYY-MM-DD') in this.flattenedCalendarEntries) {
+      return this.flattenedCalendarEntries[day.date.format('YYYY-MM-DD')];
     }
   }
 

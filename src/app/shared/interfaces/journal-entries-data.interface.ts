@@ -1,10 +1,11 @@
-import {JournalEntry} from '../models/journal-entry.model';
+import {IJournalEntry} from './journal-entry.interface';
+import {CalendarJournalEntry} from './calendar-journal-entry.interface';
 
 export interface JournalEntriesData {
   startIndex: number,
   count: number,
   mostUsedTags?: string[],
   allUsedTags?: string[],
-  calendarJournalEntries?: any,// how to specify a dict of key-value pairs?
-  journalEntries: JournalEntry[]
+  calendarJournalEntries?: CalendarJournalEntry[],
+  journalEntries: IJournalEntry[]
 }

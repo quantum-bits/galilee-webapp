@@ -1,17 +1,12 @@
-// Bible reading
-//import { Practice } from './practice.model'
+import {IJournalEntry} from '../interfaces/journal-entry.interface';
 
-export class JournalEntry {
+export class JournalEntry implements IJournalEntry {
+
   id: number;
   title: string;
   entry: string;
   tags: string[];
   date: string;
-  //readingID: number; (index in the db for the reading in question)
-  //readingDayID: ?
-  //practiceID: number
-  //stepID: number (this would then contain the resource info, etc.)
-
 
   constructor(obj) {
     this.id = obj.id;

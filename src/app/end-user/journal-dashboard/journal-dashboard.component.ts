@@ -7,6 +7,7 @@ import {DeleteJournalEntryModalComponent} from '../delete-journal-entry-modal';
 
 import {JournalEntry} from '../../shared/models/journal-entry.model';
 import {JournalEntriesData} from '../../shared/interfaces/journal-entries-data.interface';
+import {CalendarJournalEntry} from '../../shared/interfaces/calendar-journal-entry.interface';
 import {JournalEntryQueryFilters} from '../../shared/interfaces/journal-entry-query-filters.interface';
 
 import {JournalService} from '../../shared/services/journal.service';
@@ -38,7 +39,7 @@ export class JournalDashboardComponent implements OnInit {
 
   private mostUsedTags: string[];
   private allUsedTags: string[];
-  private calendarJournalEntries: any;
+  private calendarJournalEntries: CalendarJournalEntry[];
 
   constructor(
     private journalService: JournalService,

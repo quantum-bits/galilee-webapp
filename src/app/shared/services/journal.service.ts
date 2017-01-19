@@ -75,11 +75,24 @@ const JOURNAL_DATA = {
   count: 2,
   mostUsedTags: ['thoughts','reflections','prayer'],
   allUsedTags: ['thoughts','reflections','prayer', 'friends', 'doctrine', 'predestination'],
-  calendarJournalEntries: {
-    "2017-01-13": 2,
-    "2017-01-11": 1,
-    "2017-01-09": 4
-  },
+  calendarJournalEntries: [
+    {
+      dateString: "2017-01-13",
+      numberEntries: 2
+    },
+    {
+      dateString: "2017-01-11",
+      numberEntries: 1
+    },
+    {
+      dateString: "2017-01-09",
+      numberEntries: 4
+    },
+    {
+      dateString: "2016-12-24",
+      numberEntries: 4
+    }
+  ],
   journalEntries: JOURNAL_ENTRIES
 }
 
@@ -88,11 +101,24 @@ const MORE_JOURNAL_DATA = {
   count: 2,
   mostUsedTags: ['thoughts','reflections','prayer'],
   allUsedTags: ['thoughts','reflections','prayer', 'friends', 'doctrine', 'predestination'],
-  calendarJournalEntries: {
-    "2017-01-13": 2,
-    "2017-01-11": 1,
-    "2017-01-09": 4
-  },
+  calendarJournalEntries: [
+    {
+      dateString: "2017-01-13",
+      numberEntries: 2
+    },
+    {
+      dateString: "2017-01-11",
+      numberEntries: 1
+    },
+    {
+      dateString: "2017-01-09",
+      numberEntries: 4
+    },
+    {
+      dateString: "2016-12-24",
+      numberEntries: 4
+    }
+  ],
   journalEntries: MORE_JOURNAL_ENTRIES
 }
 
@@ -121,7 +147,7 @@ export class JournalService {
 
   constructor() { }
 
-  getJournalEntries(startIndex: number, count: number, filter?: JournalEntryQueryFilters) {
+  getJournalEntries(startIndex: number, count: number, filter?: JournalEntryQueryFilters): Observable<JournalEntriesData> {
     // TODO: having trouble casting the Observable to be of type JournalEntriesData; complains that
     //       the JournalEntry pieces don't have methods attached to them (which, of course, they won't --
     //       they'll just be JSON objects at this point....)
