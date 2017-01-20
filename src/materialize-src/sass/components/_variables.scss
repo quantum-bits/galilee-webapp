@@ -291,7 +291,7 @@ $footer-bg-color: $primary-color !default;
 // 22. Flow Text
 // ==========================================================================
 
-$range : $medium-screen - $small-screen !default;
+$range : $large-screen - $small-screen !default;
 $intervals: 20 !default;
 $interval-size: $range / $intervals !default;
 

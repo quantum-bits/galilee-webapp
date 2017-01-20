@@ -84,10 +84,6 @@ export class ReadingsComponent implements OnInit {
             this.readingsData = readings;
             if (this.currentReadingExists()) {
               this.initializeReadingInfo();
-              // the following is unnecesary if the readings were actually saved already, but OK....
-              // TODO: try to use 'do' to intercept the readings on the way:
-              //       https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/operators/do.md
-              this.readingService.storeReadings(this.readingsData);
             } else {
               this.modal.openModal();
             }
@@ -170,6 +166,10 @@ export class ReadingsComponent implements OnInit {
   openJournal(){
     console.log('open the journal!');
     this.router.navigate(['/end-user/journal-entry']);
+  }
+
+  getTemp(){
+    console.log(this.readingService.returnTemp());
   }
 
 }

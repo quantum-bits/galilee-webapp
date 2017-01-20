@@ -1,0 +1,18 @@
+<div *ngIf="readingsData">
+  <ul class="collection with-header">
+    <li class="collection-header"><h5>Readings for {{dateString | amDateFormat: 'LL'}}</h5></li>
+    <li *ngFor="let reading of readingsData.readings" class="collection-item">
+      {{reading.std_ref}}
+    </li>
+    <li *ngIf="includeLinkToJournal" class="collection-item right">
+      <a (click)="goToJournal()" class="waves-effect waves-light btn">Open Readings</a>
+    </li>
+
+  </ul>
+</div>
+
+<simple-modal
+  #sorry
+  header="Sorry"
+  message=""
+></simple-modal>

@@ -34,6 +34,7 @@ import { JournalEntryListComponent } from './journal-entry-list/journal-entry-li
 import { JournalEntryItemComponent } from './journal-entry-item/journal-entry-item.component';
 import { QuestionListComponent } from './question-list/question-list.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ReadingsListComponent } from './readings-list/readings-list.component';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     JournalEntryListComponent,
     JournalEntryItemComponent,
     QuestionListComponent,
-    DashboardComponent
+    DashboardComponent,
+    ReadingsListComponent
   ],
   imports: [
     BrowserModule,

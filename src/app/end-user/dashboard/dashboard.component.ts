@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import * as moment from 'moment';
 
@@ -11,15 +11,10 @@ import {ReadingService} from '../../shared/services/reading.service';
 })
 export class DashboardComponent implements OnInit {
 
-  @ViewChild('datePicker') datePicker: ElementRef;
-
-  //@ViewChild('myModalResourcePicker') input: ElementRef;
-
   private RCLDate: Date;
   private days: any;
 
-  constructor(private readingService: ReadingService,
-              private renderer: Renderer) { }
+  constructor(private readingService: ReadingService) { }
 
   ngOnInit() {
     console.log('RCL date set? ', this.readingService.RCLDateIsSet());
@@ -76,6 +71,10 @@ export class DashboardComponent implements OnInit {
 
   fetchRCLDate(){
     console.log(this.readingService.fetchRCLDate());
+  }
+
+  convertToDateString(date: Date) {
+    return date.toISOString().substring(0, 10);
   }
 
 }

@@ -27,6 +27,31 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="col s12 m6 l4 offset-l1">
+    <app-readings-list
+      [dateString] = "convertToDateString(RCLDate)"
+    >
+    </app-readings-list>
+  </div>
+  <!--
+  <app-question-list
+    [includeLinkToJournal] = true
+    [questions] = "questions" <<<<<<<<<<< maybe make the app fetch the questions?!?
+    [dateString] = "dateString"
+    (openJournal) = "openJournal()"
+  >
+  </app-question-list>
+
+  -->
+
+</div>
+
+
+
+
+
+
 <button class="btn" (click)="fetchRCLDate()">RCL Date?</button>
 
 <!-- options:
