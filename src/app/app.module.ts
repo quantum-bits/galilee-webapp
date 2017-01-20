@@ -11,6 +11,7 @@ import {AuthenticationModule} from './authentication/authentication.module';
 import {SelfUpdateComponent} from './authentication/self-update';
 
 import {MaterializeModule} from "angular2-materialize";
+import { DatePickerModule } from 'ng2-datepicker';
 
 import {MomentModule} from 'angular2-moment';
 import { Ng2CompleterModule } from "ng2-completer";
@@ -44,7 +45,8 @@ import {RouterModule} from "@angular/router";
     EndUserModule,
     AdminModule,
     AuthenticationModule,
-    Ng2CompleterModule
+    Ng2CompleterModule,
+    DatePickerModule
   ],
   providers: [FormBuilder],
   //NOTE: (1) AuthGuard has been commented out in admin.routes for the moment

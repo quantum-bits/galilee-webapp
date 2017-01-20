@@ -4,7 +4,8 @@ import {RouterModule} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 
 import {MomentModule} from 'angular2-moment';
-import { Ng2CompleterModule } from "ng2-completer";
+//import { Ng2CompleterModule } from "ng2-completer";
+import { DatePickerModule } from 'ng2-datepicker';
 
 import {MiniCalendarComponent} from './mini-calendar/mini-calendar.component';
 
@@ -32,6 +33,7 @@ import { JournalEntriesSearchResultsComponent } from './journal-entries-search-r
 import { JournalEntryListComponent } from './journal-entry-list/journal-entry-list.component';
 import { JournalEntryItemComponent } from './journal-entry-item/journal-entry-item.component';
 import { QuestionListComponent } from './question-list/question-list.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 @NgModule({
@@ -62,7 +64,8 @@ import { QuestionListComponent } from './question-list/question-list.component';
     JournalEntriesSearchResultsComponent,
     JournalEntryListComponent,
     JournalEntryItemComponent,
-    QuestionListComponent
+    QuestionListComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +75,8 @@ import { QuestionListComponent } from './question-list/question-list.component';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    Ng2CompleterModule
+    DatePickerModule
+//Ng2CompleterModule
 ]
 })
 export class EndUserModule { }

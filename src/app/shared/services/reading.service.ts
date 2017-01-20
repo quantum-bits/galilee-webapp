@@ -13,6 +13,7 @@ function todaysDate(): string {
 export class ReadingService {
 
   readingsData: any;
+  private RCLDate: Date; // keeps track of the RCL date that the user is currently looking at (since this could be different than today's date)
 
   constructor(private http: Http) {
   }
@@ -80,6 +81,22 @@ export class ReadingService {
           .get(`http://localhost:3000/daily/${date}`)
           .map(res => res.json());
       }
+    }
+  }
+
+  setRCLDate(date: Date) {
+    this.RCLDate = date;
+  }
+
+  fetchRCLDate(): Date {
+    return this.RCLDate;
+  }
+
+  RCLDateIsSet(): boolean {
+    if (this.RCLDate !== undefined) {
+      return true;
+    } else {
+      return false;
     }
   }
 

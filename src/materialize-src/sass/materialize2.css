@@ -6399,7 +6399,9 @@ h5 > span {
 nav a {
   -webkit-font-smoothing: antialiased; }
 nav ul li a:hover, nav ul li.active {
-  background-color: #ea454b; }
+  background-color: #303f9f;
+  /* KK */
+  /* color("materialize-red", "lighten-1"); */ }
 
 .header {
   color: #ee6e73;

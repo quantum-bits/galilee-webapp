@@ -1,5 +1,6 @@
 import { EndUserComponent } from './end-user.component';
 
+import { DashboardComponent } from './dashboard';
 import { ReadingsComponent } from './readings';
 import { ReadingPracticeComponent } from './reading-practice';
 import { ReadingResourceComponent } from './reading-resource';
@@ -16,6 +17,11 @@ export const EndUserRoutes = [
         path: '',
         redirectTo: 'readings/today',
         pathMatch: 'full'
+      },
+      {
+        path: 'dashboard',//dateString can be 'YYYY-MM-DD' or 'today'
+        component: DashboardComponent,
+        index: true,
       },
       {
         path: 'readings/:dateString',//dateString can be 'YYYY-MM-DD' or 'today'
