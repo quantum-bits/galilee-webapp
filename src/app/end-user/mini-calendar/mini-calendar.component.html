@@ -28,14 +28,13 @@
 			<i class="material-icons" (click)="next()">chevron_right</i>
 -->
 <div class="card ">
-  <!-- I can't figure out how to get a title bar in a solid color, so I'm cheating and using the card-action class -->
-  <div class="card-action grey darken-1">
-    <div class="card-title white-text">
+  <div class="card-title-bar">
+    <div class="card-title">
       Calendar
     </div>
   </div>
-  <div class="card-action grey center-align">
-    <span class="card-title white-text">
+  <div class="card-title-bar">
+    <span class="card-title">
       <i class="material-icons left" (click)="previous()">chevron_left</i>
       <span class="white-text lighten-3">
         {{month.format("MMM YYYY")}}

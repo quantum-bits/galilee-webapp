@@ -1,5 +1,5 @@
 <ul class="collection with-header">
-  <li class="collection-header grey white-text"><h6>Journal Entries</h6></li>
+  <li class="collection-header"><h6>Journal Entries</h6></li>
   <li *ngFor="let journalEntry of journalEntries; let i = index"  class="collection-item">
     <app-journal-entry-item
       [journalEntry]="journalEntry"

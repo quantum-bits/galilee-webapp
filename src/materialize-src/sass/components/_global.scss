@@ -567,9 +567,10 @@ td, th{
 
   &.with-header {
     .collection-header {
-      background-color: $collection-bg-color;
+      background-color: $primary-color; /* KK */ /* $collection-bg-color;*/
       border-bottom: 1px solid $collection-border-color;
       padding: 10px 20px;
+      color: #FFFFFF; /* KK */
     }
     .collection-item {
       padding-left: 30px;
