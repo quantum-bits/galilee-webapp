@@ -14,20 +14,17 @@
 
   <div class="container">
 
-    <form materialize [formGroup]="journalEntryForm" novalidate (ngSubmit)="onSubmit()">
-
-      <div class="row">
-        <div class="col s12 m8 offset-m2 l6 offset-l3 ">
+    <div class="row">
+      <div class="col s12 m8 offset-m2 l6 offset-l3 ">
+        <form materialize [formGroup]="journalEntryForm" novalidate (ngSubmit)="onSubmit()">
           <div class="card">
             <div class="card-content">
-              <span *ngIf="newEntry" class="card-title">
+              <div *ngIf="newEntry" class="card-title">
                 New Entry
-              </span>
-              <span *ngIf="!newEntry" class="card-title">
+              </div>
+              <div *ngIf="!newEntry" class="card-title">
                 Update Entry
-              </span>
-
-
+              </div>
 
               <div class="row">
                 <div class="input-field col s12">
@@ -98,6 +95,17 @@
               </div>
 
             </div>
+            <div class="row center-align">
+              <div *ngIf="!questions">
+                <button
+                  type = "button"
+                  class="waves-effect waves-light btn-flat"
+                  (click)="fetchQuestions(journalEntryData.date)"
+                >
+                  Show Questions For This Date
+                </button>
+              </div>
+            </div>
 
             <div class="card-action">
               <!-- use type="button" instead of type="submit", or else the Enter key in a text field can submit the form by accident -->
@@ -116,13 +124,23 @@
                   >Cancel</button>
               </span>
             </div>
-
-
           </div>
-        </div>
+
+        </form>
+
       </div>
 
-    </form>
+      <div *ngIf="questions" class="col s12 m8 offset-m2 l3">
+        <app-question-list
+          [includeLinkToJournal] = false
+          [questions] = "questions"
+          [dateString] = "journalEntryData.date"
+        >
+        </app-question-list>
+      </div>
+    </div>
+
+
 
   </div>
 </div>

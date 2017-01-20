@@ -8,8 +8,14 @@ import {SimpleModalComponent} from "./simple-modal.component";
 //TODO: determine translations actively
 //TODO: fix BUG -- on secondary side-nav, clicking on a passage goes to the passage,
 //      but does not close the side-nav
-//TODO: when on mobile, if click SE slider, should truncate text, so that it
-//      becomes obvious that the "Practices" have shown up....
+//TODO: add custom questions to readingsData
+
+//MOCK
+const QUESTIONS = [
+  "What did today's readings make you think about?",
+  "How can you apply what you have learned in the coming days?",
+  "Are there things that you need to discuss with your friends?"
+]
 
 const TRANSLATIONS = ["NLT", "NIV", "RSV", "KJV", "NKJV"];
 
@@ -32,7 +38,10 @@ export class ReadingsComponent implements OnInit {
 
 
   private readingsData: any;//Reading[];
+  //TODO: these need to come from a service (bundled with the readings?):
   private translations = TRANSLATIONS;
+  //TODO: these need to be bundled with the readings in the service:
+  private questions = QUESTIONS;
 
   private showReadingsDropdown: boolean = true;
   private showTranslationsDropdown: boolean = false;
@@ -158,6 +167,9 @@ export class ReadingsComponent implements OnInit {
     this.showTranslationsDropdown = !this.showTranslationsDropdown;
   }
 
-
+  openJournal(){
+    console.log('open the journal!');
+    this.router.navigate(['/end-user/journal-entry']);
+  }
 
 }

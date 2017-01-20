@@ -1,0 +1,10 @@
+<ul class="collection with-header">
+  <li class="collection-header grey darken-1 white-text"><h5>Questions for {{dateString | amDateFormat: 'LL'}}</h5></li>
+  <li *ngFor="let question of questions" class="collection-item">
+        {{question}}
+  </li>
+  <li *ngIf="includeLinkToJournal" class="collection-item right">
+    <a (click)="goToJournal()" class="waves-effect waves-light btn">Open Journal</a>
+  </li>
+
+</ul>

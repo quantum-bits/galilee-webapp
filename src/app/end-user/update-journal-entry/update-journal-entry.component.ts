@@ -26,10 +26,16 @@ export class UpdateJournalEntryComponent implements OnInit {
 
   private tagList: string[]=[];
 
+  // TODO: this date should probably be the date for the readings that
+  //       the person is looking at (in case they are ahead/behind); the
+  //       entry in the database will probably also have a date stamp, which
+  //       will (possibly) be different.
   private date = new Date();
   // date.toISOString()
   private allUsedTags: string[];
   private newEntry: boolean; // true if this is a new Journal entry; false if updating
+
+  private questions: string[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -135,12 +141,26 @@ export class UpdateJournalEntryComponent implements OnInit {
   onSubmit(){
     console.log(this.journalEntryForm.value);
     console.log(this.tagList);
+    let result = this.journalService.saveEntry(/*data*/);
+    console.log('journal entry saved!', result);
     // use the Journal service to send this info to the db
     this.router.navigate(['/end-user/journal']);
   }
 
   onCancel(){
     this.router.navigate(['/end-user/journal']);
+  }
+
+  fetchQuestions(date: string) {
+    this.journalService.getDailyQuestions(date)
+      .subscribe(
+        questions => {
+          this.questions = questions;
+        },
+        error => {
+          console.log(error);
+        }
+      );
   }
 
 }

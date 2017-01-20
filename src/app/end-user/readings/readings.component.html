@@ -108,7 +108,7 @@
     <div *ngIf="initializationComplete ">
       <div *ngIf="!showPractices(engageScripture)" class="col s12">
         <app-reading-item
-          [includeNavigationBar]="'true'"
+          [includeNavigationBar]=true
           [reading]="readingsData.readings[currentReadingIndex]"
           [numberReadings] = "numberReadings"
           [currentReadingIndex] = "currentReadingIndex"
@@ -118,7 +118,10 @@
         </app-reading-item>
       </div>
 
-      <div class="hide-on-med-and-up"><!-- do this for small devices -->
+      <!--
+          small devices
+      -->
+      <div class="hide-on-med-and-up">
         <div *ngIf="showPractices(engageScripture)" class="col s12 m6 l5">
           <app-practice-list
             [reading]="readingsData.readings[currentReadingIndex]"
@@ -126,10 +129,17 @@
             [dateString] = "dateString"
           >
           </app-practice-list>
+          <app-question-list
+            [includeLinkToJournal] = true
+            [questions] = "questions"
+            [dateString] = "dateString"
+            (openJournal) = "openJournal()"
+          >
+          </app-question-list>
         </div>
         <div *ngIf="showPractices(engageScripture)" class="col s12 m6 l7">
           <app-reading-item
-            [includeNavigationBar]="'true'"
+            [includeNavigationBar]=true
             [reading]="readingsData.readings[currentReadingIndex]"
             [numberReadings] = "numberReadings"
             [currentReadingIndex] = "currentReadingIndex"
@@ -139,10 +149,13 @@
           </app-reading-item>
         </div>
       </div>
-      <div class="hide-on-small-only"><!-- do this for med and large devices -->
+      <!--
+          med and large devices
+      -->
+      <div class="hide-on-small-only">
         <div *ngIf="showPractices(engageScripture)" class="col s12 m6 l7">
           <app-reading-item
-            [includeNavigationBar]="'true'"
+            [includeNavigationBar]=true
             [reading]="readingsData.readings[currentReadingIndex]"
             [numberReadings] = "numberReadings"
             [currentReadingIndex] = "currentReadingIndex"
@@ -158,6 +171,13 @@
             [dateString] = "dateString"
           >
           </app-practice-list>
+          <app-question-list
+            [includeLinkToJournal] = true
+            [questions] = "questions"
+            [dateString] = "dateString"
+            (openJournal) = "openJournal()"
+          >
+          </app-question-list>
         </div>
       </div>
 

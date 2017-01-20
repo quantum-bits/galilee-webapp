@@ -23,7 +23,7 @@ export const EndUserRoutes = [
         index: true,
       },
       {
-        path: 'readings/:dateString/:engageScripture',//engageScripture is a boolean (0 for off)
+        path: 'readings/:dateString/:engageScripture',//engageScripture is a boolean (0 for off, 1 for on)
         component: ReadingsComponent,
         index: true,
       },
@@ -48,10 +48,12 @@ export const EndUserRoutes = [
         path: 'journal/search-results',//display journal entries
         component: JournalEntriesSearchResultsComponent
       },
+      /* DEPRECATED(?)
       {
         path: 'reading-resource/:readingID/:resourceID',
         component: ReadingResourceComponent
       },
+      */
       {
         path: 'journal-entry',//create new journal entry
         component: UpdateJournalEntryComponent

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import { Subject }    from 'rxjs/Subject';
 
-import {JournalEntry} from '../models/journal-entry.model';
+import {IJournalEntry} from '../interfaces/journal-entry.interface';
 import {JournalEntriesData} from '../interfaces/journal-entries-data.interface';
 import {JournalEntryQueryFilters} from '../interfaces/journal-entry-query-filters.interface';
 
@@ -139,6 +139,13 @@ const NO_JOURNAL_DATA = {
 
 const ALL_USED_TAGS = ['thoughts','reflections','prayer', 'friends', 'doctrine', 'predestination'];
 
+//MOCK
+const QUESTIONS = [
+  "What did today's readings make you think about?",
+  "How can you apply what you have learned in the coming days?",
+  "Are there things that you need to discuss with your friends?"
+]
+
 @Injectable()
 export class JournalService {
 
@@ -148,13 +155,8 @@ export class JournalService {
   constructor() { }
 
   getJournalEntries(startIndex: number, count: number, filter?: JournalEntryQueryFilters): Observable<JournalEntriesData> {
-    // TODO: having trouble casting the Observable to be of type JournalEntriesData; complains that
-    //       the JournalEntry pieces don't have methods attached to them (which, of course, they won't --
-    //       they'll just be JSON objects at this point....)
-
     console.log('inside the journal service; here are the query parameters:');
     console.log(filter);
-
     if (startIndex === 0) {
       var promise = Promise.resolve(JOURNAL_DATA);// Observable.just(JOURNAL_ENTRIES);
       return Observable.fromPromise(promise);
@@ -164,13 +166,19 @@ export class JournalService {
     }
   }
 
-  getJournalEntry(entryID: number){
+  getJournalEntry(entryID: number): Observable<IJournalEntry>{
     var promise = Promise.resolve(JOURNAL_ENTRY);
     return Observable.fromPromise(promise);
   }
 
   getAllUsedTags(){
     var promise = Promise.resolve(ALL_USED_TAGS);
+    return Observable.fromPromise(promise);
+  }
+
+  getDailyQuestions(dateString: string) {
+    console.log('fetching questions for: ', dateString);
+    var promise = Promise.resolve(QUESTIONS);
     return Observable.fromPromise(promise);
   }
 
@@ -182,4 +190,9 @@ export class JournalService {
     this.journalEntryToBeDeletedSource.next(journalEntryID);
   }
 
+  saveEntry(/* data */) {
+    // save the journal entry data
+    // return an observable, presumably....
+    return true;
+  }
 }

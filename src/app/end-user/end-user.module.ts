@@ -31,6 +31,7 @@ import { UpdateJournalEntryComponent } from './update-journal-entry/update-journ
 import { JournalEntriesSearchResultsComponent } from './journal-entries-search-results/journal-entries-search-results.component';
 import { JournalEntryListComponent } from './journal-entry-list/journal-entry-list.component';
 import { JournalEntryItemComponent } from './journal-entry-item/journal-entry-item.component';
+import { QuestionListComponent } from './question-list/question-list.component';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import { JournalEntryItemComponent } from './journal-entry-item/journal-entry-it
     UpdateJournalEntryComponent,
     JournalEntriesSearchResultsComponent,
     JournalEntryListComponent,
-    JournalEntryItemComponent
+    JournalEntryItemComponent,
+    QuestionListComponent
   ],
   imports: [
     BrowserModule,
