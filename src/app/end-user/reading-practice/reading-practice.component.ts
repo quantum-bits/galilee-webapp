@@ -5,6 +5,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {ReadingService} from '../../shared/services/reading.service';
 import {PracticeService} from '../../shared/services/practice.service';
 import {Reading} from '../../shared/models/reading.model';
+import {ReadingsData} from '../../shared/interfaces/readings-data.interface';
 
 import {SimpleModalComponent} from "../readings/simple-modal.component";
 
@@ -20,7 +21,7 @@ export class ReadingPracticeComponent implements OnInit {
 
   date: Date;
   //singleReading: Reading; // once the format for the returned data has been finalized, we should use this
-  readingsData: any;
+  readingsData: ReadingsData;
   singleReading: any;
   displaySummary: boolean; //if true, display the summary for the practice
   displayPreparation: boolean; //if true, display the Preparation page
@@ -108,7 +109,7 @@ export class ReadingPracticeComponent implements OnInit {
   // TODO: make this a method on the model instead
   practiceExists(readingsData, readingIndex, practiceIndex){
     // checks if the requested reading/practice exists in readingsData
-    if (readingIndex >= this.readingsData.length) {
+    if (readingIndex >= this.readingsData.readings.length) {
       return false;
     } else if (practiceIndex >= this.readingsData.readings[readingIndex].applications.length) {
       return false;

@@ -3,6 +3,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 
 import {ReadingService} from '../../shared/services/reading.service';
 import {Reading} from '../../shared/models/reading.model';
+import {ReadingsData} from '../../shared/interfaces/readings-data.interface';
 import {SimpleModalComponent} from "./simple-modal.component";
 
 //TODO: determine translations actively
@@ -37,10 +38,10 @@ export class ReadingsComponent implements OnInit {
   //}
 
 
-  private readingsData: any;//Reading[];
-  //TODO: these need to come from a service (bundled with the readings?):
+  private readingsData: ReadingsData;//Reading[];
+  //TODO: translations need to come from a service (bundled with the readings?):
   private translations = TRANSLATIONS;
-  //TODO: these need to be bundled with the readings in the service:
+  //TODO: questions need to be bundled with the readings in the service:
   private questions = QUESTIONS;
 
   private showReadingsDropdown: boolean = true;
@@ -53,17 +54,12 @@ export class ReadingsComponent implements OnInit {
               private route: ActivatedRoute) {
   }
 
-  // TODO - Don't use a fake date!
-  //FAKE_DATE: string = '2016-12-28';
-
-  dateString: string;
-  engageScripture: number; // translates to boolean (0->false)
-  //showPractices: boolean = false;
-  //showPracticeDetailPage: boolean = false;
-  readingDescriptions: Array<any> = [];//this will hold the reading descriptions for the passages other than the one that is currently being shown
-  numberReadings: number;
-  currentReadingIndex: number = 0; // the index # of the reading that is currently being displayed
-  initializationComplete = false;
+  private dateString: string;
+  private engageScripture: number; // translates to boolean (0->false)
+  private readingDescriptions: Array<any> = [];//this will hold the reading descriptions for the passages other than the one that is currently being shown
+  private numberReadings: number;
+  private currentReadingIndex: number = 0; // the index # of the reading that is currently being displayed
+  private initializationComplete = false;
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -77,7 +73,6 @@ export class ReadingsComponent implements OnInit {
       } else {
         this.engageScripture = 0;
       }
-      //this.readingService.getTodaysReadings(this.dateString)
       this.readingService.fetchSavedReadings(this.dateString)
         .subscribe(
           readings => {
@@ -96,7 +91,7 @@ export class ReadingsComponent implements OnInit {
   }
 
   // could just use engageScripture as a boolean directly in the template, but this seems a bit safer
-  showPractices(engageScripture: number){
+  showPractices(engageScripture: number): boolean{
     if (engageScripture === 0) {
       return false;
     } else {
@@ -130,25 +125,19 @@ export class ReadingsComponent implements OnInit {
     this.readingDescriptions = [];
     var loopIndex = 0;
     for (var reading of this.readingsData.readings){
-      //if (loopIndex != this.currentReadingIndex){
-      //put all of the readings in the drop-down list
       this.readingDescriptions.push(
         {
           'description': this.readingsData.readings[loopIndex].std_ref,
           'index': loopIndex
         }
       );
-      //}
       loopIndex++;
     }
     console.log(this.readingDescriptions);
   }
 
   onReadingUpdated(updatedReadingIndex: number) {
-    //console.log('emitted event received!');
     this.router.navigate(['/end-user/readings', this.dateString, this.engageScripture, updatedReadingIndex]);
-    //this.currentReadingIndex = updatedReadingIndex;
-    //this.updateReadingDescriptionMenu();
   }
 
   // for the secondary side-nav

@@ -119,6 +119,7 @@ export class UpdateJournalEntryComponent implements OnInit {
 
   onKey(event){
     //event.stopPropagation();
+    console.log('XxXXXXXXXXXXXXXXXX');
     console.log(event);
     if (event.code==="Enter"){
       console.log('Enter key pressed');

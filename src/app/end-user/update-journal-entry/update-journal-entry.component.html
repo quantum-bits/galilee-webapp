@@ -97,6 +97,7 @@
             </div>
             <div class="row center-align">
               <div *ngIf="!questions">
+                <!-- use type="button" instead of type="submit", or else the Enter key in a text field can submit the form by accident -->
                 <button
                   type = "button"
                   class="waves-effect waves-light btn-flat"
@@ -118,7 +119,9 @@
                   [disabled]="!journalEntryForm.valid">Save</button>
                 </span>
               <span class="right">
+                <!-- use type="button" instead of type="submit", or else the Enter key in a text field can submit the form by accident -->
                 <button
+                  type="button"
                   class="waves-effect waves-light btn"
                   (click)="onCancel()"
                   >Cancel</button>

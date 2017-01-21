@@ -3,6 +3,8 @@ import {Router} from '@angular/router';
 
 import * as moment from 'moment';
 
+import {ReadingsData} from '../../shared/interfaces/readings-data.interface';
+
 import {ReadingService} from '../../shared/services/reading.service';
 import {SimpleModalComponent} from "../readings/simple-modal.component";
 
@@ -22,7 +24,7 @@ export class DashboardComponent implements OnInit {
 
   private RCLDate: Date;
   private days: any;
-  private readingsData: any;
+  private readingsData: ReadingsData;
   private questions: string[] = QUESTIONS;
 
   @ViewChild('sorry') modal: SimpleModalComponent;

@@ -4,6 +4,7 @@ import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 
 import {Reading} from '../models/reading.model';
+import {ReadingsData} from '../interfaces/readings-data.interface';
 
 function todaysDate(): string {
   return new Date().toISOString().substring(0, 10);
@@ -12,7 +13,7 @@ function todaysDate(): string {
 @Injectable()
 export class ReadingService {
 
-  private readingsData: any;
+  private readingsData: ReadingsData;
   private RCLDate: Date; // keeps track of the RCL date that the user is currently looking at (since this could be different than today's date)
 
   constructor(private http: Http) {
@@ -22,6 +23,8 @@ export class ReadingService {
     return this.readingsData;
   }
 
+  /* Deprecated -- fetchSavedReadings checks first to see if the readings
+                   are in memory; if not, it gets them from the db
   getTodaysReadings(date: string): Observable<Array<Reading>> {//the type is no longer correct here
     //date = date || 'today';
     return this.http
@@ -29,6 +32,7 @@ export class ReadingService {
       .get(`http://localhost:3000/daily/${date}`)
       .map(res => res.json());
   }
+  */
 
   getReadingById(id: number): Observable<Reading> {
     return this.http
@@ -36,27 +40,16 @@ export class ReadingService {
       .map(res => res.json());
   }
 
-  storeReadings(readingsData: any){
+  storeReadings(readingsData: ReadingsData){
     this.readingsData = readingsData;
   }
-
-
-
-  /*
-   getPermissionTypes() {
-   var promise = Promise.resolve(PERMISSION_TYPES);// Observable.just(USERS);
-   return Observable.fromPromise(promise);
-   }
-   */
-
-
 
   /*
     this method is almost identical to getTodaysReadings, but if the
     data already exists in memory, it returns that data instead of making
     a new trip to the db
   */
-  fetchSavedReadings(date: string): Observable<Array<Reading>> {
+  fetchSavedReadings(date: string): Observable<ReadingsData> {
     let dateString: string;
     let savedDateString: string;
     if (typeof this.readingsData === 'undefined') {

@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import * as moment from 'moment';
 
+import {ReadingsData} from '../../shared/interfaces/readings-data.interface';
 import {ReadingService} from '../../shared/services/reading.service';
 
 
@@ -13,7 +14,7 @@ import {ReadingService} from '../../shared/services/reading.service';
 export class ReadingsListComponent implements OnInit {
 
   @Input() dateString: string;
-  @Input() readingsData: any;
+  @Input() readingsData: ReadingsData;
   @Input() includeLinkToReadings: string;
   @Output() openReadings = new EventEmitter();
 
