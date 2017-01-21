@@ -15,7 +15,7 @@ export const EndUserRoutes = [
     children: [
       {
         path: '',
-        redirectTo: 'readings/today',
+        redirectTo: 'dashboard',
         pathMatch: 'full'
       },
       {

@@ -4,15 +4,9 @@
     <li *ngFor="let reading of readingsData.readings" class="collection-item">
       {{reading.std_ref}}
     </li>
-    <li *ngIf="includeLinkToJournal" class="collection-item right">
-      <a (click)="goToJournal()" class="waves-effect waves-light btn">Open Readings</a>
+    <li *ngIf="includeLinkToReadings" class="collection-item right">
+      <a (click)="goToReadings()" class="waves-effect waves-light btn">Start Readings</a>
     </li>
 
   </ul>
 </div>
-
-<simple-modal
-  #sorry
-  header="Sorry"
-  message=""
-></simple-modal>

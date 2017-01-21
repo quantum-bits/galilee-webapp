@@ -1,8 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {Router} from '@angular/router';
 
 import * as moment from 'moment';
 
 import {ReadingService} from '../../shared/services/reading.service';
+import {SimpleModalComponent} from "../readings/simple-modal.component";
+
+// TODO: bundle questions in with readingsData
+const QUESTIONS = [
+  "What did today's readings make you think about?",
+  "How can you apply what you have learned in the coming days?",
+  "Are there things that you need to discuss with your friends?"
+]
 
 @Component({
   selector: 'app-dashboard',
@@ -13,8 +22,14 @@ export class DashboardComponent implements OnInit {
 
   private RCLDate: Date;
   private days: any;
+  private readingsData: any;
+  private questions: string[] = QUESTIONS;
 
-  constructor(private readingService: ReadingService) { }
+  @ViewChild('sorry') modal: SimpleModalComponent;
+
+  constructor(
+    private readingService: ReadingService,
+    private router: Router) { }
 
   ngOnInit() {
     console.log('RCL date set? ', this.readingService.RCLDateIsSet());
@@ -25,7 +40,21 @@ export class DashboardComponent implements OnInit {
     this.RCLDate = this.readingService.fetchRCLDate();
     console.log('RCL Date:', this.RCLDate);
     this.days = this.initializeDateNav();
+    this.fetchReadings();
+  }
 
+  fetchReadings(){
+    let dateString = this.convertToDateString(this.RCLDate)
+    this.readingService.fetchSavedReadings(dateString)
+      .subscribe(
+        readingsData => {
+          this.readingsData = readingsData;
+        },
+        error => {
+          this.readingsData = undefined;
+          this.modal.openModal('', 'No readings for '+dateString);
+        }
+      );
   }
 
   initializeDateNav(){
@@ -45,7 +74,7 @@ export class DashboardComponent implements OnInit {
     return days;
   }
 
-  shiftDays(dayShift: number) {
+  shiftDays(dayShift: number) {//shifts the date range on the navbar by dayShift days
     let newRCLDateMoment = moment(this.RCLDate).clone().add(dayShift,'d')
     //newRCLDateMoment.date.add(dayShift,'d');
     this.RCLDate = newRCLDateMoment.toDate();
@@ -57,6 +86,7 @@ export class DashboardComponent implements OnInit {
       day.isRCLToday = day.date.isSame(this.RCLDate, 'day');
     }
     console.log(this.days);
+    this.fetchReadings(); // get the readings for the new RCLDate
   }
 
   shiftRCLDate(dayArrayIndex: number) { // change the RCLDate, but leave the Date Nav as is (i.e., unshifted)
@@ -67,6 +97,7 @@ export class DashboardComponent implements OnInit {
       day.isRCLToday = day.date.isSame(this.RCLDate, 'day');
     }
     console.log(this.days);
+    this.fetchReadings(); // get the readings for the new RCLDate
   }
 
   fetchRCLDate(){
@@ -75,6 +106,17 @@ export class DashboardComponent implements OnInit {
 
   convertToDateString(date: Date) {
     return date.toISOString().substring(0, 10);
+  }
+
+  openJournal(){
+    console.log('open the journal!');
+    this.router.navigate(['/end-user/journal-entry']);
+  }
+
+  openReadings(){
+    console.log('open the readings!');
+    let dateString = this.convertToDateString(this.RCLDate);
+    this.router.navigate(['/end-user/readings', dateString]);
   }
 
 }
