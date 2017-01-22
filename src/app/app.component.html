@@ -1,86 +1,86 @@
 <header>
   <nav>
     <div class="container">
-        <div class="nav-wrapper">
-            <span class="brand-logo left">Galilee</span>
-            <ul id="nav-mobile" class="right">
-              <li>
-                <a>
-                  <i class="material-icons">home</i>
-                </a>
-              </li>
-              <li>
-                <a>
-                  Today
-                </a>
-              </li>
-              <li>
-                <a (click)="goToJournal()">
-                  Journal
-                </a>
-              </li>
-              <li>
-                <a materialize="dropdown"
-                   class='dropdown-button'
-                   data-activates='practicesDropdownMenu'>
-                  Practices
-                  <i class="material-icons right">arrow_drop_down</i>
-                </a>
-              </li>
-              <li>
-                <a materialize="dropdown"
-                   class='dropdown-button'
-                   data-activates='resourcesDropdownMenu'>
-                  Resources
-                  <i class="material-icons right">arrow_drop_down</i>
-                </a>
-              </li>
+      <div class="nav-wrapper">
+        <span class="brand-logo left">Galilee</span>
+        <ul id="nav-mobile" class="right">
+          <li>
+            <a>
+              <i class="material-icons">home</i>
+            </a>
+          </li>
+          <li>
+            <a>
+              Today
+            </a>
+          </li>
+          <li>
+            <a (click)="goToJournal()">
+              Journal
+            </a>
+          </li>
+          <li>
+            <a materialize="dropdown"
+               class='dropdown-button'
+               data-activates='practicesDropdownMenu'>
+              Practices
+              <i class="material-icons right">arrow_drop_down</i>
+            </a>
+          </li>
+          <li>
+            <a materialize="dropdown"
+               class='dropdown-button'
+               data-activates='resourcesDropdownMenu'>
+              Resources
+              <i class="material-icons right">arrow_drop_down</i>
+            </a>
+          </li>
 
-              <li *ngIf="currentUser">
-                <a>
-                  <i class="material-icons left">perm_identity</i>
-                  {{currentUser.fullName()}}</a>
-              </li>
+          <li *ngIf="currentUser">
+            <a>
+              <i class="material-icons left">perm_identity</i>
+              {{currentUser.fullName()}}</a>
+          </li>
 
-              <li *ngIf="currentUser">
-                <a [routerLink]="['/update-preferences']">
-                  {{currentUser.fullName()}}
-                </a>
-              </li>
-                <li>
-                    <a [routerLink]="['/end-user']">
-                        <i class="material-icons">book</i>
-                    </a>
-                </li>
-                <li>
-                    <a materialize="dropdown"
-                       class='dropdown-button'
-                       data-activates='adminDropdownMenu'>
-                        <i class="material-icons">settings</i>
-                    </a>
-                </li>
-                <li>
-                    <a *ngIf="isLoggedIn()"
-                       (click)="logout()">
-                        <i class="material-icons">power_settings_new</i>
-                    </a>
-                </li>
-                <li>
-                    <a *ngIf="!isLoggedIn()"
-                       [routerLink]="['/login']">
-                        <i class="material-icons">account_circle</i>
-                    </a>
-                </li>
-            </ul>
-        </div>
+          <li *ngIf="currentUser">
+            <a [routerLink]="['/update-preferences']">
+              {{currentUser.fullName()}}
+            </a>
+          </li>
+
+          <li>
+            <a [routerLink]="['/end-user']">
+              <i class="material-icons">book</i>
+            </a>
+          </li>
+
+          <li>
+            <a materialize="dropdown"
+               class='dropdown-button'
+               data-activates='adminDropdownMenu'>
+              <i class="material-icons">settings</i>
+            </a>
+          </li>
+          <li>
+            <a *ngIf="isLoggedIn()"
+               (click)="logout()">
+              <i class="material-icons">power_settings_new</i>
+            </a>
+          </li>
+          <li>
+            <a *ngIf="!isLoggedIn()"
+               [routerLink]="['/login']">
+              <i class="material-icons">account_circle</i>
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
-
 </header>
+
 <main>
-
   <router-outlet></router-outlet>
-
 </main>
 
 <footer class="page-footer">
@@ -103,7 +103,7 @@
   </div>
   <div class="footer-copyright">
     <div class="container">
-      © Phil Collins, Ph.D., 2014.  This material was created in partnership
+      © Phil Collins, Ph.D., 2014. This material was created in partnership
       with the <a href="http://tucse.taylor.edu">Taylor University Center for Scripture Engagement</a>.
       <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
     </div>
@@ -111,15 +111,12 @@
 </footer>
 
 
-
-
-
 <!-- Dropdown Structure -->
 <ul id='adminDropdownMenu' class='dropdown-content'>
-    <li><a [routerLink]="['/admin/edit-reading-resources']">Practices & Resources</a></li>
-    <li><a [routerLink]="['/admin/manage-users']">Manage Users</a></li>
-    <li class="divider"></li>
-    <li><a href="#!">Other...?</a></li>
+  <li><a [routerLink]="['/admin/edit-reading-resources']">Practices & Resources</a></li>
+  <li><a [routerLink]="['/admin/manage-users']">Manage Users</a></li>
+  <li class="divider"></li>
+  <li><a href="#!">Other...?</a></li>
 </ul>
 
 <!-- Dropdown Structure -->
