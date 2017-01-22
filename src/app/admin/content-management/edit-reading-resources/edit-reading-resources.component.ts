@@ -60,15 +60,16 @@ export class EditReadingResourcesComponent implements OnInit {
   ngOnInit() {
     this.date = new Date();
     // FIXME hardcoded readings; assumes there is at least one reading...FIX!!!
-    this.readingService.getTodaysReadings(this.FAKE_DATE).subscribe(
-      readings => {
-        this.readings = readings;
-        var reading = this.readings[0];
-        this.currentReading = reading;
-        console.log(readings);
-      },
-      err => console.log("ERROR", err),
-      () => console.log("Readings fetched"));
+    // FIXME: No longer have getTodaysReadings
+    // this.readingService.getTodaysReadings(this.FAKE_DATE).subscribe(
+    //   readings => {
+    //     this.readings = readings;
+    //     var reading = this.readings[0];
+    //     this.currentReading = reading;
+    //     console.log(readings);
+    //   },
+    //   err => console.log("ERROR", err),
+    //   () => console.log("Readings fetched"));
   }
 
   updateTab(reading) {

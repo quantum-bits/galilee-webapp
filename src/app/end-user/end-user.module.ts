@@ -13,7 +13,6 @@ import {DeleteJournalEntryModalComponent} from './delete-journal-entry-modal/del
 import {EndUserComponent} from './end-user.component';
 import {GroupPostListComponent} from './group-post-list/group-post-list.component';
 import {JournalDashboardComponent} from './journal-dashboard/journal-dashboard.component';
-import {JournalEntriesComponent} from './journal-entries/journal-entries.component';
 import {JournalEntriesSearchResultsComponent} from './journal-entries-search-results/journal-entries-search-results.component';
 import {JournalEntryItemComponent} from './journal-entry-item/journal-entry-item.component';
 import {JournalEntryListComponent} from './journal-entry-list/journal-entry-list.component';
@@ -35,7 +34,7 @@ import {SimpleModalComponent} from './readings/simple-modal.component';
 import {TruncatePipe} from '../shared/pipes/truncate.pipe';
 import {UpdateJournalEntryComponent} from './update-journal-entry/update-journal-entry.component';
 
-export const routes: Routes = [
+const routes: Routes = [
   {
     path: 'end-user',
     component: EndUserComponent,
@@ -46,64 +45,68 @@ export const routes: Routes = [
         pathMatch: 'full'
       },
       {
-        path: 'dashboard',//dateString can be 'YYYY-MM-DD' or 'today'
+        path: 'dashboard',
         component: DashboardComponent,
-        index: true,
       },
       {
-        path: 'readings/:dateString',//dateString can be 'YYYY-MM-DD' or 'today'
+        // dateString can be 'YYYY-MM-DD' or 'today'
+        path: 'readings/:dateString',
         component: ReadingsComponent,
-        index: true,
       },
       {
-        path: 'readings/:dateString/:engageScripture',//engageScripture is a boolean (0 for off, 1 for on)
+        // engageScripture is a boolean (0 for off, 1 for on)
+        path: 'readings/:dateString/:engageScripture',
         component: ReadingsComponent,
-        index: true,
       },
       {
-        path: 'readings/:dateString/:engageScripture/:readingIndex',//show the specified reading
+        // Show the specified reading
+        path: 'readings/:dateString/:engageScripture/:readingIndex',
         component: ReadingsComponent,
-        index: true,
       },
       {
-        path: 'reading-practice/:dateString/:readingIndex/:practiceIndex',//display the summary for the practice (optionally) and then the Preparation page
+        //display the summary for the practice (optionally) and then the Preparation page
+        path: 'reading-practice/:dateString/:readingIndex/:practiceIndex',
         component: ReadingPracticeComponent
       },
       {
-        path: 'reading-practice/:dateString/:readingIndex/:practiceIndex/:stepIndex',//display a step of the practice
+        //display a step of the practice
+        path: 'reading-practice/:dateString/:readingIndex/:practiceIndex/:stepIndex',
         component: ReadingPracticeComponent
       },
       {
-        path: 'journal',//display journal entries
+        //display journal entries
+        path: 'journal',
         component: JournalDashboardComponent
       },
       {
-        path: 'journal/search-results',//display journal entries
+        //display journal entries
+        path: 'journal/search-results',
         component: JournalEntriesSearchResultsComponent
       },
       {
-        path: 'journal-entry',//create new journal entry
+        //create new journal entry
+        path: 'journal-entry',
         component: UpdateJournalEntryComponent
       },
       {
-        path: 'journal-entry/:journalEntryID',//update existing journal entry
+        //update existing journal entry
+        path: 'journal-entry/:journalEntryID',
         component: UpdateJournalEntryComponent
-      },
+      }
     ]
-
-  },
+  }
 ];
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    DatePickerModule
+    DatePickerModule,
     FormsModule,
     MaterializeModule,
     MomentModule,
     ReactiveFormsModule,
-    SharedModule,
+    SharedModule
   ],
   declarations: [
     DashboardComponent,
@@ -111,12 +114,11 @@ export const routes: Routes = [
     EndUserComponent,
     GroupPostListComponent,
     JournalDashboardComponent,
-    JournalEntriesComponent,
     JournalEntriesSearchResultsComponent,
     JournalEntryItemComponent,
     JournalEntryListComponent,
     MiniCalendarComponent,
-    PostItemComponent
+    PostItemComponent,
     PracticeItemComponent,
     PracticeListComponent,
     PracticePreparationComponent,
@@ -131,7 +133,7 @@ export const routes: Routes = [
     ResourceItemComponent,
     SimpleModalComponent,
     TruncatePipe,
-    UpdateJournalEntryComponent,
+    UpdateJournalEntryComponent
   ]
 })
 export class EndUserModule {
