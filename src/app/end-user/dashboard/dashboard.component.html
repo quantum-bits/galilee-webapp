@@ -28,32 +28,48 @@
 </div>
 
 <div *ngIf="readingsData">
-  <div class="row">
-    <div class="col s12 m6 l4 offset-l1">
-      <app-readings-list
-        [includeLinkToReadings] = true
-        [dateString] = "convertToDateString(RCLDate)"
-        [readingsData] = "readingsData"
-        (openReadings) = "openReadings()"
-      >
-      </app-readings-list>
-    </div>
-    <div class="col s12 m6 l5 offset-l1">
-      <app-question-list
-        [includeLinkToJournal] = true
-        [questions] = "questions"
-        [dateString] = "convertToDateString(RCLDate)"
-        (openJournal) = "openJournal()"
-      >
-      </app-question-list>
-    </div>
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m6 l5 ">
+        <app-readings-list
+          [includeLinkToReadings] = true
+          [dateString] = "convertToDateString(RCLDate)"
+          [readingsData] = "readingsData"
+          (openReadings) = "openReadings()"
+        >
+        </app-readings-list>
+      </div>
+      <div class="col s12 m6 l6 offset-l1">
+        <app-question-list
+          [includeLinkToJournal] = true
+          [questions] = "questions"
+          [dateString] = "convertToDateString(RCLDate)"
+          (openJournal) = "openJournal()"
+        >
+        </app-question-list>
+      </div>
 
+    </div>
   </div>
+</div>
 
+<div *ngIf="multiGroupPostData">
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m6 l12">
+        <div *ngFor="let groupPostData of multiGroupPostData">
+          <app-group-post-list
+            [groupPostData] = 'groupPostData'
+          >
+          </app-group-post-list>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <simple-modal
-  #sorry
+  #dashboardSorry
   header="Sorry"
   message=""
 ></simple-modal>

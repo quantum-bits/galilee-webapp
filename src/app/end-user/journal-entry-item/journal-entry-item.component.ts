@@ -16,9 +16,8 @@ export class JournalEntryItemComponent implements OnInit {
 
   @Input() journalEntry: JournalEntry;
 
-  private truncationLimit = TRUNCATION_LIMIT; // so can use this in the template....
+  private truncationLimit: number = TRUNCATION_LIMIT; // so can use this in the template....
   private allowTruncation: boolean = true;//allow truncation of text for this entry
-
 
   constructor(private journalService: JournalService,
               private router: Router) { }

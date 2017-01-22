@@ -1,0 +1,11 @@
+<h5>{{groupPostData.group_name}}</h5>
+
+<ul class="collection with-header">
+  <li class="collection-header"><h6>Recent Forum Posts</h6></li>
+  <li *ngFor="let post of groupPostData.posts; let i = index"  class="collection-item">
+    <app-post-item
+      [post]="post"
+    >
+    </app-post-item>
+  </li>
+</ul>

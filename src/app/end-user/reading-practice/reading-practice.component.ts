@@ -17,7 +17,7 @@ import {SimpleModalComponent} from "../readings/simple-modal.component";
 })
 export class ReadingPracticeComponent implements OnInit {
 
-  @ViewChild('sorry') modal: SimpleModalComponent;
+  @ViewChild('readingPracticeSorry') modal: SimpleModalComponent;
 
   date: Date;
   //singleReading: Reading; // once the format for the returned data has been finalized, we should use this

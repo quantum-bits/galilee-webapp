@@ -4,8 +4,10 @@ import {Router} from '@angular/router';
 import * as moment from 'moment';
 
 import {ReadingsData} from '../../shared/interfaces/readings-data.interface';
+import {GroupPostData} from '../../shared/interfaces/group-post-data.interface';
 
 import {ReadingService} from '../../shared/services/reading.service';
+import {PostService} from '../../shared/services/post.service';
 import {SimpleModalComponent} from "../readings/simple-modal.component";
 
 // TODO: bundle questions in with readingsData
@@ -15,6 +17,8 @@ const QUESTIONS = [
   "Are there things that you need to discuss with your friends?"
 ]
 
+const MAX_NUMBER_POSTS = 5;
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -22,31 +26,37 @@ const QUESTIONS = [
 })
 export class DashboardComponent implements OnInit {
 
+  @ViewChild('dashboardSorry') modal: SimpleModalComponent;
+
   private RCLDate: Date;
   private days: any;
   private readingsData: ReadingsData;
+  private multiGroupPostData: GroupPostData[];
   private questions: string[] = QUESTIONS;
 
-  @ViewChild('sorry') modal: SimpleModalComponent;
+  private maxNumberPosts = MAX_NUMBER_POSTS;
 
   constructor(
     private readingService: ReadingService,
+    private postService: PostService,
     private router: Router) { }
 
   ngOnInit() {
     console.log('RCL date set? ', this.readingService.RCLDateIsSet());
     if (!this.readingService.RCLDateIsSet()) {
       let today = new Date();
+      console.log('today is: ', today);
       this.readingService.setRCLDate(today);
     }
     this.RCLDate = this.readingService.fetchRCLDate();
     console.log('RCL Date:', this.RCLDate);
     this.days = this.initializeDateNav();
     this.fetchReadings();
+    this.fetchGroupPosts();
   }
 
   fetchReadings(){
-    let dateString = this.convertToDateString(this.RCLDate)
+    let dateString = this.convertToDateString(this.RCLDate);
     this.readingService.fetchSavedReadings(dateString)
       .subscribe(
         readingsData => {
@@ -59,9 +69,41 @@ export class DashboardComponent implements OnInit {
       );
   }
 
+  fetchGroupPosts(){
+    this.postService.getPostsAllGroups(this.maxNumberPosts)
+      .subscribe(
+        multiGroupPostData => {
+
+          /*
+            WORKING HERE.......
+           */
+
+          this.multiGroupPostData = multiGroupPostData;
+          // create post objects so that we can use the method(s) on the objects
+          /*
+           this.journalEntries = [];
+           this.mostUsedTags = journalEntriesData.mostUsedTags;
+           this.allUsedTags = journalEntriesData.allUsedTags;
+           this.calendarJournalEntries = journalEntriesData.calendarJournalEntries;
+           for (let entry of journalEntriesData.journalEntries) {
+           this.journalEntries.push(new JournalEntry(entry));//need to use the constructor, etc., if want access to the methods
+           }
+           */
+
+          console.log('group posts!', this.multiGroupPostData);
+        },
+        error => {
+          this.multiGroupPostData = undefined;
+          //this.modal.openModal('', 'No readings for '+dateString);
+        }
+      );
+  }
+
+
   initializeDateNav(){
     // some help from the mini-calendar component by Blaine Backman
     let middleDate = moment(this.RCLDate).clone();
+    console.log('middle date is: ', middleDate);
     let days = [];
     let date = middleDate.add(-3,'d');
     for (let i = 0; i < 7; i++) {
@@ -73,6 +115,7 @@ export class DashboardComponent implements OnInit {
       date = date.clone();
       date.add(1, 'd');
     }
+    console.log('days: ', days);
     return days;
   }
 
@@ -107,7 +150,12 @@ export class DashboardComponent implements OnInit {
   }
 
   convertToDateString(date: Date) {
-    return date.toISOString().substring(0, 10);
+    // Note: using date.toISOString().substring(0, 10) ignores
+    //       time zones...!  So in the evening, in EST, for example,
+    //       the date string will be for the following day
+    let dateMoment = moment(date).clone();
+    let dateString = dateMoment.format('YYYY-MM-DD');
+    return dateString;
   }
 
   openJournal(){

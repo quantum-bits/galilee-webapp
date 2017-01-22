@@ -35,6 +35,8 @@ import { JournalEntryItemComponent } from './journal-entry-item/journal-entry-it
 import { QuestionListComponent } from './question-list/question-list.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ReadingsListComponent } from './readings-list/readings-list.component';
+import { GroupPostListComponent } from './group-post-list/group-post-list.component';
+import { PostItemComponent } from './post-item/post-item.component';
 
 
 @NgModule({
@@ -67,7 +69,9 @@ import { ReadingsListComponent } from './readings-list/readings-list.component';
     JournalEntryItemComponent,
     QuestionListComponent,
     DashboardComponent,
-    ReadingsListComponent
+    ReadingsListComponent,
+    GroupPostListComponent,
+    PostItemComponent
   ],
   imports: [
     BrowserModule,

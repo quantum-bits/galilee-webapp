@@ -9,6 +9,7 @@ import {ResourceService} from './shared/services/resource.service';
 import {UserService} from './authentication/user.service';
 import {User} from './shared/models/user.model';
 import {JournalService} from './shared/services/journal.service';
+import {PostService} from './shared/services/post.service';
 import {JournalEntry} from './shared/models/journal-entry.model';
 
 @Component({
@@ -19,7 +20,8 @@ import {JournalEntry} from './shared/models/journal-entry.model';
     ReadingService,
     PracticeService,
     ResourceService,
-    JournalService
+    JournalService,
+    PostService
   ]
 })
 export class AppComponent {
@@ -37,7 +39,8 @@ export class AppComponent {
               private practiceService: PracticeService,
               private journalService: JournalService,
               private userService: UserService,
-              private router: Router) {
+              private router: Router,
+              private postService: PostService) {
   }
 
   ngOnInit() {

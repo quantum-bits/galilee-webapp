@@ -29,7 +29,7 @@ const DEFAULT_NUMBER_ENTRIES = 2; // default number of entries to show
 })
 export class JournalDashboardComponent implements OnInit {
 
-  @ViewChild('deleteEntryModal') modal: DeleteJournalEntryModalComponent;
+  @ViewChild('deleteJournalEntryModal') modal: DeleteJournalEntryModalComponent;
 
   //private journalEntriesData: JournalEntriesData; not currently being used
   private journalEntries: JournalEntry[];
