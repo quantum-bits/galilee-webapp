@@ -1,17 +1,13 @@
-// Bible reading
-//import { Practice } from './practice.model'
+import {IJournalEntry} from '../interfaces/journal-entry.interface';
 
-export class JournalEntry {
+export class JournalEntry implements IJournalEntry {
+
   id: number;
   title: string;
   entry: string;
   tags: string[];
   date: string;
-  //readingID: number; (index in the db for the reading in question)
-  //readingDayID: ?
-  //practiceID: number
-  //stepID: number (this would then contain the resource info, etc.)
-
+  RCL_date?: string; // this property may be "undefined" for some of the entries (not required for IJournalEntry interface)
 
   constructor(obj) {
     this.id = obj.id;
@@ -19,10 +15,13 @@ export class JournalEntry {
     this.entry = obj.entry;
     this.tags = obj.tags;
     this.date = obj.date;
+    if ("RCL_date" in obj) {
+      this.RCL_date = obj.RCL_date;
+    };
   }
 
   hasTags() {
-    return true;
+    //return true;
   }
 
   entryIsLong(numWords: number){

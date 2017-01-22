@@ -1,3 +1,4 @@
+// TODO: Is this interface deprecated?
 import {Resource} from '../models/resource.model';
 
 export interface ResourceCollection {

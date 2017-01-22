@@ -7,6 +7,7 @@ import {ResourceService} from './shared/services/resource.service';
 import {UserService} from './authentication/user.service';
 import {User} from './shared/models/user.model';
 import {JournalService} from './shared/services/journal.service';
+import {PostService} from './shared/services/post.service';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,8 @@ import {JournalService} from './shared/services/journal.service';
     ReadingService,
     PracticeService,
     ResourceService,
-    JournalService
+    JournalService,
+    PostService
   ]
 })
 export class AppComponent implements OnInit {
@@ -30,11 +32,14 @@ export class AppComponent implements OnInit {
   // singleReading: Reading;
   // currentUser: User;
 
+  private showPracticesDropdown: boolean = false;
+
   constructor(private readingService: ReadingService,
               private practiceService: PracticeService,
               private journalService: JournalService,
               private userService: UserService,
-              private router: Router) {
+              private router: Router,
+              private postService: PostService) {
   }
 
   ngOnInit() {
@@ -91,6 +96,16 @@ export class AppComponent implements OnInit {
   }
 
   goToJournal(){
-    this.router.navigate(['/end-user/journal-entries']);
+    this.router.navigate(['/end-user/journal']);
   }
+
+  goHome(){
+    this.router.navigate(['/end-user']);
+  }
+
+  togglePracticesDropdown(event){
+    event.stopPropagation();
+    this.showPracticesDropdown = !this.showPracticesDropdown;
+  }
+
 }

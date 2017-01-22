@@ -3,7 +3,22 @@ import {Router, ActivatedRoute} from '@angular/router';
 
 import {ReadingService} from '../../shared/services/reading.service';
 import {Reading} from '../../shared/models/reading.model';
+import {ReadingsData} from '../../shared/interfaces/readings-data.interface';
 import {SimpleModalComponent} from "./simple-modal.component";
+
+//TODO: determine translations actively
+//TODO: fix BUG -- on secondary side-nav, clicking on a passage goes to the passage,
+//      but does not close the side-nav
+//TODO: add custom questions to readingsData
+
+//MOCK
+const QUESTIONS = [
+  "What did today's readings make you think about?",
+  "How can you apply what you have learned in the coming days?",
+  "Are there things that you need to discuss with your friends?"
+]
+
+const TRANSLATIONS = ["NLT", "NIV", "RSV", "KJV", "NKJV"];
 
 @Component({
   selector: 'app-readings',
@@ -22,7 +37,15 @@ export class ReadingsComponent implements OnInit {
   //  $('.materialboxed').materialbox();
   //}
 
-  private readingsData: any;//Reading[];
+
+  private readingsData: ReadingsData;//Reading[];
+  //TODO: translations need to come from a service (bundled with the readings?):
+  private translations = TRANSLATIONS;
+  //TODO: questions need to be bundled with the readings in the service:
+  private questions = QUESTIONS;
+
+  private showReadingsDropdown: boolean = true;
+  private showTranslationsDropdown: boolean = false;
 
   @ViewChild('sorry') modal: SimpleModalComponent;
 
@@ -31,14 +54,12 @@ export class ReadingsComponent implements OnInit {
               private route: ActivatedRoute) {
   }
 
-  dateString: string;
-  engageScripture: number; // translates to boolean (0->false)
-  //showPractices: boolean = false;
-  //showPracticeDetailPage: boolean = false;
-  readingDescriptions: Array<any> = [];//this will hold the reading descriptions for the passages other than the one that is currently being shown
-  numberReadings: number;
-  currentReadingIndex: number = 0; // the index # of the reading that is currently being displayed
-  initializationComplete = false;
+  private dateString: string;
+  private engageScripture: number; // translates to boolean (0->false)
+  private readingDescriptions: Array<any> = [];//this will hold the reading descriptions for the passages other than the one that is currently being shown
+  private numberReadings: number;
+  private currentReadingIndex: number = 0; // the index # of the reading that is currently being displayed
+  private initializationComplete = false;
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -52,15 +73,12 @@ export class ReadingsComponent implements OnInit {
       } else {
         this.engageScripture = 0;
       }
-      //this.readingService.getTodaysReadings(this.dateString)
       this.readingService.fetchSavedReadings(this.dateString)
         .subscribe(
           readings => {
             this.readingsData = readings;
             if (this.currentReadingExists()) {
               this.initializeReadingInfo();
-              // the following is unnecesary if the readings were actually saved already, but OK....
-              this.readingService.storeReadings(this.readingsData);
             } else {
               this.modal.openModal();
             }
@@ -73,7 +91,7 @@ export class ReadingsComponent implements OnInit {
   }
 
   // could just use engageScripture as a boolean directly in the template, but this seems a bit safer
-  showPractices(engageScripture: number){
+  showPractices(engageScripture: number): boolean{
     if (engageScripture === 0) {
       return false;
     } else {
@@ -107,24 +125,40 @@ export class ReadingsComponent implements OnInit {
     this.readingDescriptions = [];
     var loopIndex = 0;
     for (var reading of this.readingsData.readings){
-      if (loopIndex != this.currentReadingIndex){
-        this.readingDescriptions.push(
-          {
-            'description': this.readingsData.readings[loopIndex].std_ref,
-            'index': loopIndex
-          }
-        );
-      }
+      this.readingDescriptions.push(
+        {
+          'description': this.readingsData.readings[loopIndex].std_ref,
+          'index': loopIndex
+        }
+      );
       loopIndex++;
     }
     console.log(this.readingDescriptions);
   }
 
   onReadingUpdated(updatedReadingIndex: number) {
-    //console.log('emitted event received!');
     this.router.navigate(['/end-user/readings', this.dateString, this.engageScripture, updatedReadingIndex]);
-    //this.currentReadingIndex = updatedReadingIndex;
-    //this.updateReadingDescriptionMenu();
+  }
+
+  // for the secondary side-nav
+  toggleReadingsDropdown(event){
+    event.stopPropagation();
+    this.showReadingsDropdown = !this.showReadingsDropdown;
+  }
+
+  // for the secondary side-nav
+  toggleTranslationsDropdown(event){
+    event.stopPropagation();
+    this.showTranslationsDropdown = !this.showTranslationsDropdown;
+  }
+
+  openJournal(){
+    console.log('open the journal!');
+    this.router.navigate(['/end-user/journal-entry']);
+  }
+
+  getTemp(){
+    console.log(this.readingService.returnTemp());
   }
 
 }

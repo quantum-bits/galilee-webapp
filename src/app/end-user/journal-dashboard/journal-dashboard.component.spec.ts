@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { JournalEntriesComponent } from './journal-entries.component';
+import { JournalEntriesComponent } from './journal-dashboard.component';
 
 describe('JournalEntriesComponent', () => {
   let component: JournalEntriesComponent;

@@ -1,6 +1,10 @@
+//TODO: should make this implement the IResource interface,
+//      but currently there are some disagreements in the properties
+//      of the interface and the model
+
 export class Resource {
   public caption: string = '';
-  public copyrightYear: number;
+  public copyrightYear: number; // the data has a string here
   public copyrightOwner: string = '';
   public fileName: string = 'FOO';
 

@@ -1,12 +1,12 @@
 <header>
-  <nav>
+  <nav class="hide-on-med-and-down">
     <div class="container">
       <div class="nav-wrapper">
         <span class="brand-logo left">Galilee</span>
         <ul id="nav-mobile" class="right">
           <li>
             <a>
-              <i class="material-icons">home</i>
+              <i (click)="goHome()" class="material-icons">home</i>
             </a>
           </li>
           <li>
@@ -35,7 +35,6 @@
               <i class="material-icons right">arrow_drop_down</i>
             </a>
           </li>
-
           <li *ngIf="currentUser">
             <a>
               <i class="material-icons left">perm_identity</i>
@@ -47,13 +46,11 @@
               {{currentUser.fullName()}}
             </a>
           </li>
-
           <li>
             <a [routerLink]="['/end-user']">
               <i class="material-icons">book</i>
             </a>
           </li>
-
           <li>
             <a materialize="dropdown"
                class='dropdown-button'
@@ -76,6 +73,44 @@
         </ul>
       </div>
     </div>
+  </nav>
+
+  <nav class="hide-on-large-only nav-wrapper">
+    <a class="brand-logo">Galilee</a>
+    <ul id="slide-out" class="side-nav">
+      <li>
+        <a>
+          <i (click)="goHome()" class="material-icons">home</i>
+        </a>
+      </li>
+      <li>
+        <a>
+          Today
+        </a>
+      </li>
+      <li>
+        <a (click)="goToJournal()">
+          Journal
+        </a>
+      </li>
+      <li>
+        <a (click)="togglePracticesDropdown($event)" class="waves-effect">
+          Practices
+        </a>
+        <ul *ngIf="showPracticesDropdown" class="nav-bar-submenu">
+          <li><a>Individual</a></li>
+          <li><a>Small Group</a></li>
+        </ul>
+      </li>
+    </ul>
+    <a materialize="sideNav"
+       [materializeParams]="[{edge:'left', closeOnClick: true}]"
+       href="#"
+       data-activates="slide-out"
+       class="button-collapse">
+      <i class="mdi-navigation-menu material-icons">menu</i>
+    </a>
+
   </nav>
 </header>
 
@@ -109,7 +144,6 @@
     </div>
   </div>
 </footer>
-
 
 <!-- Dropdown Structure -->
 <ul id='adminDropdownMenu' class='dropdown-content'>

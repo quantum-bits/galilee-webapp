@@ -4,20 +4,21 @@ import {FormsModule, FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {RouterModule, Routes} from "@angular/router";
 
-import {EndUserModule} from './end-user/end-user.module';
 import {AdminModule} from './admin/admin.module';
-import {AuthenticationModule} from './authentication/authentication.module';
-
-import {MaterializeModule} from "angular2-materialize";
-import {MomentModule} from 'angular2-moment';
-import {Ng2PaginationModule} from 'ng2-pagination';
-
 import {AppComponent} from './app.component';
+import {AuthenticationModule} from './authentication/authentication.module';
 import {DialogComponent} from './admin/temp/dialog.component';
+import {EndUserModule} from './end-user/end-user.module';
 import {SelfUpdateComponent} from './authentication/self-update';
 
+import {MaterializeModule} from "angular2-materialize";
+import {DatePickerModule} from 'ng2-datepicker';
+import {MomentModule} from 'angular2-moment';
+import {Ng2CompleterModule} from "ng2-completer";
+import {Ng2PaginationModule} from 'ng2-pagination';
+
 const routes: Routes = [
-  { path: '', redirectTo: 'end-user', pathMatch: 'full'}
+  {path: '', redirectTo: 'end-user', pathMatch: 'full'}
 ];
 
 @NgModule({
@@ -32,7 +33,9 @@ const routes: Routes = [
     Ng2PaginationModule,
     EndUserModule,
     AdminModule,
-    AuthenticationModule
+    AuthenticationModule,
+    Ng2CompleterModule,
+    DatePickerModule
   ],
   declarations: [
     AppComponent,

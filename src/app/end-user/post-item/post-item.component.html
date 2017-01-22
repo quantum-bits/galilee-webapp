@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col s8">
+    <h6>{{post.title}}</h6>
+  </div>
+  <!--
+  need to think about this...in some views, if the post is owned by the
+    authenticated user, then they should be able to edit the post....
+  <div class="col s4 right-align">
+    <a (click)="deleteEntry()">
+      <i class="material-icons grey-text darken-2">delete</i>
+    </a>
+    <a (click)="updateEntry(journalEntry.id)">
+      <i class="material-icons grey-text darken-2">mode_edit</i>
+    </a>
+  </div>
+   -->
+</div>
+<div *ngIf="allowTruncation">
+  <div>
+    {{post.entry | truncate : truncationLimit}}
+  </div>
+  <!-- don't have this working yet -- need to create post objects
+  <div *ngIf="post.entryIsLong(truncationLimit)">
+    <br>
+    <a class="grey-text darken-3" (click)="toggleAllowTruncation()"> Read More... </a>
+  </div>
+  -->
+</div>
+<div *ngIf="!allowTruncation">
+  <div>
+    {{post.entry }}
+    <!--{{journalEntry.hasTags()}}-->
+  </div>
+  <!-- don't have this working yet -- need to create post objects
+  <div *ngIf="post.entryIsLong(truncationLimit)">
+    <br>
+    <a class="grey-text darken-3" (click)="toggleAllowTruncation()"> Read Less </a>
+  </div>
+  -->
+</div>
+<br>
+<div class="grey-text darken-3 right">{{post.date | amTimeAgo}}</div>
+

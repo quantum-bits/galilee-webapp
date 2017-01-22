@@ -1,74 +1,36 @@
-
-<!--
-<div class="mini-calendar-component">
-	<div class="header">
-    <div class="row">
-      <i class="material-icons left" (click)="previous()">chevron_left</i>
-      <span class="grey-text">{{month.format("MMM YYYY")}}</span>
-      <i class="material-icons right" (click)="next()">chevron_right</i>
-    </div>
-
-	</div>
-	<div class="week" *ngFor="let week of weeks">
-		<span class="day" [ngClass]="{ 'today': day.isToday, 'different-month': !day.isCurrentMonth, 'selected': isInWeek(day) }"
-			(click)="select(day)" *ngFor="let day of week.days">{{day.numb}}</span>
-	</div>
-</div>
-
-<div class="row">
-  <i class="material-icons left" (click)="previous()">chevron_left</i>
-  <span class="grey-text">{{month.format("MMM YYYY")}}</span>
-  <i class="material-icons right" (click)="next()">chevron_right</i>
-</div>
--->
-
-<!--
-<i class="material-icons" (click)="previous()">chevron_left</i>
-			<span class="grey-text">{{month.format("MMM YYYY")}}</span>
-			<i class="material-icons" (click)="next()">chevron_right</i>
--->
-<div class="circle">1</div>
-<div class="card ">
-  <!-- I can't figure out how to get a title bar in a solid color, so I'm cheating and using the card-action class -->
-  <div class="card-action grey darken-1">
-    <div class="card-title white-text">
-      Calendar
-    </div>
-  </div>
-  <div class="card-action grey center-align">
-    <span class="card-title white-text">
-      <i class="material-icons left" (click)="previous()">chevron_left</i>
-      <span class="white-text lighten-3">
-        {{month.format("MMM YYYY")}}
-      </span>
-      <i class="material-icons right" (click)="next()">chevron_right</i>
-    </span>
-  </div>
-  <div class="card-content center-align">
+<ul class="collection with-header">
+  <li class="collection-header">
+    <h6 class="center-align">
+      <i class="material-icons left lr-arrow" (click)="previous()">chevron_left</i>
+      {{month.format("MMM YYYY")}}
+      <i class="material-icons right lr-arrow" (click)="next()">chevron_right</i>
+    </h6>
+  </li>
+  <li class="collection-item">
     <div class="row">
       <div class="col s12 center-align">
         <div class="mini-calendar-component">
-        <div class="week" *ngFor="let week of weeks">
-          <span class="day" [ngClass]="{ 'today': day.isToday, 'different-month': !day.isCurrentMonth, 'selected': isInWeek(day) }"
+          <div class="week" *ngFor="let week of weeks">
+            <span class="day"
+                  [ngClass]="{ 'today': day.isToday, 'different-month': !day.isCurrentMonth, 'selected': isInWeek(day) }"
                   (click)="select(day)" *ngFor="let day of week.days">
-            <div>{{day.numb}}</div>
-            <!-- this no worky maybe try the icon alert or something from materialize css -->
-            <div class="center">
-              <div class="circle">1</div>
-            </div>
-            <!--<span class="new badge green" data-badge-caption="">2</span>-->
-          </span>
+              <div>{{day.numb}}</div>
+              <!-- this no worky maybe try the icon alert or something from materialize css -->
+              <div *ngIf="entriesExistThisDay(day)" class="center">
+                <div class="circle">{{numberEntriesThisDay(day)}}</div>
+              </div>
+              <!--<span class="new badge green" data-badge-caption="">2</span>-->
+            </span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </li>
+</ul>
 
 
 
 
-
-</div>
 
 
 

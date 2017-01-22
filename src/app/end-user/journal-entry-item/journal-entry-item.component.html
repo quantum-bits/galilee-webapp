@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col s8">
+    <h6>{{journalEntry.title}}</h6>
+  </div>
+  <div class="col s4 right-align">
+    <a (click)="deleteEntry()">
+      <i class="material-icons grey-text darken-2">delete</i>
+    </a>
+    <a (click)="updateEntry(journalEntry.id)">
+      <i class="material-icons grey-text darken-2">mode_edit</i>
+    </a>
+  </div>
+</div>
+<div *ngIf="allowTruncation">
+  <div>
+    {{journalEntry.entry | truncate : truncationLimit}}
+    <!--{{journalEntry.hasTags()}}-->
+  </div>
+  <div *ngIf="journalEntry.entryIsLong(truncationLimit)">
+    <br>
+    <a class="grey-text darken-3" (click)="toggleAllowTruncation()"> Read More... </a>
+  </div>
+</div>
+<div *ngIf="!allowTruncation">
+  <div>
+    {{journalEntry.entry }}
+    <!--{{journalEntry.hasTags()}}-->
+  </div>
+  <div *ngIf="journalEntry.entryIsLong(truncationLimit)">
+    <br>
+    <a class="grey-text darken-3" (click)="toggleAllowTruncation()"> Read Less </a>
+  </div>
+</div>
+<br>
+<div class="chip" *ngFor="let tag of journalEntry.tags">
+  {{tag}}
+</div>
+<div class="grey-text darken-3 right">{{journalEntry.date | amTimeAgo}}</div>
+

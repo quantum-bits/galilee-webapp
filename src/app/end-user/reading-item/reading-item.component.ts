@@ -14,6 +14,8 @@ export class ReadingItemComponent implements OnInit {
   @Input() dateString: string;
   @Input() engageScripture: number;//0->false; 1->true
 
+  //private hideContent: boolean;//hide the content of the reading if on a mobile device
+
   constructor(private router: Router) {
   }
 
@@ -21,6 +23,13 @@ export class ReadingItemComponent implements OnInit {
     console.log('inside ngoninit for reading-item');
     console.log(this.includeNavigationButtons);
     this.modifyHeaderStyle();
+    /*
+    if (this.engageScripture===1){
+      this.hideContent = true;
+    } else {
+      this.hideContent = false;
+    }
+    */
   }
 
   displayInfo(reading) {
@@ -74,5 +83,11 @@ export class ReadingItemComponent implements OnInit {
     //console.log(this.reading.text);
     this.reading.text = this.reading.text.replace(/<h3>/g, "<h4>").replace(/<\/h3>/g, "</h4>");
   }
+
+  /*
+  toggleHideContent(){
+    this.hideContent = !this.hideContent;
+  }
+  */
 
 }
