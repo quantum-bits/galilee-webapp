@@ -2,14 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {ReadingService} from './shared/services/reading.service';
-import {Reading} from './shared/models/reading.model';
 import {PracticeService} from './shared/services/practice.service';
-import {Practice} from './shared/models/practice.model';
 import {ResourceService} from './shared/services/resource.service';
 import {UserService} from './authentication/user.service';
 import {User} from './shared/models/user.model';
 import {JournalService} from './shared/services/journal.service';
-import {JournalEntry} from './shared/models/journal-entry.model';
 
 @Component({
   selector: 'app-root',
@@ -22,8 +19,10 @@ import {JournalEntry} from './shared/models/journal-entry.model';
     JournalService
   ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'app works!';
+
+  private currentUser: User = null;
 
   // date: Date;
   // readings: Reading[] = [];
@@ -39,6 +38,13 @@ export class AppComponent {
   }
 
   ngOnInit() {
+    this.userService
+      .getCurrentUser()
+      .subscribe(user => {
+        this.currentUser = user;
+        console.log("CURRENT USER", this.currentUser);
+      });
+
     // grab current user info if it exists....
     // if (this.userService.isLoggedIn()) {
     //   this.currentUser = this.userService.getCurrentUser();

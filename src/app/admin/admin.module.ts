@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {RouterModule} from "@angular/router";
+import {CommonModule} from '@angular/common';
+import {RouterModule, Routes} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {MaterializeModule} from "angular2-materialize";
@@ -22,7 +22,21 @@ import {UpdateResourceCollectionComponent} from './content-management/update-res
 import {UpdateResourceItemComponent} from './content-management/update-resource-item';
 import {UpdateResourcesComponent} from './content-management/update-resources';
 import {UploadResourceComponent} from './content-management/upload-resource';
-import { ManageReadingComponent } from './content-management/manage-reading/manage-reading.component';
+import {ManageReadingComponent} from './content-management/manage-reading/manage-reading.component';
+
+const routes: Routes = [
+  {
+    path: 'admin',
+    component: AdminComponent,
+    children: [
+      {path: '', redirectTo: 'edit-reading-resources', pathMatch: 'full'},
+      {path: 'edit-reading-resources', component: EditReadingResourcesComponent},
+      {path: 'manage-users', component: ManageUsersComponent},
+      {path: 'manage-readings', component: ManageReadingComponent}
+    ]
+  },
+];
+
 
 @NgModule({
   declarations: [
@@ -43,7 +57,8 @@ import { ManageReadingComponent } from './content-management/manage-reading/mana
     EditUserComponent
   ],
   imports: [
-    BrowserModule,
+    CommonModule,
+    RouterModule.forChild(routes),
     FormsModule,
     MaterializeModule,
     ReactiveFormsModule,
@@ -55,4 +70,5 @@ import { ManageReadingComponent } from './content-management/manage-reading/mana
     SharedModule
   ],
 })
-export class AdminModule { }
+export class AdminModule {
+}

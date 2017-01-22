@@ -23,7 +23,7 @@ export class AuthenticationService {
   constructor(private http: Http) {
   }
 
-  login(email: string, password: string): Observable<User> {
+  login(email: string, password: string): Observable<LoginData> {
     return this.http.post('http://localhost:3000/authenticate', {email, password})
       .map(res => res.json())
       .do((data: LoginData) => {

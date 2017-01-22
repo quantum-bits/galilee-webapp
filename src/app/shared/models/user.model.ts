@@ -10,15 +10,15 @@ export class User {
   preferredVersionID: number;
   permissions: UserPermission[];
 
-  constructor(obj){
-    this.id = obj.id;
-    this.email = obj.email;
-    this.firstName = obj.firstName;
-    this.lastName = obj.lastName;
-    this.joinedOn = obj.joinedOn;
-    this.enabled = obj.enabled;
-    this.preferredVersionID = obj.preferredVersionID;
-    this.permissions = obj.permissions;
+  constructor(db_obj){
+    this.id = db_obj.id;
+    this.email = db_obj.email;
+    this.firstName = db_obj.first_name;
+    this.lastName = db_obj.last_name;
+    this.joinedOn = db_obj.joined_on;
+    this.enabled = db_obj.enabled;
+    this.preferredVersionID = db_obj.preferred_version_id;
+    this.permissions = db_obj.permissions;
   }
 
   isEnabled() {

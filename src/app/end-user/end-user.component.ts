@@ -1,14 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-end-user',
-  templateUrl: './end-user.component.html'
+  template: '<router-outlet></router-outlet>'
 })
-export class EndUserComponent implements OnInit {
-
-  constructor() {}
-
-  ngOnInit() {
-  }
-
+export class EndUserComponent {
 }

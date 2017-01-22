@@ -12,7 +12,10 @@ export class JournalService {
   }
 
   getJournalEntries() {
-    let currentUser: User = this.userService.getCurrentUser();
+    let currentUser: User;
+    this.userService
+      .getCurrentUser()
+      .subscribe(user => currentUser = user);
     return this.http.get(`http://localhost:3000/users/${currentUser.email}/journal-entries`)
       .map(res => res.json());
   }

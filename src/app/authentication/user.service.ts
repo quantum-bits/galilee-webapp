@@ -1,9 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
+import {Subject, BehaviorSubject} from 'rxjs';
 
 import {AuthenticationService} from './authentication.service';
 
 import {User} from '../shared/models/user.model';
+import {LoginData} from '../shared/interfaces/login-data.interface';
+
 import {Permission} from '../shared/models/permission.model';
 import {UserPermission} from '../shared/models/user-permission.model';
 
@@ -30,20 +33,22 @@ const baseUrl = 'http://localhost:3001';
 
 @Injectable()
 export class UserService {
-  private currentUser: User;
+  private currentUser: Subject<User> = new BehaviorSubject<User>(null);
 
   constructor(private authenticationService: AuthenticationService,
               private http: Http) {
   }
 
-  login(email, password) {
+  login(email: string, password: string) {
     this.authenticationService.login(email, password)
-      .subscribe(user => {
-        if (user) {
-          this.currentUser = user;
-          console.log("Logged in", user);
+      .subscribe((loginData: LoginData) => {
+        if (loginData.status === "OK") {
+          console.log("LOGIN DATA", loginData);
+          let u: User = new User(loginData.user);
+          this.currentUser.next(u);
+          console.log("Logged in", u);
         } else {
-          this.currentUser = null;
+          this.currentUser.next(null);
           console.log("Login failed");
         }
       });
@@ -68,7 +73,7 @@ export class UserService {
     return this.authenticationService.isloggedIn();
   }
 
-  getCurrentUser(): User {
+  getCurrentUser(): Subject<User> {
     return this.currentUser;
   }
 

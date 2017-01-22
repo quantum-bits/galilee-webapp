@@ -1,39 +1,29 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
 import {FormsModule, FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
+import {RouterModule, Routes} from "@angular/router";
 
 import {EndUserModule} from './end-user/end-user.module';
 import {AdminModule} from './admin/admin.module';
 import {AuthenticationModule} from './authentication/authentication.module';
 
-import {SelfUpdateComponent} from './authentication/self-update';
-
 import {MaterializeModule} from "angular2-materialize";
-
 import {MomentModule} from 'angular2-moment';
-
-import {AppComponent} from './app.component';
-
 import {Ng2PaginationModule} from 'ng2-pagination';
 
+import {AppComponent} from './app.component';
 import {DialogComponent} from './admin/temp/dialog.component';
+import {SelfUpdateComponent} from './authentication/self-update';
 
-
-import {appRoutes} from './app.routes';
-import {RouterModule} from "@angular/router";
+const routes: Routes = [
+  { path: '', redirectTo: 'end-user', pathMatch: 'full'}
+];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    DialogComponent,
-    SelfUpdateComponent
-  ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes),
-    CommonModule,
+    RouterModule.forRoot(routes, {enableTracing: true}),
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
@@ -43,6 +33,11 @@ import {RouterModule} from "@angular/router";
     EndUserModule,
     AdminModule,
     AuthenticationModule
+  ],
+  declarations: [
+    AppComponent,
+    DialogComponent,
+    SelfUpdateComponent
   ],
   providers: [FormBuilder],
   //NOTE: (1) AuthGuard has been commented out in admin.routes for the moment

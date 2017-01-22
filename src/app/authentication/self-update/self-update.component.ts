@@ -15,7 +15,9 @@ export class SelfUpdateComponent implements OnInit {
   constructor(private router: Router,
               private userService: UserService) {
     if (this.userService.isLoggedIn()) {
-      this.currentUser = this.userService.getCurrentUser();
+      this.userService
+        .getCurrentUser()
+        .subscribe(user => this.currentUser = user);
     } else {
       // what to do here?
       console.log('ERROR!!!  user cannot update preferences if not logged in!');

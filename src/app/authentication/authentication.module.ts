@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {RouterModule} from "@angular/router";
+import {RouterModule, Routes} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {AdminModule} from '../admin/admin.module';
@@ -12,6 +12,14 @@ import {AuthenticationService} from './authentication.service';
 
 import {LoginComponent} from './login';
 import {SignupComponent} from './signup';
+import {SelfUpdateComponent} from './self-update';
+
+const routes: Routes = [
+  {path: 'login', component: LoginComponent},
+  {path: 'signup', component: SignupComponent},
+  {path: 'update-preferences', component: SelfUpdateComponent}
+];
+
 
 @NgModule({
   imports: [
@@ -19,7 +27,7 @@ import {SignupComponent} from './signup';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule,
+    RouterModule.forChild(routes),
     SharedModule,
   ],
   declarations: [
@@ -28,5 +36,4 @@ import {SignupComponent} from './signup';
   ],
   providers: [AuthGuard, AuthenticationService, UserService]
 })
-export class AuthenticationModule {
-}
+export class AuthenticationModule {}

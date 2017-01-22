@@ -22,7 +22,6 @@ export class ReadingsComponent implements OnInit {
   //  $('.materialboxed').materialbox();
   //}
 
-
   private readingsData: any;//Reading[];
 
   @ViewChild('sorry') modal: SimpleModalComponent;
@@ -31,9 +30,6 @@ export class ReadingsComponent implements OnInit {
               private router: Router,
               private route: ActivatedRoute) {
   }
-
-  // TODO - Don't use a fake date!
-  //FAKE_DATE: string = '2016-12-28';
 
   dateString: string;
   engageScripture: number; // translates to boolean (0->false)
