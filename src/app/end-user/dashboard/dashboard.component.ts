@@ -5,7 +5,7 @@ import * as moment from 'moment';
 
 import {ReadingsData} from '../../shared/interfaces/readings-data.interface';
 import {GroupPostData} from '../../shared/models/group-post-data.model';
-import {Post} from '../../shared/models/post.model';
+//import {Post} from '../../shared/models/post.model';
 
 import {ReadingService} from '../../shared/services/reading.service';
 import {PostService} from '../../shared/services/post.service';

@@ -11,6 +11,7 @@ import {GroupPostData} from '../../shared/models/group-post-data.model';
 export class GroupPostListComponent implements OnInit {
 
   @Input() groupPostData: GroupPostData;
+  @Input() groupNameInTitleBar: boolean; // if true, group name goes in title bar; if false, group name goes above
 
   constructor() { }
 

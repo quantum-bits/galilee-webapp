@@ -134,6 +134,14 @@
             (openJournal) = "openJournal()"
           >
           </app-question-list>
+          <div *ngIf="multiGroupPostData">
+            <div *ngFor="let groupPostData of multiGroupPostData">
+              <app-group-post-list
+                [groupPostData] = 'groupPostData'
+              >
+              </app-group-post-list>
+            </div>
+          </div>
         </div>
         <div *ngIf="showPractices(engageScripture)" class="col s12 m6 l7">
           <app-reading-item
@@ -176,6 +184,17 @@
             (openJournal) = "openJournal()"
           >
           </app-question-list>
+
+          <div *ngIf="multiGroupPostData">
+            <div *ngFor="let groupPostData of multiGroupPostData">
+              <app-group-post-list
+                [groupPostData] = 'groupPostData'
+                [groupNameInTitleBar] = true
+              >
+              </app-group-post-list>
+            </div>
+          </div>
+
         </div>
       </div>
 

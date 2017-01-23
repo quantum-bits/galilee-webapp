@@ -27,6 +27,8 @@ const POST_ENTRY = {
   'sit aspernatur aut odit aut fugit, sed quia',
   date: "2017-01-16T05:00:00.000Z",
   RCL_date: "2017-01-14",
+  reading_id: 1,
+  reading_std_ref: 'Gen. 1: 3-5',
   user_id: 1,
   group_id: 1
 }
@@ -49,11 +51,56 @@ const POST_ENTRIES = [
     'sit aspernatur aut odit aut fugit, sed quia',
     date: "2017-01-16T05:00:00.000Z",
     RCL_date: "2017-01-16",
+    reading_id: 1,
+    reading_std_ref: 'Gen. 1: 3-5',
     user_id: 1,
     group_id: 1
   },
   {
     id: 2,// entry with no title
+    entry: 'What did everybody think of the reading for today?'+
+    'After I read this, I thought about some things. '+
+    'unde omnis iste natus error sit voluptatem accusantium ' +
+    'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
+    'ab illo inventore veritatis et quasi architecto beatae vitae ' +
+    'dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas ' +
+    'sit aspernatur aut odit aut fugit, sed quia' +
+    'unde omnis iste natus error sit voluptatem accusantium ' +
+    'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
+    'ab illo inventore veritatis et quasi architecto beatae vitae ' +
+    'dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas ' +
+    'sit aspernatur aut odit aut fugit, sed quia',
+    date: "2017-01-14T05:00:00.000Z",
+    RCL_date: "2017-01-12",
+    reading_id: 2,
+    reading_std_ref: 'Heb. 4: 3-7',
+    user_id: 1,
+    group_id: 1
+  },
+  {
+    id: 3,
+    title: 'The reading today really helped me understand something',
+    entry: 'Here is what I have been thinking about. '+
+    'After I read this, I thought about some things. '+
+    'unde omnis iste natus error sit voluptatem accusantium ' +
+    'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
+    'ab illo inventore veritatis et quasi architecto beatae vitae ' +
+    'dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas ' +
+    'sit aspernatur aut odit aut fugit, sed quia' +
+    'unde omnis iste natus error sit voluptatem accusantium ' +
+    'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
+    'ab illo inventore veritatis et quasi architecto beatae vitae ' +
+    'dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas ' +
+    'sit aspernatur aut odit aut fugit, sed quia',
+    date: "2017-01-14T05:00:00.000Z",
+    RCL_date: "2017-01-15",
+    reading_id: 2,
+    reading_std_ref: 'Heb. 4: 3-7',
+    user_id: 1,
+    group_id: 1
+  },
+  {
+    id: 4,// entry with no title
     entry: 'What did everybody think of the reading for today?'+
     'After I read this, I thought about some things. '+
     'unde omnis iste natus error sit voluptatem accusantium ' +

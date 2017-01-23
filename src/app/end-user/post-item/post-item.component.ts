@@ -15,6 +15,8 @@ const TRUNCATION_LIMIT = 25; //number of words in a post after which to truncate
 export class PostItemComponent implements OnInit {
 
   @Input() post: Post;
+  @Input() closed: boolean; // if closed ==== true, then only show the title
+  @Input() openable: boolean; // if openable ==== true, then clicking can open, etc.
 
   private truncationLimit: number = TRUNCATION_LIMIT; // so can use this in the template....
   private allowTruncation: boolean = true;//allow truncation of text for this entry

@@ -36,7 +36,7 @@ export class Post implements IPost {
     this.group_id = obj.group_id;
   }
 
-  entryIsLong(numWords: number){
+  entryIsLong(numWords: number): boolean {
     // returns true if the entry is long enough to be truncated after numWords words
     let stringArray = this.entry.split(" ");
     if (stringArray.length >= numWords) {
@@ -45,5 +45,23 @@ export class Post implements IPost {
       return false;
     }
   }
+
+  tiedToReading(): boolean {
+    if (this.reading_id === undefined ) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  hasTitle(): boolean {
+    if (this.title === undefined ) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+
 
 }

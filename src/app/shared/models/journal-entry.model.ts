@@ -24,7 +24,7 @@ export class JournalEntry implements IJournalEntry {
     //return true;
   }
 
-  entryIsLong(numWords: number){
+  entryIsLong(numWords: number): boolean {
     // returns true if the entry is long enough to be truncated after numWords words
     let stringArray = this.entry.split(" ");
     if (stringArray.length >= numWords) {

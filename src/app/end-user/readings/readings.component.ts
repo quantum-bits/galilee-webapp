@@ -2,9 +2,14 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 
 import {ReadingService} from '../../shared/services/reading.service';
+import {PostService} from '../../shared/services/post.service';
+
 import {Reading} from '../../shared/models/reading.model';
 import {ReadingsData} from '../../shared/interfaces/readings-data.interface';
+import {GroupPostData} from '../../shared/models/group-post-data.model';
+
 import {SimpleModalComponent} from "./simple-modal.component";
+
 
 //TODO: determine translations actively
 //TODO: fix BUG -- on secondary side-nav, clicking on a passage goes to the passage,
@@ -19,6 +24,8 @@ const QUESTIONS = [
 ]
 
 const TRANSLATIONS = ["NLT", "NIV", "RSV", "KJV", "NKJV"];
+
+const MAX_NUMBER_POSTS = 5;
 
 @Component({
   selector: 'app-readings',
@@ -47,13 +54,17 @@ export class ReadingsComponent implements OnInit {
   private showReadingsDropdown: boolean = true;
   private showTranslationsDropdown: boolean = false;
 
+  private maxNumberPosts: number = MAX_NUMBER_POSTS;
+
   @ViewChild('sorry') modal: SimpleModalComponent;
 
   constructor(private readingService: ReadingService,
+              private postService: PostService,
               private router: Router,
               private route: ActivatedRoute) {
   }
 
+  private multiGroupPostData: GroupPostData[];
   private dateString: string;
   private engageScripture: number; // translates to boolean (0->false)
   private readingDescriptions: Array<any> = [];//this will hold the reading descriptions for the passages other than the one that is currently being shown
@@ -73,22 +84,46 @@ export class ReadingsComponent implements OnInit {
       } else {
         this.engageScripture = 0;
       }
-      this.readingService.fetchSavedReadings(this.dateString)
-        .subscribe(
-          readings => {
-            this.readingsData = readings;
-            if (this.currentReadingExists()) {
-              this.initializeReadingInfo();
-            } else {
-              this.modal.openModal();
-            }
-          },
-          error => {
-            this.modal.openModal();
-          }
-        );
+      this.fetchReadings();
+      this.fetchGroupPosts();
+
     });
   }
+
+  fetchReadings(){
+    this.readingService.fetchSavedReadings(this.dateString)
+      .subscribe(
+        readings => {
+          this.readingsData = readings;
+          if (this.currentReadingExists()) {
+            this.initializeReadingInfo();
+          } else {
+            this.modal.openModal();
+          }
+        },
+        error => {
+          this.modal.openModal();
+        }
+      );
+  }
+
+  fetchGroupPosts(){
+    this.postService.getPostsAllGroups(this.maxNumberPosts)
+      .subscribe(
+        multiGroupPostData => {
+          this.multiGroupPostData = [];
+          for (let groupPostData of multiGroupPostData) {
+            this.multiGroupPostData.push(new GroupPostData(groupPostData));//need to use the constructor, etc., if want access to the methods
+          }
+          console.log('group posts!', this.multiGroupPostData);
+        },
+        error => {
+          this.multiGroupPostData = undefined;
+          //this.modal.openModal('', 'No readings for '+dateString);
+        }
+      );
+  }
+
 
   // could just use engageScripture as a boolean directly in the template, but this seems a bit safer
   showPractices(engageScripture: number): boolean{
