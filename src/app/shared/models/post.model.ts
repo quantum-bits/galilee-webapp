@@ -62,6 +62,15 @@ export class Post implements IPost {
     }
   }
 
+  propertyExists(key): boolean {
+    // check if a given optional property (e.g., reading_id, response_post_id, etc.) exists for the post object
+    if (this[key] === undefined ) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
 
 
 }

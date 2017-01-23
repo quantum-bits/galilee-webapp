@@ -52,7 +52,7 @@ const POST_ENTRIES = [
     date: "2017-01-16T05:00:00.000Z",
     RCL_date: "2017-01-16",
     reading_id: 1,
-    reading_std_ref: 'Gen. 1: 3-5',
+    reading_std_ref: 'Hos. 1: 2-10',
     user_id: 1,
     group_id: 1
   },
@@ -73,7 +73,7 @@ const POST_ENTRIES = [
     date: "2017-01-14T05:00:00.000Z",
     RCL_date: "2017-01-12",
     reading_id: 2,
-    reading_std_ref: 'Heb. 4: 3-7',
+    reading_std_ref: 'Ps. 85',
     user_id: 1,
     group_id: 1
   },
@@ -94,8 +94,8 @@ const POST_ENTRIES = [
     'sit aspernatur aut odit aut fugit, sed quia',
     date: "2017-01-14T05:00:00.000Z",
     RCL_date: "2017-01-15",
-    reading_id: 2,
-    reading_std_ref: 'Heb. 4: 3-7',
+    reading_id: 1,
+    reading_std_ref: 'Hos. 1: 2-10',
     user_id: 1,
     group_id: 1
   },
@@ -157,6 +157,8 @@ const POST_ENTRIES2 = [
     'sit aspernatur aut odit aut fugit, sed quia',
     date: "2017-01-14T05:00:00.000Z",
     RCL_date: "2017-01-14",
+    reading_id: 1,
+    reading_std_ref: 'Hos. 1: 2-10',
     user_id: 1,
     group_id: 2
   }

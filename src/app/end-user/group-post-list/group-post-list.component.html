@@ -3,17 +3,59 @@
 </div>
 <ul class="collection with-header">
   <div *ngIf="!groupNameInTitleBar">
-    <li class="collection-header"><h5>Recent Forum Posts</h5></li>
+    <li class="collection-header">
+      <h5>Recent Forum Posts</h5>
+    </li>
+
   </div>
   <div *ngIf="groupNameInTitleBar">
-    <li class="collection-header"><h5>{{groupPostData.group_name}}</h5></li>
+    <li class="collection-header">
+      <h5>{{groupPostData.group_name}}
+        <a materialize="dropdown"
+           class="dropdown-button right"
+           data-activates="groupPostDataDropdown"
+        >
+          <i class="material-icons white-text">filter_list</i>
+        </a>
+      </h5>
+    </li>
   </div>
-  <li *ngFor="let post of groupPostData.posts; let i = index"  class="collection-item">
-    <app-post-item
-      [post]="post"
-      [closed]=true
-      [openable]=false
-    >
-    </app-post-item>
-  </li>
+  <div *ngIf="filteredPostList">
+    <li *ngFor="let post of filteredPostList" class="collection-item">
+      <app-post-item
+        [post]="post"
+        [closed]=true
+        [openable]=false
+      >
+      </app-post-item>
+    </li>
+  </div>
 </ul>
+
+{{filteredPostList}}
+
+{{groupPostData.filteredPosts(postQueryFilters)}}
+{{postQueryFilters}}
+
+<button class="btn" (click)="showList()">List?</button>
+
+
+<!-- Dropdown Trigger
+<a class='dropdown-button btn' href='#' data-activates='dropdown1'>Drop Me!</a>
+
+<!-- Dropdown Structure -->
+<ul id='groupPostDataDropdown' class='dropdown-content'>
+  <li><a (click)="dropFilters()">all</a></li>
+  <li><a (click)="filterListThisReading()">this passage</a></li>
+</ul>
+
+<!--
+<label class="label-wrapper" [attr.for]="'textareaAdvice'+practice.id">Advice for {{practice.title}}
+</label>
+<textarea [formControl]="practiceText"
+          id="textareaAdvice{{practice.id}}"
+          class="materialize-textarea"
+          #myInput2>
+(click)="filterList()"
+-->
+

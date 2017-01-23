@@ -138,6 +138,8 @@
             <div *ngFor="let groupPostData of multiGroupPostData">
               <app-group-post-list
                 [groupPostData] = 'groupPostData'
+                [groupNameInTitleBar] = true
+                [readingID] = "readingsData.readings[currentReadingIndex].id"
               >
               </app-group-post-list>
             </div>
@@ -190,6 +192,7 @@
               <app-group-post-list
                 [groupPostData] = 'groupPostData'
                 [groupNameInTitleBar] = true
+                [readingID] = "readingsData.readings[currentReadingIndex].id"
               >
               </app-group-post-list>
             </div>
