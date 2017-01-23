@@ -1,7 +1,8 @@
 import {User} from '../models/user.model';
 
 export interface LoginData {
-  status: string;
+  ok: boolean,
+  message: string,
   id_token: string;
   user: User;
 }

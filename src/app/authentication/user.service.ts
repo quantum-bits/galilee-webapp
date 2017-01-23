@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
+import {Router} from '@angular/router';
 import {Subject, BehaviorSubject} from 'rxjs';
 
 import {AuthenticationService} from './authentication.service';
@@ -29,27 +30,30 @@ import {UserPermission} from '../shared/models/user-permission.model';
  broadcasting: ReplaySubject (for cases when the receiver may have missed the broadcast):
  https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/subjects/replaysubject.md
  */
-const baseUrl = 'http://localhost:3001';
+const BASE_URL = 'http://localhost:3001';
+const DEFAULT_REDIRECT_URL = '/end-user/dashboard';
 
 @Injectable()
 export class UserService {
   private currentUser: Subject<User> = new BehaviorSubject<User>(null);
 
   constructor(private authenticationService: AuthenticationService,
+              private router: Router,
               private http: Http) {
   }
 
   login(email: string, password: string) {
-    this.authenticationService.login(email, password)
-      .subscribe((loginData: LoginData) => {
-        if (loginData.status === "OK") {
-          console.log("LOGIN DATA", loginData);
-          let u: User = new User(loginData.user);
-          this.currentUser.next(u);
-          console.log("Logged in", u);
+    this.authenticationService.authenticate(email, password)
+      .subscribe((user: User) => {
+        if (this.authenticationService.isAuthenticated()) {
+          console.log("Authenticated as", user);
+          this.currentUser.next(user);
+
+          let redirect = this.authenticationService.redirectUrl || DEFAULT_REDIRECT_URL;
+          this.router.navigate([redirect]);
         } else {
+          console.log("Failed to authenticate");
           this.currentUser.next(null);
-          console.log("Login failed");
         }
       });
   }
@@ -65,12 +69,12 @@ export class UserService {
   }
 
   logout() {
-    this.authenticationService.logout();
-    this.currentUser = null;
+    this.authenticationService.revokeAuthentication();
+    this.currentUser.next(null);
   }
 
   isLoggedIn() {
-    return this.authenticationService.isloggedIn();
+    return this.authenticationService.isAuthenticated();
   }
 
   getCurrentUser(): Subject<User> {

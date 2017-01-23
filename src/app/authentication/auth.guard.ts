@@ -1,23 +1,33 @@
 import {Injectable} from '@angular/core';
-import {Router, CanActivate} from '@angular/router';
+import {Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import {AuthenticationService} from './authentication.service';
 
+// Refer to "Guard the Admin Feature" in the Angular advanced guide for routing and navigation.
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  // see: https://github.com/auth0-blog/angular2-authentication-sample
-  //      https://medium.com/@blacksonic86/angular-2-authentication-revisited-611bf7373bf9#.r37i15mfh
-
-  constructor(private auth: AuthenticationService,
-              private router: Router) {
+  constructor(private authenticationService: AuthenticationService, private router: Router) {
   }
 
-  canActivate() {
-    if (this.auth.isloggedIn()) {
+  // ActivatedRouteSnapshot -- future route that will be activated
+  // RouterStateSnapshot -- future RouterState of the application,
+  // should you pass through the guard check.
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    let url: string = state.url;
+    return this.checkLogin(url);
+  }
+
+  checkLogin(url: string): boolean {
+    if (this.authenticationService.isAuthenticated()) {
+      // Already logged in.
       return true;
-    } else {
-      this.router.navigate(['/login']);
-      return false;
     }
+
+    // Store attempted URL for later.
+    this.authenticationService.redirectUrl = url;
+
+    // Go to the login page.
+    this.router.navigate(['/login']);
+    return false;
   }
 }

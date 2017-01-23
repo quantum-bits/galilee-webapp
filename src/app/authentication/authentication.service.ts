@@ -20,28 +20,32 @@ const TOKEN_KEY: string = 'id_token';
 
 @Injectable()
 export class AuthenticationService {
+  // Redirect here after logging in.
+  redirectUrl: string = "";
+
   constructor(private http: Http) {
   }
 
-  login(email: string, password: string): Observable<LoginData> {
+  authenticate(email: string, password: string): Observable<User> {
     return this.http.post('http://localhost:3000/authenticate', {email, password})
-      .map(res => res.json())
-      .do((data: LoginData) => {
-          if (data.status === "OK") {
-            localStorage.setItem(TOKEN_KEY, data[TOKEN_KEY]);
-            return data.user;
-          } else {
-            localStorage.removeItem(TOKEN_KEY);
-            return null;
-          }
-        });
+      .map(res => {
+        let loginData: LoginData = res.json();
+
+        if (loginData.ok) {
+          localStorage.setItem(TOKEN_KEY, loginData[TOKEN_KEY]);
+          return new User(loginData.user);
+        }
+
+        localStorage.removeItem(TOKEN_KEY);
+        return null;
+      });
   }
 
-  isloggedIn(): boolean {
+  isAuthenticated(): boolean {
     return tokenNotExpired();
   }
 
-  logout() {
+  revokeAuthentication(): void {
     localStorage.removeItem(TOKEN_KEY);
   }
 }

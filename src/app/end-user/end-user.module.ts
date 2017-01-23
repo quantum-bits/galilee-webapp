@@ -8,6 +8,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 import {DatePickerModule} from 'ng2-datepicker';
 import {MiniCalendarComponent} from './mini-calendar/mini-calendar.component';
 
+import {AuthGuard} from '../authentication/auth.guard';
+
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {DeleteJournalEntryModalComponent} from './delete-journal-entry-modal/delete-journal-entry-modal.component';
 import {EndUserComponent} from './end-user.component';
@@ -47,6 +49,7 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardComponent,
+        canActivate: [AuthGuard]
       },
       {
         // dateString can be 'YYYY-MM-DD' or 'today'
@@ -76,22 +79,26 @@ const routes: Routes = [
       {
         //display journal entries
         path: 'journal',
-        component: JournalDashboardComponent
+        component: JournalDashboardComponent,
+        canActivate: [AuthGuard]
       },
       {
         //display journal entries
         path: 'journal/search-results',
-        component: JournalEntriesSearchResultsComponent
+        component: JournalEntriesSearchResultsComponent,
+        canActivate: [AuthGuard]
       },
       {
         //create new journal entry
         path: 'journal-entry',
-        component: UpdateJournalEntryComponent
+        component: UpdateJournalEntryComponent,
+        canActivate: [AuthGuard]
       },
       {
         //update existing journal entry
         path: 'journal-entry/:journalEntryID',
-        component: UpdateJournalEntryComponent
+        component: UpdateJournalEntryComponent,
+        canActivate: [AuthGuard]
       }
     ]
   }

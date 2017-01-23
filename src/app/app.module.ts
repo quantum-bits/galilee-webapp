@@ -18,7 +18,7 @@ import {Ng2CompleterModule} from "ng2-completer";
 import {Ng2PaginationModule} from 'ng2-pagination';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'end-user', pathMatch: 'full'}
+  {path: '', redirectTo: '/end-user/readings/today', pathMatch: 'full'}
 ];
 
 @NgModule({
