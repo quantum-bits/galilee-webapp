@@ -1,17 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { Post } from '../../shared/models/post.model';
-import {GroupPostData} from '../../shared/interfaces/group-post-data.interface';
-
-/*
- export interface GroupPostData {
- startIndex: number,
- count: number,
- group_id: number;
- group_name: string;
- posts: IPost[];
- }
- */
+import {GroupPostData} from '../../shared/models/group-post-data.model';
 
 @Component({
   selector: 'app-group-post-list',

@@ -19,24 +19,19 @@
   <div>
     {{post.entry | truncate : truncationLimit}}
   </div>
-  <!-- don't have this working yet -- need to create post objects
   <div *ngIf="post.entryIsLong(truncationLimit)">
     <br>
     <a class="grey-text darken-3" (click)="toggleAllowTruncation()"> Read More... </a>
   </div>
-  -->
 </div>
 <div *ngIf="!allowTruncation">
   <div>
     {{post.entry }}
-    <!--{{journalEntry.hasTags()}}-->
   </div>
-  <!-- don't have this working yet -- need to create post objects
   <div *ngIf="post.entryIsLong(truncationLimit)">
     <br>
     <a class="grey-text darken-3" (click)="toggleAllowTruncation()"> Read Less </a>
   </div>
-  -->
 </div>
 <br>
 <div class="grey-text darken-3 right">{{post.date | amTimeAgo}}</div>

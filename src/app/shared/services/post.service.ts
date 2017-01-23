@@ -4,7 +4,7 @@ import {Observable} from 'rxjs/Observable';
 import { Subject }    from 'rxjs/Subject';
 
 import {IPost} from '../interfaces/post.interface';
-import {GroupPostData} from '../interfaces/group-post-data.interface';
+import {IGroupPostData} from '../interfaces/group-post-data.interface';
 import {PostQueryFilters} from '../interfaces/post-query-filters.interface';
 
 //import {JournalEntryQueryFilters} from '../interfaces/journal-entry-query-filters.interface';
@@ -157,7 +157,7 @@ export class PostService {
 
   // fetches recent posts for all groups of which the user is a member, up to a certain
   // max # of posts per group
-  getPostsAllGroups(maxNumber: number): Observable<Array<GroupPostData>> {
+  getPostsAllGroups(maxNumber: number): Observable<Array<IGroupPostData>> {
     var promise = Promise.resolve(GROUP_POSTS);
     return Observable.fromPromise(promise);
   }
@@ -169,7 +169,7 @@ export class PostService {
   // ===> write methods on GroupPosts that can sort things based on readings, etc.
   // QUESTION: is it part of MVP to be able to group posts as responses to other posts?
 
-  getPosts(startIndex: number, count: number, filter?: PostQueryFilters): Observable<GroupPostData> {
+  getPosts(startIndex: number, count: number, filter?: PostQueryFilters): Observable<IGroupPostData> {
     console.log('inside the post service; here are the query parameters:');
     console.log(filter);
     // QUESTION: should 'load more' actually reload everything, in case there

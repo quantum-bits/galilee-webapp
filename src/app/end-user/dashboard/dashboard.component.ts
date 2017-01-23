@@ -4,7 +4,8 @@ import {Router} from '@angular/router';
 import * as moment from 'moment';
 
 import {ReadingsData} from '../../shared/interfaces/readings-data.interface';
-import {GroupPostData} from '../../shared/interfaces/group-post-data.interface';
+import {GroupPostData} from '../../shared/models/group-post-data.model';
+import {Post} from '../../shared/models/post.model';
 
 import {ReadingService} from '../../shared/services/reading.service';
 import {PostService} from '../../shared/services/post.service';
@@ -73,23 +74,10 @@ export class DashboardComponent implements OnInit {
     this.postService.getPostsAllGroups(this.maxNumberPosts)
       .subscribe(
         multiGroupPostData => {
-
-          /*
-            WORKING HERE.......
-           */
-
-          this.multiGroupPostData = multiGroupPostData;
-          // create post objects so that we can use the method(s) on the objects
-          /*
-           this.journalEntries = [];
-           this.mostUsedTags = journalEntriesData.mostUsedTags;
-           this.allUsedTags = journalEntriesData.allUsedTags;
-           this.calendarJournalEntries = journalEntriesData.calendarJournalEntries;
-           for (let entry of journalEntriesData.journalEntries) {
-           this.journalEntries.push(new JournalEntry(entry));//need to use the constructor, etc., if want access to the methods
-           }
-           */
-
+          this.multiGroupPostData = [];
+          for (let groupPostData of multiGroupPostData) {
+            this.multiGroupPostData.push(new GroupPostData(groupPostData));//need to use the constructor, etc., if want access to the methods
+          }
           console.log('group posts!', this.multiGroupPostData);
         },
         error => {
