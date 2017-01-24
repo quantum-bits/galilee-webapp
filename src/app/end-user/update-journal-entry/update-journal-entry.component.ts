@@ -109,6 +109,7 @@ export class UpdateJournalEntryComponent implements OnInit {
       id: 0, // id will eventually need to be managed by the server-side code
       title: '',
       entry: '',
+      // TODO: fix (toISOString() method does not properly take into account time zones)
       date: this.date.toISOString()
     }
   }
@@ -119,7 +120,6 @@ export class UpdateJournalEntryComponent implements OnInit {
 
   onKey(event){
     //event.stopPropagation();
-    console.log('XxXXXXXXXXXXXXXXXX');
     console.log(event);
     if (event.code==="Enter"){
       console.log('Enter key pressed');

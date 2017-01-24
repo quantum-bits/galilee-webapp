@@ -20,16 +20,35 @@
       </h5>
     </li>
   </div>
-  <div *ngIf="filteredPostList">
-    <li *ngFor="let post of filteredPostList" class="collection-item">
-      <app-post-item
-        [post]="post"
-        [closed]=true
-        [openable]=false
-      >
-      </app-post-item>
-    </li>
-  </div>
+  <li *ngFor="let post of filteredPostList" class="collection-item avatar">
+    <img src="app/images_temp/face_image.png" alt="" class="circle">
+    <app-post-item
+      [post]="post"
+      [closed]=true
+      [openable]=false
+    >
+    </app-post-item>
+  </li>
+  <!--
+  <li class="collection-item">
+    <span class="left-align">
+      <a class="waves-effect waves-light btn">new post</a>
+    </span>
+    <span class="right-align">
+      <a class="waves-effect waves-light btn">all posts</a>
+    </span>
+  </li>
+-->
+  <li class="collection-item">
+    <span>
+      <a (click)="newPost()" class="waves-effect waves-light btn">New Post</a>
+    </span>
+    <span class="right">
+      <a class="waves-effect waves-light btn">All Posts</a>
+    </span>
+  </li>
+
+
 </ul>
 
 

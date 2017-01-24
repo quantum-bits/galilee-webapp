@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Post } from '../../shared/models/post.model';
 import {GroupPostData} from '../../shared/models/group-post-data.model';
@@ -19,7 +20,7 @@ export class GroupPostListComponent implements OnInit, OnChanges {
   private postQueryFilters: PostQueryFilters;
   private filteredPostList: Post[];
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
     console.log('inside oninit for grouppostlistcomp');
@@ -54,8 +55,9 @@ export class GroupPostListComponent implements OnInit, OnChanges {
     console.log('back from the method call; here is the filtered post list: ', this.filteredPostList);
   }
 
-  showList(){
-    console.log(this.filteredPostList);
+  newPost(){
+    this.router.navigate(['/end-user/post']);
   }
+
 
 }

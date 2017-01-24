@@ -35,6 +35,7 @@ import {SharedModule} from '../shared/shared.module';
 import {SimpleModalComponent} from './readings/simple-modal.component';
 import {TruncatePipe} from '../shared/pipes/truncate.pipe';
 import {UpdateJournalEntryComponent} from './update-journal-entry/update-journal-entry.component';
+import { UpdatePostComponent } from './update-post/update-post.component';
 
 const routes: Routes = [
   {
@@ -99,6 +100,12 @@ const routes: Routes = [
         path: 'journal-entry/:journalEntryID',
         component: UpdateJournalEntryComponent,
         canActivate: [AuthGuard]
+      },
+      {
+        //create new forum post
+        path: 'post',
+        component: UpdatePostComponent,
+        canActivate: [AuthGuard]
       }
     ]
   }
@@ -140,7 +147,8 @@ const routes: Routes = [
     ResourceItemComponent,
     SimpleModalComponent,
     TruncatePipe,
-    UpdateJournalEntryComponent
+    UpdateJournalEntryComponent,
+    UpdatePostComponent
   ]
 })
 export class EndUserModule {

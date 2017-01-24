@@ -1,0 +1,84 @@
+<div *ngIf="postForm">
+  <div class="container">
+    <div class="card">
+      <div class="card-content">
+        <div class="card-title">
+          Forum Post
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <div class="row">
+      <div class="col s12 m8 offset-m2 l6 offset-l3 ">
+        <form materialize [formGroup]="postForm" novalidate (ngSubmit)="onSubmit()">
+          <div class="card">
+            <div class="card-content">
+              <div *ngIf="newPost" class="card-title">
+                New Post
+              </div>
+              <div *ngIf="!newPost" class="card-title">
+                Update Post
+              </div>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <label for="title">Title (optional)</label>
+                  <input
+                    [input-wake-up]="'title'"
+                    id="title"
+                    type="text"
+                    formControlName="title">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <label for="entry">Entry</label>
+                  <textarea
+                    class="materialize-textarea"
+                    [input-wake-up]="'entry'"
+                    [class.warning-background]="postForm.controls.entry.errors && postForm.controls.entry.touched"
+                    id="entry"
+                    type="text"
+                    formControlName="entry">
+                  </textarea>
+                </div>
+                <div *ngIf="postForm.controls.entry.errors && postForm.controls.entry.touched">
+                  <small class="warning">
+                    This field is required.
+                  </small>
+                </div>
+              </div>
+
+              <div class="card-action">
+                <!-- use type="button" instead of type="submit", or else the Enter key in a text field can submit the form by accident -->
+                <span>
+                <button
+                  class="waves-effect waves-light btn"
+                  type="button"
+                  (click)="onSubmit()"
+                  [class.disabled]="!postForm.valid"
+                  [disabled]="!postForm.valid">Save</button>
+                </span>
+                <span class="right">
+                <!-- use type="button" instead of type="submit", or else the Enter key in a text field can submit the form by accident -->
+                <button
+                  type="button"
+                  class="waves-effect waves-light btn"
+                  (click)="onCancel()"
+                >Cancel</button>
+                </span>
+              </div>
+
+            </div>
+          </div>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>
