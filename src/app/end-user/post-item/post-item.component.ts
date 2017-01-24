@@ -6,6 +6,7 @@ import {PostService} from '../../shared/services/post.service';
 import {Post} from '../../shared/models/post.model';
 
 const TRUNCATION_LIMIT = 25; //number of words in a post after which to truncate
+const SHORT_TRUNCATION_LIMIT = 8;
 
 @Component({
   selector: 'app-post-item',
@@ -19,6 +20,7 @@ export class PostItemComponent implements OnInit {
   @Input() openable: boolean; // if openable ==== true, then clicking can open, etc.
 
   private truncationLimit: number = TRUNCATION_LIMIT; // so can use this in the template....
+  private shortTruncationLimit: number = SHORT_TRUNCATION_LIMIT;
   private allowTruncation: boolean = true;//allow truncation of text for this entry
 
   constructor(private postService: PostService,

@@ -201,6 +201,11 @@ const GROUP_POSTS = [POST_DATA_GROUP1, POST_DATA_GROUP2];
 
 @Injectable()
 export class PostService {
+  // Observable string sources
+  private postToBeDeletedSource = new Subject<number>();
+
+  // Observable string streams
+  postToBeDeleted$ = this.postToBeDeletedSource.asObservable();
 
   constructor() { }
 
@@ -234,6 +239,10 @@ export class PostService {
 
 
 
+  // Service message commands
+  announceDeletion(postID: number) {
+    this.postToBeDeletedSource.next(postID);
+  }
 
 
 

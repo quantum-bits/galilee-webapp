@@ -151,6 +151,9 @@ export class JournalService {
   // Observable string sources
   private journalEntryToBeDeletedSource = new Subject<number>();
 
+  // Observable string streams
+  journalEntryToBeDeleted$ = this.journalEntryToBeDeletedSource.asObservable();
+
   constructor() { }
 
   getJournalEntries(startIndex: number, count: number, filter?: JournalEntryQueryFilters): Observable<JournalEntriesData> {
@@ -180,9 +183,6 @@ export class JournalService {
     var promise = Promise.resolve(QUESTIONS);
     return Observable.fromPromise(promise);
   }
-
-  // Observable string streams
-  journalEntryToBeDeleted$ = this.journalEntryToBeDeletedSource.asObservable();
 
   // Service message commands
   announceDeletion(journalEntryID: number) {
