@@ -34,10 +34,10 @@
           </div>
           -->
           <div class="col s5 center-align switch">
-            <label class="card-title grey-text" >
+            <label class="card-title grey-text">
               Scripture Engagement
               <input type="checkbox" [checked]="showPractices(engageScripture)" (change)="updateScriptureEngagement()">
-                <span class="lever"></span>
+              <span class="lever"></span>
             </label>
           </div>
           <!--
@@ -65,7 +65,7 @@
     <i class="mdi-navigation-menu material-icons">more_vert</i>
   </a>
   <div class="switch right">
-    <label class="grey-text secondary-nav" >
+    <label class="grey-text secondary-nav">
       Scripture Engagement
       <input type="checkbox" [checked]="showPractices(engageScripture)" (change)="updateScriptureEngagement()">
       <span class="lever"></span>
@@ -100,109 +100,63 @@
 </nav>
 
 
-
 <!-- Current reading, possibly with practice types shown -->
-  <div class="container row">
-    <div *ngIf="initializationComplete ">
-      <div *ngIf="!showPractices(engageScripture)" class="col s12">
-        <app-reading-item
-          [includeNavigationBar]=true
-          [reading]="readingsData.readings[currentReadingIndex]"
-          [numberReadings] = "numberReadings"
-          [currentReadingIndex] = "currentReadingIndex"
-          [engageScripture] = "engageScripture"
-          [dateString] = "dateString"
-        >
-        </app-reading-item>
-      </div>
+<div class="container row">
+  <div *ngIf="initializationComplete ">
+    <div *ngIf="!showPractices(engageScripture)" class="col s12">
+      <app-reading-item
+        [includeNavigationBar]=true
+        [reading]="readingsData.readings[currentReadingIndex]"
+        [numberReadings]="numberReadings"
+        [currentReadingIndex]="currentReadingIndex"
+        [engageScripture]="engageScripture"
+        [dateString]="dateString"
+      >
+      </app-reading-item>
+    </div>
 
-      <!--
-          small devices
-      -->
-      <div class="hide-on-med-and-up">
-        <div *ngIf="showPractices(engageScripture)" class="col s12 m6 l5">
-          <app-practice-list
-            [reading]="readingsData.readings[currentReadingIndex]"
-            [readingIndex] = "currentReadingIndex"
-            [dateString] = "dateString"
-          >
-          </app-practice-list>
-          <app-question-list
-            [includeLinkToJournal] = true
-            [questions] = "questions"
-            [dateString] = "dateString"
-            (openJournal) = "openJournal()"
-          >
-          </app-question-list>
-          <div *ngIf="multiGroupPostData">
-            <div *ngFor="let groupPostData of multiGroupPostData">
-              <app-group-post-list
-                [groupPostData] = 'groupPostData'
-                [groupNameInTitleBar] = true
-                [readingID] = "readingsData.readings[currentReadingIndex].id"
-              >
-              </app-group-post-list>
-            </div>
-          </div>
-        </div>
-        <div *ngIf="showPractices(engageScripture)" class="col s12 m6 l7">
-          <app-reading-item
-            [includeNavigationBar]=true
-            [reading]="readingsData.readings[currentReadingIndex]"
-            [numberReadings] = "numberReadings"
-            [currentReadingIndex] = "currentReadingIndex"
-            [engageScripture] = "engageScripture"
-            [dateString] = "dateString"
-          >
-          </app-reading-item>
-        </div>
-      </div>
-      <!--
-          med and large devices
-      -->
-      <div class="hide-on-small-only">
-        <div *ngIf="showPractices(engageScripture)" class="col s12 m6 l7">
-          <app-reading-item
-            [includeNavigationBar]=true
-            [reading]="readingsData.readings[currentReadingIndex]"
-            [numberReadings] = "numberReadings"
-            [currentReadingIndex] = "currentReadingIndex"
-            [engageScripture] = "engageScripture"
-            [dateString] = "dateString"
-          >
-          </app-reading-item>
-        </div>
-        <div *ngIf="showPractices(engageScripture)" class="col s12 m6 l5">
-          <app-practice-list
-            [reading]="readingsData.readings[currentReadingIndex]"
-            [readingIndex] = "currentReadingIndex"
-            [dateString] = "dateString"
-          >
-          </app-practice-list>
-          <app-question-list
-            [includeLinkToJournal] = true
-            [questions] = "questions"
-            [dateString] = "dateString"
-            (openJournal) = "openJournal()"
-          >
-          </app-question-list>
+    <div *ngIf="showPractices(engageScripture)" class="col s12 m6 l7">
+      <app-reading-item
+        [includeNavigationBar]=true
+        [reading]="readingsData.readings[currentReadingIndex]"
+        [numberReadings]="numberReadings"
+        [currentReadingIndex]="currentReadingIndex"
+        [engageScripture]="engageScripture"
+        [dateString]="dateString"
+      >
+      </app-reading-item>
+    </div>
+    <div *ngIf="showPractices(engageScripture)" class="col s12 m6 l5">
+      <app-practice-list
+        [reading]="readingsData.readings[currentReadingIndex]"
+        [readingIndex]="currentReadingIndex"
+        [dateString]="dateString"
+      >
+      </app-practice-list>
+      <app-question-list
+        [includeLinkToJournal]=true
+        [questions]="questions"
+        [dateString]="dateString"
+        (openJournal)="openJournal()"
+      >
+      </app-question-list>
 
-          <div *ngIf="multiGroupPostData">
-            <div *ngFor="let groupPostData of multiGroupPostData">
-              <app-group-post-list
-                [groupPostData] = 'groupPostData'
-                [groupNameInTitleBar] = true
-                [readingID] = "readingsData.readings[currentReadingIndex].id"
-              >
-              </app-group-post-list>
-            </div>
-          </div>
-
+      <div *ngIf="multiGroupPostData">
+        <div *ngFor="let groupPostData of multiGroupPostData">
+          <app-group-post-list
+            [groupPostData]='groupPostData'
+            [groupNameInTitleBar]=true
+            [readingID]="readingsData.readings[currentReadingIndex].id"
+          >
+          </app-group-post-list>
         </div>
       </div>
 
     </div>
+
+
   </div>
+</div>
 
 <simple-modal #sorry header="Sorry" message="No readings for today."></simple-modal>
 

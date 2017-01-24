@@ -50,7 +50,6 @@ export class GroupPostListComponent implements OnInit, OnChanges {
       group_id: this.groupPostData.groupID(),
       reading_id: this.readingID
     }
-    //this.filteredPostList = undefined;
     this.filteredPostList = this.groupPostData.filteredPosts(this.postQueryFilters);
     console.log('back from the method call; here is the filtered post list: ', this.filteredPostList);
   }

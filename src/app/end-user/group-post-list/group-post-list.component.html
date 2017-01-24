@@ -13,7 +13,7 @@
       <h5>{{groupPostData.group_name}}
         <a materialize="dropdown"
            class="dropdown-button right"
-           data-activates="groupPostDataDropdown"
+           [attr.data-activates]="'groupPostDataDropdown'+groupPostData.group_id"
         >
           <i class="material-icons white-text">filter_list</i>
         </a>
@@ -32,19 +32,14 @@
   </div>
 </ul>
 
-{{filteredPostList}}
 
-<button class="btn" (click)="showList()">List?</button>
-
-
-<!-- Dropdown Trigger
-<a class='dropdown-button btn' href='#' data-activates='dropdown1'>Drop Me!</a>
-
-<!-- Dropdown Structure -->
-<ul id='groupPostDataDropdown' class='dropdown-content'>
+<!-- Dropdown Structure-->
+<ul id="groupPostDataDropdown{{groupPostData.group_id}}" class='dropdown-content'>
   <li><a (click)="dropFilters()">all</a></li>
   <li><a (click)="filterListThisReading()">this passage</a></li>
 </ul>
+
+
 
 <!--
 <label class="label-wrapper" [attr.for]="'textareaAdvice'+practice.id">Advice for {{practice.title}}
