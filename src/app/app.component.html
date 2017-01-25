@@ -73,15 +73,15 @@
             <i class="mdi-navigation-menu material-icons">menu</i>
         </a>
       </span>
-      <span class="col s4 brand-logo left ">Galilee</span>
+      <span class="col s3 m4 brand-logo left ">Galilee</span>
 
-      <span class="col s6 right">
+      <span class="col s7 m6 right">
         <a [hidden]="!currentUser"
            materialize="dropdown"
            data-alignment="right"
            data-beloworigin="true"
            class='dropdown-button right'
-           data-activates='userDropdownMenu'>
+           data-activates='userDropdownMenu2'>
           <i class="material-icons left">perm_identity</i>
           <span *ngIf="currentUser">{{currentUser.fullName()}}</span>
           <i class="material-icons right">arrow_drop_down</i>
@@ -170,6 +170,14 @@
   <li><a [routerLink]="['/update-preferences']">Profile</a></li>
   <li><a (click)="logout()">Logout</a></li>
 </ul>
+
+<!-- Dropdown Structure -->
+<ul id='userDropdownMenu2' class='dropdown-content narrow-width'>
+  <li><a [routerLink]="['/update-preferences']">Profile</a></li>
+  <li><a (click)="logout()">Logout</a></li>
+</ul>
+
+
 
 <!-- Dropdown Structure -->
 <ul id='adminDropdownMenu' class='dropdown-content medium-width'>
