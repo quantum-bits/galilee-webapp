@@ -71,8 +71,8 @@ export class UserService  {
       .post('http://localhost:3000/users/signup', {
         email: email,
         password: password,
-        first_name: first_name,
-        last_name: last_name
+        firstName: first_name,
+        lastName: last_name
       });
   }
 
