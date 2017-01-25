@@ -78,10 +78,12 @@ export class UpdatePostComponent implements OnInit {
 
   onSubmit(){
     //
+    this.router.navigate(['/end-user/post']);
   }
 
   onCancel(){
     //
+    this.router.navigate(['/end-user/post']);
   }
 
 

@@ -34,9 +34,14 @@ export class EditUserComponent implements OnInit, OnChanges {
 
   message: string = 'Hello, I\'m a dialog box!';
 
-  private initialUserPermissions: UserPermission[];
+  private permissionTypes: UserPermission[];//types of permissions possible
   public userForm: FormGroup; // our model driven form
   private signinServerError: any;
+
+  private isNewUser: boolean;
+  private currentUserIsAdmin: boolean;
+
+  private currentUser: User;// the user who is currently logged in
 
   public submitted: boolean; // keep track of whether form is submitted
 
@@ -49,8 +54,24 @@ export class EditUserComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    if (this.userService.isLoggedIn()) {
+      this.userService
+        .getCurrentUser()
+        .subscribe(user => {
+          this.currentUser = user;
+          // check if currentUser is an admin.... for now, assume not
+        });
+    }
+    // TODO: fix this....
+    this.currentUserIsAdmin = false;
     console.log('inside ngOnInit of edit-user, here is userData:');
     console.log(this.userData);
+
+    if (this.userData === undefined){
+      this.isNewUser = true;
+    } else {
+      this.isNewUser = false;
+    }
     this.initializeForm();
   }
 
@@ -63,10 +84,10 @@ export class EditUserComponent implements OnInit, OnChanges {
     // user is an admin
     this.userService.getInitialUserPermissions().subscribe(
       permissions => {
-        this.initialUserPermissions = permissions;
-        console.log(this.initialUserPermissions);
+        this.permissionTypes = permissions;
+        console.log('types of permissions: ', this.permissionTypes);
 
-        if (this.userData === undefined) {
+        if (this.isNewUser) {
           this.createEmptyUserData(); // fills userData with initial values
           console.log(this.userData);
         }
@@ -83,7 +104,7 @@ export class EditUserComponent implements OnInit, OnChanges {
           enabled: [true, [<any>Validators.required]],
           preferredVersionID: [this.userData.preferredVersionID, [<any>Validators.required]],
           permissions: this.formBuilder.array(
-            this.initPermissionArray(this.userData.permissions)),
+            this.initPermissionArray(this.userData.permissions, this.permissionTypes)),
         });
 
         console.log(this.userForm);
@@ -104,27 +125,41 @@ export class EditUserComponent implements OnInit, OnChanges {
       joinedOn: '',
       enabled: true,
       preferredVersionID: 0,
-      permissions: this.initialUserPermissions
+      permissions: []
     }
   }
 
-  initPermissionArray(permissions: UserPermission[]) {
-    console.log(permissions);
+  initPermissionArray(userPermissions: UserPermission[], permissionTypes: UserPermission[]) {
+    // entries in the permissions array are 'enabled' for the user; absence of an
+    // entry implies that the user does not have the corresponding permission
+
+    //this.userData.permissions, this.permissionTypes
+
+    console.log(userPermissions);
     let permissionArray = [];
-    for (let permission of permissions) {
-      permissionArray.push(this.initPermission(permission));
+    let hasPermission: boolean;
+    for (let permissionType of permissionTypes) {
+      hasPermission = false;
+      for (let userPermission of userPermissions) {
+        if (userPermission.id === permissionType.id) {
+          // user has this permission type
+          hasPermission = true;
+        }
+      }
+      permissionArray.push(this.initPermission(permissionType, hasPermission));
     }
+    console.log('here is the permission Array: ', permissionArray);
     return permissionArray;
   }
 
-  initPermission(permissionInfo: UserPermission) {
+  initPermission(permissionInfo: UserPermission, hasPermission: boolean) {
     // initialize our resource
     console.log('about to initialize new permission');
     console.log(permissionInfo);
     return this.formBuilder.group({
       id: [permissionInfo.id, Validators.required],
       title: [permissionInfo.title, Validators.required],
-      enabled: [permissionInfo.enabled, Validators.required]
+      enabled: [hasPermission, Validators.required]
     });
   }
 
@@ -202,10 +237,6 @@ export class EditUserComponent implements OnInit, OnChanges {
 
   onClickedExit() {
     this.close.emit('event');
-  }
-
-  displayCurrentUser() {
-    console.log(this.userService.getCurrentUser());
   }
 
 }

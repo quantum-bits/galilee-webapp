@@ -47,35 +47,7 @@ export class SignupComponent implements OnInit {
     // 2. give an error message for the 400, 401, etc., errors
     // 3. make sure the logic makes sense for both positive and negative results!!!
     // 4. double-check login for #3....
-/*
-    if (this.signupForm.valid){
-      this.signinServerError = null;//reinitialize it....
-      this.userService.signup(
-        this.signupForm.value.username,
-        this.signupForm.value.passwords.password).subscribe(
-        (result) => {
-          console.log('back in the login component');
-          console.log(result);
-          this.router.navigate(['/end-user']);
-      },
-        (error) => {
-          console.log('there was an error');
-          console.log(error);
-          this.signinServerError = error;
-        }
-      );
-    }
-    */
-  }
 
-  /*
-  areEqual(group) {
-    if (group.value.password === group.value.password2) {
-      return null;
-    } else {
-      return {error: 'Passwords must match.'};
-    }
   }
-  */
 
 }

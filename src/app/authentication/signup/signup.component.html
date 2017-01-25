@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <div class="col s12 m10 offset-m1 l10 offset-l1">
+    <div class="col s12 m10 offset-m1 l8 offset-l2">
       <app-edit-user><!-- do not include [userData]=""; just leave it undefined -->
       </app-edit-user>
     </div>
@@ -14,75 +14,3 @@
     </div>
   </div>
 </div>
-
-<!--
-<div class="container">
-  <form [formGroup]="signupForm" novalidate (ngSubmit)="onSubmit()">
-    <div class="row">
-      <div class="col s12 m6 offset-m3 l6 offset-l3">
-        <div class="card">
-          <div class="card-content">
-            <span class="card-title">Create Account</span>
-            <div class="row">
-              <div class="input-field col s12">
-                <label for="username">Username</label>
-                <input
-                  [input-wake-up]="'username'"
-                  id="username"
-                  type="text"
-                  formControlName="username">
-              </div>
-            </div>
-            <div formGroupName="passwords">
-              <div class="row">
-                <div class="input-field col s12">
-                  <label for="password">Password</label>
-                  <input
-                    [input-wake-up]="'password'"
-                    [class.warning-background] = "signupForm.controls.passwords.errors && signupForm.controls.passwords.controls.password.touched && signupForm.controls.passwords.controls.password2.touched"
-                    id="password"
-                    type="password"
-                    formControlName="password">
-                </div>
-              </div>
-              <div class="row">
-                <div class="input-field col s12">
-                  <label for="password2">Reenter Password</label>
-                  <input
-                    [input-wake-up]="'password2'"
-                    [class.warning-background] = "signupForm.controls.passwords.errors && signupForm.controls.passwords.controls.password.touched && signupForm.controls.passwords.controls.password2.touched"
-                    id="password2"
-                    type="password"
-                    formControlName="password2">
-                </div>
-                <div *ngIf="signupForm.controls.passwords.errors && signupForm.controls.passwords.controls.password.touched && signupForm.controls.passwords.controls.password2.touched ">
-                  <small class="warning">
-                    {{signupForm.controls.passwords.errors.error}}
-                  </small>
-                </div>
-              </div>
-            </div>
-            <div *ngIf="signinServerError" class="row">
-              <div class="input-field col s12 user-exists-warning red-text text-darken-2 red lighten-3">
-                {{signinServerError._body}}
-              </div>
-            </div>
-          </div>
-          <div class="card-action">
-            <button
-              class="waves-effect waves-light btn"
-              type="submit"
-              [class.disabled]="!signupForm.valid"
-              [disabled]="!signupForm.valid">Submit</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </form>
-  <div class="row">
-    <div class="col s12 m6 offset-m3 l6 offset-l3 center">
-      <a [routerLink]="['/login']">Click here to Login</a>
-    </div>
-  </div>
-</div>
--->

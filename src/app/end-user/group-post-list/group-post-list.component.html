@@ -1,3 +1,5 @@
+<div *ngIf="groupPostData">
+
 <div *ngIf="!groupNameInTitleBar">
   <h5>{{groupPostData.group_name}}</h5>
 </div>
@@ -24,7 +26,7 @@
     <img src="app/images_temp/face_image.png" alt="" class="circle">
     <app-post-item
       [post]="post"
-      [closed]=true
+      [closed]="postsClosed"
       [openable]=false
     >
     </app-post-item>
@@ -44,13 +46,14 @@
       <a (click)="newPost()" class="waves-effect waves-light btn">New Post</a>
     </span>
     <span class="right">
-      <a class="waves-effect waves-light btn">All Posts</a>
+      <a (click)="goToPostDashboard()" class="waves-effect waves-light btn">All Posts</a>
     </span>
   </li>
 
 
 </ul>
 
+</div>
 
 <!-- Dropdown Structure-->
 <ul id="groupPostDataDropdown{{groupPostData.group_id}}" class='dropdown-content'>

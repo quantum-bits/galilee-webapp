@@ -16,6 +16,7 @@ export class GroupPostListComponent implements OnInit, OnChanges {
   @Input() groupPostData: GroupPostData;
   @Input() groupNameInTitleBar: boolean; // if true, group name goes in title bar; if false, group name goes above
   @Input() readingID: number;
+  @Input() postsClosed: boolean;
 
   private postQueryFilters: PostQueryFilters;
   private filteredPostList: Post[];
@@ -27,6 +28,8 @@ export class GroupPostListComponent implements OnInit, OnChanges {
     console.log('here is the reading ID: ', this.readingID);
     console.log(this.groupPostData);
     this.initializeFilters();
+
+    console.log('posts closed? ', this.postsClosed);
   }
 
   ngOnChanges() {
@@ -59,5 +62,8 @@ export class GroupPostListComponent implements OnInit, OnChanges {
     this.router.navigate(['/end-user/post-entry']);
   }
 
+  goToPostDashboard(){
+    this.router.navigate(['/end-user/post']);
+  }
 
 }
