@@ -1,0 +1,115 @@
+<div class="container">
+  <div class="row">
+    <div class="col s12 m8 offset-m2 l6 offset-l3">
+      <div class="card">
+        <div class="card-title-bar">
+          <span class="card-title">Account</span>
+        </div>
+        <div class="card-content">
+
+          <div class="section">
+            <h5>Information</h5>
+            <div class="divider"></div>
+            <br>
+            <span class="row">
+              <div class="col s6">
+                Ken Kiers
+              </div>
+              <div class="col s6 right-align">
+                <a> Update Name</a>
+              </div>
+            </span>
+            <span class="row">
+              <div class="col s6">
+                knkiers@taylor.edu
+              </div>
+              <div class="col s6 right-align">
+                <a> Update Email</a>
+              </div>
+            </span>
+            <span class="row">
+              <div class="col s6 offset-s6 right-align">
+                <a> Update Password</a>
+              </div>
+            </span>
+          </div>
+
+          <div class="section">
+            <h5>Groups</h5>
+            <div class="divider"></div>
+            <br>
+            <span class="row">
+              <div class="col s6">
+                Group 1
+              </div>
+              <div class="col s6 right-align">
+                <a> Leave Group</a>
+              </div>
+            </span>
+            <span class="row">
+              <div class="col s6">
+                Group 2
+              </div>
+              <div class="col s6 right-align">
+                <a> Leave Group</a>
+              </div>
+            </span>
+          </div>
+
+          <div class="section">
+            <h5>Settings</h5>
+            <div class="divider"></div>
+            <br>
+            <div class="row">
+              <div class="col s6">
+                Verse Numbers
+              </div>
+              <!-- Switch -->
+              <div class="col s6 switch">
+                <label>
+                  off
+                  <input type="checkbox">
+                  <span class="lever"></span>
+                  on
+                </label>
+              </div>
+            </div>
+            <div class="row valign-wrapper">
+              <div class="col s6 valign">
+                Default Translation
+              </div>
+              <div class="col s6 valign">
+                <a materialize="dropdown"
+                   class='dropdown-button'
+                   data-activates='preferencesTranslationsDropdownMenu'>
+                  <span class="grey-text">
+                      {{chosenTranslation}}
+                    <i class="material-icons">arrow_drop_down</i>
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!--
+        <div class="card-action">
+          <a href="#">This is a link</a>
+          <a href="#">This is a link</a>
+        </div>
+        -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Dropdown Structure -->
+<ul id='preferencesTranslationsDropdownMenu' class='dropdown-content'>
+  <li *ngFor="let translation of translations">
+    <a>
+      {{translation}}
+    </a>
+  </li>
+</ul>

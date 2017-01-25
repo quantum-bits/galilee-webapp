@@ -102,7 +102,7 @@ export class EditUserComponent implements OnInit, OnChanges {
           lastName: [this.userData.lastName, [<any>Validators.required]],
           joinedOn: [this.date.toISOString(), [<any>Validators.required]],//maybe fill this in upon submission instead...?!?
           enabled: [true, [<any>Validators.required]],
-          preferredVersionID: [this.userData.preferredVersionID, [<any>Validators.required]],
+          preferredVersionID: [this.userData.preferredVersionID],
           permissions: this.formBuilder.array(
             this.initPermissionArray(this.userData.permissions, this.permissionTypes)),
         });
@@ -124,7 +124,7 @@ export class EditUserComponent implements OnInit, OnChanges {
       lastName: '',
       joinedOn: '',
       enabled: true,
-      preferredVersionID: 0,
+      preferredVersionID: null,
       permissions: []
     }
   }

@@ -13,11 +13,12 @@ import {AuthenticationService} from './authentication.service';
 import {LoginComponent} from './login';
 import {SignupComponent} from './signup';
 import {SelfUpdateComponent} from './self-update';
+import { UpdateProfileComponent } from './update-profile/update-profile.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
-  {path: 'update-preferences', component: SelfUpdateComponent}
+  {path: 'update-preferences', component: UpdateProfileComponent}
 ];
 
 
@@ -32,7 +33,8 @@ const routes: Routes = [
   ],
   declarations: [
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    UpdateProfileComponent
   ],
   providers: [AuthGuard, AuthenticationService, UserService]
 })
