@@ -36,7 +36,7 @@ const DEFAULT_REDIRECT_URL = '/end-user/dashboard';
 const CURRENT_USER_KEY = 'current-user';
 
 @Injectable()
-export class UserService  {
+export class UserService {
   private currentUser: Subject<User> = new BehaviorSubject<User>(null);
 
   constructor(private authenticationService: AuthenticationService,

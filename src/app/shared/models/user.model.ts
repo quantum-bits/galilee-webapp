@@ -1,4 +1,4 @@
-import {UserPermission} from './user-permission.model';
+import {Permission} from './permission.model';
 
 export class User {
   id: number;
@@ -8,7 +8,7 @@ export class User {
   joinedOn: string;
   enabled: boolean;
   preferredVersionID: number;
-  permissions: UserPermission[];
+  permissions: Array<Permission>;
 
   constructor(obj){
     this.id = obj.id;
@@ -18,7 +18,11 @@ export class User {
     this.joinedOn = obj.joinedOn;
     this.enabled = obj.enabled;
     this.preferredVersionID = obj.preferredVersionId;
-    this.permissions = obj.permissions;
+    this.permissions = [];
+
+    obj.permissions.forEach(permission => {
+      this.permissions.push(new Permission(permission));
+    });
   }
 
   isEnabled() {
