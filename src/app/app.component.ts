@@ -33,6 +33,7 @@ export class AppComponent implements OnInit {
   // currentUser: User;
 
   private showPracticesDropdown: boolean = false;
+  private showResourcesDropdown: boolean = false;
 
   constructor(private readingService: ReadingService,
               private practiceService: PracticeService,
@@ -107,5 +108,12 @@ export class AppComponent implements OnInit {
     event.stopPropagation();
     this.showPracticesDropdown = !this.showPracticesDropdown;
   }
+
+  toggleResourcesDropdown(event){
+    event.stopPropagation();
+    this.showResourcesDropdown = !this.showResourcesDropdown;
+  }
+
+
 
 }

@@ -37,6 +37,8 @@ import {TruncatePipe} from '../shared/pipes/truncate.pipe';
 import {UpdateJournalEntryComponent} from './update-journal-entry/update-journal-entry.component';
 import { UpdatePostComponent } from './update-post/update-post.component';
 import { PostDashboardComponent } from './post-dashboard/post-dashboard.component';
+import { InfoGalileeComponent } from './info-galilee/info-galilee.component';
+import { InfoRCLComponent } from './info-rcl/info-rcl.component';
 
 const routes: Routes = [
   {
@@ -113,6 +115,16 @@ const routes: Routes = [
         path: 'post-entry',
         component: UpdatePostComponent,
         canActivate: [AuthGuard]
+      },
+      {
+        //static info page about the galilee project
+        path: 'info-galilee',
+        component: InfoGalileeComponent
+      },
+      {
+        //static info page about the rcl
+        path: 'info-rcl',
+        component: InfoRCLComponent
       }
     ]
   }
@@ -156,7 +168,9 @@ const routes: Routes = [
     TruncatePipe,
     UpdateJournalEntryComponent,
     UpdatePostComponent,
-    PostDashboardComponent
+    PostDashboardComponent,
+    InfoGalileeComponent,
+    InfoRCLComponent
   ]
 })
 export class EndUserModule {

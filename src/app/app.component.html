@@ -11,7 +11,7 @@
           </li>
           <li>
             <a>
-              Today
+              Forum
             </a>
           </li>
           <li>
@@ -21,6 +21,7 @@
           </li>
           <li>
             <a materialize="dropdown"
+               data-beloworigin="true"
                class='dropdown-button'
                data-activates='practicesDropdownMenu'>
               Practices
@@ -29,39 +30,24 @@
           </li>
           <li>
             <a materialize="dropdown"
+               data-beloworigin="true"
                class='dropdown-button'
                data-activates='resourcesDropdownMenu'>
               Resources
               <i class="material-icons right">arrow_drop_down</i>
             </a>
           </li>
-          <li *ngIf="currentUser">
-            <a>
-              <i class="material-icons left">perm_identity</i>
-              {{currentUser.fullName()}}</a>
-          </li>
-
-          <li *ngIf="currentUser">
-            <a [routerLink]="['/update-preferences']">
-              {{currentUser.fullName()}}
-            </a>
-          </li>
-          <li>
-            <a [routerLink]="['/end-user']">
-              <i class="material-icons">book</i>
-            </a>
-          </li>
-          <li>
+          <!-- using [hidden] so that the element still instantiates oninit;
+               otherwise the dropdown doesn't work after the user logs in -->
+          <li [hidden]="!currentUser">
             <a materialize="dropdown"
+               data-alignment="right"
+               data-beloworigin="true"
                class='dropdown-button'
-               data-activates='adminDropdownMenu'>
-              <i class="material-icons">settings</i>
-            </a>
-          </li>
-          <li>
-            <a *ngIf="isLoggedIn()"
-               (click)="logout()">
-              <i class="material-icons">power_settings_new</i>
+               data-activates='userDropdownMenu'>
+              <i class="material-icons left">perm_identity</i>
+              <span *ngIf="currentUser">{{currentUser.fullName()}}</span>
+              <i class="material-icons right">arrow_drop_down</i>
             </a>
           </li>
           <li>
@@ -75,8 +61,40 @@
     </div>
   </nav>
 
-  <nav class="hide-on-large-only nav-wrapper">
-    <a class="brand-logo">Galilee</a>
+  <nav class="hide-on-large-only nav-wrapper nav-wrapper-small">
+
+    <span class="row">
+      <span class="col s2 ">
+        <a materialize="sideNav"
+           [materializeParams]="[{edge:'left', closeOnClick: true}]"
+           href="#"
+           data-activates="slide-out"
+           class="button-collapse left">
+            <i class="mdi-navigation-menu material-icons">menu</i>
+        </a>
+      </span>
+      <span class="col s4 brand-logo left ">Galilee</span>
+
+      <span class="col s6 right">
+        <a [hidden]="!currentUser"
+           materialize="dropdown"
+           data-alignment="right"
+           data-beloworigin="true"
+           class='dropdown-button right'
+           data-activates='userDropdownMenu'>
+          <i class="material-icons left">perm_identity</i>
+          <span *ngIf="currentUser">{{currentUser.fullName()}}</span>
+          <i class="material-icons right">arrow_drop_down</i>
+        </a>
+        <a *ngIf="!isLoggedIn()"
+           class="right"
+           [routerLink]="['/login']">
+          <i class="material-icons">account_circle</i>
+        </a>
+      </span>
+    </span>
+
+
     <ul id="slide-out" class="side-nav">
       <li>
         <a>
@@ -85,7 +103,7 @@
       </li>
       <li>
         <a>
-          Today
+          Forum
         </a>
       </li>
       <li>
@@ -102,15 +120,16 @@
           <li><a>Small Group</a></li>
         </ul>
       </li>
+      <li>
+        <a (click)="toggleResourcesDropdown($event)" class="waves-effect">
+          Resources
+        </a>
+        <ul *ngIf="showResourcesDropdown" class="nav-bar-submenu">
+          <li><a [routerLink]="['/end-user/info-galilee']">About Galilee</a></li>
+          <li><a [routerLink]="['/end-user/info-rcl']">About the RCL</a></li>
+        </ul>
+      </li>
     </ul>
-    <a materialize="sideNav"
-       [materializeParams]="[{edge:'left', closeOnClick: true}]"
-       href="#"
-       data-activates="slide-out"
-       class="button-collapse">
-      <i class="mdi-navigation-menu material-icons">menu</i>
-    </a>
-
   </nav>
 </header>
 
@@ -139,14 +158,21 @@
   <div class="footer-copyright">
     <div class="container">
       © Phil Collins, Ph.D., 2014. This material was created in partnership
-      with the <a href="http://tucse.taylor.edu">Taylor University Center for Scripture Engagement</a>.
+      with the <a href="http://tucse.taylor.edu" target="_blank">Taylor University Center for Scripture Engagement</a>.
       <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
     </div>
   </div>
 </footer>
 
+
 <!-- Dropdown Structure -->
-<ul id='adminDropdownMenu' class='dropdown-content'>
+<ul id='userDropdownMenu' class='dropdown-content narrow-width'>
+  <li><a [routerLink]="['/update-preferences']">Profile</a></li>
+  <li><a (click)="logout()">Logout</a></li>
+</ul>
+
+<!-- Dropdown Structure -->
+<ul id='adminDropdownMenu' class='dropdown-content medium-width'>
   <li><a [routerLink]="['/admin/edit-reading-resources']">Practices & Resources</a></li>
   <li><a [routerLink]="['/admin/manage-users']">Manage Users</a></li>
   <li class="divider"></li>
@@ -155,9 +181,9 @@
 
 <!-- Dropdown Structure -->
 <ul id='resourcesDropdownMenu' class='dropdown-content'>
-  <li><a>About Scripture Engagement</a></li>
+  <li><a [routerLink]="['/end-user/info-galilee']">About Galilee</a></li>
   <li class="divider"></li>
-  <li><a>Bible Study vs. Scripture Engagement</a></li>
+  <li><a [routerLink]="['/end-user/info-rcl']">About the RCL</a></li>
 </ul>
 
 <!-- Dropdown Structure -->
