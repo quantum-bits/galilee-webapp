@@ -29,19 +29,13 @@ export class User {
     return this.enabled;
   }
 
-  indexOfPermission(permissionID: string) {
-    // Fetch the array index for the permission with the given id.
-    for (let i in this.permissions){
-      if (this.permissions[i].id === permissionID) {
-        return i;
+  can(permissionID: string){
+    for (let permission of this.permissions){
+      if (permission.id === permissionID) {
+        return true;
       }
     }
-    throw new Error(`No permission with ID ${permissionID}`);
-  }
-
-  can(permissionID: string){
-    let index = this.indexOfPermission(permissionID);
-    return this.permissions[index].can();
+    return false;
   }
 
   fullName(){
