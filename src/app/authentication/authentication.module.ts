@@ -18,7 +18,14 @@ import { UpdateProfileComponent } from './update-profile/update-profile.componen
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
-  {path: 'update-preferences', component: UpdateProfileComponent}
+  {
+    path: 'update-preferences',
+    component: UpdateProfileComponent
+  },
+  {
+    path: 'self-update',
+    component: SelfUpdateComponent
+  }
 ];
 
 

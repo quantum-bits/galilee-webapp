@@ -27,6 +27,8 @@ export class EditUserComponent implements OnInit, OnChanges {
    set userData after the fact (see manage-users.component for an example)
    */
   @Input() userData: any;
+  @Input() updateField: string;// can be 'name', 'email' or 'password'
+
 
   close = new EventEmitter();
 
@@ -54,6 +56,8 @@ export class EditUserComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+
+    console.log('inside edit-user oninit; update field is: ', this.updateField);
     if (this.userService.isLoggedIn()) {
       this.userService
         .getCurrentUser()
@@ -95,8 +99,8 @@ export class EditUserComponent implements OnInit, OnChanges {
           id: [this.userData.id, [<any>Validators.required]],
           email: [this.userData.email, Validators.compose([<any>Validators.required, this.emailValidator])],
           passwords: this.formBuilder.group({
-            password: [this.userData.password, [<any>Validators.required]],
-            password2: [this.userData.password, [<any>Validators.required]]
+            password: ['', [<any>Validators.required]],
+            password2: ['', [<any>Validators.required]]
           }, {validator: this.areEqual}),
           firstName: [this.userData.firstName, [<any>Validators.required]],
           lastName: [this.userData.lastName, [<any>Validators.required]],
@@ -119,7 +123,6 @@ export class EditUserComponent implements OnInit, OnChanges {
     this.userData = {
       id: 0, // id will eventually need to be managed by the server-side code
       email: '',
-      password: '',
       firstName: '',
       lastName: '',
       joinedOn: '',
@@ -193,6 +196,31 @@ export class EditUserComponent implements OnInit, OnChanges {
     }
   }
 
+  postNewUser(){
+    this.userService.signup(
+      this.userForm.value.email,
+      this.userForm.value.passwords.password,
+      this.userForm.value.firstName,
+      this.userForm.value.lastName
+    ).subscribe(
+      (result) => {
+        console.log('back in the login component');
+        console.log(result);
+        //this.router.navigate(['/end-user']);
+
+        if (result.ok) {
+          this.close.emit('event');
+          //  this.closeModal(this.modalID);
+        }
+      },
+      (error) => {
+        console.log('there was an error');
+        console.log(error);
+        this.signinServerError = error;
+      }
+    );
+  }
+
 
   onSubmit() {
     console.log(this.userForm);
@@ -204,30 +232,25 @@ export class EditUserComponent implements OnInit, OnChanges {
 
     if (this.userForm.valid) {
       this.signinServerError = null;//reinitialize it....
-      this.userService.signup(
-        this.userForm.value.email,
-        this.userForm.value.passwords.password,
-        this.userForm.value.firstName,
-        this.userForm.value.lastName
-      ).subscribe(
-        (result) => {
-          console.log('back in the login component');
-          console.log(result);
-          //this.router.navigate(['/end-user']);
+      if (this.isNewUser) {
+        this.postNewUser();
+      } else {
+        // update user's information
+      }
 
-          if (result.ok) {
-            this.close.emit('event');
-            //  this.closeModal(this.modalID);
-          }
-        },
-        (error) => {
-          console.log('there was an error');
-          console.log(error);
-          this.signinServerError = error;
-        }
-      );
+
     }
   }
+
+  // used in the template to decide whether or not to
+  exposeField(field: string){ // field can be 'name', 'email' or 'password'
+    if ((this.isNewUser)|| (this.updateField === undefined)||(this.updateField === field)){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 
   displayForm() {
     console.log(this.userForm);
