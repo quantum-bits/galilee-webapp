@@ -3,6 +3,8 @@ import {Http} from '@angular/http';
 import {Router} from '@angular/router';
 import {Subject, BehaviorSubject} from 'rxjs';
 
+import {AuthHttp} from 'angular2-jwt';
+
 import {AuthenticationService} from './authentication.service';
 
 import {User} from '../shared/models/user.model';
@@ -40,6 +42,7 @@ export class UserService {
   private currentUser: Subject<User> = new BehaviorSubject<User>(null);
 
   constructor(private authenticationService: AuthenticationService,
+              private authHttp: AuthHttp,
               private router: Router,
               private http: Http) {
     // Load up the current user if there's one in local storage.
@@ -54,21 +57,21 @@ export class UserService {
     this.authenticationService.authenticate(email, password)
       .subscribe((user: User) => {
         if (this.authenticationService.isAuthenticated()) {
-          console.log("Authenticated as", user);
           this.setCurrentUser(user);
-
           let redirect = this.authenticationService.redirectUrl || DEFAULT_REDIRECT_URL;
           this.router.navigate([redirect]);
         } else {
-          console.log("Failed to authenticate");
           this.clearCurrentUser();
         }
       });
   }
 
+  update(user: User) {
+    return this.authHttp.post(`http://localhost:3000/users/{user.id}`, user);
+  }
+
   signup(email, password, first_name, last_name) {
-    return this.http
-      .post('http://localhost:3000/users/signup', {
+    return this.http.put('http://localhost:3000/users/signup', {
         email: email,
         password: password,
         firstName: first_name,

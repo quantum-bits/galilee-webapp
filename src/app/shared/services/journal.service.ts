@@ -1,11 +1,16 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+
 import {Observable} from 'rxjs/Observable';
-import { Subject }    from 'rxjs/Subject';
+import {Subject}    from 'rxjs/Subject';
+
+import {AuthHttp} from 'angular2-jwt';
+
+import {UserService} from '../../authentication/user.service';
+import {User} from '../models/user.model';
 
 import {IJournalEntry} from '../interfaces/journal-entry.interface';
 import {JournalEntriesData} from '../interfaces/journal-entries-data.interface';
 import {JournalEntryQueryFilters} from '../interfaces/journal-entry-query-filters.interface';
-
 
 // MOCK
 const JOURNAL_ENTRY = {
@@ -27,7 +32,7 @@ const JOURNAL_ENTRIES = [
   {
     id: 2,
     title: 'My other reflections on some more readings from today',
-    entry: 'After I read this, I thought about some things. '+
+    entry: 'After I read this, I thought about some things. ' +
     'unde omnis iste natus error sit voluptatem accusantium ' +
     'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
     'ab illo inventore veritatis et quasi architecto beatae vitae ' +
@@ -38,7 +43,7 @@ const JOURNAL_ENTRIES = [
     'ab illo inventore veritatis et quasi architecto beatae vitae ' +
     'dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas ' +
     'sit aspernatur aut odit aut fugit, sed quia',
-    tags: ['thoughts','reflections','prayer'],
+    tags: ['thoughts', 'reflections', 'prayer'],
     date: "2017-01-16T05:00:00.000Z"
   }
 ];
@@ -54,7 +59,7 @@ const MORE_JOURNAL_ENTRIES = [
   {
     id: 4,
     title: 'My other other reflections on the things from today',
-    entry: 'After I read this, I thought about some things. '+
+    entry: 'After I read this, I thought about some things. ' +
     'unde omnis iste natus error sit voluptatem accusantium ' +
     'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
     'ab illo inventore veritatis et quasi architecto beatae vitae ' +
@@ -65,7 +70,7 @@ const MORE_JOURNAL_ENTRIES = [
     'ab illo inventore veritatis et quasi architecto beatae vitae ' +
     'dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas ' +
     'sit aspernatur aut odit aut fugit, sed quia',
-    tags: ['thoughts','reflections','prayer'],
+    tags: ['thoughts', 'reflections', 'prayer'],
     date: "2017-01-13T05:00:00.000Z"
   }
 ];
@@ -73,8 +78,8 @@ const MORE_JOURNAL_ENTRIES = [
 const JOURNAL_DATA = {
   startIndex: 0,
   count: 2,
-  mostUsedTags: ['thoughts','reflections','prayer'],
-  allUsedTags: ['thoughts','reflections','prayer', 'friends', 'doctrine', 'predestination'],
+  mostUsedTags: ['thoughts', 'reflections', 'prayer'],
+  allUsedTags: ['thoughts', 'reflections', 'prayer', 'friends', 'doctrine', 'predestination'],
   calendarJournalEntries: [
     {
       dateString: "2017-01-13",
@@ -99,8 +104,8 @@ const JOURNAL_DATA = {
 const MORE_JOURNAL_DATA = {
   startIndex: 2,
   count: 2,
-  mostUsedTags: ['thoughts','reflections','prayer'],
-  allUsedTags: ['thoughts','reflections','prayer', 'friends', 'doctrine', 'predestination'],
+  mostUsedTags: ['thoughts', 'reflections', 'prayer'],
+  allUsedTags: ['thoughts', 'reflections', 'prayer', 'friends', 'doctrine', 'predestination'],
   calendarJournalEntries: [
     {
       dateString: "2017-01-13",
@@ -127,8 +132,8 @@ const NO_JOURNAL_ENTRIES = [];
 const NO_JOURNAL_DATA = {
   startIndex: 2,
   count: 2,
-  mostUsedTags: ['thoughts','reflections','prayer'],
-  allUsedTags: ['thoughts','reflections','prayer', 'friends', 'doctrine', 'predestination'],
+  mostUsedTags: ['thoughts', 'reflections', 'prayer'],
+  allUsedTags: ['thoughts', 'reflections', 'prayer', 'friends', 'doctrine', 'predestination'],
   calendarJournalEntries: {
     "2017-01-13": 2,
     "2017-01-11": 1,
@@ -137,7 +142,7 @@ const NO_JOURNAL_DATA = {
   journalEntries: NO_JOURNAL_ENTRIES
 }
 
-const ALL_USED_TAGS = ['thoughts','reflections','prayer', 'friends', 'doctrine', 'predestination'];
+const ALL_USED_TAGS = ['thoughts', 'reflections', 'prayer', 'friends', 'doctrine', 'predestination'];
 
 //MOCK
 const QUESTIONS = [
@@ -154,7 +159,9 @@ export class JournalService {
   // Observable string streams
   journalEntryToBeDeleted$ = this.journalEntryToBeDeletedSource.asObservable();
 
-  constructor() { }
+  constructor(private userService: UserService,
+              private authHttp: AuthHttp) {
+  }
 
   getJournalEntries(startIndex: number, count: number, filter?: JournalEntryQueryFilters): Observable<JournalEntriesData> {
     console.log('inside the journal service; here are the query parameters:');
@@ -168,14 +175,16 @@ export class JournalService {
     }
   }
 
-  getJournalEntry(entryID: number): Observable<IJournalEntry>{
+  getJournalEntry(entryID: number): Observable<IJournalEntry> {
     var promise = Promise.resolve(JOURNAL_ENTRY);
     return Observable.fromPromise(promise);
   }
 
-  getAllUsedTags(){
-    var promise = Promise.resolve(ALL_USED_TAGS);
-    return Observable.fromPromise(promise);
+  getAllUsedTags() {
+    return this.authHttp
+      .get(`http://localhost:3000/journals/17/tags`)
+      .map(res => res.json())
+      .map(result => result.tags);
   }
 
   getDailyQuestions(dateString: string) {

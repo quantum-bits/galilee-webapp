@@ -1,13 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-
-import {
-  FormBuilder,
-  FormGroup,
-  FormArray,
-  Validators, // used to make a field required
-  FormControl
-} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 import {JournalService} from '../../shared/services/journal.service';
 
@@ -24,7 +17,7 @@ export class UpdateJournalEntryComponent implements OnInit {
   private journalEntryData: any;
   public journalEntryForm: FormGroup; // our model driven form
 
-  private tagList: string[]=[];
+  private tagList: string[] = [];
 
   // TODO: this date should probably be the date for the readings that
   //       the person is looking at (in case they are ahead/behind); the
@@ -37,41 +30,40 @@ export class UpdateJournalEntryComponent implements OnInit {
 
   private questions: string[];
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private journalService: JournalService,
-    private route: ActivatedRoute,
-    private router: Router) {
+  constructor(private formBuilder: FormBuilder,
+              private journalService: JournalService,
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      if ('journalEntryID' in params) {
-        let journalEntryID = +params['journalEntryID'];
-        this.journalService.getJournalEntry(journalEntryID)
-          .subscribe(
-            journalEntry => {
-              this.journalEntryData = journalEntry;
-              this.newEntry = false;
-              console.log(this.journalEntryData);
-              for (let tag of journalEntry.tags){
-                this.tagList.push(tag);
+        if ('journalEntryID' in params) {
+          let journalEntryID = +params['journalEntryID'];
+          this.journalService.getJournalEntry(journalEntryID)
+            .subscribe(
+              journalEntry => {
+                this.journalEntryData = journalEntry;
+                this.newEntry = false;
+                console.log(this.journalEntryData);
+                for (let tag of journalEntry.tags) {
+                  this.tagList.push(tag);
+                }
+                console.log(this.tagList);
+                this.initializeForm();
+              },
+              error => {
+                console.log(error);
+                //this.modal.openModal();
               }
-              console.log(this.tagList);
-              this.initializeForm();
-            },
-            error => {
-              console.log(error);
-              //this.modal.openModal();
-            }
-          );
-      } else {
-        this.newEntry = true;
-        this.createEmptyJournalEntryData(); // fills journalEntryData with initial values
-        console.log(this.journalEntryData);
-        this.initializeForm();
-      }
-    },
+            );
+        } else {
+          this.newEntry = true;
+          this.createEmptyJournalEntryData(); // fills journalEntryData with initial values
+          console.log(this.journalEntryData);
+          this.initializeForm();
+        }
+      },
       error => {
         console.log(error);
         //this.modal.openModal();
@@ -82,7 +74,7 @@ export class UpdateJournalEntryComponent implements OnInit {
   initializeForm() {
     this.journalService.getAllUsedTags()
       .subscribe(
-        tags=> {
+        tags => {
           this.allUsedTags = tags.sort();
           console.log(this.allUsedTags);
 
@@ -114,18 +106,18 @@ export class UpdateJournalEntryComponent implements OnInit {
     }
   }
 
-  addTagByIndex(i: number){
+  addTagByIndex(i: number) {
     this.tagList.push(this.allUsedTags[i]);
   }
 
-  onKey(event){
+  onKey(event) {
     //event.stopPropagation();
     console.log(event);
-    if (event.code==="Enter"){
+    if (event.code === "Enter") {
       console.log('Enter key pressed');
-      if (typeof this.journalEntryForm.value.newTag ==='string'){
+      if (typeof this.journalEntryForm.value.newTag === 'string') {
         let newTag = this.journalEntryForm.value.newTag.trim();
-        if (newTag.length>0){
+        if (newTag.length > 0) {
           this.tagList.push(newTag);
           // TODO: try to find a way to reset the form value without
           //       reaching into the DOM :(
@@ -135,11 +127,11 @@ export class UpdateJournalEntryComponent implements OnInit {
     }
   }
 
-  deleteTag(arrayIndex: number){
+  deleteTag(arrayIndex: number) {
     this.tagList.splice(arrayIndex, 1);
   }
 
-  onSubmit(){
+  onSubmit() {
     console.log(this.journalEntryForm.value);
     console.log(this.tagList);
     let result = this.journalService.saveEntry(/*data*/);
@@ -148,7 +140,7 @@ export class UpdateJournalEntryComponent implements OnInit {
     this.router.navigate(['/end-user/journal']);
   }
 
-  onCancel(){
+  onCancel() {
     this.router.navigate(['/end-user/journal']);
   }
 
