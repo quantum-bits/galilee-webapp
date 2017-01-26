@@ -28,16 +28,15 @@ export class AuthenticationService {
 
   authenticate(email: string, password: string): Observable<User> {
     return this.http.post('http://localhost:3000/authenticate', {email, password})
-      .map(res => {
-        let loginData: LoginData = res.json();
-
-        if (loginData.ok) {
+      .map(response => {
+        if (response.ok) {
+          let loginData: LoginData = response.json();
           localStorage.setItem(TOKEN_KEY, loginData[TOKEN_KEY]);
           return new User(loginData.user);
+        } else {
+          localStorage.removeItem(TOKEN_KEY);
+          return null;
         }
-
-        localStorage.removeItem(TOKEN_KEY);
-        return null;
       });
   }
 

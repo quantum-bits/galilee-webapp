@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {Http} from '@angular/http';
 
 import {Observable} from 'rxjs/Observable';
 import {Subject}    from 'rxjs/Subject';
@@ -142,15 +143,6 @@ const NO_JOURNAL_DATA = {
   journalEntries: NO_JOURNAL_ENTRIES
 }
 
-const ALL_USED_TAGS = ['thoughts', 'reflections', 'prayer', 'friends', 'doctrine', 'predestination'];
-
-//MOCK
-const QUESTIONS = [
-  "What did today's readings make you think about?",
-  "How can you apply what you have learned in the coming days?",
-  "Are there things that you need to discuss with your friends?"
-]
-
 @Injectable()
 export class JournalService {
   // Observable string sources
@@ -160,6 +152,7 @@ export class JournalService {
   journalEntryToBeDeleted$ = this.journalEntryToBeDeletedSource.asObservable();
 
   constructor(private userService: UserService,
+              private http: Http,
               private authHttp: AuthHttp) {
   }
 
@@ -188,14 +181,19 @@ export class JournalService {
     return this.userService.getCurrentUser()
       .flatMap((user: User) => this.authHttp
         .get(`http://localhost:3000/journals/${user.id}/tags`)
-        .map(res => res.json())
-        .map(result => result.tags.map(obj => obj.text)));
+        .map(resp => resp.json())
+        .map(tags => tags.map(tag => tag.text)));
   }
 
+  /**
+   * Get all questions for the given reading day.
+   * @param dateString
+   * @returns {Observable<Array<string>>}
+   */
   getDailyQuestions(dateString: string) {
-    console.log('fetching questions for: ', dateString);
-    var promise = Promise.resolve(QUESTIONS);
-    return Observable.fromPromise(promise);
+      this.http
+        .get(`http://localhost:3000/daily/${dateString}/questions`)
+        .map(res => res.json());
   }
 
   // Service message commands

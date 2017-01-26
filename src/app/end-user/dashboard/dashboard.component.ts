@@ -11,13 +11,6 @@ import {ReadingService} from '../../shared/services/reading.service';
 import {PostService} from '../../shared/services/post.service';
 import {SimpleModalComponent} from "../readings/simple-modal.component";
 
-// TODO: bundle questions in with readingsData
-const QUESTIONS = [
-  "What did today's readings make you think about?",
-  "How can you apply what you have learned in the coming days?",
-  "Are there things that you need to discuss with your friends?"
-]
-
 const MAX_NUMBER_POSTS = 5;
 
 @Component({
@@ -33,7 +26,6 @@ export class DashboardComponent implements OnInit {
   private days: any;
   private readingsData: ReadingsData;
   private multiGroupPostData: GroupPostData[];
-  private questions: string[] = QUESTIONS;
 
   private maxNumberPosts = MAX_NUMBER_POSTS;
 
