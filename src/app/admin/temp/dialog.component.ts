@@ -11,8 +11,6 @@ import {
 //import { InputWakeUp } from '../../../shared/directives/input-wake-up.directive';
 
 import {User} from '../../shared/models/user.model';
-import {UserPermission} from '../../shared/models/user-permission.model';
-
 import { UserService } from '../../authentication/user.service';
 
 

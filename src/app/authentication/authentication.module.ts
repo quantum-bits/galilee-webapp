@@ -20,11 +20,13 @@ const routes: Routes = [
   {path: 'signup', component: SignupComponent},
   {
     path: 'update-preferences',
-    component: UpdateProfileComponent
+    component: UpdateProfileComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'self-update',
-    component: SelfUpdateComponent
+    component: SelfUpdateComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

@@ -1,4 +1,4 @@
-import {Component, OnInit, EventEmitter, Input, OnChanges} from '@angular/core';
+import {Component, OnInit, EventEmitter, Input} from '@angular/core';
 
 import {
   FormBuilder,
@@ -9,16 +9,18 @@ import {
 } from '@angular/forms';
 
 import {User} from '../../../shared/models/user.model';
-import {UserPermission} from '../../../shared/models/user-permission.model';
+import {Permission} from '../../../shared/models/permission.model';
 
 import {UserService} from '../../../authentication/user.service';
+
+import {ADMIN} from '../../../shared/models/permission.model';
 
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
   styleUrls: ['./edit-user.component.css']
 })
-export class EditUserComponent implements OnInit, OnChanges {
+export class EditUserComponent implements OnInit {
   /*
    Use cases for userData:
    - new user: do not pass in userData upon instantiating the component
@@ -27,16 +29,14 @@ export class EditUserComponent implements OnInit, OnChanges {
    - (may need to be updated) updating existing user, but launching 'on the fly' (using @ViewChild, etc.):
       set userData after the fact (see manage-users.component for an example)
    */
-  @Input() userData: any; // only pass in if updating a current user; otherwise undefined
+  @Input() userData: User; // only pass in if updating a current user; otherwise undefined
   @Input() updateField: string;// only pass in if updating a current user; can be 'name', 'email' or 'password'
 
   close = new EventEmitter();
 
   onFinished = new EventEmitter<string>();
 
-  //message: string = 'Hello, I\'m a dialog box!';
-
-  private permissionTypes: UserPermission[];//types of permissions possible
+  private permissionTypes: Permission[];//types of permissions possible
   public userForm: FormGroup; // our model driven form
   private signinServerError: any;
 
@@ -58,6 +58,7 @@ export class EditUserComponent implements OnInit, OnChanges {
   ngOnInit() {
 
     console.log('inside edit-user oninit; update field is: ', this.updateField);
+    console.log('ADMIN is: ', ADMIN);
     if (this.userService.isLoggedIn()) {
       this.userService
         .getCurrentUser()
@@ -79,14 +80,13 @@ export class EditUserComponent implements OnInit, OnChanges {
     this.initializeForm();
   }
 
-  ngOnChanges() {
-    console.log('change detected in edit-user!');
-  }
-
   initializeForm() {
-    this.userService.getInitialUserPermissions().subscribe(
+    this.userService.getPermissionTypes().subscribe(
       permissions => {
-        this.permissionTypes = permissions;
+        this.permissionTypes = [];
+        for (let permission of permissions) {
+          this.permissionTypes.push(new Permission(permission));
+        };
         console.log('types of permissions: ', this.permissionTypes);
 
         if (this.isNewUser) {
@@ -100,22 +100,37 @@ export class EditUserComponent implements OnInit, OnChanges {
   }
 
 
+  /*
+   this.id = obj.id;
+   this.email = obj.email;
+   this.firstName = obj.firstName;
+   this.lastName = obj.lastName;
+   this.joinedOn = obj.joinedOn;
+   this.enabled = obj.enabled;
+   this.preferredVersionID = obj.preferredVersionId;
+   this.permissions = [];
+   */
+
   createEmptyUserData() {
-    this.userData = {
+    this.userData = new User({
+      id: null,//this will be assigned by the server-side code later
       email: '',
       firstName: '',
       lastName: '',
+      joinedOn: null,//this will be assigned by the server-side code later
       enabled: true,
       preferredVersionID: null,
       permissions: []
-    }
+    });
   }
 
-  initPermissionArray(userPermissions: UserPermission[], permissionTypes: UserPermission[]) {
-    // entries in the permissions array are 'enabled' for the user; absence of an
-    // entry implies that the user does not have the corresponding permission
-
-    console.log(userPermissions);
+  /*
+    this method builds the 'permissions' part of the form;
+    Note: the entries in the userPermissions array are those which are 'enabled' for the user;
+          the permissionArray form that is returned by the method contains all of the permissionTypes,
+          with an additional property, enabled, which is a boolean
+   */
+  initPermissionArray(userPermissions: Permission[], permissionTypes: Permission[]) {
     let permissionArray = [];
     let hasPermission: boolean;
     for (let permissionType of permissionTypes) {
@@ -132,7 +147,7 @@ export class EditUserComponent implements OnInit, OnChanges {
     return permissionArray;
   }
 
-  initPermission(permissionInfo: UserPermission, hasPermission: boolean) {
+  initPermission(permissionInfo: Permission, hasPermission: boolean) {
     // initialize our resource
     console.log('about to initialize new permission');
     console.log(permissionInfo);
@@ -181,11 +196,14 @@ export class EditUserComponent implements OnInit, OnChanges {
       this.userForm.value.lastName
     ).subscribe(
       (result) => {
-        console.log('back in the login component');
-        console.log(result);
+        console.log('result from attempt to create new user: ', result);
         //this.router.navigate(['/end-user']);
 
+        console.log('type of result.ok: ', typeof result.ok);
+        console.log(result.ok);
+
         if (result.ok) {
+          console.log('new user created OK!');
           this.close.emit('event');
           //  this.closeModal(this.modalID);
         }

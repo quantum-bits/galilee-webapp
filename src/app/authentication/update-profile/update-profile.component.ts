@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {Router, NavigationExtras} from '@angular/router';
 
 import {User} from '../../shared/models/user.model';
-//import {UserPermission} from '../../shared/models/user-permission.model';
 
 import {UserService} from '../user.service';
 
+// TODO: use a service and pull this from the db
 const TRANSLATIONS = ["NLT", "NIV", "RSV", "KJV", "NKJV", "ESV"];
+const CHOSEN_TRANSLATION = "ESV";
 
 @Component({
   selector: 'app-update-profile',
@@ -16,7 +17,7 @@ const TRANSLATIONS = ["NLT", "NIV", "RSV", "KJV", "NKJV", "ESV"];
 export class UpdateProfileComponent implements OnInit {
 
   private translations: string[] = TRANSLATIONS;
-  private chosenTranslation: string = "ESV";
+  private chosenTranslation: string = CHOSEN_TRANSLATION;
   private currentUser: User = null;
 
   constructor(
