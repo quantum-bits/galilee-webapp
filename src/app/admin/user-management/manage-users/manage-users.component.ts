@@ -25,8 +25,6 @@ import {Permission} from '../../../shared/models/permission.model';
 import {PermissionFilter} from '../../../shared/models/permission-filter.model';
 import {PermissionFilterType} from '../../../shared/models/permission-filter.model';
 
-import {UserPermission} from '../../../shared/models/user-permission.model';
-
 import { UserService } from '../../../authentication/user.service';
 
 // WORKING HERE:

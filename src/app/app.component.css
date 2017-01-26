@@ -10,10 +10,24 @@ header, main, footer {
   margin-right: 20px;
 }
 
-.dropdown-content {
+.medium-width {
   min-width: 250px
+}
+
+.narrow-width {
+  max-width: 100px
 }
 
 .nav-bar-submenu {
   padding-left: 20px;
 }
+
+/* see: http://angularjs.blogspot.com/2016/04/5-rookie-mistakes-to-avoid-with-angular.html */
+.hidden {
+  display: none !important;
+}
+
+.nav-wrapper-small {
+  padding-right: 10px;
+}
+

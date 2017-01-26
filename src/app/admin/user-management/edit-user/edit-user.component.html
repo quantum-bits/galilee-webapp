@@ -13,10 +13,10 @@
                 Create Account
               </span>
               <span *ngIf="!isNewUser" class="card-title">
-                Update Account
+                Update Account Information
               </span>
 
-              <div class="row">
+              <div *ngIf="exposeField('name')" class="row">
                 <div class="input-field col s12">
                   <label for="firstName">First Name</label>
                   <input
@@ -33,7 +33,7 @@
                 </div>
               </div>
 
-              <div class="row">
+              <div *ngIf="exposeField('name')" class="row">
                 <div class="input-field col s12">
                   <label for="lastName">Last Name</label>
                   <input
@@ -50,7 +50,7 @@
                 </div>
               </div>
 
-              <div class="row">
+              <div *ngIf="exposeField('email')" class="row">
                 <div class="input-field col s12">
                   <label for="email">Email</label>
                   <input
@@ -66,32 +66,36 @@
                   </small>
                 </div>
               </div>
-              <div formGroupName="passwords">
-                <div class="row">
-                  <div class="input-field col s12">
-                    <label for="password">Password</label>
-                    <input
-                      [input-wake-up]="'password'"
-                      [class.warning-background] = "(userForm.controls.passwords.controls.password.touched && !userForm.controls.passwords.controls.password.valid) || (userForm.controls.passwords.errors && userForm.controls.passwords.controls.password.touched && userForm.controls.passwords.controls.password2.touched)"
-                      id="password"
-                      type="password"
-                      formControlName="password">
+
+              <div *ngIf="exposeField('password')">
+
+                <div formGroupName="passwords">
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <label for="password">Password</label>
+                      <input
+                        [input-wake-up]="'password'"
+                        [class.warning-background] = "(userForm.controls.passwords.controls.password.touched && !userForm.controls.passwords.controls.password.valid) || (userForm.controls.passwords.errors && userForm.controls.passwords.controls.password.touched && userForm.controls.passwords.controls.password2.touched)"
+                        id="password"
+                        type="password"
+                        formControlName="password">
+                    </div>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="input-field col s12">
-                    <label for="password2">Reenter Password</label>
-                    <input
-                      [input-wake-up]="'password2'"
-                      [class.warning-background] = "(userForm.controls.passwords.controls.password2.touched && !userForm.controls.passwords.controls.password2.valid) || (userForm.controls.passwords.errors && userForm.controls.passwords.controls.password.touched && userForm.controls.passwords.controls.password2.touched)"
-                      id="password2"
-                      type="password"
-                      formControlName="password2">
-                  </div>
-                  <div *ngIf="userForm.controls.passwords.errors && userForm.controls.passwords.controls.password.touched && userForm.controls.passwords.controls.password2.touched ">
-                    <small class="warning">
-                      {{userForm.controls.passwords.errors.error}}
-                    </small>
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <label for="password2">Reenter Password</label>
+                      <input
+                        [input-wake-up]="'password2'"
+                        [class.warning-background] = "(userForm.controls.passwords.controls.password2.touched && !userForm.controls.passwords.controls.password2.valid) || (userForm.controls.passwords.errors && userForm.controls.passwords.controls.password.touched && userForm.controls.passwords.controls.password2.touched)"
+                        id="password2"
+                        type="password"
+                        formControlName="password2">
+                    </div>
+                    <div *ngIf="userForm.controls.passwords.errors && userForm.controls.passwords.controls.password.touched && userForm.controls.passwords.controls.password2.touched ">
+                      <small class="warning">
+                        {{userForm.controls.passwords.errors.error}}
+                      </small>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -152,4 +156,3 @@
 
 <button class="btn" (click)="displayForm()">current user is?</button>
 
-{{message}}

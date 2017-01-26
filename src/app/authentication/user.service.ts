@@ -11,7 +11,6 @@ import {User} from '../shared/models/user.model';
 import {LoginData} from '../shared/interfaces/login-data.interface';
 
 import {Permission} from '../shared/models/permission.model';
-import {UserPermission} from '../shared/models/user-permission.model';
 
 //import localStorage from 'localStorage'; // I'm not sure why, but we apparently don't need to do this....
 
@@ -108,11 +107,6 @@ export class UserService {
   }
 
   getPermissionTypes() {
-    // TODO: How do these two methods differ??
-    return this.getInitialUserPermissions();
-  }
-
-  getInitialUserPermissions() {
     return this.http.get('http://localhost:3000/users/permissions')
       .map(res => res.json());
   }

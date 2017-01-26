@@ -1,8 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {Component, OnInit, Input} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
 
 import {UserService} from '../user.service';
 import {User} from '../../shared/models/user.model';
+
+import {UserUpdateFields} from '../../shared/interfaces/user-update-fields.interface';
 
 @Component({
   selector: 'app-self-update',
@@ -11,8 +13,10 @@ import {User} from '../../shared/models/user.model';
 export class SelfUpdateComponent implements OnInit {
 
   currentUser: User;
+  private updateField: string = null;
 
   constructor(private router: Router,
+              private route: ActivatedRoute,
               private userService: UserService) {
     if (this.userService.isLoggedIn()) {
       this.userService
@@ -25,6 +29,20 @@ export class SelfUpdateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+        console.log('query params: ');
+        console.log(params);
+        if ('field' in params) {
+          this.updateField = params['field'];
+        }
+      },
+      error => {
+        console.log(error);
+        //this.modal.openModal();
+      }
+    );
+
+
   }
 
 }

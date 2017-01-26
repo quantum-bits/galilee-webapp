@@ -1,4 +1,4 @@
-import {Component, OnInit, EventEmitter, Input, OnChanges} from '@angular/core';
+import {Component, OnInit, EventEmitter, Input} from '@angular/core';
 
 import {
   FormBuilder,
@@ -9,37 +9,39 @@ import {
 } from '@angular/forms';
 
 import {User} from '../../../shared/models/user.model';
-import {UserPermission} from '../../../shared/models/user-permission.model';
+import {Permission} from '../../../shared/models/permission.model';
 
 import {UserService} from '../../../authentication/user.service';
+
+import {ADMIN} from '../../../shared/models/permission.model';
 
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
   styleUrls: ['./edit-user.component.css']
 })
-export class EditUserComponent implements OnInit, OnChanges {
+export class EditUserComponent implements OnInit {
   /*
    Use cases for userData:
-   - new user: do not set userData
+   - new user: do not pass in userData upon instantiating the component
    - updating existing user: set userData to the user's User object
-   - updating existing user, but launching 'on the fly' (using @ViewChild, etc.):
-   set userData after the fact (see manage-users.component for an example)
+      - if want to update only one field ('name', 'email' or 'password') then pass that in to the component as updateField
+   - (may need to be updated) updating existing user, but launching 'on the fly' (using @ViewChild, etc.):
+      set userData after the fact (see manage-users.component for an example)
    */
-  @Input() userData: any;
+  @Input() userData: User; // only pass in if updating a current user; otherwise undefined
+  @Input() updateField: string;// only pass in if updating a current user; can be 'name', 'email' or 'password'
 
   close = new EventEmitter();
 
   onFinished = new EventEmitter<string>();
 
-  message: string = 'Hello, I\'m a dialog box!';
-
-  private permissionTypes: UserPermission[];//types of permissions possible
+  private permissionTypes: Permission[];//types of permissions possible
   public userForm: FormGroup; // our model driven form
   private signinServerError: any;
 
   private isNewUser: boolean;
-  private currentUserIsAdmin: boolean;
+  private currentUserIsAdmin: boolean; //eventually use a method on the currentUser object
 
   private currentUser: User;// the user who is currently logged in
 
@@ -54,6 +56,9 @@ export class EditUserComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+
+    console.log('inside edit-user oninit; update field is: ', this.updateField);
+    console.log('ADMIN is: ', ADMIN);
     if (this.userService.isLoggedIn()) {
       this.userService
         .getCurrentUser()
@@ -62,7 +67,7 @@ export class EditUserComponent implements OnInit, OnChanges {
           // check if currentUser is an admin.... for now, assume not
         });
     }
-    // TODO: fix this....
+    // TODO: check whether currentUser is actually an admin
     this.currentUserIsAdmin = false;
     console.log('inside ngOnInit of edit-user, here is userData:');
     console.log(this.userData);
@@ -75,67 +80,57 @@ export class EditUserComponent implements OnInit, OnChanges {
     this.initializeForm();
   }
 
-  ngOnChanges() {
-    console.log('change detected in edit-user!');
-  }
-
   initializeForm() {
-    // FIXME need to make sure only to show user permissions in the form only if the current
-    // user is an admin
-    this.userService.getInitialUserPermissions().subscribe(
+    this.userService.getPermissionTypes().subscribe(
       permissions => {
-        this.permissionTypes = permissions;
+        this.permissionTypes = [];
+        for (let permission of permissions) {
+          this.permissionTypes.push(new Permission(permission));
+        };
         console.log('types of permissions: ', this.permissionTypes);
 
         if (this.isNewUser) {
           this.createEmptyUserData(); // fills userData with initial values
           console.log(this.userData);
         }
-        this.userForm = this.formBuilder.group({
-          id: [this.userData.id, [<any>Validators.required]],
-          email: [this.userData.email, Validators.compose([<any>Validators.required, this.emailValidator])],
-          passwords: this.formBuilder.group({
-            password: [this.userData.password, [<any>Validators.required]],
-            password2: [this.userData.password, [<any>Validators.required]]
-          }, {validator: this.areEqual}),
-          firstName: [this.userData.firstName, [<any>Validators.required]],
-          lastName: [this.userData.lastName, [<any>Validators.required]],
-          joinedOn: [this.date.toISOString(), [<any>Validators.required]],//maybe fill this in upon submission instead...?!?
-          enabled: [true, [<any>Validators.required]],
-          preferredVersionID: [this.userData.preferredVersionID, [<any>Validators.required]],
-          permissions: this.formBuilder.array(
-            this.initPermissionArray(this.userData.permissions, this.permissionTypes)),
-        });
-
-        console.log(this.userForm);
-
+        this.createUserForm();
       },
       err => console.log("ERROR", err),
       () => console.log("Permission types fetched"));
   }
 
 
+  /*
+   this.id = obj.id;
+   this.email = obj.email;
+   this.firstName = obj.firstName;
+   this.lastName = obj.lastName;
+   this.joinedOn = obj.joinedOn;
+   this.enabled = obj.enabled;
+   this.preferredVersionID = obj.preferredVersionId;
+   this.permissions = [];
+   */
+
   createEmptyUserData() {
-    this.userData = {
-      id: 0, // id will eventually need to be managed by the server-side code
+    this.userData = new User({
+      id: null,//this will be assigned by the server-side code later
       email: '',
-      password: '',
       firstName: '',
       lastName: '',
-      joinedOn: '',
+      joinedOn: null,//this will be assigned by the server-side code later
       enabled: true,
-      preferredVersionID: 0,
+      preferredVersionID: null,
       permissions: []
-    }
+    });
   }
 
-  initPermissionArray(userPermissions: UserPermission[], permissionTypes: UserPermission[]) {
-    // entries in the permissions array are 'enabled' for the user; absence of an
-    // entry implies that the user does not have the corresponding permission
-
-    //this.userData.permissions, this.permissionTypes
-
-    console.log(userPermissions);
+  /*
+    this method builds the 'permissions' part of the form;
+    Note: the entries in the userPermissions array are those which are 'enabled' for the user;
+          the permissionArray form that is returned by the method contains all of the permissionTypes,
+          with an additional property, enabled, which is a boolean
+   */
+  initPermissionArray(userPermissions: Permission[], permissionTypes: Permission[]) {
     let permissionArray = [];
     let hasPermission: boolean;
     for (let permissionType of permissionTypes) {
@@ -152,7 +147,7 @@ export class EditUserComponent implements OnInit, OnChanges {
     return permissionArray;
   }
 
-  initPermission(permissionInfo: UserPermission, hasPermission: boolean) {
+  initPermission(permissionInfo: Permission, hasPermission: boolean) {
     // initialize our resource
     console.log('about to initialize new permission');
     console.log(permissionInfo);
@@ -193,6 +188,34 @@ export class EditUserComponent implements OnInit, OnChanges {
     }
   }
 
+  postNewUser(){
+    this.userService.signup(
+      this.userForm.value.email,
+      this.userForm.value.passwords.password,
+      this.userForm.value.firstName,
+      this.userForm.value.lastName
+    ).subscribe(
+      (result) => {
+        console.log('result from attempt to create new user: ', result);
+        //this.router.navigate(['/end-user']);
+
+        console.log('type of result.ok: ', typeof result.ok);
+        console.log(result.ok);
+
+        if (result.ok) {
+          console.log('new user created OK!');
+          this.close.emit('event');
+          //  this.closeModal(this.modalID);
+        }
+      },
+      (error) => {
+        console.log('there was an error');
+        console.log(error);
+        this.signinServerError = error;
+      }
+    );
+  }
+
 
   onSubmit() {
     console.log(this.userForm);
@@ -204,34 +227,65 @@ export class EditUserComponent implements OnInit, OnChanges {
 
     if (this.userForm.valid) {
       this.signinServerError = null;//reinitialize it....
-      this.userService.signup(
-        this.userForm.value.email,
-        this.userForm.value.passwords.password,
-        this.userForm.value.firstName,
-        this.userForm.value.lastName
-      ).subscribe(
-        (result) => {
-          console.log('back in the login component');
-          console.log(result);
-          //this.router.navigate(['/end-user']);
+      if (this.isNewUser) {
+        this.postNewUser();
+      } else {
+        // update user's information
+      }
 
-          if (result.ok) {
-            this.close.emit('event');
-            //  this.closeModal(this.modalID);
-          }
-        },
-        (error) => {
-          console.log('there was an error');
-          console.log(error);
-          this.signinServerError = error;
-        }
-      );
+
     }
+  }
+
+  // used in the template and in createUserForm() to decide whether or not to show a given field;
+  // field can be 'name', 'email' or 'password'
+  exposeField(field: string){
+    if ((this.isNewUser)|| (this.updateField === undefined)||(this.updateField === field)){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /*
+    This method creates the user form; the password is a special case, since it
+    is not contained in the User object.  If the user is updating just the 'name'
+    or 'email' fields, then we don't want to try to validate the password fields,
+    since there is nothing there.  On the other hand, when updating the 'password'
+    field, the other fields are actually in the form, and already valid.
+  */
+  createUserForm(){
+    if (this.exposeField('password')) {
+      this.userForm = this.formBuilder.group({
+        email: [this.userData.email, Validators.compose([<any>Validators.required, this.emailValidator])],
+        passwords: this.formBuilder.group({
+          password: ['', [<any>Validators.required]],
+          password2: ['', [<any>Validators.required]]
+        }, {validator: this.areEqual}),
+        firstName: [this.userData.firstName, [<any>Validators.required]],
+        lastName: [this.userData.lastName, [<any>Validators.required]],
+        enabled: [true, [<any>Validators.required]],
+        preferredVersionID: [this.userData.preferredVersionID],
+        permissions: this.formBuilder.array(
+          this.initPermissionArray(this.userData.permissions, this.permissionTypes)),
+      });
+    } else {
+      this.userForm = this.formBuilder.group({
+        email: [this.userData.email, Validators.compose([<any>Validators.required, this.emailValidator])],
+        firstName: [this.userData.firstName, [<any>Validators.required]],
+        lastName: [this.userData.lastName, [<any>Validators.required]],
+        enabled: [true, [<any>Validators.required]],
+        preferredVersionID: [this.userData.preferredVersionID],
+        permissions: this.formBuilder.array(
+          this.initPermissionArray(this.userData.permissions, this.permissionTypes)),
+      });
+    }
+
+    console.log(this.userForm);
   }
 
   displayForm() {
     console.log(this.userForm);
-    //console.log(this.userForm.controls.passwords.controls.password2.touched && !this.userForm.controls.passwords.controls.valid);
   }
 
 
