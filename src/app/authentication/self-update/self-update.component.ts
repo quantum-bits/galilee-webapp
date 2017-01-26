@@ -4,8 +4,6 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {UserService} from '../user.service';
 import {User} from '../../shared/models/user.model';
 
-import {UserUpdateFields} from '../../shared/interfaces/user-update-fields.interface';
-
 @Component({
   selector: 'app-self-update',
   templateUrl: './self-update.component.html'

@@ -190,8 +190,8 @@ export class JournalService {
    * @param dateString
    * @returns {Observable<Array<string>>}
    */
-  getDailyQuestions(dateString: string) {
-      this.http
+  getDailyQuestions(dateString: string): Observable<Array<string>> {
+    return this.http
         .get(`http://localhost:3000/daily/${dateString}/questions`)
         .map(res => res.json());
   }

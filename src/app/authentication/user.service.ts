@@ -66,7 +66,7 @@ export class UserService {
   }
 
   update(user: User) {
-    return this.authHttp.post(`http://localhost:3000/users/{user.id}`, user);
+    return this.authHttp.put(`http://localhost:3000/users/{user.id}`, user);
   }
 
   signup(email, password, first_name, last_name) {
