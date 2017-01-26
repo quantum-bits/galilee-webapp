@@ -26,7 +26,7 @@ export class EditUserComponent implements OnInit {
    - new user: do not pass in userData upon instantiating the component
    - updating existing user: set userData to the user's User object
       - if want to update only one field ('name', 'email' or 'password') then pass that in to the component as updateField
-   - (may need to be updated) updating existing user, but launching 'on the fly' (using @ViewChild, etc.):
+   - (needs to be updated) updating existing user, but launching 'on the fly' (using @ViewChild, etc.):
       set userData after the fact (see manage-users.component for an example)
    */
   @Input() userData: User; // only pass in if updating a current user; otherwise undefined
@@ -43,12 +43,9 @@ export class EditUserComponent implements OnInit {
   private isNewUser: boolean;
   private currentUserIsAdmin: boolean; //eventually use a method on the currentUser object
 
-  private currentUser: User;// the user who is currently logged in
+  //private currentUser: User;// the user who is currently logged in
 
   public submitted: boolean; // keep track of whether form is submitted
-
-  private date = new Date();
-  // date.toISOString()
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService) {
@@ -58,15 +55,21 @@ export class EditUserComponent implements OnInit {
   ngOnInit() {
 
     console.log('inside edit-user oninit; update field is: ', this.updateField);
+
     console.log('ADMIN is: ', ADMIN);
+    console.log('typeof ADMIN is: ', typeof ADMIN);
+
+    // get rid of current user
+
     if (this.userService.isLoggedIn()) {
-      this.userService
-        .getCurrentUser()
-        .subscribe(user => {
-          this.currentUser = user;
-          // check if currentUser is an admin.... for now, assume not
-        });
+      //this.userService.can(ADMIN).subscribe(
+      //  can => {
+      //    console.log('current user has ADMIN permission: ', can);
+      //  }
+      //);
     }
+
+
     // TODO: check whether currentUser is actually an admin
     this.currentUserIsAdmin = false;
     console.log('inside ngOnInit of edit-user, here is userData:');
@@ -281,10 +284,6 @@ export class EditUserComponent implements OnInit {
       });
     }
 
-    console.log(this.userForm);
-  }
-
-  displayForm() {
     console.log(this.userForm);
   }
 

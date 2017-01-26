@@ -1,7 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import {Router} from '@angular/router';
-import {Subject, BehaviorSubject} from 'rxjs';
+import {Subject, BehaviorSubject, Observable} from 'rxjs';
+
+//import {Observable} from 'rxjs/Observable';
 
 import {AuthenticationService} from './authentication.service';
 
@@ -89,6 +91,29 @@ export class UserService {
     this.authenticationService.revokeAuthentication();
     this.clearCurrentUser();
   }
+
+  can(permissionID: string): Observable<boolean> {
+
+    if(this.isLoggedIn()) {
+      this.currentUser
+        .map(user => user.can(permissionID));
+    } else {
+      return Observable.of(false);
+    }
+
+
+  }
+
+  /*
+   subscribe(
+   user => {
+   console.log('inside can method, here is user: ', user);
+   console.log('inside can method; user can: ', user.can(permissionID));
+   return Observable.of(user.can(permissionID));
+   }
+   );
+   */
+
 
   isLoggedIn() {
     return this.authenticationService.isAuthenticated();
