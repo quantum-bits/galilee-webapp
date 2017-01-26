@@ -40,7 +40,10 @@ const CURRENT_USER_KEY = 'current-user';
 
 @Injectable()
 export class UserService {
-  private currentUser: Subject<User> = new BehaviorSubject<User>(null);
+  private currentUser: User;
+
+  // Is this kosher?
+  private observableUser: Subject<User> = new BehaviorSubject<User>(null);
 
   constructor(private authenticationService: AuthenticationService,
               private authHttp: AuthHttp,
@@ -50,7 +53,7 @@ export class UserService {
     let user_data: string = localStorage.getItem(CURRENT_USER_KEY);
     if (user_data) {
       let user: User = new User(JSON.parse(user_data));
-      this.currentUser.next(user);
+      this.setCurrentUser(user);
     }
   }
 
@@ -73,21 +76,31 @@ export class UserService {
 
   signup(email, password, first_name, last_name) {
     return this.http.put('http://localhost:3000/users/signup', {
-        email: email,
-        password: password,
-        firstName: first_name,
-        lastName: last_name
-      });
+      email: email,
+      password: password,
+      firstName: first_name,
+      lastName: last_name
+    });
+  }
+
+  getCurrentUser(): User {
+    return this.currentUser;
+  }
+
+  watchCurrentUser(): Observable<User> {
+    return this.observableUser;
   }
 
   private setCurrentUser(user: User): void {
     localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
-    this.currentUser.next(user);
+    this.currentUser = user;
+    this.observableUser.next(user);
   }
 
   private clearCurrentUser(): void {
     localStorage.removeItem(CURRENT_USER_KEY);
-    this.currentUser.next(null);
+    this.currentUser = null;
+    this.observableUser.next(null);
   }
 
   logout() {
@@ -95,35 +108,12 @@ export class UserService {
     this.clearCurrentUser();
   }
 
-  can(permissionID: string): Observable<boolean> {
-
-    if(this.isLoggedIn()) {
-      this.currentUser
-        .map(user => user.can(permissionID));
-    } else {
-      return Observable.of(false);
-    }
-
-
+  can(permissionID: string): boolean {
+    return this.isLoggedIn() && this.currentUser.can(permissionID);
   }
-
-  /*
-   subscribe(
-   user => {
-   console.log('inside can method, here is user: ', user);
-   console.log('inside can method; user can: ', user.can(permissionID));
-   return Observable.of(user.can(permissionID));
-   }
-   );
-   */
-
 
   isLoggedIn() {
     return this.authenticationService.isAuthenticated();
-  }
-
-  getCurrentUser(): Subject<User> {
-    return this.currentUser;
   }
 
   getUsers() {

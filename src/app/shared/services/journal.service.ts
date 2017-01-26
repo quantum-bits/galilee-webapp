@@ -178,11 +178,11 @@ export class JournalService {
    * @returns {Observable<Array<string>>}
    */
   getAllUsedTags() {
-    return this.userService.getCurrentUser()
-      .flatMap((user: User) => this.authHttp
+    let user: User = this.userService.getCurrentUser();
+    return this.authHttp
         .get(`http://localhost:3000/journals/${user.id}/tags`)
         .map(resp => resp.json())
-        .map(tags => tags.map(tag => tag.text)));
+        .map(tags => tags.map(tag => tag.text));
   }
 
   /**

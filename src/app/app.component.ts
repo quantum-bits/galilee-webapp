@@ -44,11 +44,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService
-      .getCurrentUser()
+    this.userService.watchCurrentUser()
       .subscribe(user => {
         this.currentUser = user;
-        console.log("CURRENT USER", this.currentUser);
       });
 
     // grab current user info if it exists....
