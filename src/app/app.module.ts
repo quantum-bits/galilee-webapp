@@ -1,10 +1,10 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, FormBuilder, ReactiveFormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
+import {HttpModule, Http, RequestOptions} from '@angular/http';
 import {RouterModule, Routes} from "@angular/router";
 
-import {AuthHttp} from 'angular2-jwt';
+import {AuthConfig, AuthHttp} from 'angular2-jwt';
 
 import {AdminModule} from './admin/admin.module';
 import {AppComponent} from './app.component';
@@ -23,21 +23,26 @@ const routes: Routes = [
   {path: '', redirectTo: '/end-user/readings/today', pathMatch: 'full'}
 ];
 
+// TODO: Figure out why this is declared as it is (from the angular2-jwt docs).
+export function authHttpServiceFactory(http: Http, options: RequestOptions) {
+  return new AuthHttp(new AuthConfig(), http, options);
+}
+
 @NgModule({
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes, {enableTracing: true}),
+    AdminModule,
+    AuthenticationModule,
+    DatePickerModule,
+    EndUserModule,
     FormsModule,
-    ReactiveFormsModule,
     HttpModule,
     MaterializeModule,
     MomentModule,
-    Ng2PaginationModule,
-    EndUserModule,
-    AdminModule,
-    AuthenticationModule,
     Ng2CompleterModule,
-    DatePickerModule
+    Ng2PaginationModule,
+    ReactiveFormsModule
   ],
   declarations: [
     AppComponent,
@@ -46,13 +51,13 @@ const routes: Routes = [
   ],
   providers: [
     FormBuilder,
-    AuthHttp
+    { provide: AuthHttp,
+      useFactory: authHttpServiceFactory,
+      deps: [Http, RequestOptions]
+    }
   ],
-  //NOTE: (1) AuthGuard has been commented out in admin.routes for the moment
-  //      (2) I don't know if this is the correct place to put the AuthGuard declaration...in rc4 it was included as part of the bootstrapping process
   entryComponents: [AppComponent, DialogComponent],// not sure if EditUserComponent needs to be here....
   bootstrap: [AppComponent]
 })
 export class AppModule {
-
 }

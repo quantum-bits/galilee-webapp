@@ -180,11 +180,16 @@ export class JournalService {
     return Observable.fromPromise(promise);
   }
 
+  /**
+   * Get all tags in use by the current user.
+   * @returns {Observable<Array<string>>}
+   */
   getAllUsedTags() {
-    return this.authHttp
-      .get(`http://localhost:3000/journals/17/tags`)
-      .map(res => res.json())
-      .map(result => result.tags);
+    return this.userService.getCurrentUser()
+      .flatMap((user: User) => this.authHttp
+        .get(`http://localhost:3000/journals/${user.id}/tags`)
+        .map(res => res.json())
+        .map(result => result.tags.map(obj => obj.text)));
   }
 
   getDailyQuestions(dateString: string) {
