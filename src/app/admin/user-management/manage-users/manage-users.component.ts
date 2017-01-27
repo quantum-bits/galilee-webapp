@@ -19,6 +19,7 @@ import {DialogAnchorDirective} from '../../temp/dialoganchor.directive';
 
 import {User} from '../../../shared/models/user.model';
 import {Permission} from '../../../shared/models/permission.model';
+import {PaginationInstance} from '../../../shared/interfaces/pagination-instance.interface';
 import {PermissionFilter} from '../../../shared/models/permission-filter.model';
 import {PermissionFilterType} from '../../../shared/models/permission-filter.model';
 
@@ -48,7 +49,7 @@ declare var $: any; // for using jQuery within this angular component
 export class ManageUsersComponent implements OnInit {
 
   @ViewChild(EditUserAnchorDirective) editUserAnchor: EditUserAnchorDirective;
-  // other helpful examples (including async call to server, multiple pagination instances, etc.)
+  // other helpful examples (including sass for styling, async call to server, multiple pagination instances, etc.)
   // using the pagination package: https://github.com/michaelbromley/ng2-pagination
 
   @ViewChild(DialogAnchorDirective) dialogAnchor: DialogAnchorDirective;
@@ -79,9 +80,9 @@ export class ManageUsersComponent implements OnInit {
   public maxSize: number = 5;//used by pagination component (max # of pages indicated, including the '...')
   public directionLinks: boolean = true;//used by pagination component
   public autoHide: boolean = false;//used by pagination component
-  public config = {//used by pagination component
+  public config: PaginationInstance = {//used by pagination component
     id: 'advanced',
-    itemsPerPage: 5,
+    itemsPerPage: 2,
     currentPage: 1
   };
 
@@ -265,6 +266,8 @@ export class ManageUsersComponent implements OnInit {
   }
 
   onPageChange(number: number) {
+    console.log('config: ', this.config);
+    console.log('page number: ', number);
     this.config.currentPage = number;
   }
 
