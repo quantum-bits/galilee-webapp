@@ -113,7 +113,7 @@ export class UserService {
     return this.observableUser;
   }
 
-  private setCurrentUser(user: User): void {
+  setCurrentUser(user: User): void {
     localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
     this.currentUser = user;
     this.observableUser.next(user);
@@ -139,7 +139,7 @@ export class UserService {
   }
 
   getUsers() {
-    return this.http.get('http://localhost:3000/users')
+    return this.authHttp.get('http://localhost:3000/users')
       .map(res => res.json());
   }
 
