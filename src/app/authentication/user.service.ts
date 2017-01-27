@@ -70,8 +70,13 @@ export class UserService {
       });
   }
 
-  update(user: User) {
-    return this.authHttp.put(`http://localhost:3000/users/{user.id}`, user);
+  updateName(user_id: number, firstName: string, lastName: string) {
+    return this.authHttp
+      .patch(`http://localhost:3000/users/${user_id}/name`,
+        {
+          firstName: firstName,
+          lastName: lastName
+        });
   }
 
   signup(email, password, first_name, last_name) {
