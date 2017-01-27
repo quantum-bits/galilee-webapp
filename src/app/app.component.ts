@@ -6,6 +6,7 @@ import {PracticeService} from './shared/services/practice.service';
 import {ResourceService} from './shared/services/resource.service';
 import {UserService} from './authentication/user.service';
 import {User} from './shared/models/user.model';
+import {ADMIN} from './shared/models/permission.model';
 import {JournalService} from './shared/services/journal.service';
 import {PostService} from './shared/services/post.service';
 
@@ -25,6 +26,7 @@ export class AppComponent implements OnInit {
   title = 'app works!';
 
   private currentUser: User = null;
+  private currentUserIsAdmin: boolean = false;
 
   // date: Date;
   // readings: Reading[] = [];
@@ -34,6 +36,7 @@ export class AppComponent implements OnInit {
 
   private showPracticesDropdown: boolean = false;
   private showResourcesDropdown: boolean = false;
+  private showAdminDropdown: boolean = false;
 
   constructor(private readingService: ReadingService,
               private practiceService: PracticeService,
@@ -47,6 +50,7 @@ export class AppComponent implements OnInit {
     this.userService.watchCurrentUser()
       .subscribe(user => {
         this.currentUser = user;
+        this.currentUserIsAdmin = this.userService.can(ADMIN);
       });
 
     // grab current user info if it exists....
@@ -110,6 +114,11 @@ export class AppComponent implements OnInit {
   toggleResourcesDropdown(event){
     event.stopPropagation();
     this.showResourcesDropdown = !this.showResourcesDropdown;
+  }
+
+  toggleAdminDropdown(event){
+    event.stopPropagation();
+    this.showAdminDropdown = !this.showAdminDropdown;
   }
 
 

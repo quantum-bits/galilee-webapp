@@ -56,6 +56,9 @@ const routes: Routes = [
   exports: [
     EditUserComponent
   ],
+  entryComponents: [
+    EditUserComponent
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

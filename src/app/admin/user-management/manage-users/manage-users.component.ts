@@ -1,13 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-import {Compiler, ViewContainerRef, ComponentRef, ComponentFactory, ComponentFactoryResolver} from '@angular/core'
-
 import {
-  PaginatePipe,
-  //PaginationControlsCmp,
-  PaginationService,
-  PaginationInstance
-} from 'ng2-pagination';
+  //Compiler,
+  ViewContainerRef, //ComponentRef, ComponentFactory,
+  ComponentFactoryResolver
+} from '@angular/core'
 
 import {TimeAgoPipe} from 'angular2-moment';
 
@@ -36,22 +33,28 @@ import { UserService } from '../../../authentication/user.service';
 
 declare var $: any; // for using jQuery within this angular component
 
+
+/*
+ Dynamically injecting components:
+  - https://engineering-game-dev.com/2016/08/19/angular-2-dynamically-injecting-components/
+  - https://github.com/angular/angular/issues/10735
+ */
+
 @Component({
   selector: 'app-manage-users',
   templateUrl: './manage-users.component.html',
-  styleUrls: ['./manage-users.component.css'],
-  providers: [PaginationService]
+  styleUrls: ['./manage-users.component.css']
 })
 export class ManageUsersComponent implements OnInit {
 
   @ViewChild(EditUserAnchorDirective) editUserAnchor: EditUserAnchorDirective;
-  // other helpful examples (including async call to server)
-  // using the pagination package: http://michaelbromley.github.io/ng2-pagination/
+  // other helpful examples (including async call to server, multiple pagination instances, etc.)
+  // using the pagination package: https://github.com/michaelbromley/ng2-pagination
 
   @ViewChild(DialogAnchorDirective) dialogAnchor: DialogAnchorDirective;
 
   @ViewChild('placeholder', {read: ViewContainerRef}) viewContainerRef;
-  private componentFactory: ComponentFactory<any>;
+  private componentFactory: any;
   //componentRef: ComponentRef;
 
   // http://stackoverflow.com/questions/36325212/angular-2-dynamic-tabs-with-user-click-chosen-components/36325468#36325468
@@ -76,7 +79,7 @@ export class ManageUsersComponent implements OnInit {
   public maxSize: number = 5;//used by pagination component (max # of pages indicated, including the '...')
   public directionLinks: boolean = true;//used by pagination component
   public autoHide: boolean = false;//used by pagination component
-  public config: PaginationInstance = {//used by pagination component
+  public config = {//used by pagination component
     id: 'advanced',
     itemsPerPage: 5,
     currentPage: 1
@@ -122,8 +125,8 @@ export class ManageUsersComponent implements OnInit {
   public filter: string = '';//bound to textual input in template that is used for filtering the list of users by name, etc.
 
   constructor(private userService: UserService,
-              componentFactoryResolver: ComponentFactoryResolver,
-              compiler: Compiler) {
+              private componentFactoryResolver: ComponentFactoryResolver) {
+              //compiler: Compiler) {
     this.componentFactory = componentFactoryResolver.resolveComponentFactory(EditUserComponent);
     console.log(this.componentFactory);
   }
@@ -145,6 +148,8 @@ export class ManageUsersComponent implements OnInit {
         }
         this.userService.getUsers().subscribe(
           users => {
+            console.log(users);
+
             this.users = users; // these are actual user objects now, along with associated methods
             //create a copy of this.users called this.filteredUsers; this is what will be
             //displayed, etc.

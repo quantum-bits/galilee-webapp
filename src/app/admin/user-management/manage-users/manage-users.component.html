@@ -144,12 +144,13 @@
             </tbody>
           </table>
           <div class="center">
-              <pagination-controls #p
-                                   [maxSize]="maxSize"
-                                   [directionLinks]="directionLinks"
-                                   [autoHide]="autoHide"
-                                   [id]="config.id"
-                                   (pageChange)="onPageChange($event)">
+              <pagination-template
+                 #p="paginationApi"
+                 maxSize="maxSize"
+                 directionLinks="directionLinks"
+                 autoHide="autoHide"
+                 id="config.id"
+                 (pageChange)="onPageChange($event)">
 
                 <ul class="pagination">
                   <li class="disabled" *ngIf="p.isFirstPage()">
@@ -184,7 +185,7 @@
                   </li>
                 </ul>
 
-              </pagination-controls>
+              </pagination-template>
           </div>
 
 
@@ -205,7 +206,7 @@
 <!-- fab -->
 
 <div class="fixed-action-btn">
-  <a materialize="leanModal" [materializeParams]="[{dismissible: true}]"
+  <a materialize="modal" [materializeParams]="[{dismissible: true}]"
      class="btn-floating btn-large waves-effect waves-light red modal-trigger"
      href="#modalAddNewUser">
     <i class="large material-icons">add</i>

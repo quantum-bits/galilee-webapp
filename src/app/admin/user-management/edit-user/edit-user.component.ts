@@ -223,31 +223,19 @@ export class EditUserComponent implements OnInit {
   }
 
 
-  selfUpdateExistingUser(){//only updates name and/or email
-    let user = new User({
-      id: this.userData.id,
-      email: this.userForm.value.email,
-      firstName: this.userForm.value.firstName,
-      lastName: this.userForm.value.lastName,
-      joinedOn: this.userData.joinedOn,
-      enabled: this.userData.enabled,
-      preferredVersionID: this.userData.preferredVersionID,
-      permissions: this.userData.permissions
-    });
-
-    console.log('about to post the result; here is the user object: ', user);
-    console.log('typeof id: ', typeof user.id);
-
-    this.userService.update(user).subscribe(
+  selfUpdateName(){//only updates name and/or email
+    let firstName = this.userForm.value.firstName;
+    let lastName = this.userForm.value.lastName;
+    this.userService.updateName(this.userData.id, firstName, lastName)
+      .subscribe(
       (result) => {
         console.log('result from attempt to update user: ', result);
         //this.router.navigate(['/end-user']);
-
-        console.log('type of result.ok: ', typeof result.ok);
-        console.log(result.ok);
-
         if (result.ok) {
           console.log('user updated OK!');
+          this.userData.firstName = firstName;
+          this.userData.lastName = lastName;
+          this.userService.setCurrentUser(this.userData);
           //this.close.emit('event');
           //this.router.navigate(['/signup-success']);
 
@@ -276,7 +264,28 @@ export class EditUserComponent implements OnInit {
       if (this.isNewUser) {
         this.postNewUser();
       } else {
-        this.selfUpdateExistingUser();
+        switch(this.updateField) {
+          case 'name': {
+            this.selfUpdateName();
+            break;
+          }
+          case 'email': {
+            //
+            break;
+          }
+          case 'password': {
+            //
+            break;
+          }
+          case undefined: {
+            // what to do ?!?
+            break;
+          }
+          default: {
+            //what to do ?!?
+            break;
+          }
+        }
       }
 
 
