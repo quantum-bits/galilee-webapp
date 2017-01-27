@@ -70,14 +70,31 @@ export class UserService {
       });
   }
 
+  // TODO: Delete me.
+  update(user: User) {
+    // return this.updateName(user.id, user.firstName, user.lastName);
+    // return this.updateEmail(user.id, user.email);
+    return this.updatePassword(user.id, 'reallygoodpassword');
+  }
+
   updateName(user_id: number, firstName: string, lastName: string) {
     return this.authHttp
       .patch(`http://localhost:3000/users/${user_id}/name`,
-        {
-          firstName: firstName,
-          lastName: lastName
-        });
+        {firstName: firstName, lastName: lastName});
   }
+
+  updateEmail(user_id: number, email: string) {
+    return this.authHttp
+      .patch(`http://localhost:3000/users/${user_id}/email`,
+        {email: email});
+  }
+
+  updatePassword(user_id: number, password: string) {
+    return this.authHttp
+      .patch(`http://localhost:3000/users/${user_id}/password`,
+        {password: password});
+  }
+
 
   signup(email, password, first_name, last_name) {
     return this.http.post('http://localhost:3000/users/signup', {
