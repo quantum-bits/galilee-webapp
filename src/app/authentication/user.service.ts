@@ -40,9 +40,8 @@ const CURRENT_USER_KEY = 'current-user';
 
 @Injectable()
 export class UserService {
+  // TODO: There must be a better way to expose state as an observable.
   private currentUser: User;
-
-  // Is this kosher?
   private observableUser: Subject<User> = new BehaviorSubject<User>(null);
 
   constructor(private authenticationService: AuthenticationService,
@@ -75,7 +74,7 @@ export class UserService {
   }
 
   signup(email, password, first_name, last_name) {
-    return this.http.put('http://localhost:3000/users/signup', {
+    return this.http.post('http://localhost:3000/users/signup', {
       email: email,
       password: password,
       firstName: first_name,

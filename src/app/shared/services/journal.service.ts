@@ -168,9 +168,10 @@ export class JournalService {
     }
   }
 
-  getJournalEntry(entryID: number): Observable<IJournalEntry> {
-    var promise = Promise.resolve(JOURNAL_ENTRY);
-    return Observable.fromPromise(promise);
+  getJournalEntry(entryId: number): Observable<IJournalEntry> {
+    return this.authHttp
+      .get(`http://localhost:3000/entries/${entryId}`)
+      .map(resp => resp.json());
   }
 
   /**
@@ -180,7 +181,7 @@ export class JournalService {
   getAllUsedTags() {
     let user: User = this.userService.getCurrentUser();
     return this.authHttp
-        .get(`http://localhost:3000/journals/${user.id}/tags`)
+        .get(`http://localhost:3000/users/${user.id}/tags`)
         .map(resp => resp.json())
         .map(tags => tags.map(tag => tag.text));
   }
