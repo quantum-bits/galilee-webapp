@@ -2,7 +2,7 @@
   <nav class="hide-on-med-and-down">
     <div class="container">
       <div class="nav-wrapper">
-        <span class="brand-logo left">Galilee</span>
+        <a (click)="goHome()" class="brand-logo left">Galilee</a>
         <ul id="nav-mobile" class="right">
           <li>
             <a>
@@ -73,7 +73,7 @@
             <i class="mdi-navigation-menu material-icons">menu</i>
         </a>
       </span>
-      <span class="col s3 m4 brand-logo left ">Galilee</span>
+      <a (click)="goHome()" class="col s3 m4 brand-logo left ">Galilee</a>
 
       <span class="col s7 m6 right">
         <a [hidden]="!currentUser"

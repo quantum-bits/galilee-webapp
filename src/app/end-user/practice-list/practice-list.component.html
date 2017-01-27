@@ -2,17 +2,25 @@
 <ul class="collection with-header">
   <li class="collection-header"><h5>Practices</h5></li>
 
-  <li *ngFor="let practiceData of reading.applications; let i = index" class="collection-item">
-    <h5>
-      <a class="grey-text text-darken-1" (click)="onSelectPractice(i)">
-        {{practiceData.practice.title}}
-        <!--<i class="material-icons lr-arrow">arrow_forward</i>-->
-      </a>
-      <a (click)="onSelectPracticeSummary(i)">
-        <i class="material-icons right grey-text darken-2">info_outline</i>
-      </a>
-    </h5>
-  </li>
+  <a *ngFor="let practiceData of reading.applications; let i = index" class="collection-item">
+    <span class="title grey-text text-darken-2" (click)="onSelectPractice(i)"> {{practiceData.practice.title}}
+     <!--
+    <a class="grey-text text-darken-1" (click)="onSelectPractice(i)">
+        {{practiceData.practice.title}}-->
+        <i class="material-icons lr-arrow">navigate_next</i>
+      </span>
+      <!--</a>-->
+      <span>
+        <i
+          (click)="onSelectPracticeSummary(i)"
+          (mouseover) = "setHover(i)"
+          (mouseleave) = "unsetHover(i)"
+          class="material-icons right"
+          [style.color]="getStyle(i)"
+
+          >info_outline</i>
+      </span>
+  </a>
 </ul>
 
 <simple-modal

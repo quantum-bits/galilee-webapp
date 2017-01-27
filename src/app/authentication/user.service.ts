@@ -75,7 +75,7 @@ export class UserService {
   }
 
   signup(email, password, first_name, last_name) {
-    return this.http.put('http://localhost:3000/users/signup', {
+    return this.http.post('http://localhost:3000/users/signup', {
       email: email,
       password: password,
       firstName: first_name,

@@ -1,4 +1,5 @@
 import {Component, OnInit, EventEmitter, Input} from '@angular/core';
+import {Router} from '@angular/router';
 
 import {
   FormBuilder,
@@ -47,7 +48,8 @@ export class EditUserComponent implements OnInit {
 
   public submitted: boolean; // keep track of whether form is submitted
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private router: Router,
+              private formBuilder: FormBuilder,
               private userService: UserService) {
     console.log('inside edit-user constructor');
   }
@@ -207,14 +209,55 @@ export class EditUserComponent implements OnInit {
 
         if (result.ok) {
           console.log('new user created OK!');
-          this.close.emit('event');
+          //this.close.emit('event');
+          this.router.navigate(['/signup-success']);
+
+          //  this.closeModal(this.modalID);
+        }
+      },
+      (error) => {
+        console.log('there was an error');
+        this.signinServerError = JSON.parse(error._body).message;
+      }
+    );
+  }
+
+
+  selfUpdateExistingUser(){//only updates name and/or email
+    let user = new User({
+      id: this.userData.id,
+      email: this.userForm.value.email,
+      firstName: this.userForm.value.firstName,
+      lastName: this.userForm.value.lastName,
+      joinedOn: this.userData.joinedOn,
+      enabled: this.userData.enabled,
+      preferredVersionID: this.userData.preferredVersionID,
+      permissions: this.userData.permissions
+    });
+
+    console.log('about to post the result; here is the user object: ', user);
+    console.log('typeof id: ', typeof user.id);
+
+    this.userService.update(user).subscribe(
+      (result) => {
+        console.log('result from attempt to update user: ', result);
+        //this.router.navigate(['/end-user']);
+
+        console.log('type of result.ok: ', typeof result.ok);
+        console.log(result.ok);
+
+        if (result.ok) {
+          console.log('user updated OK!');
+          //this.close.emit('event');
+          //this.router.navigate(['/signup-success']);
+
           //  this.closeModal(this.modalID);
         }
       },
       (error) => {
         console.log('there was an error');
         console.log(error);
-        this.signinServerError = error;
+        this.signinServerError = JSON.parse(error._body).message;
       }
     );
   }
@@ -233,7 +276,7 @@ export class EditUserComponent implements OnInit {
       if (this.isNewUser) {
         this.postNewUser();
       } else {
-        // update user's information
+        this.selfUpdateExistingUser();
       }
 
 

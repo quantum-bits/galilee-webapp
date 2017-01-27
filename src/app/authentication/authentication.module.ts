@@ -14,10 +14,12 @@ import {LoginComponent} from './login';
 import {SignupComponent} from './signup';
 import {SelfUpdateComponent} from './self-update';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
+import { SignupSuccessComponent } from './signup-success/signup-success.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
+  {path: 'signup-success', component: SignupSuccessComponent},
   {
     path: 'update-preferences',
     component: UpdateProfileComponent,
@@ -43,7 +45,8 @@ const routes: Routes = [
   declarations: [
     LoginComponent,
     SignupComponent,
-    UpdateProfileComponent
+    UpdateProfileComponent,
+    SignupSuccessComponent
   ],
   providers: [AuthGuard, AuthenticationService, UserService]
 })

@@ -17,11 +17,16 @@ export class PracticeListComponent implements OnInit {
   @Input() dateString: string; // 'today' or 'YYYY-MM-DD'
   //@Output() viewPracticeIndex = new EventEmitter<number>();
 
+  private hovered: boolean[];
 
   constructor(private router: Router) { }
 
   ngOnInit() {
     console.log(this.reading);
+    this.hovered = [];
+    for (let practiceData of this.reading.applications){
+      this.hovered.push(false);
+    }
   }
 
   // DELETE the following?!?
@@ -43,6 +48,23 @@ export class PracticeListComponent implements OnInit {
     let modalMessage = this.reading.applications[practiceIndex].practice.summary;
     this.modal.openModal(modalTitle, modalMessage);
   }
+
+  getStyle(index:number) {
+    if(this.hovered[index]) {
+      return "#303f9f"; //indigo darken-2
+    } else {
+      return "#7986cb"; //indigo lighten-2
+    }
+  }
+
+  setHover(index: number){
+    this.hovered[index] = true;
+  }
+
+  unsetHover(index: number){
+    this.hovered[index] = false;
+  }
+
 
   /*
   // should use IDs to navigate, once these are all stored in the array
