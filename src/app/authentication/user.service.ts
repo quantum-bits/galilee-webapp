@@ -80,6 +80,7 @@ export class UserService {
         this.announceAuthenticationFailure(JSON.parse(error._body).message);
       });
   }
+
   announceAuthenticationFailure(message){
     this.authenticationFailureSource.next(message);
   }
