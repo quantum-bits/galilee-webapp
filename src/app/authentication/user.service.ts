@@ -93,26 +93,23 @@ export class UserService {
 
   updateName(user_id: number, firstName: string, lastName: string) {
     return this.authHttp
-      .patch(`http://localhost:3000/users/${user_id}/name`,
-        {firstName: firstName, lastName: lastName});
+      .patch(`http://localhost:3000/users/name`, {firstName: firstName, lastName: lastName});
   }
 
   updateEmail(user_id: number, email: string) {
     return this.authHttp
-      .patch(`http://localhost:3000/users/${user_id}/email`,
-        {email: email});
+      .patch(`http://localhost:3000/users/email`, {email: email});
   }
 
   updatePassword(user_id: number, password: string) {
     console.log('updating password: ', password);
     return this.authHttp
-      .patch(`http://localhost:3000/users/${user_id}/password`,
-        {password: password});
+      .patch(`http://localhost:3000/users/password`, {password: password});
   }
 
 
   signup(email, password, first_name, last_name) {
-    return this.http.post('http://localhost:3000/users/signup', {
+    return this.http.post('http://localhost:3000/users', {
       email: email,
       password: password,
       firstName: first_name,
@@ -154,7 +151,7 @@ export class UserService {
   }
 
   getUsers() {
-    return this.authHttp.get('http://localhost:3000/users')
+    return this.authHttp.get('http://localhost:3000/admin/users')
       .map(res => res.json());
   }
 
