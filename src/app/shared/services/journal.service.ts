@@ -168,9 +168,10 @@ export class JournalService {
     }
   }
 
-  getJournalEntry(entryID: number): Observable<IJournalEntry> {
-    var promise = Promise.resolve(JOURNAL_ENTRY);
-    return Observable.fromPromise(promise);
+  getJournalEntry(entryId: number): Observable<IJournalEntry> {
+    return this.authHttp
+      .get(`http://localhost:3000/entries/${entryId}`)
+      .map(resp => resp.json());
   }
 
   /**

@@ -40,9 +40,8 @@ const CURRENT_USER_KEY = 'current-user';
 
 @Injectable()
 export class UserService {
+  // TODO: There must be a better way to expose state as an observable.
   private currentUser: User;
-
-  // Is this kosher?
   private observableUser: Subject<User> = new BehaviorSubject<User>(null);
 
   // Observable used to inform the Login page that there has been a problem
