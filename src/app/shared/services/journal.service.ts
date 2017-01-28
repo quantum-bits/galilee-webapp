@@ -180,7 +180,7 @@ export class JournalService {
   getAllUsedTags() {
     let user: User = this.userService.getCurrentUser();
     return this.authHttp
-        .get(`http://localhost:3000/journals/${user.id}/tags`)
+        .get(`http://localhost:3000/tags`)
         .map(resp => resp.json())
         .map(tags => tags.map(tag => tag.text));
   }
