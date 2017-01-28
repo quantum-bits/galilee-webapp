@@ -16,6 +16,9 @@ import {SelfUpdateComponent} from './self-update';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
 import { SignupSuccessComponent } from './signup-success/signup-success.component';
 
+import {WarningMessageComponent} from './warning-message/warning-message.component';
+import { SelfUpdateSuccessComponent } from './self-update-success/self-update-success.component';
+
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
@@ -28,6 +31,11 @@ const routes: Routes = [
   {
     path: 'self-update',
     component: SelfUpdateComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'self-update-success',
+    component: SelfUpdateSuccessComponent,
     canActivate: [AuthGuard]
   }
 ];
@@ -46,7 +54,10 @@ const routes: Routes = [
     LoginComponent,
     SignupComponent,
     UpdateProfileComponent,
-    SignupSuccessComponent
+    SignupSuccessComponent,
+    SelfUpdateSuccessComponent
+  ],
+  exports: [
   ],
   providers: [AuthGuard, AuthenticationService, UserService]
 })

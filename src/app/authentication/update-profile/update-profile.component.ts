@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Router, NavigationExtras} from '@angular/router';
+import {Router, NavigationExtras, ActivatedRoute} from '@angular/router';
 
 import {User} from '../../shared/models/user.model';
 
@@ -22,10 +22,17 @@ export class UpdateProfileComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private router: Router) { }
+    private router: Router,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.currentUser = this.userService.getCurrentUser();
+    this.route.url.map(segments => segments.join(''))
+      .subscribe(url=>{
+        console.log('received url! ',url);
+        // Store URL for later (if account information is updated, want to return to the current page)
+        this.userService.redirectUrl = url;
+      });
   }
 
   updateName(){

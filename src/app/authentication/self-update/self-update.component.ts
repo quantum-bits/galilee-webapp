@@ -1,6 +1,8 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 
+import {Observable} from 'rxjs';
+
 import {UserService} from '../user.service';
 import {User} from '../../shared/models/user.model';
 
@@ -16,6 +18,7 @@ export class SelfUpdateComponent implements OnInit {
   constructor(private router: Router,
               private route: ActivatedRoute,
               private userService: UserService) {
+    //this.url = this.route.url.map(segments => segments.join(''));
   }
 
   ngOnInit() {

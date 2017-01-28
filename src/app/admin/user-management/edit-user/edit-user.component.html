@@ -62,7 +62,7 @@
                 </div>
                 <div *ngIf="userForm.controls.email.errors && userForm.controls.email.touched">
                   <small class="warning">
-                    This field must have the form of an email address.
+                    {{userForm.controls.email.errors.error}}
                   </small>
                 </div>
               </div>
@@ -80,6 +80,11 @@
                         type="password"
                         formControlName="password">
                     </div>
+                    <div *ngIf="userForm.controls.passwords.controls.password.errors && userForm.controls.passwords.controls.password.touched">
+                      <small class="warning">
+                        {{userForm.controls.passwords.controls.password.errors.error}}
+                      </small>
+                    </div>
                   </div>
                   <div class="row">
                     <div class="input-field col s12">
@@ -91,6 +96,13 @@
                         type="password"
                         formControlName="password2">
                     </div>
+
+                    <div *ngIf="userForm.controls.passwords.controls.password2.errors && userForm.controls.passwords.controls.password2.touched">
+                      <small class="warning">
+                        {{userForm.controls.passwords.controls.password2.errors.error}}
+                      </small>
+                    </div>
+
                     <div *ngIf="userForm.controls.passwords.errors && userForm.controls.passwords.controls.password.touched && userForm.controls.passwords.controls.password2.touched ">
                       <small class="warning">
                         {{userForm.controls.passwords.errors.error}}
@@ -100,9 +112,13 @@
                 </div>
               </div>
               <div *ngIf="signinServerError" class="row">
-                <div class="input-field col s12 user-exists-warning red-text text-darken-2 red lighten-3">
-                  {{signinServerError}}
+                <div class="input-field col s12">
+                  <app-warning-message
+                    [warning] = "signinServerError"
+                  >
+                  </app-warning-message>
                 </div>
+
               </div>
 
               <!-- Permission Checkboxes -->

@@ -45,6 +45,14 @@ export class UserService {
   // Is this kosher?
   private observableUser: Subject<User> = new BehaviorSubject<User>(null);
 
+  // Observable used to inform the Login page that there has been a problem
+  // with authentication
+  private authenticationFailureSource = new Subject<string>();
+  authenticationFailure$ = this.authenticationFailureSource.asObservable();
+
+  // Redirect here after updating account information.
+  redirectUrl: string = "";
+
   constructor(private authenticationService: AuthenticationService,
               private authHttp: AuthHttp,
               private router: Router,
@@ -67,7 +75,13 @@ export class UserService {
         } else {
           this.clearCurrentUser();
         }
+      },
+      (error)=> {
+        this.announceAuthenticationFailure(JSON.parse(error._body).message);
       });
+  }
+  announceAuthenticationFailure(message){
+    this.authenticationFailureSource.next(message);
   }
 
   // TODO: Delete me.
@@ -90,6 +104,7 @@ export class UserService {
   }
 
   updatePassword(user_id: number, password: string) {
+    console.log('updating password: ', password);
     return this.authHttp
       .patch(`http://localhost:3000/users/${user_id}/password`,
         {password: password});

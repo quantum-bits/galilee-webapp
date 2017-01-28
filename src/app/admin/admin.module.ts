@@ -5,6 +5,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {MaterializeModule} from "angular2-materialize";
 import {SharedModule} from '../shared/shared.module';
+//import {AuthenticationModule} from '../authentication/authentication.module';
+
 import {Ng2PaginationModule} from 'ng2-pagination';
 import {MomentModule} from 'angular2-moment';
 import {DragulaModule} from 'ng2-dragula/ng2-dragula';

@@ -27,8 +27,11 @@
               </div>
             </div>
             <div *ngIf="signinServerError" class="row">
-              <div class="input-field col s12 login-error red-text text-darken-2 red lighten-3">
-                {{signinServerError._body}}
+              <div class="input-field col s12">
+                <app-warning-message
+                  [warning]="signinServerError"
+                >
+                </app-warning-message>
               </div>
             </div>
           </div>

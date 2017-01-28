@@ -15,11 +15,17 @@ export class LoginComponent implements OnInit {
   //      https://scotch.io/tutorials/using-angular-2s-model-driven-forms-with-formgroup-and-formcontrol
 
   public loginForm: FormGroup;
-  private signinServerError: any;
+  private signinServerError: string;
 
   constructor(private userService: UserService,
               private router: Router,
               private formBuilder: FormBuilder) {
+    this.userService.authenticationFailure$.subscribe(
+      message => {
+        this.signinServerError = message;
+        console.log(message);
+      }
+    );
   }
 
   ngOnInit() {

@@ -16,6 +16,8 @@ import {UserService} from '../../../authentication/user.service';
 
 import {ADMIN} from '../../../shared/models/permission.model';
 
+const MIN_PASSWORD_LENGTH: number = 6;
+
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
@@ -104,18 +106,6 @@ export class EditUserComponent implements OnInit {
       () => console.log("Permission types fetched"));
   }
 
-
-  /*
-   this.id = obj.id;
-   this.email = obj.email;
-   this.firstName = obj.firstName;
-   this.lastName = obj.lastName;
-   this.joinedOn = obj.joinedOn;
-   this.enabled = obj.enabled;
-   this.preferredVersionID = obj.preferredVersionId;
-   this.permissions = [];
-   */
-
   createEmptyUserData() {
     this.userData = new User({
       id: null,//this will be assigned by the server-side code later
@@ -148,14 +138,11 @@ export class EditUserComponent implements OnInit {
       }
       permissionArray.push(this.initPermission(permissionType, hasPermission));
     }
-    console.log('here is the permission Array: ', permissionArray);
     return permissionArray;
   }
 
   initPermission(permissionInfo: Permission, hasPermission: boolean) {
     // initialize our resource
-    console.log('about to initialize new permission');
-    console.log(permissionInfo);
     return this.formBuilder.group({
       id: [permissionInfo.id, Validators.required],
       title: [permissionInfo.title, Validators.required],
@@ -189,7 +176,14 @@ export class EditUserComponent implements OnInit {
     var EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
 
     if (!EMAIL_REGEXP.test(control.value)) {
-      return {invalidEmail: true};
+      return {error: 'This field must have the form of an email address.'};
+    }
+  }
+
+  passwordValidator(control) {
+    if (control.value.length < MIN_PASSWORD_LENGTH) {
+      console.log('control: ', control);
+      return {error: 'Password must be at least six characters.'};
     }
   }
 
@@ -202,11 +196,6 @@ export class EditUserComponent implements OnInit {
     ).subscribe(
       (result) => {
         console.log('result from attempt to create new user: ', result);
-        //this.router.navigate(['/end-user']);
-
-        console.log('type of result.ok: ', typeof result.ok);
-        console.log(result.ok);
-
         if (result.ok) {
           console.log('new user created OK!');
           //this.close.emit('event');
@@ -223,7 +212,7 @@ export class EditUserComponent implements OnInit {
   }
 
 
-  selfUpdateName(){//only updates name and/or email
+  selfUpdateName(){//only updates name
     let firstName = this.userForm.value.firstName;
     let lastName = this.userForm.value.lastName;
     this.userService.updateName(this.userData.id, firstName, lastName)
@@ -236,10 +225,7 @@ export class EditUserComponent implements OnInit {
           this.userData.firstName = firstName;
           this.userData.lastName = lastName;
           this.userService.setCurrentUser(this.userData);
-          //this.close.emit('event');
-          //this.router.navigate(['/signup-success']);
-
-          //  this.closeModal(this.modalID);
+          this.router.navigate(['self-update-success']);
         }
       },
       (error) => {
@@ -250,15 +236,49 @@ export class EditUserComponent implements OnInit {
     );
   }
 
+  selfUpdateEmail(){//only updates email
+    let email = this.userForm.value.email;
+    this.userService.updateEmail(this.userData.id, email)
+      .subscribe(
+        (result) => {
+          console.log('result from attempt to update user: ', result);
+          //this.router.navigate(['/end-user']);
+          if (result.ok) {
+            console.log('user updated OK!');
+            this.userData.email = email;
+            this.userService.setCurrentUser(this.userData);
+            this.router.navigate(['self-update-success']);
+          }
+        },
+        (error) => {
+          console.log('there was an error');
+          console.log(error);
+          this.signinServerError = JSON.parse(error._body).message;
+        }
+      );
+  }
+
+  selfUpdatePassword(){//only updates password
+    let password = this.userForm.value.passwords.password;
+    this.userService.updatePassword(this.userData.id, password)
+      .subscribe(
+        (result) => {
+          console.log('result from attempt to update user: ', result);
+          //this.router.navigate(['/end-user']);
+          if (result.ok) {
+            console.log('user updated OK!');
+            this.router.navigate(['self-update-success']);
+          }
+        },
+        (error) => {
+          console.log('there was an error');
+          console.log(error);
+          this.signinServerError = JSON.parse(error._body).message;
+        }
+      );
+  }
 
   onSubmit() {
-    console.log(this.userForm);
-
-    // WORKING HERE:
-    // 2. give an error message for the 400, 401, etc., errors
-    // 3. make sure the logic makes sense for both positive and negative results!!!
-    // 4. double-check login for #3....
-
     if (this.userForm.valid) {
       this.signinServerError = null;//reinitialize it....
       if (this.isNewUser) {
@@ -270,19 +290,19 @@ export class EditUserComponent implements OnInit {
             break;
           }
           case 'email': {
-            //
+            this.selfUpdateEmail();
             break;
           }
           case 'password': {
-            //
+            this.selfUpdatePassword();
             break;
           }
           case undefined: {
-            // what to do ?!?
+            // TODO: fix this; what to do ?!?  this might be the case for an ADMIN editing a user
             break;
           }
           default: {
-            //what to do ?!?
+            // TODO: what to do in this case?
             break;
           }
         }
@@ -314,8 +334,8 @@ export class EditUserComponent implements OnInit {
       this.userForm = this.formBuilder.group({
         email: [this.userData.email, Validators.compose([<any>Validators.required, this.emailValidator])],
         passwords: this.formBuilder.group({
-          password: ['', [<any>Validators.required]],
-          password2: ['', [<any>Validators.required]]
+          password: ['', Validators.compose([<any>Validators.required, this.passwordValidator])],
+          password2: ['', Validators.compose([<any>Validators.required, this.passwordValidator])]
         }, {validator: this.areEqual}),
         firstName: [this.userData.firstName, [<any>Validators.required]],
         lastName: [this.userData.lastName, [<any>Validators.required]],
@@ -335,8 +355,6 @@ export class EditUserComponent implements OnInit {
           this.initPermissionArray(this.userData.permissions, this.permissionTypes)),
       });
     }
-
-    console.log(this.userForm);
   }
 
 
