@@ -6,7 +6,8 @@
     <a (click)="deleteEntry()">
       <i class="material-icons grey-text darken-2">delete</i>
     </a>
-    <a (click)="updateEntry(journalEntry.id)">
+    <a [routerLink]="['/end-user/journal-entry', journalEntry.id]">
+      <!--(click)="updateEntry(journalEntry.id)">-->
       <i class="material-icons grey-text darken-2">mode_edit</i>
     </a>
   </div>

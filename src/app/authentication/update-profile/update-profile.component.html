@@ -19,7 +19,10 @@
                   {{currentUser.fullName()}}
                 </div>
                 <div class="col s6 right-align">
-                  <a (click)="updateName()"> Update Name</a>
+                  <!-- https://angular.io/docs/ts/latest/api/router/index/RouterLink-directive.html -->
+                  <a
+                    [routerLink]="['/self-update']"
+                    [queryParams]= "{field: 'name'}"> Update Name</a>
                 </div>
               </span>
               <span class="row">
@@ -27,12 +30,16 @@
                   {{currentUser.email}}
                 </div>
                 <div class="col s6 right-align">
-                  <a (click)="updateEmail()"> Update Email</a>
+                  <a
+                    [routerLink]="['/self-update']"
+                    [queryParams]= "{field: 'email'}"> Update Email</a>
                 </div>
               </span>
               <span class="row">
                 <div class="col s6 offset-s6 right-align">
-                  <a (click)="updatePassword()"> Update Password</a>
+                  <a
+                    [routerLink]="['/self-update']"
+                    [queryParams]= "{field: 'password'}"> Update Password</a>
                 </div>
               </span>
             </div>

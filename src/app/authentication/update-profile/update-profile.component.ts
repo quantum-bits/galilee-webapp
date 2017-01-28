@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Router, NavigationExtras, ActivatedRoute} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 
 import {User} from '../../shared/models/user.model';
 
@@ -34,27 +34,5 @@ export class UpdateProfileComponent implements OnInit {
         this.userService.redirectUrl = url;
       });
   }
-
-  updateName(){
-    let navigationExtras: NavigationExtras = {
-      queryParams: {'field': 'name'}
-    };
-    this.router.navigate(['/self-update'],navigationExtras);
-  }
-
-  updateEmail(){
-    let navigationExtras: NavigationExtras = {
-      queryParams: {'field': 'email'}
-    };
-    this.router.navigate(['/self-update'],navigationExtras);
-  }
-
-  updatePassword(){
-    let navigationExtras: NavigationExtras = {
-      queryParams: {'field': 'password'}
-    };
-    this.router.navigate(['/self-update'],navigationExtras);
-  }
-
 
 }
