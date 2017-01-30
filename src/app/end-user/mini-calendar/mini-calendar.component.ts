@@ -105,11 +105,7 @@ export class MiniCalendarComponent implements OnInit {
   }
 
   entriesExistThisDay(day) {
-    if (day.date.format('YYYY-MM-DD') in this.calendarJournalEntries) {
-      return true;
-    } else {
-      return false;
-    }
+    return (day.date.format('YYYY-MM-DD') in this.calendarJournalEntries);
   }
 
   numberEntriesThisDay(day) {

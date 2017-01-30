@@ -22,21 +22,16 @@
       </div>
     </div>
 
-
     <div class="col s12 m12 l8">
-      <app-journal-entries-list
-        [journalEntries]="journalEntries"
-      >
+      <app-journal-entries-list [journalEntries]="journalEntries">
       </app-journal-entries-list>
 
       <div class="row center-align">
-
         <!--<a class="waves-effect waves-light btn" (click)="newJournalEntry()">New Entry</a>-->
         <span *ngIf="moreEntriesMayExist()">
           <a class="waves-effect waves-light btn" (click)="loadMoreEntries()">Load More</a>
         </span>
       </div>
-
 
     </div>
   </div>
@@ -48,8 +43,6 @@
   </a>
 </div>
 
-
-
 <app-delete-journal-entry-modal
   #deleteJournalEntryModal
   header="Delete Entry"
@@ -57,5 +50,3 @@
   (deleteEntry)="deleteEntry($event)"
 >
 </app-delete-journal-entry-modal>
-
-
