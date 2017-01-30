@@ -6,7 +6,7 @@ import {MomentModule} from 'angular2-moment';
 import {MaterializeModule} from "angular2-materialize";
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 import {DatePickerModule} from 'ng2-datepicker';
-import {MiniCalendarComponent} from './mini-calendar/mini-calendar.component';
+//import {MiniCalendarComponent} from '../shared/components/mini-calendar/mini-calendar.component';
 
 import {AuthGuard} from '../authentication/auth.guard';
 
@@ -150,7 +150,7 @@ const routes: Routes = [
     JournalEntriesSearchResultsComponent,
     JournalEntryItemComponent,
     JournalEntryListComponent,
-    MiniCalendarComponent,
+    //MiniCalendarComponent,
     PostItemComponent,
     PracticeItemComponent,
     PracticeListComponent,

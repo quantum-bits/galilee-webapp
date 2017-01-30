@@ -8,17 +8,17 @@ import {DeleteJournalEntryModalComponent} from '../delete-journal-entry-modal';
 import {JournalEntry} from '../../shared/models/journal-entry.model';
 import {
     JournalEntries,
-    CalendarJournalEntry,
+    //CalendarJournalEntries,
     JournalEntryQueryFilters
 } from '../../shared/interfaces/journal-entries.interface';
+
+import { CalendarEntries } from '../../shared/interfaces/calendar-entries.interface';
+
+
 import {JournalService} from '../../shared/services/journal.service';
 
 const DEFAULT_NUMBER_ENTRIES = 2; // default number of entries to show
 
-
-//TODO: not currently using the JournalEntries interface to enforce typing;
-//      transpiler says that the JournalEntry objects are incompatible, b/c they
-//      don't include the methods
 /*
  TODO: Reverse the order of Journal Entries...?  Newest should be at the top.
  */
@@ -39,7 +39,7 @@ export class JournalDashboardComponent implements OnInit {
 
     private mostUsedTags: Array<string> = [];
     private allUsedTags: Array<string> = [];
-    private calendarJournalEntries: Array<CalendarJournalEntry> = [];
+    private calendarJournalEntries: CalendarEntries = {};
 
     constructor(private journalService: JournalService,
                 private router: Router) {

@@ -1,11 +1,9 @@
-export interface CalendarJournalEntry {
-  [ dateString: string ] : number
-}
+import {CalendarEntries} from './calendar-entries.interface';
 
 export interface JournalMetadata {
   mostUsedTags: Array<string>,
   allUsedTags: Array<string>,
-  calendarJournalEntries: Array<CalendarJournalEntry>
+  calendarJournalEntries: CalendarEntries
 }
 
 export interface JournalEntries {

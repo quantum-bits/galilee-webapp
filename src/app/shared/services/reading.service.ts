@@ -5,10 +5,19 @@ import {Observable} from 'rxjs/Rx';
 
 import {Reading} from '../models/reading.model';
 import {ReadingsData} from '../interfaces/readings-data.interface';
+import {CalendarEntries} from '../interfaces/calendar-entries.interface';
 
 function todaysDate(): string {
   return new Date().toISOString().substring(0, 10);
 }
+
+
+const CALENDAR_READINGS: CalendarEntries = {
+  '2017-01-30': 3,
+  '2017-01-27': 2,
+  '2017-02-01': 4
+}
+
 
 @Injectable()
 export class ReadingService {
@@ -89,6 +98,12 @@ export class ReadingService {
       }
     }
   }
+
+  fetchCalendarReadings(){
+    return Observable.of(CALENDAR_READINGS);
+  }
+
+
 
   setRCLDate(date: Date) {
     this.RCLDate = date;

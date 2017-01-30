@@ -25,6 +25,7 @@ import {UpdateResourceItemComponent} from './content-management/update-resource-
 import {UpdateResourcesComponent} from './content-management/update-resources';
 import {UploadResourceComponent} from './content-management/upload-resource';
 import {ManageReadingComponent} from './content-management/manage-reading/manage-reading.component';
+import { UpdateReadingsComponent } from './content-management/update-readings/update-readings.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,7 @@ const routes: Routes = [
       {path: '', redirectTo: 'edit-reading-resources', pathMatch: 'full'},
       {path: 'edit-reading-resources', component: EditReadingResourcesComponent},
       {path: 'manage-users', component: ManageUsersComponent},
+      {path: 'update-readings', component: UpdateReadingsComponent},
       {path: 'manage-readings', component: ManageReadingComponent}
     ]
   },
@@ -53,7 +55,8 @@ const routes: Routes = [
     UpdateResourceItemComponent,
     UpdateResourcesComponent,
     UploadResourceComponent,
-    ManageReadingComponent
+    ManageReadingComponent,
+    UpdateReadingsComponent
   ],
   exports: [
     EditUserComponent
