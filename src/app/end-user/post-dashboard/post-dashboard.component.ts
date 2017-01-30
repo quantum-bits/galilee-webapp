@@ -23,7 +23,7 @@ export class PostDashboardComponent implements OnInit {
 
   @ViewChild('deletePostModal') modal: DeleteJournalEntryModalComponent;
 
-  //private journalEntriesData: JournalEntriesData; not currently being used
+  //private journalEntriesData: JournalEntries; not currently being used
   private multiGroupPostData: GroupPostData[];
 
   private startIndex: number = 0;

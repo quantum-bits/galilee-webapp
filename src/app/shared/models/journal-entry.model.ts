@@ -1,12 +1,13 @@
-import {IJournalEntry} from '../interfaces/journal-entry.interface';
+import {IJournalEntry} from '../interfaces/journal-entries.interface';
 
 export class JournalEntry implements IJournalEntry {
 
   id: number;
   title: string;
   entry: string;
-  tags: string[];
-  date: string;
+  tags: Array<string>;
+  createdAt: string;
+  updatedAt: string;
   RCL_date?: string; // this property may be "undefined" for some of the entries (not required for IJournalEntry interface)
 
   constructor(obj) {
@@ -14,7 +15,8 @@ export class JournalEntry implements IJournalEntry {
     this.title = obj.title;
     this.entry = obj.entry;
     this.tags = obj.tags;
-    this.date = obj.date;
+    this.createdAt = obj.createdAt;
+    this.updatedAt = obj.updatedAt;
     if ("RCL_date" in obj) {
       this.RCL_date = obj.RCL_date;
     };

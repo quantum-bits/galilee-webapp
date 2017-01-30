@@ -9,9 +9,12 @@ import {AuthHttp} from 'angular2-jwt';
 import {UserService} from '../../authentication/user.service';
 import {User} from '../models/user.model';
 
-import {IJournalEntry} from '../interfaces/journal-entry.interface';
-import {JournalEntriesData} from '../interfaces/journal-entries-data.interface';
-import {JournalEntryQueryFilters} from '../interfaces/journal-entry-query-filters.interface';
+import {
+  JournalEntries,
+  IJournalEntry,
+  JournalEntryQueryFilters,
+  JournalMetadata
+} from '../interfaces/journal-entries.interface';
 
 // MOCK
 const JOURNAL_ENTRY = {
@@ -156,18 +159,23 @@ export class JournalService {
               private authHttp: AuthHttp) {
   }
 
-  getJournalEntries(startIndex: number, count: number, filter?: JournalEntryQueryFilters): Observable<JournalEntriesData> {
-    console.log('inside the journal service; here are the query parameters:');
-    console.log(filter);
-    if (startIndex === 0) {
-      var promise = Promise.resolve(JOURNAL_DATA);// Observable.just(JOURNAL_ENTRIES);
-      return Observable.fromPromise(promise);
-    } else {
-      var promise = Promise.resolve(MORE_JOURNAL_DATA);// Observable.just(JOURNAL_ENTRIES);
-      return Observable.fromPromise(promise);
-    }
+  getJournalEntries(startIndex: number, count: number, filter?: JournalEntryQueryFilters): Observable<JournalEntries> {
+    return this.authHttp
+      .get(`http://localhost:3000/entries?offset=${startIndex}&limit=${count}`)
+      .map(resp => resp.json());
   }
 
+  getJournalMetadata(): Observable<JournalMetadata> {
+    return this.authHttp
+      .get('http://localhost:3000/entries/meta')
+      .map(resp => resp.json());
+  }
+
+  /**
+   * Fetch a single journal entry by ID.
+   * @param entryId
+   * @returns {Observable<IJournalEntry>}
+   */
   getJournalEntry(entryId: number): Observable<IJournalEntry> {
     return this.authHttp
       .get(`http://localhost:3000/entries/${entryId}`)

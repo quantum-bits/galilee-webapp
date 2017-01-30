@@ -6,14 +6,10 @@ import * as moment from 'moment';
 import {DeleteJournalEntryModalComponent} from '../delete-journal-entry-modal';
 
 import {JournalEntry} from '../../shared/models/journal-entry.model';
-import {JournalEntriesData} from '../../shared/interfaces/journal-entries-data.interface';
-import {JournalEntryQueryFilters} from '../../shared/interfaces/journal-entry-query-filters.interface';
-
+import {JournalEntries, JournalEntryQueryFilters} from '../../shared/interfaces/journal-entries.interface';
 import {JournalService} from '../../shared/services/journal.service';
 
 const DEFAULT_NUMBER_ENTRIES = 2; // default number of entries to show
-
-
 
 @Component({
   selector: 'app-journal-entries-search-results',
@@ -24,7 +20,7 @@ export class JournalEntriesSearchResultsComponent implements OnInit {
 
   @ViewChild('deleteEntryModal') modal: DeleteJournalEntryModalComponent;
 
-  //private journalEntriesData: JournalEntriesData; not currently being used
+  //private journalEntriesData: JournalEntries; not currently being used
   private journalEntries: JournalEntry[];
 
   private startIndex: number = 0;
