@@ -3,10 +3,15 @@
     <h6>{{journalEntry.title}}</h6>
   </div>
   <div class="col s4 right-align">
-    <a (click)="deleteEntry()">
+    <!--
+    a work-around so that the cursor changes to a pointer upon hovering; see:
+    http://stackoverflow.com/questions/35639174/passive-link-in-angular-2-a-href-equivalent
+    -->
+    <a href="javascript:void(0)" (click)="deleteEntry()">
       <i class="material-icons grey-text darken-2">delete</i>
     </a>
-    <a (click)="updateEntry(journalEntry.id)">
+    <a [routerLink]="['/end-user/journal-entry', journalEntry.id]">
+      <!--(click)="updateEntry(journalEntry.id)">-->
       <i class="material-icons grey-text darken-2">mode_edit</i>
     </a>
   </div>
