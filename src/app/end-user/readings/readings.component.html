@@ -33,13 +33,7 @@
             </span>
           </div>
           -->
-          <div class="col s5 center-align switch">
-            <label class="card-title grey-text">
-              Scripture Engagement
-              <input type="checkbox" [checked]="showPractices(engageScripture)" (change)="updateScriptureEngagement()">
-              <span class="lever"></span>
-            </label>
-          </div>
+
           <!--
           <div class="col s2 center-align">
             <span class="card-title grey-text">
@@ -64,13 +58,6 @@
      class="button-collapse grey-text right">
     <i class="mdi-navigation-menu material-icons">more_vert</i>
   </a>
-  <div class="switch right">
-    <label class="grey-text secondary-nav">
-      Scripture Engagement
-      <input type="checkbox" [checked]="showPractices(engageScripture)" (change)="updateScriptureEngagement()">
-      <span class="lever"></span>
-    </label>
-  </div>
   <ul id="slide-out2" class="side-nav">
     <li>
       <a (click)="toggleReadingsDropdown($event)" class="waves-effect">
@@ -103,30 +90,17 @@
 <!-- Current reading, possibly with practice types shown -->
 <div class="container row">
   <div *ngIf="initializationComplete ">
-    <div *ngIf="!showPractices(engageScripture)" class="col s12">
+    <div class="col s12 m6 l7">
       <app-reading-item
         [includeNavigationBar]=true
         [reading]="readingsData.readings[currentReadingIndex]"
         [numberReadings]="numberReadings"
         [currentReadingIndex]="currentReadingIndex"
-        [engageScripture]="engageScripture"
         [dateString]="dateString"
       >
       </app-reading-item>
     </div>
-
-    <div *ngIf="showPractices(engageScripture)" class="col s12 m6 l7">
-      <app-reading-item
-        [includeNavigationBar]=true
-        [reading]="readingsData.readings[currentReadingIndex]"
-        [numberReadings]="numberReadings"
-        [currentReadingIndex]="currentReadingIndex"
-        [engageScripture]="engageScripture"
-        [dateString]="dateString"
-      >
-      </app-reading-item>
-    </div>
-    <div *ngIf="showPractices(engageScripture)" class="col s12 m6 l5">
+    <div class="col s12 m6 l5">
       <app-practice-list
         [reading]="readingsData.readings[currentReadingIndex]"
         [readingIndex]="currentReadingIndex"

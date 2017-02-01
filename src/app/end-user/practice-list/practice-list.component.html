@@ -2,7 +2,7 @@
 <ul class="collection with-header">
   <li class="collection-header"><h5>Practices</h5></li>
 
-  <a *ngFor="let practiceData of reading.applications; let i = index" class="collection-item">
+  <a href="javascript:void(0)" *ngFor="let practiceData of reading.applications; let i = index" class="collection-item">
     <span class="title grey-text text-darken-2" (click)="onSelectPractice(i)"> {{practiceData.practice.title}}
      <!--
     <a class="grey-text text-darken-1" (click)="onSelectPractice(i)">

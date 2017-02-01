@@ -55,7 +55,6 @@ export class ReadingsComponent implements OnInit {
 
   private multiGroupPostData: GroupPostData[];
   private dateString: string;
-  private engageScripture: number; // translates to boolean (0->false)
   private readingDescriptions: Array<any> = [];//this will hold the reading descriptions for the passages other than the one that is currently being shown
   private numberReadings: number;
   private currentReadingIndex: number = 0; // the index # of the reading that is currently being displayed
@@ -65,13 +64,8 @@ export class ReadingsComponent implements OnInit {
     this.route.params.subscribe(params => {
       console.log('readings -- received route params');
       this.dateString = params['dateString'];
-      if ('engageScripture' in params){
-        this.engageScripture = +params['engageScripture'];
-        if ('readingIndex' in params){
-          this.currentReadingIndex = +params['readingIndex'];
-        }
-      } else {
-        this.engageScripture = 0;
+      if ('readingIndex' in params){
+        this.currentReadingIndex = +params['readingIndex'];
       }
       this.fetchReadings();
       this.fetchGroupPosts();
@@ -113,21 +107,6 @@ export class ReadingsComponent implements OnInit {
       );
   }
 
-
-  // could just use engageScripture as a boolean directly in the template, but this seems a bit safer
-  showPractices(engageScripture: number): boolean{
-    if (engageScripture === 0) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  updateScriptureEngagement(){
-    // switches the practices between "open" and "closed"
-    this.router.navigate(['/end-user/readings', this.dateString, (this.engageScripture+1)%2, this.currentReadingIndex]);
-  }
-
   currentReadingExists(){
     if ((this.currentReadingIndex < 0)||(this.currentReadingIndex >= this.readingsData.readings.length)) {
       return false;
@@ -161,7 +140,7 @@ export class ReadingsComponent implements OnInit {
   }
 
   onReadingUpdated(updatedReadingIndex: number) {
-    this.router.navigate(['/end-user/readings', this.dateString, this.engageScripture, updatedReadingIndex]);
+    this.router.navigate(['/end-user/readings', this.dateString, updatedReadingIndex]);
   }
 
   // for the secondary side-nav

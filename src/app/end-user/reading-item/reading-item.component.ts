@@ -12,7 +12,6 @@ export class ReadingItemComponent implements OnInit {
   @Input() numberReadings: number;
   @Input() currentReadingIndex: number;
   @Input() dateString: string;
-  @Input() engageScripture: number;//0->false; 1->true
 
   //private hideContent: boolean;//hide the content of the reading if on a mobile device
 
@@ -23,13 +22,6 @@ export class ReadingItemComponent implements OnInit {
     console.log('inside ngoninit for reading-item');
     console.log(this.includeNavigationButtons);
     this.modifyHeaderStyle();
-    /*
-    if (this.engageScripture===1){
-      this.hideContent = true;
-    } else {
-      this.hideContent = false;
-    }
-    */
   }
 
   displayInfo(reading) {
@@ -69,11 +61,11 @@ export class ReadingItemComponent implements OnInit {
   }
 
   nextReading() {
-    this.router.navigate(['/end-user/readings', this.dateString, this.engageScripture, this.currentReadingIndex+1]);
+    this.router.navigate(['/end-user/readings', this.dateString, this.currentReadingIndex+1]);
   }
 
   previousReading() {
-    this.router.navigate(['/end-user/readings', this.dateString, this.engageScripture, this.currentReadingIndex-1]);
+    this.router.navigate(['/end-user/readings', this.dateString, this.currentReadingIndex-1]);
   }
 
   //TODO: this might not be the best way to override the header styling;

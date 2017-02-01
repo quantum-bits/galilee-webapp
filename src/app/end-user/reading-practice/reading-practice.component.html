@@ -2,7 +2,8 @@
   <div class="container">
     <div class="row">
       <div class="col s12 m6 offset-m3 l6 offset-l3 back-link">
-        <a class="grey-text text-darken-2" (click)="goHome()">
+        <a class="grey-text text-darken-2"
+           [routerLink]="['/end-user/readings', dateString, readingIndex]">
           <i class="material-icons lr-arrow">navigate_before</i>
           Back to Scripture Engagement
         </a>
@@ -27,7 +28,8 @@
   <div class="container">
     <div class="row">
       <div class="col s12 m6 offset-m3 l6 offset-l3 back-link">
-        <a class="grey-text text-darken-2" (click)="goHome()">
+        <a class="grey-text text-darken-2"
+           [routerLink]="['/end-user/readings', dateString, readingIndex]">
           <i class="material-icons lr-arrow">navigate_before</i>
           Back to Scripture Engagement
         </a>
@@ -51,7 +53,8 @@
   <div class="container">
     <div class="row">
       <div class="col s12 m10 offset-m1 l10 offset-l1 back-link">
-        <a class="grey-text text-darken-2" (click)="goHome()">
+        <a class="grey-text text-darken-2"
+           [routerLink]="['/end-user/readings', dateString, readingIndex]">
           <i class="material-icons lr-arrow">navigate_before</i>
           Back to Scripture Engagement
         </a>
@@ -81,7 +84,6 @@
           [includeNavigationBar]="'false'"
           [numberReadings] = "numberReadings"
           [currentReadingIndex] = "currentReadingIndex"
-          [engageScripture] = "'1'"
           [dateString] = "dateString"
         >
         </app-reading-item>

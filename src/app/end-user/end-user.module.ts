@@ -61,13 +61,8 @@ const routes: Routes = [
         component: ReadingsComponent,
       },
       {
-        // engageScripture is a boolean (0 for off, 1 for on)
-        path: 'readings/:dateString/:engageScripture',
-        component: ReadingsComponent,
-      },
-      {
         // Show the specified reading
-        path: 'readings/:dateString/:engageScripture/:readingIndex',
+        path: 'readings/:dateString/:readingIndex',
         component: ReadingsComponent,
       },
       {
