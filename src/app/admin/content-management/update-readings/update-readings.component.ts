@@ -80,9 +80,20 @@ export class UpdateReadingsComponent implements OnInit {
   }
 
   onAddReading(success: boolean){
-    console.log('succes!!');
+    console.log('succes?', success);
     this.addReadingModeOn = false;
   }
+
+  addNewQuestion(){
+    this.reading = null;
+    this.addQuestionModeOn = true;
+  }
+
+  onAddQuestion(success: boolean){
+    console.log('success?', success);
+    this.addQuestionModeOn = false;
+  }
+
 
 
 }

@@ -48,18 +48,19 @@
                   </small>
                 </div>
               </div>
-
             </div>
-
             <div class="card-action">
               <button
                 class="waves-effect waves-light btn"
                 type="submit"
                 [class.disabled]="!readingForm.valid"
                 [disabled]="!readingForm.valid">Submit</button>
+              <button
+                class="waves-effect waves-light btn right"
+                type="button"
+                (click)="onCancel()"
+              >Cancel</button>
             </div>
-
-
           </div>
         </div>
       </div>

@@ -43,7 +43,7 @@
       <div *ngIf="!(addReadingModeOn || addQuestionModeOn)" class="row">
         <div class="col s12 center-align">
           <a class="waves-effect waves-light btn" (click)="addNewReading()">Add Reading</a>
-          <a class="waves-effect waves-light btn">Add Question</a>
+          <a class="waves-effect waves-light btn" (click)="addNewQuestion()">Add Question</a>
         </div>
       </div>
       <div *ngIf="addReadingModeOn" class="row">
@@ -51,6 +51,12 @@
           [reading] = "reading"
           (submitSuccess) = "onAddReading($event)">
         </app-update-reading-form>
+      </div>
+      <div *ngIf="addQuestionModeOn" class="row">
+        <app-update-question-form
+          [question] = "question"
+          (submitSuccess) = "onAddQuestion($event)">
+        </app-update-question-form>
       </div>
     </div>
   </div>

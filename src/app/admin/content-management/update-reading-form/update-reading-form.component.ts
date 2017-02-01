@@ -57,35 +57,16 @@ export class UpdateReadingFormComponent implements OnInit {
     }
   }
 
-  //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt
-  filterInt(value) {
-    if (/^([0-9]+)$/.test(value)) {
-      return Number(value);
-    } else {
-      return NaN;
-    }
-  }
-
-  /*
-  function isInteger(value){
-  if((parseFloat(value) == parseInt(value)) && !isNaN(value)){
-    // I can have spacespacespace1 - which is 1 and validators pases but
-    // spacespacespace doesn't - which is what i wanted.
-    // 1space2 doesn't pass - good
-    // of course, when saving data you do another parseInt.
-    return true;
-  } else {
-    return false;
-  }
-  */
-
-
   onSubmit(){
     let success: boolean = true;
     this.submitSuccess.next(success);
     //
   }
 
+  onCancel(){
+    let success: boolean = false;
+    this.submitSuccess.next(success);
+  }
 
 
 
