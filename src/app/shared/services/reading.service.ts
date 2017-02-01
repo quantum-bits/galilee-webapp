@@ -15,6 +15,7 @@ function todaysDate(): string {
 const CALENDAR_READINGS: CalendarEntries = {
   '2017-01-30': 3,
   '2017-01-27': 2,
+  '2017-01-31': 2,
   '2017-02-01': 4
 }
 

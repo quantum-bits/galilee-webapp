@@ -12,5 +12,6 @@ export interface IReading {
 export interface ReadingsData {
   date: string;
   id: number;
+  questions?: string[];
   readings: IReading[];
 }

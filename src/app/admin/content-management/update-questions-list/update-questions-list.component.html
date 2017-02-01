@@ -1,0 +1,15 @@
+<div *ngIf="!questions && dateString">
+  <ul class="collection with-header">
+    <li class="collection-header"><h5>No questions yet for {{dateString | amDateFormat: 'LL'}}</h5></li>
+  </ul>
+</div>
+
+<div *ngIf="questions">
+  <ul class="collection with-header">
+    <li class="collection-header"><h5>Questions for {{dateString | amDateFormat: 'LL'}}</h5></li>
+    <li *ngFor="let question of questions" class="collection-item">
+      <span class="title"> {{question}} </span>
+    </li>
+  </ul>
+</div>
+

@@ -9,7 +9,7 @@
  Modified by KK
  */
 
-import {Component, OnInit, OnChanges, Input, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import * as moment from 'moment';
 import {CalendarEntries} from '../../interfaces/calendar-entries.interface';
 
@@ -18,7 +18,7 @@ import {CalendarEntries} from '../../interfaces/calendar-entries.interface';
   templateUrl: './mini-calendar.component.html',
   styleUrls: ['./mini-calendar.component.less']
 })
-export class MiniCalendarComponent implements OnInit, OnChanges {
+export class MiniCalendarComponent implements OnInit {
   @Input() showWeek;
   @Input() selected;
   @Input() calendarJournalEntries: CalendarEntries = {};
@@ -36,10 +36,6 @@ export class MiniCalendarComponent implements OnInit, OnChanges {
     this._removeTime(start.day(0));
 
     this._buildMonth(this, start, this.month);
-  }
-
-  ngOnChanges() {
-    console.log('change! ', this.calendarJournalEntries);
   }
 
   public select(day) {
