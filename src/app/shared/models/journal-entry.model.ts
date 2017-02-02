@@ -1,11 +1,10 @@
-import {IJournalEntry} from '../interfaces/journal-entries.interface';
+import {UserTag} from '../interfaces/tag.interface';
 
-export class JournalEntry implements IJournalEntry {
-
+export class JournalEntry  {
   id: number;
   title: string;
   entry: string;
-  tags: Array<string>;
+  tags: Array<UserTag>;
   createdAt: string;
   updatedAt: string;
   RCL_date?: string; // this property may be "undefined" for some of the entries (not required for IJournalEntry interface)
@@ -20,10 +19,6 @@ export class JournalEntry implements IJournalEntry {
     if ("RCL_date" in obj) {
       this.RCL_date = obj.RCL_date;
     };
-  }
-
-  hasTags() {
-    //return true;
   }
 
   entryIsLong(numWords: number): boolean {

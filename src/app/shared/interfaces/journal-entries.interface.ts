@@ -1,31 +1,21 @@
 import {CalendarEntries} from './calendar-entries.interface';
+import {JournalEntry} from '../models/journal-entry.model';
+import {UserTag} from '../interfaces/tag.interface';
 
 export interface JournalMetadata {
   totalEntries: number,
-  mostUsedTags: Array<string>,
-  allUsedTags: Array<string>,
+  mostUsedTags: Array<UserTag>,
+  allUsedTags: Array<UserTag>,
   calendarJournalEntries: CalendarEntries
 }
 
 export interface JournalEntries {
   offset: number,
   count: number,
-  entries: IJournalEntry[]
+  entries: Array<JournalEntry>
 }
 
-export interface IJournalEntry {
-  title: string;
-  entry: string;
-  tags: Array<string>;
-  RCL_date?: string;
-  //userID?
-  //readingID: number; (index in the db for the reading in question)
-  //readingDayID: ?
-  //practiceID: number
-  //stepID: number (this would then contain the resource info, etc.)
-}
-
-export interface JournalEntryQueryFilters {
+export interface JournalEntryFilter {
   date?: string,//'YYYY-MM-DD' format
   tag?: string,
   text?: string

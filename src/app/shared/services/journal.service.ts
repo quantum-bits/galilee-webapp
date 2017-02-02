@@ -9,9 +9,8 @@ import {AuthHttp} from 'angular2-jwt';
 import {UserService} from '../../authentication/user.service';
 import {User} from '../models/user.model';
 
-import {
-  JournalEntries, IJournalEntry, JournalEntryQueryFilters, JournalMetadata
-} from '../interfaces/journal-entries.interface';
+import {JournalEntries, JournalEntryFilter, JournalMetadata} from '../interfaces/journal-entries.interface';
+import {JournalEntry} from '../models/journal-entry.model';
 
 @Injectable()
 export class JournalService {
@@ -26,7 +25,7 @@ export class JournalService {
               private authHttp: AuthHttp) {
   }
 
-  getJournalEntries(startIndex: number, count: number, filter?: JournalEntryQueryFilters): Observable<JournalEntries> {
+  getJournalEntries(startIndex: number, count: number, filter?: JournalEntryFilter): Observable<JournalEntries> {
     return this.authHttp
       .get(`http://localhost:3000/entries?offset=${startIndex}&limit=${count}`)
       .map(resp => resp.json());
@@ -41,12 +40,12 @@ export class JournalService {
   /**
    * Fetch a single journal entry by ID.
    * @param entryId
-   * @returns {Observable<IJournalEntry>}
+   * @returns {Observable<JournalEntry>}
    */
-  getJournalEntry(entryId: number): Observable<IJournalEntry> {
+  getJournalEntry(entryId: number): Observable<JournalEntry> {
     return this.authHttp
       .get(`http://localhost:3000/entries/${entryId}`)
-      .map(resp => resp.json());
+      .map(resp => new JournalEntry(resp.json()));
   }
 
   /**

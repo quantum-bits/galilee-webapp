@@ -38,7 +38,7 @@
 </div>
 <br>
 <div class="chip" *ngFor="let tag of journalEntry.tags">
-  {{tag}}
+  {{tag.label}}
 </div>
 <div class="grey-text darken-3 right">{{journalEntry.updatedAt | amTimeAgo}}</div>
 

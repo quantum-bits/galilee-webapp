@@ -7,7 +7,7 @@ import {IPost} from '../interfaces/post.interface';
 import {IGroupPostData} from '../interfaces/group-post-data.interface';
 import {PostQueryFilters} from '../interfaces/post-query-filters.interface';
 
-//import {JournalEntryQueryFilters} from '../interfaces/journal-entry-query-filters.interface';
+//import {JournalEntryFilter} from '../interfaces/journal-entry-query-filters.interface';
 
 // MOCK
 const POST_ENTRY = {

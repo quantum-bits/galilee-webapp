@@ -4,7 +4,7 @@ import {Router, NavigationExtras} from '@angular/router';
 import {DeleteJournalEntryModalComponent} from '../delete-journal-entry-modal';
 
 import {JournalEntry} from '../../shared/models/journal-entry.model';
-import {JournalMetadata, JournalEntryQueryFilters} from '../../shared/interfaces/journal-entries.interface';
+import {JournalMetadata, JournalEntryFilter} from '../../shared/interfaces/journal-entries.interface';
 import {JournalService} from '../../shared/services/journal.service';
 
 const ENTRIES_PER_LOAD = 3;
@@ -84,7 +84,7 @@ export class JournalDashboardComponent implements OnInit {
   }
 
   daySelected(dateString: string) {
-    let journalEntryQueryFilters: JournalEntryQueryFilters = {
+    let journalEntryQueryFilters: JournalEntryFilter = {
       'date': dateString
     };
     let navigationExtras: NavigationExtras = {
@@ -94,7 +94,7 @@ export class JournalDashboardComponent implements OnInit {
   }
 
   tagSelected(tag: string) {
-    let journalEntryQueryFilters: JournalEntryQueryFilters = {
+    let journalEntryQueryFilters: JournalEntryFilter = {
       'tag': tag
     };
     let navigationExtras: NavigationExtras = {

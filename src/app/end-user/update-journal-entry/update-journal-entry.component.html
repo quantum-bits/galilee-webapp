@@ -59,7 +59,7 @@
                 <div class="input-field col s12">
                   <div class="chip" *ngFor="let tag of tagList; let j=index">
                     <a class="grey-text" (click)="deleteTag(j)">
-                      {{tag}}
+                      {{tag.label}}
                       <i class="material-icons lr-arrow">close</i>
                     </a>
                   </div>
@@ -140,8 +140,8 @@
 <div *ngIf="allUsedTags">
   <!-- Dropdown Structure -->
   <ul id='tagDropdown' class='dropdown-content'>
-    <li *ngFor="let tag of allUsedTags; let i=index">
-      <a class="grey-text" (click)="addTagByIndex(i)">{{tag}}</a>
+    <li *ngFor="let tag of allUsedTags">
+      <a class="grey-text" (click)="addTagByIndex(tag.userTagId)">{{tag.label}}</a>
     </li>
   </ul>
 </div>

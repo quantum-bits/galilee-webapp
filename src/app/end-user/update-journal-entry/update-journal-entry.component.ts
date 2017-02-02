@@ -3,7 +3,9 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 import {JournalService} from '../../shared/services/journal.service';
-import {IJournalEntry} from '../../shared/interfaces/journal-entries.interface';
+import {JournalEntry} from '../../shared/models/journal-entry.model';
+import {UserTag} from '../../shared/interfaces/tag.interface';
+import {User} from "../../shared/models/user.model";
 
 @Component({
   selector: 'app-update-journal-entry',
@@ -15,12 +17,11 @@ export class UpdateJournalEntryComponent implements OnInit {
 
   @ViewChild('tagSelect') private tagInput: any;
 
-  private journalEntryData: IJournalEntry;
+  private journalEntry: JournalEntry;
   public journalEntryForm: FormGroup; // our model driven form
 
-  private tagList: string[] = [];
-
-  private allUsedTags: string[];
+  private tagList: Array<UserTag> = [];
+  private allUsedTags: Array<UserTag> = [];
   private isNewEntry: boolean; // true if this is a new Journal entry; false if updating
 
   private questions: string[];
@@ -36,32 +37,16 @@ export class UpdateJournalEntryComponent implements OnInit {
         if ('journalEntryID' in params) {
           let journalEntryID = +params['journalEntryID'];
           this.journalService.getJournalEntry(journalEntryID)
-            .subscribe(
-              journalEntry => {
-                this.journalEntryData = journalEntry;
-                this.isNewEntry = false;
-                console.log(this.journalEntryData);
-                for (let tag of journalEntry.tags) {
-                  this.tagList.push(tag);
-                }
-                console.log(this.tagList);
-                this.initializeForm();
-              },
-              error => {
-                console.log(error);
-                //this.modal.openModal();
-              }
-            );
+            .subscribe(journalEntry => {
+              this.journalEntry = journalEntry;
+              this.isNewEntry = false;
+              journalEntry.tags.forEach(tagObj => this.tagList.push(tagObj));
+              this.initializeForm();
+            });
         } else {
           this.isNewEntry = true;
-          this.createEmptyJournalEntryData(); // fills journalEntryData with initial values
-          console.log(this.journalEntryData);
           this.initializeForm();
         }
-      },
-      error => {
-        console.log(error);
-        //this.modal.openModal();
       }
     );
   }
@@ -71,34 +56,19 @@ export class UpdateJournalEntryComponent implements OnInit {
       .subscribe(
         tags => {
           this.allUsedTags = tags.sort();
-          console.log(this.allUsedTags);
 
           this.journalEntryForm = this.formBuilder.group({
-            title: [this.journalEntryData.title, [<any>Validators.required]],
-            entry: [this.journalEntryData.entry, [<any>Validators.required]],
+            title: [this.journalEntry.title, [<any>Validators.required]],
+            entry: [this.journalEntry.entry, [<any>Validators.required]],
             newTag: [''],//used to capture new tags....
           });
-
-          console.log(this.journalEntryForm);
-
-        },
-        error => {
-          console.log(error);
-          //this.modal.openModal();
         }
       );
   }
 
-  createEmptyJournalEntryData() {
-    this.journalEntryData = {
-      title: '',
-      entry: '',
-      tags: [],
-    }
-  }
-
-  addTagByIndex(i: number) {
-    this.tagList.push(this.allUsedTags[i]);
+  // TODO: Remove the tag from the tag list so it can't be added again.
+  addTagByIndex(id: number) {
+    this.tagList.push(this.allUsedTags.find(tag => tag.userTagId === id));
   }
 
   onKey(event) {
@@ -146,5 +116,4 @@ export class UpdateJournalEntryComponent implements OnInit {
         }
       );
   }
-
 }

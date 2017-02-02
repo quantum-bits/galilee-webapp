@@ -15,7 +15,7 @@
           <ul class="collection with-header">
             <li class="collection-header"><h6>Most Used Tags</h6></li>
             <li *ngFor="let tag of journalMetadata.mostUsedTags"  class="collection-item">
-              <a class="grey-text darken-3" (click)="tagSelected(tag)">{{tag}}</a>
+              <a class="grey-text darken-3" (click)="tagSelected(tag.id)">{{tag.label}}</a>
             </li>
           </ul>
         </div>
