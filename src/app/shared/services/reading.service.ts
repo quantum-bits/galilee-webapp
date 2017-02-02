@@ -2,26 +2,16 @@ import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 
 import {Observable} from 'rxjs/Rx';
+import {AuthHttp} from 'angular2-jwt';
 
 import {Reading} from '../models/reading.model';
 import {ReadingsData} from '../interfaces/readings-data.interface';
 import {CalendarEntries} from '../interfaces/calendar-entries.interface';
 
+// TODO: Move this to a shared module.
 function todaysDate(): string {
   return new Date().toISOString().substring(0, 10);
 }
-
-
-const CALENDAR_READINGS: CalendarEntries = {
-  '2017-02-01': 3,
-  '2017-02-02': 2,
-  '2017-02-03': 2,
-  '2017-02-04': 4,
-  '2017-02-05': 1,
-  '2017-02-06': 2,
-  '2017-02-07': 3
-}
-
 
 @Injectable()
 export class ReadingService {
@@ -29,7 +19,7 @@ export class ReadingService {
   private readingsData: ReadingsData;
   private RCLDate: Date; // keeps track of the RCL date that the user is currently looking at (since this could be different than today's date)
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private authHttp: AuthHttp) {
   }
 
   returnTemp() {
@@ -49,12 +39,18 @@ export class ReadingService {
 
   getReadingById(id: number): Observable<Reading> {
     return this.http
-      .get(`http://localhost:3000/reading/${id}`)
+      .get(`http://localhost:3000/readings/${id}`)
       .map(res => res.json());
   }
 
   storeReadings(readingsData: ReadingsData){
     this.readingsData = readingsData;
+  }
+
+  getReadingMetadata(): Observable<CalendarEntries> {
+    return this.authHttp
+      .get('http://localhost:3000/readings/meta')
+      .map(resp => resp.json());
   }
 
   /*
@@ -102,12 +98,6 @@ export class ReadingService {
       }
     }
   }
-
-  fetchCalendarReadings(){
-    return Observable.of(CALENDAR_READINGS);
-  }
-
-
 
   setRCLDate(date: Date) {
     this.RCLDate = date;

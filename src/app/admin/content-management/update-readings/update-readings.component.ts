@@ -54,7 +54,7 @@ const PRACTICE_GENERAL_INFO = [
 })
 export class UpdateReadingsComponent implements OnInit {
 
-  private calendarReadings: CalendarEntries = null;
+  private calendarReadings: CalendarEntries = {};
   private readingsData: ReadingsData = null;
   private dateString: string = null;
   private questions: string[] = null;
@@ -78,7 +78,7 @@ export class UpdateReadingsComponent implements OnInit {
   ngOnInit() {
     //this.fetchPractices();
 
-    this.readingService.fetchCalendarReadings()
+    this.readingService.getReadingMetadata()
       .subscribe(
         calendarReadings => {
           console.log(calendarReadings);
