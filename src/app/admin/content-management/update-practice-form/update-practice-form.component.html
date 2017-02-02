@@ -1,0 +1,97 @@
+<div *ngIf="applicationForm">
+
+  <div class="container">
+
+    <form [formGroup]="applicationForm" novalidate (ngSubmit)="onSubmit()">
+
+      <div class="row">
+        <div class="col s12 ">
+          <div class="card">
+            <div class="card-content">
+
+              <span *ngIf="isNewApplication" class="card-title">
+                Add New Practice and Steps
+              </span>
+              <span *ngIf="!isNewApplication" class="card-title">
+                Update Practice and/or Steps
+              </span>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <select
+                    materialize="material_select"
+                    [materializeSelectOptions]="selectOptions"
+                    formControlName="practiceID"
+                  >
+                    <option *ngIf="isNewApplication" value="" disabled selected>Choose a practice</option>
+                      <option *ngFor="let practice of availablePractices"
+                              [value]="practice.id">
+                        {{practice.title}}
+                      </option>
+                        <!--
+                        <option value="1">Option 1</option>
+                        <option value="2">Option 2</option>
+                        <option value="3">Option 3</option>
+                        -->
+
+                  </select>
+                  <label>Practice</label>
+                </div>
+
+                <!--
+                <div class="row">
+                  <div class="input-field col s12">
+                    <i class="material-icons prefix">mode_edit</i>
+                    <label for="question">Question</label>
+                    <input
+                      [input-wake-up]="'question'"
+                      [class.warning-background] = "questionForm.controls.question.errors && questionForm.controls.question.touched"
+                      id="question"
+                      type="text"
+                      formControlName="question">
+                  </div>
+                  <div *ngIf="questionForm.controls.question.errors && questionForm.controls.question.touched">
+                    <small class="warning">
+                      This field is required.
+                    </small>
+                  </div>
+                </div>
+                -->
+              </div>
+            </div>
+            <div class="card-action">
+              <button
+                class="waves-effect waves-light btn"
+                type="submit"
+                [class.disabled]="!applicationForm.valid"
+                [disabled]="!applicationForm.valid"
+              >Submit</button>
+
+              <!--[class.disabled]="!applicationForm.valid"
+                [disabled]="!applicationForm.valid"
+                -->
+
+              <button
+                class="waves-effect waves-light btn right"
+                type="button"
+                (click)="onCancel()"
+              >Cancel</button>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!--
+<div class="input-field col s6">
+              <select [(ngModel)]="selectedOption" name="selectedOption" materialize="material_select" [materializeSelectOptions]="selectOptions">
+                <option value="" disabled selected>Choose your option</option>
+                <option *ngFor="let option of selectOptions" [value]="option.value">{{option.name}}</option>
+              </select>
+              <label>Materialize Select</label>
+            </div>
+            -->

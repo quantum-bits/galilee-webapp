@@ -30,6 +30,7 @@ import { UpdateReadingsListComponent } from './content-management/update-reading
 import { UpdateQuestionsListComponent } from './content-management/update-questions-list/update-questions-list.component';
 import { UpdateReadingFormComponent } from './content-management/update-reading-form/update-reading-form.component';
 import { UpdateQuestionFormComponent } from './content-management/update-question-form/update-question-form.component';
+import { UpdatePracticeFormComponent } from './content-management/update-practice-form/update-practice-form.component';
 
 const routes: Routes = [
   {
@@ -64,7 +65,8 @@ const routes: Routes = [
     UpdateReadingsListComponent,
     UpdateQuestionsListComponent,
     UpdateReadingFormComponent,
-    UpdateQuestionFormComponent
+    UpdateQuestionFormComponent,
+    UpdatePracticeFormComponent
   ],
   exports: [
     EditUserComponent
