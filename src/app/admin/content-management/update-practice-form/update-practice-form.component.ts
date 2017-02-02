@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 
 import {Application} from '../../../shared/interfaces/application.interface';
@@ -63,11 +63,33 @@ export class UpdatePracticeFormComponent implements OnInit {
     }
 
     this.applicationForm = this.formBuilder.group({
-      practiceID: [applicationFormData.practiceID, [<any>Validators.required]]//,
-      //seq: [applicationFormData.seq, Validators.compose([<any>Validators.required, this.integerValidator])]
+      practiceID: [applicationFormData.practiceID, [<any>Validators.required]],
+      steps: this.formBuilder.array([
+        this.initStep(),
+      ])
     });
     console.log(this.applicationForm);
   }
+
+  initStep() {
+    // initialize our address
+    return this.formBuilder.group({
+      description: ['', Validators.required]
+    });
+  }
+
+  addStep() {
+    // add address to the list
+    const control = <FormArray>this.applicationForm.controls['steps'];
+    control.push(this.initStep());
+  }
+
+  removeStep(i: number) {
+    // remove address from the list
+    const control = <FormArray>this.applicationForm.controls['steps'];
+    control.removeAt(i);
+  }
+
 
   integerValidator(control) {
     //see: http://stackoverflow.com/questions/34072092/generic-mail-validator-in-angular2
@@ -88,8 +110,5 @@ export class UpdatePracticeFormComponent implements OnInit {
     let success: boolean = false;
     this.submitSuccess.next(success);
   }
-
-
-
 
 }
