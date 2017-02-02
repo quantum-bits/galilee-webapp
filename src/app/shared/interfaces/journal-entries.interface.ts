@@ -14,12 +14,9 @@ export interface JournalEntries {
 }
 
 export interface IJournalEntry {
-  id: number;
   title: string;
   entry: string;
   tags: Array<string>;
-  createdAt: string;
-  updatedAt: string;
   RCL_date?: string;
   //userID?
   //readingID: number; (index in the db for the reading in question)

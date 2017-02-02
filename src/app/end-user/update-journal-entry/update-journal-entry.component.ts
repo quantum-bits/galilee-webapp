@@ -3,6 +3,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 import {JournalService} from '../../shared/services/journal.service';
+import {IJournalEntry} from '../../shared/interfaces/journal-entries.interface';
 
 @Component({
   selector: 'app-update-journal-entry',
@@ -14,19 +15,13 @@ export class UpdateJournalEntryComponent implements OnInit {
 
   @ViewChild('tagSelect') private tagInput: any;
 
-  private journalEntryData: any;
+  private journalEntryData: IJournalEntry;
   public journalEntryForm: FormGroup; // our model driven form
 
   private tagList: string[] = [];
 
-  // TODO: this date should probably be the date for the readings that
-  //       the person is looking at (in case they are ahead/behind); the
-  //       entry in the database will probably also have a date stamp, which
-  //       will (possibly) be different.
-  private date = new Date();
-  // date.toISOString()
   private allUsedTags: string[];
-  private newEntry: boolean; // true if this is a new Journal entry; false if updating
+  private isNewEntry: boolean; // true if this is a new Journal entry; false if updating
 
   private questions: string[];
 
@@ -44,7 +39,7 @@ export class UpdateJournalEntryComponent implements OnInit {
             .subscribe(
               journalEntry => {
                 this.journalEntryData = journalEntry;
-                this.newEntry = false;
+                this.isNewEntry = false;
                 console.log(this.journalEntryData);
                 for (let tag of journalEntry.tags) {
                   this.tagList.push(tag);
@@ -58,7 +53,7 @@ export class UpdateJournalEntryComponent implements OnInit {
               }
             );
         } else {
-          this.newEntry = true;
+          this.isNewEntry = true;
           this.createEmptyJournalEntryData(); // fills journalEntryData with initial values
           console.log(this.journalEntryData);
           this.initializeForm();
@@ -79,10 +74,8 @@ export class UpdateJournalEntryComponent implements OnInit {
           console.log(this.allUsedTags);
 
           this.journalEntryForm = this.formBuilder.group({
-            id: [this.journalEntryData.id, [<any>Validators.required]],
             title: [this.journalEntryData.title, [<any>Validators.required]],
             entry: [this.journalEntryData.entry, [<any>Validators.required]],
-            date: [this.journalEntryData.date, [<any>Validators.required]],
             newTag: [''],//used to capture new tags....
           });
 
@@ -98,11 +91,9 @@ export class UpdateJournalEntryComponent implements OnInit {
 
   createEmptyJournalEntryData() {
     this.journalEntryData = {
-      id: 0, // id will eventually need to be managed by the server-side code
       title: '',
       entry: '',
-      // TODO: fix (toISOString() method does not properly take into account time zones)
-      date: this.date.toISOString()
+      tags: [],
     }
   }
 

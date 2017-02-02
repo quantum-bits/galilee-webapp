@@ -51,7 +51,7 @@ export class JournalEntriesSearchResultsComponent implements OnInit {
         .subscribe(
           journalEntriesData=> {
             this.journalEntries = [];
-            for (let entry of journalEntriesData.journalEntries) {
+            for (let entry of journalEntriesData.entries) {
               this.journalEntries.push(new JournalEntry(entry));//need to use the constructor, etc., if want access to the methods
             }
           },
@@ -99,7 +99,7 @@ export class JournalEntriesSearchResultsComponent implements OnInit {
           journalEntriesData=> {
             //this.journalEntries = [];
             let newJournalEntries = [];
-            for (let entry of journalEntriesData.journalEntries) {
+            for (let entry of journalEntriesData.entries) {
               newJournalEntries.push(new JournalEntry(entry));
             }
             this.journalEntries = newJournalEntries.concat(this.journalEntries);
