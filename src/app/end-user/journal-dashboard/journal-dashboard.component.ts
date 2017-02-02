@@ -5,16 +5,9 @@ import {DeleteJournalEntryModalComponent} from '../delete-journal-entry-modal';
 
 import {JournalEntry} from '../../shared/models/journal-entry.model';
 import {JournalMetadata, JournalEntryQueryFilters} from '../../shared/interfaces/journal-entries.interface';
-
-import {CalendarEntries} from '../../shared/interfaces/calendar-entries.interface';
-
 import {JournalService} from '../../shared/services/journal.service';
 
-const DEFAULT_NUMBER_ENTRIES = 2; // default number of entries to show
-
-/*
- TODO: Reverse the order of Journal Entries...?  Newest should be at the top.
- */
+const ENTRIES_PER_LOAD = 3;
 
 @Component({
   selector: 'app-journal-dashboard',
@@ -27,13 +20,14 @@ export class JournalDashboardComponent implements OnInit {
 
   private journalEntries: Array<JournalEntry> = [];
   private journalMetadata: JournalMetadata = {
+    totalEntries: 0,
     mostUsedTags: [],
     allUsedTags: [],
     calendarJournalEntries: {}
   };
 
-  private startIndex: number = 0;
-  private maxEntriesToShow: number = DEFAULT_NUMBER_ENTRIES;
+  // Offset into the current list of journal entries.
+  private offset: number = 0;
 
   constructor(private journalService: JournalService,
               private router: Router) {
@@ -43,36 +37,40 @@ export class JournalDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.journalService.getJournalEntries(this.startIndex, DEFAULT_NUMBER_ENTRIES)
-      .subscribe(
-        journalEntries => {
-          this.journalEntries =
-            journalEntries.journalEntries.map(entry => new JournalEntry(entry));
-        },
-        error => console.log(error)
-      );
+    this.loadMoreEntries();
 
     this.journalService.getJournalMetadata()
       .subscribe(metadata => this.journalMetadata = metadata);
   }
 
-  /*
-   Protocol for fetching journal/post entries:
-   DEPRECATED
-   - component initially requests N entries; passes dateOldestEntry and dateNewestEntry as undefined (or doesn't pass them at all)
-   - assuming service has no cached data, service goes to API endpoint; API endpoint returns N entries with the newest 'date updated' (or 'date created'? I would think maybe we would want to see things if they were updated recently, so maybe go with 'updated'....) time stamps
-   - service uses Subject.next(journalEntry) to send N entries, one after the other, starting with the newest (which will be at the top of the displayed list)
-   - component subscribes to the service and receives the entries one at a time, constructs a list of the objects, etc., and displays them
-   - if the component wants more entries, it sends back a request for N more entries, and also sends a Date object with the ('created' or 'updated'?!?) date of the oldest and newest entries in its possession
-   - service goes to the API endpoint; API returns any newer entries (if such exist), any updated entries with date stamps newer than the oldest, and several older entries, for a total of N entries
-   - component looks at the ids and datestamps and interleaves/replaces the entries as appropriate so that the revised list is in the appropriate order
-   - service does the same thing, thereby keeping a set of entries that is up to date with what is in the component(?)
+  loadMoreEntries() {
+    this.journalService.getJournalEntries(this.offset, ENTRIES_PER_LOAD)
+      .subscribe(result => {
+        result.entries.map(entry => this.journalEntries.push(new JournalEntry(entry)));
+        this.offset += result.count;
+      })
+  }
 
-   Protocol for fetching with filters:
-   - ...?
+  haveMoreEntries() {
+    return (this.journalEntries.length < this.journalMetadata.totalEntries);
+  }
 
-   */
+/*
+ Protocol for fetching journal/post entries:
+ DEPRECATED
+ - component initially requests N entries; passes dateOldestEntry and dateNewestEntry as undefined (or doesn't pass them at all)
+ - assuming service has no cached data, service goes to API endpoint; API endpoint returns N entries with the newest 'date updated' (or 'date created'? I would think maybe we would want to see things if they were updated recently, so maybe go with 'updated'....) time stamps
+ - service uses Subject.next(journalEntry) to send N entries, one after the other, starting with the newest (which will be at the top of the displayed list)
+ - component subscribes to the service and receives the entries one at a time, constructs a list of the objects, etc., and displays them
+ - if the component wants more entries, it sends back a request for N more entries, and also sends a Date object with the ('created' or 'updated'?!?) date of the oldest and newest entries in its possession
+ - service goes to the API endpoint; API returns any newer entries (if such exist), any updated entries with date stamps newer than the oldest, and several older entries, for a total of N entries
+ - component looks at the ids and datestamps and interleaves/replaces the entries as appropriate so that the revised list is in the appropriate order
+ - service does the same thing, thereby keeping a set of entries that is up to date with what is in the component(?)
 
+ Protocol for fetching with filters:
+ - ...?
+
+ */
 
   launchDeleteEntryModal(entryID: number) {
     console.log(entryID);
@@ -111,32 +109,5 @@ export class JournalDashboardComponent implements OnInit {
 
   updateEntry(entryID: number) {
     this.router.navigate(['/end-user/journal-entry', entryID]);
-  }
-
-  moreEntriesMayExist() {
-    if (this.journalEntries.length === this.maxEntriesToShow) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  loadMoreEntries() {
-    if (this.moreEntriesMayExist()) {
-      this.maxEntriesToShow = this.maxEntriesToShow + DEFAULT_NUMBER_ENTRIES;
-      this.journalService.getJournalEntries(this.maxEntriesToShow - DEFAULT_NUMBER_ENTRIES, DEFAULT_NUMBER_ENTRIES)
-        .subscribe(journalEntriesData => {
-            let newJournalEntries = [];
-            for (let entry of journalEntriesData.journalEntries) {
-              newJournalEntries.push(new JournalEntry(entry));
-            }
-            this.journalEntries = newJournalEntries.concat(this.journalEntries);
-          },
-          error => {
-            console.log(error);
-            //this.modal.openModal();
-          }
-        );
-    }
   }
 }

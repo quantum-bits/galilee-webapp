@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col s8">
-    <h6>{{journalEntry.title}}</h6>
+    <h6>{{journalEntry.id}}&mdash;{{journalEntry.title}}</h6>
   </div>
   <div class="col s4 right-align">
     <!--
@@ -40,5 +40,5 @@
 <div class="chip" *ngFor="let tag of journalEntry.tags">
   {{tag}}
 </div>
-<div class="grey-text darken-3 right">{{journalEntry.date | amTimeAgo}}</div>
+<div class="grey-text darken-3 right">{{journalEntry.updatedAt | amTimeAgo}}</div>
 

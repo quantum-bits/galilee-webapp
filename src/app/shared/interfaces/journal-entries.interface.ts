@@ -1,16 +1,16 @@
 import {CalendarEntries} from './calendar-entries.interface';
 
 export interface JournalMetadata {
+  totalEntries: number,
   mostUsedTags: Array<string>,
   allUsedTags: Array<string>,
   calendarJournalEntries: CalendarEntries
 }
 
 export interface JournalEntries {
-  startIndex: number,
+  offset: number,
   count: number,
-  totalEntries: number,
-  journalEntries: IJournalEntry[]
+  entries: IJournalEntry[]
 }
 
 export interface IJournalEntry {
