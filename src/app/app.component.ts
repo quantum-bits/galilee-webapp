@@ -14,6 +14,7 @@ import {PostService} from './shared/services/post.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  //styleUrls: ['../materialize-src/sass/ghpages-materialize.scss','./app.component.css'],
   providers: [
     ReadingService,
     PracticeService,

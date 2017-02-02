@@ -7,8 +7,28 @@
 <div *ngIf="readingsData">
   <ul class="collection with-header">
     <li class="collection-header"><h5>Readings for {{dateString | amDateFormat: 'LL'}}</h5></li>
-    <li *ngFor="let reading of readingsData.readings" class="collection-item">
-      <span class="title"> {{reading.std_ref}} </span>
+    <li *ngFor="let reading of readingsData.readings; let i=index" class="collection-item">
+      <span class="title"> {{reading.std_ref}}</span>
+      <ul *ngIf="reading.applications.length" class="collection">
+        <li *ngFor="let application of reading.applications" class="collection-item">
+          {{application.practice.title}}
+          <p *ngFor="let step of application.steps" class="step">
+            {{step.seq}}. {{step.description}}
+          </p>
+
+        </li>
+
+      </ul>
+
+      <div *ngIf="!reading.applications.length">
+        <p></p>
+      </div>
+
+      <a class="waves-effect waves-light btn secondary-content" (click)="onAddPractice(i)">Add Practice</a>
+      <p>
+        <br>
+      </p>
+
     </li>
   </ul>
 </div>

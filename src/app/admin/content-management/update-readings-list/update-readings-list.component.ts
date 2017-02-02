@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import {ReadingsData} from '../../../shared/interfaces/readings-data.interface';
 
@@ -11,11 +11,16 @@ export class UpdateReadingsListComponent implements OnInit {
 
   @Input() dateString: string;
   @Input() readingsData: ReadingsData;
+  @Output() launchAddPracticeForm = new EventEmitter<number>();
 
   constructor() { }
 
   ngOnInit() {
 
+  }
+
+  onAddPractice(readingIndex: number){
+    this.launchAddPracticeForm.emit(readingIndex);
   }
 
 }
