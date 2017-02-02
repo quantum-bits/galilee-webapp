@@ -1,10 +1,10 @@
 export interface IReading {
   id: number;
-  osis_ref: string;
+  osisRef: string;
   passage?: any; // not sure what this is
-  reading_day_id: number;
+  readingDayId: number;
   seq: number;
-  std_ref: string;
+  stdRef: string;
   text: string;
   applications?: any;
 }

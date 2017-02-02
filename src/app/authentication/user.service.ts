@@ -57,9 +57,9 @@ export class UserService {
               private router: Router,
               private http: Http) {
     // Load up the current user if there's one in local storage.
-    let user_data: string = localStorage.getItem(CURRENT_USER_KEY);
-    if (user_data) {
-      let user: User = new User(JSON.parse(user_data));
+    let userData: string = localStorage.getItem(CURRENT_USER_KEY);
+    if (userData) {
+      let user: User = new User(JSON.parse(userData));
       this.setCurrentUser(user);
     }
   }
@@ -75,9 +75,7 @@ export class UserService {
           this.clearCurrentUser();
         }
       },
-      (error)=> {
-        this.announceAuthenticationFailure(JSON.parse(error._body).message);
-      });
+      error => this.announceAuthenticationFailure(JSON.parse(error._body).message));
   }
 
   announceAuthenticationFailure(message){
@@ -91,29 +89,29 @@ export class UserService {
     return this.updatePassword(user.id, 'reallygoodpassword');
   }
 
-  updateName(user_id: number, firstName: string, lastName: string) {
+  updateName(userId: number, firstName: string, lastName: string) {
     return this.authHttp
       .patch(`http://localhost:3000/users/name`, {firstName: firstName, lastName: lastName});
   }
 
-  updateEmail(user_id: number, email: string) {
+  updateEmail(userId: number, email: string) {
     return this.authHttp
       .patch(`http://localhost:3000/users/email`, {email: email});
   }
 
-  updatePassword(user_id: number, password: string) {
+  updatePassword(userId: number, password: string) {
     console.log('updating password: ', password);
     return this.authHttp
       .patch(`http://localhost:3000/users/password`, {password: password});
   }
 
 
-  signup(email, password, first_name, last_name) {
+  signup(email, password, firstName, lastName) {
     return this.http.post('http://localhost:3000/users', {
       email: email,
       password: password,
-      firstName: first_name,
-      lastName: last_name
+      firstName: firstName,
+      lastName: lastName
     });
   }
 

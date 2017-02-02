@@ -36,7 +36,7 @@ export class UpdateReadingFormComponent implements OnInit {
       };
     } else {
       readingFormData = {
-        osis: this.reading.osis_ref,
+        osis: this.reading.osisRef,
         seq: this.reading.seq
       };
     }

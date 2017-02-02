@@ -9,6 +9,7 @@ export interface JournalMetadata {
 export interface JournalEntries {
   startIndex: number,
   count: number,
+  totalEntries: number,
   journalEntries: IJournalEntry[]
 }
 

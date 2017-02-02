@@ -10,10 +10,7 @@ import {UserService} from '../../authentication/user.service';
 import {User} from '../models/user.model';
 
 import {
-  JournalEntries,
-  IJournalEntry,
-  JournalEntryQueryFilters,
-  JournalMetadata
+  JournalEntries, IJournalEntry, JournalEntryQueryFilters, JournalMetadata
 } from '../interfaces/journal-entries.interface';
 
 @Injectable()
@@ -59,9 +56,8 @@ export class JournalService {
   getAllUsedTags() {
     let user: User = this.userService.getCurrentUser();
     return this.authHttp
-        .get(`http://localhost:3000/tags`)
-        .map(resp => resp.json())
-        .map(tags => tags.map(tag => tag.text));
+      .get(`http://localhost:3000/tags`)
+      .map(resp => resp.json());
   }
 
   /**
@@ -71,8 +67,8 @@ export class JournalService {
    */
   getDailyQuestions(dateString: string): Observable<Array<string>> {
     return this.http
-        .get(`http://localhost:3000/daily/${dateString}/questions`)
-        .map(res => res.json());
+      .get(`http://localhost:3000/daily/${dateString}/questions`)
+      .map(res => res.json());
   }
 
   // Service message commands

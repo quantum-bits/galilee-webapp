@@ -130,7 +130,7 @@ export class ReadingsComponent implements OnInit {
     for (var reading of this.readingsData.readings){
       this.readingDescriptions.push(
         {
-          'description': this.readingsData.readings[loopIndex].std_ref,
+          'description': this.readingsData.readings[loopIndex].stdRef,
           'index': loopIndex
         }
       );

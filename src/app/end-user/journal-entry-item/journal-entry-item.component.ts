@@ -1,8 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {JournalService} from '../../shared/services/journal.service';
-
 import {JournalEntry} from '../../shared/models/journal-entry.model';
 
 const TRUNCATION_LIMIT = 25; //number of words in a journal entry after which to truncate
@@ -12,7 +11,7 @@ const TRUNCATION_LIMIT = 25; //number of words in a journal entry after which to
   templateUrl: './journal-entry-item.component.html',
   styleUrls: ['./journal-entry-item.component.css']
 })
-export class JournalEntryItemComponent implements OnInit {
+export class JournalEntryItemComponent {
 
   @Input() journalEntry: JournalEntry;
 
@@ -20,23 +19,20 @@ export class JournalEntryItemComponent implements OnInit {
   private allowTruncation: boolean = true;//allow truncation of text for this entry
 
   constructor(private journalService: JournalService,
-              private router: Router) { }
-
-  ngOnInit() {
+              private router: Router) {
   }
 
-  toggleAllowTruncation(){
+  toggleAllowTruncation() {
     this.allowTruncation = !this.allowTruncation;
   }
 
-  deleteEntry(){
+  deleteEntry() {
     this.journalService.announceDeletion(this.journalEntry.id);
   }
 
   /*
-  updateEntry(){
-    this.router.navigate(['/end-user/journal-entry', this.journalEntry.id]);
-  }
-  */
-
+   updateEntry(){
+   this.router.navigate(['/end-user/journal-entry', this.journalEntry.id]);
+   }
+   */
 }

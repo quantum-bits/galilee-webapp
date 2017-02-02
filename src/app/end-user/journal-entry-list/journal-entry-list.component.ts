@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {JournalEntry} from '../../shared/models/journal-entry.model';
 
 @Component({
@@ -8,9 +8,7 @@ import {JournalEntry} from '../../shared/models/journal-entry.model';
 })
 export class JournalEntryListComponent implements OnInit {
 
-  @Input() journalEntries: JournalEntry[];
-
-  constructor() { }
+  @Input() journalEntries: Array<JournalEntry>;
 
   ngOnInit() {
     console.log('inside oninit for journalentrylist comp');

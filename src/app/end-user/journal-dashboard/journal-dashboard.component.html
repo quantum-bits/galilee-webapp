@@ -7,14 +7,14 @@
           <app-mini-calendar
             [showWeek]="'true'"
             [selected]="'2017-01-11'"
-            [calendarJournalEntries]="calendarJournalEntries"
+            [calendarJournalEntries]="journalMetadata.calendarJournalEntries"
             (changeSelected)="daySelected($event)">
           </app-mini-calendar>
         </div>
         <div class="col s12">
           <ul class="collection with-header">
             <li class="collection-header"><h6>Most Used Tags</h6></li>
-            <li *ngFor="let tag of mostUsedTags"  class="collection-item">
+            <li *ngFor="let tag of journalMetadata.mostUsedTags"  class="collection-item">
               <a class="grey-text darken-3" (click)="tagSelected(tag)">{{tag}}</a>
             </li>
           </ul>

@@ -12,6 +12,7 @@ import {AuthenticationModule} from './authentication/authentication.module';
 import {DialogComponent} from './admin/temp/dialog.component';
 import {EndUserModule} from './end-user/end-user.module';
 import {SelfUpdateComponent} from './authentication/self-update';
+import {JWT_TOKEN_KEY} from './shared/constants';
 
 import {MaterializeModule} from "angular2-materialize";
 import {DatePickerModule} from 'ng2-datepicker';
@@ -25,7 +26,10 @@ const routes: Routes = [
 
 // TODO: Figure out why this is declared as it is (from the angular2-jwt docs).
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
-  return new AuthHttp(new AuthConfig(), http, options);
+  return new AuthHttp(new AuthConfig({
+    tokenName: JWT_TOKEN_KEY,
+    tokenGetter: (() => localStorage.getItem(JWT_TOKEN_KEY))
+  }), http, options);
 }
 
 @NgModule({

@@ -16,7 +16,7 @@ import {tokenNotExpired} from 'angular2-jwt';
 import {LoginData} from '../shared/interfaces/login-data.interface';
 import {User} from '../shared/models/user.model';
 
-const TOKEN_KEY: string = 'id_token';
+import {JWT_TOKEN_KEY} from '../shared/constants';
 
 @Injectable()
 export class AuthenticationService {
@@ -31,20 +31,20 @@ export class AuthenticationService {
       .map(response => {
         if (response.ok) {
           let loginData: LoginData = response.json();
-          localStorage.setItem(TOKEN_KEY, loginData[TOKEN_KEY]);
+          localStorage.setItem(JWT_TOKEN_KEY, loginData[JWT_TOKEN_KEY]);
           return new User(loginData.user);
         } else {
-          localStorage.removeItem(TOKEN_KEY);
+          localStorage.removeItem(JWT_TOKEN_KEY);
           return null;
         }
       });
   }
 
   isAuthenticated(): boolean {
-    return tokenNotExpired();
+    return tokenNotExpired(JWT_TOKEN_KEY);
   }
 
   revokeAuthentication(): void {
-    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(JWT_TOKEN_KEY);
   }
 }
