@@ -1,3 +1,9 @@
+<div class="modal"
+     materialize="modal"
+     [materializeParams]="[{dismissible: false}]"
+     [materializeActions]="modalActions">
+  <div class="modal-content">
+
 <div *ngIf="applicationForm">
 
   <div class="container">
@@ -147,12 +153,8 @@
   </div>
 </div>
 
-<!--
-<div class="input-field col s6">
-              <select [(ngModel)]="selectedOption" name="selectedOption" materialize="material_select" [materializeSelectOptions]="selectOptions">
-                <option value="" disabled selected>Choose your option</option>
-                <option *ngFor="let option of selectOptions" [value]="option.value">{{option.name}}</option>
-              </select>
-              <label>Materialize Select</label>
-            </div>
-            -->
+  </div>
+  <div class="modal-footer">
+    <a class="waves-effect waves-green btn-flat modal-action modal-close">Ok</a>
+  </div>
+</div>

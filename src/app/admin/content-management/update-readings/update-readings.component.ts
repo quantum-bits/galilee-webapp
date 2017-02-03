@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import * as moment from 'moment';
 
@@ -8,6 +8,7 @@ import {Application} from '../../../shared/interfaces/application.interface';
 import {ReadingService} from '../../../shared/services/reading.service';
 import {PracticeService} from '../../../shared/services/practice.service';
 
+import {UpdatePracticeFormComponent} from '../update-practice-form/update-practice-form.component';
 
 import {CalendarEntries} from '../../../shared/interfaces/calendar-entries.interface';
 
@@ -53,6 +54,8 @@ const PRACTICE_GENERAL_INFO = [
   styleUrls: ['./update-readings.component.css']
 })
 export class UpdateReadingsComponent implements OnInit {
+
+  @ViewChild('updatePractice') modal: UpdatePracticeFormComponent;
 
   private calendarReadings: CalendarEntries = null;
   private readingsData: ReadingsData = null;
@@ -159,6 +162,8 @@ export class UpdateReadingsComponent implements OnInit {
     this.application = null;
     this.readingID = this.readingsData.readings[readingIndex].id;
     this.addPracticeModeOn = true;
+    console.log(this.modal);
+    this.modal.openModal();
   }
 
   onAddPractice(success: boolean){

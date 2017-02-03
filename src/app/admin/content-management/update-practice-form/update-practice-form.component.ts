@@ -13,7 +13,10 @@ import {IPractice} from '../../../shared/interfaces/practice.interface';
 export class UpdatePracticeFormComponent implements OnInit {
   @Input() readingID: number; // this information if included in the application, if this is an update
   @Input() application: Application = null; //null if new; otherwise it comes in from the parent component
-  @Input() availablePractices: IPractice[]; //practices that have not yet been used for this application (not including the current one, if this is an update)
+  @Input() availablePractices: IPractice[] = []; //practices that have not yet been used for this application (not including the current one, if this is an update)
+
+  modalActions = new EventEmitter();
+
 
   @Output() submitSuccess = new EventEmitter<boolean>();
 
@@ -52,7 +55,7 @@ export class UpdatePracticeFormComponent implements OnInit {
 
   initializeForm(){
     let applicationFormData: any;
-    if (this.application === null){
+    if ((this.application === null)||(this.application === undefined)){
       applicationFormData = {
         practiceID: null
       };
@@ -110,5 +113,17 @@ export class UpdatePracticeFormComponent implements OnInit {
     let success: boolean = false;
     this.submitSuccess.next(success);
   }
+
+  openModal() {
+    this.modalActions.emit({action: "modal", params: ['open']});
+  }
+
+  closeModal() {
+    this.modalActions.emit({action: "modal", params: ['close']});
+  }
+
+
+
+
 
 }
