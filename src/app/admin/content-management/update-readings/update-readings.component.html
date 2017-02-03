@@ -53,14 +53,14 @@
         </div>
       </div>
 
-      <div *ngIf="addPracticeModeOn" class="row">
+      <!--<div *ngIf="addPracticeModeOn" class="row">
         <app-update-practice-form
           [readingID] = "readingID"
           [application] = "application"
           [availablePractices] = "availablePractices"
           (submitSuccess) = "onAddPractice($event)">
         </app-update-practice-form>
-      </div>
+     </div>-->
 
 
 
@@ -80,4 +80,12 @@
     </div>
   </div>
 </div>
+
+  <app-update-practice-form
+    #updatePractice
+    [readingID] = "readingID"
+    [application] = "application"
+    [availablePractices] = "availablePractices"
+    (submitSuccess) = "onAddPractice($event)">
+  </app-update-practice-form>
 

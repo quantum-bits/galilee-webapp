@@ -1,3 +1,9 @@
+<div class="modal"
+     materialize="modal"
+     [materializeParams]="[{dismissible: false}]"
+     [materializeActions]="modalActions">
+  <div class="modal-content">
+
 <div *ngIf="applicationForm">
 
   <div class="container">
@@ -17,55 +23,116 @@
               </span>
 
               <div class="row">
-                <div class="input-field col s12">
-                  <select
-                    materialize="material_select"
-                    [materializeSelectOptions]="selectOptions"
-                    formControlName="practiceID"
-                  >
-                    <option *ngIf="isNewApplication" value="" disabled selected>Choose a practice</option>
-                      <option *ngFor="let practice of availablePractices"
-                              [value]="practice.id">
-                        {{practice.title}}
-                      </option>
-                        <!--
-                        <option value="1">Option 1</option>
-                        <option value="2">Option 2</option>
-                        <option value="3">Option 3</option>
-                        -->
+                <div class="col s12">
+                  <ul class="collection with-header">
+                    <li class="collection-header"><span class="title">Practice</span></li>
+                    <li class="collection-item">
+                      <div class="row">
+                        <div class="input-field col s10 offset-s1">
+                          <select
+                            materialize="material_select"
+                            [materializeSelectOptions]="selectOptions"
+                            formControlName="practiceID"
+                          >
+                            <option *ngIf="isNewApplication" value="" disabled selected>Choose a practice</option>
+                            <option *ngFor="let practice of availablePractices"
+                                    [value]="practice.id"
+                            >{{practice.title}}</option>
+                          </select>
 
-                  </select>
-                  <label>Practice</label>
+                          <div *ngIf="applicationForm.controls.practiceID.errors && applicationForm.controls.practiceID.touched">                                <small class="warning">
+                            This field is required.
+                          </small>
+                          </div>
+
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+                <!-- https://scotch.io/tutorials/how-to-build-nested-model-driven-forms-in-angular-2 -->
+              <div class="row">
+                <div class="col s12">
+
+                  <div formArrayName="steps">
+
+                    <ul class="collection with-header">
+                      <li class="collection-header"><span class="title">Step(s)</span></li>
+                      <li *ngFor="let step of applicationForm.controls.steps.controls; let i=index" class="collection-item">
+                        <!-- step header, show remove button when more than one address available -->
+                        <div class="row">
+                          <div class="input-field col s12">
+                            <span>Step {{i + 1}}</span>
+                            <a *ngIf="applicationForm.controls.steps.controls.length > 1"
+                               href="javascript:void(0)"
+                               (click)="removeStep(i)"
+                               class="grey-text text-darken-2 right">
+                              <i class="material-icons">close</i>
+                            </a>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <!-- Angular assigns array index as group name by default 0, 1, 2, ... -->
+                          <div [formGroupName]="i" class="col s10 offset-s1">
+                            <!--description-->
+                            <div class="input-field">
+                              <label for="description">Description</label>
+                              <textarea
+                                class="materialize-textarea"
+                                [input-wake-up]="'description'"
+                                [class.warning-background]="applicationForm.controls.steps.controls[i].controls.description.errors && applicationForm.controls.steps.controls[i].controls.description.touched"
+                                id="description"
+                                type="text"
+                                formControlName="description">
+                              </textarea>
+                            </div>
+                            <div *ngIf="applicationForm.controls.steps.controls[i].controls.description.errors && applicationForm.controls.steps.controls[i].controls.description.touched">                                <small class="warning">
+                                This field is required.
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col s12">
+                  <a href="javascript:void(0)" (click)="addStep()"
+                     class="grey-text text-darken-2 right"> Add another step +
+                  </a>
                 </div>
 
-                <!--
-                <div class="row">
-                  <div class="input-field col s12">
-                    <i class="material-icons prefix">mode_edit</i>
-                    <label for="question">Question</label>
-                    <input
-                      [input-wake-up]="'question'"
-                      [class.warning-background] = "questionForm.controls.question.errors && questionForm.controls.question.touched"
-                      id="question"
-                      type="text"
-                      formControlName="question">
-                  </div>
-                  <div *ngIf="questionForm.controls.question.errors && questionForm.controls.question.touched">
-                    <small class="warning">
-                      This field is required.
-                    </small>
-                  </div>
-                </div>
-                -->
               </div>
             </div>
+              <!--
+              <div class="row">
+                <div class="input-field col s12">
+                  <i class="material-icons prefix">mode_edit</i>
+                  <label for="question">Question</label>
+                  <input
+                    [input-wake-up]="'question'"
+                    [class.warning-background] = "questionForm.controls.question.errors && questionForm.controls.question.touched"
+                    id="question"
+                    type="text"
+                    formControlName="question">
+                </div>
+                <div *ngIf="questionForm.controls.question.errors && questionForm.controls.question.touched">
+                  <small class="warning">
+                    This field is required.
+                  </small>
+                </div>
+              </div>
+              -->
+
             <div class="card-action">
               <button
                 class="waves-effect waves-light btn"
                 type="submit"
                 [class.disabled]="!applicationForm.valid"
                 [disabled]="!applicationForm.valid"
-              >Submit</button>
+              >Submit
+              </button>
 
               <!--[class.disabled]="!applicationForm.valid"
                 [disabled]="!applicationForm.valid"
@@ -75,9 +142,9 @@
                 class="waves-effect waves-light btn right"
                 type="button"
                 (click)="onCancel()"
-              >Cancel</button>
+              >Cancel
+              </button>
             </div>
-
 
           </div>
         </div>
@@ -86,12 +153,8 @@
   </div>
 </div>
 
-<!--
-<div class="input-field col s6">
-              <select [(ngModel)]="selectedOption" name="selectedOption" materialize="material_select" [materializeSelectOptions]="selectOptions">
-                <option value="" disabled selected>Choose your option</option>
-                <option *ngFor="let option of selectOptions" [value]="option.value">{{option.name}}</option>
-              </select>
-              <label>Materialize Select</label>
-            </div>
-            -->
+  </div>
+  <div class="modal-footer">
+    <a class="waves-effect waves-green btn-flat modal-action modal-close">Ok</a>
+  </div>
+</div>

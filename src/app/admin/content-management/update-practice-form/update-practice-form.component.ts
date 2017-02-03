@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 
 import {Application} from '../../../shared/interfaces/application.interface';
@@ -13,7 +13,10 @@ import {IPractice} from '../../../shared/interfaces/practice.interface';
 export class UpdatePracticeFormComponent implements OnInit {
   @Input() readingID: number; // this information if included in the application, if this is an update
   @Input() application: Application = null; //null if new; otherwise it comes in from the parent component
-  @Input() availablePractices: IPractice[]; //practices that have not yet been used for this application (not including the current one, if this is an update)
+  @Input() availablePractices: IPractice[] = []; //practices that have not yet been used for this application (not including the current one, if this is an update)
+
+  modalActions = new EventEmitter();
+
 
   @Output() submitSuccess = new EventEmitter<boolean>();
 
@@ -52,7 +55,7 @@ export class UpdatePracticeFormComponent implements OnInit {
 
   initializeForm(){
     let applicationFormData: any;
-    if (this.application === null){
+    if ((this.application === null)||(this.application === undefined)){
       applicationFormData = {
         practiceID: null
       };
@@ -63,11 +66,33 @@ export class UpdatePracticeFormComponent implements OnInit {
     }
 
     this.applicationForm = this.formBuilder.group({
-      practiceID: [applicationFormData.practiceID, [<any>Validators.required]]//,
-      //seq: [applicationFormData.seq, Validators.compose([<any>Validators.required, this.integerValidator])]
+      practiceID: [applicationFormData.practiceID, [<any>Validators.required]],
+      steps: this.formBuilder.array([
+        this.initStep(),
+      ])
     });
     console.log(this.applicationForm);
   }
+
+  initStep() {
+    // initialize our address
+    return this.formBuilder.group({
+      description: ['', Validators.required]
+    });
+  }
+
+  addStep() {
+    // add address to the list
+    const control = <FormArray>this.applicationForm.controls['steps'];
+    control.push(this.initStep());
+  }
+
+  removeStep(i: number) {
+    // remove address from the list
+    const control = <FormArray>this.applicationForm.controls['steps'];
+    control.removeAt(i);
+  }
+
 
   integerValidator(control) {
     //see: http://stackoverflow.com/questions/34072092/generic-mail-validator-in-angular2
@@ -88,6 +113,15 @@ export class UpdatePracticeFormComponent implements OnInit {
     let success: boolean = false;
     this.submitSuccess.next(success);
   }
+
+  openModal() {
+    this.modalActions.emit({action: "modal", params: ['open']});
+  }
+
+  closeModal() {
+    this.modalActions.emit({action: "modal", params: ['close']});
+  }
+
 
 
 
