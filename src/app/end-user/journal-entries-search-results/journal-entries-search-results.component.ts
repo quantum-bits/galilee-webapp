@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import {DeleteJournalEntryModalComponent} from '../delete-journal-entry-modal';
 
 import {JournalEntry} from '../../shared/models/journal-entry.model';
-import {JournalEntries, JournalEntryQueryFilters} from '../../shared/interfaces/journal-entries.interface';
+import {JournalEntries, JournalEntryFilter} from '../../shared/interfaces/journal-entries.interface';
 import {JournalService} from '../../shared/services/journal.service';
 
 const DEFAULT_NUMBER_ENTRIES = 2; // default number of entries to show
@@ -26,7 +26,7 @@ export class JournalEntriesSearchResultsComponent implements OnInit {
   private startIndex: number = 0;
   //private count: number = DEFAULT_NUMBER_ENTRIES;
   private maxEntriesToShow: number = DEFAULT_NUMBER_ENTRIES;
-  private searchParams: JournalEntryQueryFilters = {};
+  private searchParams: JournalEntryFilter = {};
 
   constructor(
     private route: ActivatedRoute,

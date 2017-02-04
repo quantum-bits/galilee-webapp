@@ -3,15 +3,14 @@ import {Http} from '@angular/http';
 
 import {Observable} from 'rxjs/Observable';
 import {Subject}    from 'rxjs/Subject';
+import * as assert from 'assert';
 
 import {AuthHttp} from 'angular2-jwt';
 
 import {UserService} from '../../authentication/user.service';
-import {User} from '../models/user.model';
-
-import {
-  JournalEntries, IJournalEntry, JournalEntryQueryFilters, JournalMetadata
-} from '../interfaces/journal-entries.interface';
+import {JournalEntries, JournalEntryFilter, JournalMetadata} from '../interfaces/journal-entries.interface';
+import {JournalEntry} from '../models/journal-entry.model';
+import {Tag} from "../interfaces/tag.interface";
 
 @Injectable()
 export class JournalService {
@@ -26,7 +25,7 @@ export class JournalService {
               private authHttp: AuthHttp) {
   }
 
-  getJournalEntries(startIndex: number, count: number, filter?: JournalEntryQueryFilters): Observable<JournalEntries> {
+  getJournalEntries(startIndex: number, count: number, filter?: JournalEntryFilter): Observable<JournalEntries> {
     return this.authHttp
       .get(`http://localhost:3000/entries?offset=${startIndex}&limit=${count}`)
       .map(resp => resp.json());
@@ -41,22 +40,20 @@ export class JournalService {
   /**
    * Fetch a single journal entry by ID.
    * @param entryId
-   * @returns {Observable<IJournalEntry>}
+   * @returns {Observable<JournalEntry>}
    */
-  getJournalEntry(entryId: number): Observable<IJournalEntry> {
+  getJournalEntry(entryId: number): Observable<JournalEntry> {
     return this.authHttp
       .get(`http://localhost:3000/entries/${entryId}`)
-      .map(resp => resp.json());
+      .map(resp => new JournalEntry(resp.json()));
   }
 
   /**
    * Get all tags in use by the current user.
-   * @returns {Observable<Array<string>>}
    */
-  getAllUsedTags() {
-    let user: User = this.userService.getCurrentUser();
+  getUserTags(): Observable<Array<Tag>> {
     return this.authHttp
-      .get(`http://localhost:3000/tags`)
+      .get('http://localhost:3000/tags')
       .map(resp => resp.json());
   }
 
@@ -68,7 +65,7 @@ export class JournalService {
   getDailyQuestions(dateString: string): Observable<Array<string>> {
     return this.http
       .get(`http://localhost:3000/daily/${dateString}/questions`)
-      .map(res => res.json());
+      .map(resp => resp.json());
   }
 
   // Service message commands
@@ -76,9 +73,28 @@ export class JournalService {
     this.journalEntryToBeDeletedSource.next(journalEntryID);
   }
 
-  saveEntry(/* data */) {
-    // save the journal entry data
-    // return an observable, presumably....
-    return true;
+  deleteEntry(entryId: number) {
+    return this.authHttp
+      .delete(`http://localhost:3000/entries/${entryId}`)
+      .map(resp => resp.json);
+  }
+
+  saveEntry(journalEntry: JournalEntry, isNewEntry: boolean) {
+    const payload = {
+      title: journalEntry.title,
+      entry: journalEntry.entry,
+      tags: journalEntry.tags
+    };
+
+    if (isNewEntry) {
+      return this.authHttp
+        .post('http://localhost:3000/entries', payload)
+        .map(resp => resp.json());
+    } else {
+      assert(journalEntry.id, 'Journal entry has no id');
+      return this.authHttp
+        .patch(`http://localhost:3000/entries/${journalEntry.id}`, payload)
+        .map(resp => resp.json());
+    }
   }
 }

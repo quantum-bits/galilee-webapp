@@ -15,5 +15,4 @@ export class QuestionListComponent {
   goToJournal() {
     this.openJournal.emit()
   }
-
 }

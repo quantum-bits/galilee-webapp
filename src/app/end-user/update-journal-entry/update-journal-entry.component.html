@@ -19,6 +19,7 @@
             <div class="card-content">
               <div *ngIf="isNewEntry ? 'New Entry' : 'Update Entry'" class="card-title"></div>
 
+              <!-- Title -->
               <div class="row">
                 <div class="input-field col s12">
                   <label for="title">Title</label>
@@ -36,6 +37,7 @@
                 </div>
               </div>
 
+              <!-- Entry -->
               <div class="row">
                 <div class="input-field col s12">
                   <label for="entry">Entry</label>
@@ -55,40 +57,14 @@
                 </div>
               </div>
 
-              <div class="row">
-                <div class="input-field col s12">
-                  <div class="chip" *ngFor="let tag of tagList; let j=index">
-                    <a class="grey-text" (click)="deleteTag(j)">
-                      {{tag}}
-                      <i class="material-icons lr-arrow">close</i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col s12 card-title">
-                  Add Tag(s):
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col s6">
-                  <div>
-                    <input
-                      #tagSelect
-                      formControlName="newTag"
-                      placeholder="Add new tag (press enter)"
-                      (keyup)="onKey($event)">
-                  </div>
-                </div>
-                <div class="col s6">
-                  <!-- Dropdown Trigger -->
-                  <a materialize="dropdown" class='dropdown-button btn' data-activates='tagDropdown'>Tags</a>
-                </div>
-              </div>
+              <!-- Tag Picker -->
+              <tag-picker [allTags]="userTagList"
+                          [selectedTags]="journalEntry.tags || []"
+                          (onUpdate)="setSelectedTags($event)">
+              </tag-picker>
             </div>
 
+            <!-- Questions -->
             <div class="row center-align">
               <div *ngIf="!questions">
                 <!-- use type="button" instead of type="submit", or else the Enter key in a text field can submit the form by accident -->
@@ -101,6 +77,7 @@
               </div>
             </div>
 
+            <!-- Actions -->
             <div class="card-action">
               <!-- use type="button" instead of type="submit", or else the Enter key in a text field can submit the form by accident -->
               <span>
@@ -136,15 +113,3 @@
     </div>
   </div>
 </div>
-
-<div *ngIf="allUsedTags">
-  <!-- Dropdown Structure -->
-  <ul id='tagDropdown' class='dropdown-content'>
-    <li *ngFor="let tag of allUsedTags; let i=index">
-      <a class="grey-text" (click)="addTagByIndex(i)">{{tag}}</a>
-    </li>
-  </ul>
-</div>
-
-
-

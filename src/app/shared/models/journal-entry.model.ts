@@ -1,29 +1,20 @@
-import {IJournalEntry} from '../interfaces/journal-entries.interface';
+import {Tag} from '../interfaces/tag.interface';
 
-export class JournalEntry implements IJournalEntry {
-
+export class JournalEntry  {
   id: number;
   title: string;
   entry: string;
-  tags: Array<string>;
+  tags: Array<Tag>;
   createdAt: string;
   updatedAt: string;
-  RCL_date?: string; // this property may be "undefined" for some of the entries (not required for IJournalEntry interface)
 
   constructor(obj) {
-    this.id = obj.id;
-    this.title = obj.title;
-    this.entry = obj.entry;
-    this.tags = obj.tags;
-    this.createdAt = obj.createdAt;
-    this.updatedAt = obj.updatedAt;
-    if ("RCL_date" in obj) {
-      this.RCL_date = obj.RCL_date;
-    };
-  }
-
-  hasTags() {
-    //return true;
+      this.id = obj.id;
+      this.title = obj.title;
+      this.entry = obj.entry;
+      this.tags = obj.tags || [];
+      this.createdAt = obj.createdAt;
+      this.updatedAt = obj.updatedAt;
   }
 
   entryIsLong(numWords: number): boolean {
