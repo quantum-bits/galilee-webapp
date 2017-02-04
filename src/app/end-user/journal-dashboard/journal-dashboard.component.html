@@ -6,7 +6,7 @@
         <div class="col s12">
           <app-mini-calendar
             [showWeek]="'true'"
-            [selected]="'2017-01-11'"
+            [selected]="dateStringCalendarInit"
             [calendarJournalEntries]="journalMetadata.calendarJournalEntries"
             (changeSelected)="daySelected($event)">
           </app-mini-calendar>

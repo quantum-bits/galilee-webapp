@@ -1,6 +1,8 @@
-import {Component, OnInit, EventEmitter} from '@angular/core';
+import {Component, OnInit, OnDestroy, EventEmitter} from '@angular/core';
 import {Location} from '@angular/common';
 import {Observable} from 'rxjs/Observable';
+
+import { Subscription }   from 'rxjs/Subscription';
 
 import {UpdatePracticeItemBindingService} from '../update-practice-item-binding.service';
 import {UpdateResourceItemBindingService} from '../update-resource-item-binding.service';
@@ -18,7 +20,7 @@ import {ResourceCollection} from '../../../shared/interfaces/resource-collection
   styleUrls: ['./edit-reading-resources.component.css'],
   providers: [ReadingService, UpdatePracticeItemBindingService, UpdateResourceItemBindingService]
 })
-export class EditReadingResourcesComponent implements OnInit {
+export class EditReadingResourcesComponent implements OnInit, OnDestroy {
   /*
    NOTE: When we start storing the practice and resource information in the database,
    we will need to update the onUpdatePractice() and onUpdateResourceCollection()
@@ -33,6 +35,10 @@ export class EditReadingResourcesComponent implements OnInit {
   currentReading: any;//reading being shown in current tab
   private changeTracker = 0;//this is a hack to get ngOnChanges to fire when the practices are updated...it doesn't fire if something deep in a nested object changes
 
+  private practiceUpdatedSubscription: Subscription;
+  private resourceUpdatedSubscription: Subscription;
+  private practiceDeletedSubscription: Subscription;
+
   constructor(//private _location:Location,
     //private practiceService:PracticeService,
     private readingService: ReadingService,
@@ -40,15 +46,15 @@ export class EditReadingResourcesComponent implements OnInit {
     private updateResourceItemBindingService: UpdateResourceItemBindingService) {
     console.log('inside edit-reading-resources constructor');
 
-    updatePracticeItemBindingService.practiceUpdated$.subscribe(
+    this.practiceUpdatedSubscription = updatePracticeItemBindingService.practiceUpdated$.subscribe(
       practiceWithAdvice => {
         this.onUpdatePractice(practiceWithAdvice);
       });
-    updatePracticeItemBindingService.practiceDeleted$.subscribe(
+    this.practiceDeletedSubscription = updatePracticeItemBindingService.practiceDeleted$.subscribe(
       practiceID => {
         this.onDeletePractice(practiceID);
       });
-    updateResourceItemBindingService.resourceUpdated$.subscribe(
+    this.resourceUpdatedSubscription = updateResourceItemBindingService.resourceUpdated$.subscribe(
       resourceCollection => {
         this.onUpdateResourceCollection(resourceCollection);
       });
@@ -162,4 +168,12 @@ export class EditReadingResourcesComponent implements OnInit {
     console.log('here is the new version of current reading:');
     console.log(this.currentReading);
   }
+
+  ngOnDestroy(){
+    // prevent memory leak when component destroyed
+    this.practiceUpdatedSubscription.unsubscribe();
+    this.resourceUpdatedSubscription.unsubscribe();
+    this.practiceDeletedSubscription.unsubscribe();
+  }
+
 }

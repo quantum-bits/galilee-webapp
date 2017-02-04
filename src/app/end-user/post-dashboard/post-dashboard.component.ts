@@ -1,6 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 
 import {Router, NavigationExtras} from '@angular/router';
+
+import { Subscription }   from 'rxjs/Subscription';
 
 import * as moment from 'moment';
 
@@ -19,7 +21,7 @@ const DEFAULT_NUMBER_ENTRIES = 2; // default number of entries to show
   templateUrl: './post-dashboard.component.html',
   styleUrls: ['./post-dashboard.component.css']
 })
-export class PostDashboardComponent implements OnInit {
+export class PostDashboardComponent implements OnInit, OnDestroy {
 
   @ViewChild('deletePostModal') modal: DeleteJournalEntryModalComponent;
 
@@ -29,9 +31,11 @@ export class PostDashboardComponent implements OnInit {
   private startIndex: number = 0;
   private maxNumberPosts: number = DEFAULT_NUMBER_ENTRIES;
 
+  private deletionSubscription: Subscription;
+
   constructor(private postService: PostService,
               private router: Router) {
-      postService.postToBeDeleted$.subscribe(
+    this.deletionSubscription = postService.postToBeDeleted$.subscribe(
       postID => {
         this.launchDeletePostModal(postID);
       });
@@ -70,6 +74,12 @@ export class PostDashboardComponent implements OnInit {
   }
 
 
-
+  ngOnDestroy() {
+    // prevent memory leak when component destroyed;
+    // this fixes a bug in which a modal was being instantiated multiple times,
+    // instead of just once (there were multiple subscriptions, and they each fired off a modal)
+    console.log('deleting subscription!');
+    this.deletionSubscription.unsubscribe();
+  }
 
 }

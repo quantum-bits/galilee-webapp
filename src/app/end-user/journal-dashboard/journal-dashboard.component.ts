@@ -1,11 +1,15 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import {Router, NavigationExtras} from '@angular/router';
+
+import { Subscription }   from 'rxjs/Subscription';
 
 import {DeleteJournalEntryModalComponent} from '../delete-journal-entry-modal';
 
 import {JournalEntry} from '../../shared/models/journal-entry.model';
 import {JournalMetadata, JournalEntryFilter} from '../../shared/interfaces/journal-entries.interface';
 import {JournalService} from '../../shared/services/journal.service';
+
+import * as moment from 'moment';
 
 const ENTRIES_PER_LOAD = 3;
 
@@ -14,7 +18,7 @@ const ENTRIES_PER_LOAD = 3;
   templateUrl: './journal-dashboard.component.html',
   styleUrls: ['./journal-dashboard.component.css']
 })
-export class JournalDashboardComponent implements OnInit {
+export class JournalDashboardComponent implements OnInit, OnDestroy {
 
   @ViewChild('deleteJournalEntryModal') modal: DeleteJournalEntryModalComponent;
 
@@ -28,10 +32,14 @@ export class JournalDashboardComponent implements OnInit {
 
   // Offset into the current list of journal entries.
   private offset: number = 0;
+  private dateStringCalendarInit = moment(new Date()).format('YYYY-MM-DD');
+
+  private deletionSubscription: Subscription;
 
   constructor(private journalService: JournalService,
               private router: Router) {
-    journalService.journalEntryToBeDeleted$.subscribe(journalEntryID => {
+    this.deletionSubscription = journalService.journalEntryToBeDeleted$.subscribe(journalEntryID => {
+      console.log('subscription received for deletion');
       this.launchDeleteEntryModal(journalEntryID);
     });
   }
@@ -73,6 +81,7 @@ export class JournalDashboardComponent implements OnInit {
    */
 
   launchDeleteEntryModal(entryId: number) {
+    console.log('LAUNCHING delete entry modal....');
     this.modal.openModal(entryId);
   }
 
@@ -115,4 +124,13 @@ export class JournalDashboardComponent implements OnInit {
   updateEntry(entryID: number) {
     this.router.navigate(['/end-user/journal-entry', entryID]);
   }
+
+  ngOnDestroy() {
+    // prevent memory leak when component destroyed;
+    // this fixes a bug in which a modal was being instantiated multiple times,
+    // instead of just once (there were multiple subscriptions, and they each fired off a modal)
+    console.log('deleting subscription!');
+    this.deletionSubscription.unsubscribe();
+  }
+
 }
