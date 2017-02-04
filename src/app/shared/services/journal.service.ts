@@ -73,6 +73,12 @@ export class JournalService {
     this.journalEntryToBeDeletedSource.next(journalEntryID);
   }
 
+  deleteEntry(entryId: number) {
+    return this.authHttp
+      .delete(`http://localhost:3000/entries/${entryId}`)
+      .map(resp => resp.json);
+  }
+
   saveEntry(journalEntry: JournalEntry, isNewEntry: boolean) {
     const payload = {
       title: journalEntry.title,

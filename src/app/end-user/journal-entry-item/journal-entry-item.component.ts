@@ -29,10 +29,4 @@ export class JournalEntryItemComponent {
   deleteEntry() {
     this.journalService.announceDeletion(this.journalEntry.id);
   }
-
-  /*
-   updateEntry(){
-   this.router.navigate(['/end-user/journal-entry', this.journalEntry.id]);
-   }
-   */
 }

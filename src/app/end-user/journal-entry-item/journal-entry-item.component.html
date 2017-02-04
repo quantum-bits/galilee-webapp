@@ -11,11 +11,11 @@
       <i class="material-icons grey-text darken-2">delete</i>
     </a>
     <a [routerLink]="['/end-user/journal-entry', journalEntry.id]">
-      <!--(click)="updateEntry(journalEntry.id)">-->
       <i class="material-icons grey-text darken-2">mode_edit</i>
     </a>
   </div>
 </div>
+
 <div *ngIf="allowTruncation">
   <div>
     {{journalEntry.entry | truncate : truncationLimit}}
@@ -26,6 +26,7 @@
     <a class="grey-text darken-3" (click)="toggleAllowTruncation()"> Read More... </a>
   </div>
 </div>
+
 <div *ngIf="!allowTruncation">
   <div>
     {{journalEntry.entry }}
@@ -36,9 +37,12 @@
     <a class="grey-text darken-3" (click)="toggleAllowTruncation()"> Read Less </a>
   </div>
 </div>
+
 <br>
+
 <div class="chip" *ngFor="let tag of journalEntry.tags">
   {{tag.label}}
 </div>
+
 <div class="grey-text darken-3 right">{{journalEntry.updatedAt | amTimeAgo}}</div>
 
