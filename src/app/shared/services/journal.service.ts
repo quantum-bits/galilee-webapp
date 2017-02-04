@@ -7,10 +7,9 @@ import {Subject}    from 'rxjs/Subject';
 import {AuthHttp} from 'angular2-jwt';
 
 import {UserService} from '../../authentication/user.service';
-import {User} from '../models/user.model';
-
 import {JournalEntries, JournalEntryFilter, JournalMetadata} from '../interfaces/journal-entries.interface';
 import {JournalEntry} from '../models/journal-entry.model';
+import {Tag} from "../interfaces/tag.interface";
 
 @Injectable()
 export class JournalService {
@@ -50,12 +49,10 @@ export class JournalService {
 
   /**
    * Get all tags in use by the current user.
-   * @returns {Observable<Array<string>>}
    */
-  getAllUsedTags() {
-    let user: User = this.userService.getCurrentUser();
+  getUserTags(): Observable<Array<Tag>> {
     return this.authHttp
-      .get(`http://localhost:3000/tags`)
+      .get('http://localhost:3000/tags')
       .map(resp => resp.json());
   }
 
@@ -67,7 +64,7 @@ export class JournalService {
   getDailyQuestions(dateString: string): Observable<Array<string>> {
     return this.http
       .get(`http://localhost:3000/daily/${dateString}/questions`)
-      .map(res => res.json());
+      .map(resp => resp.json());
   }
 
   // Service message commands
@@ -75,9 +72,9 @@ export class JournalService {
     this.journalEntryToBeDeletedSource.next(journalEntryID);
   }
 
-  saveEntry(/* data */) {
-    // save the journal entry data
-    // return an observable, presumably....
-    return true;
+  saveEntry(journalEntry: JournalEntry) {
+    return this.authHttp
+      .post('http://localhost:3000/entries', journalEntry)
+      .map(resp => resp.json());
   }
 }

@@ -1,5 +1,5 @@
-export interface UserTag {
-  userTagId: number,
+export interface Tag {
+  id: number,
   label:string,
-  uses: number
 }
+

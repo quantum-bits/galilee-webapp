@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="input-field col s12">
+    <div class="chip" *ngFor="let tag of selectedTags; let i = index">
+      <a class="grey-text" (click)="deselectTag(i)">
+        {{tag.label}}
+        <i class="material-icons lr-arrow">close</i>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col s12 card-title">
+    Add Tag(s):
+  </div>
+</div>
+
+<div class="row">
+  <div class="col s6">
+    <div>
+      <input #newtag
+             placeholder="Add new tag (press enter)"
+             (keyup.enter)="onNewTag(newtag.value); newtag.value=''">
+    </div>
+  </div>
+  <div class="col s6">
+    <a materialize="dropdown" class='dropdown-button btn' data-activates='tagDropdown'>Tags</a>
+  </div>
+</div>
+
+<ul id='tagDropdown' class='dropdown-content'>
+  <li *ngFor="let tag of deselectedTags; let i = index">
+    <a class="grey-text" (click)="selectTag(i)">
+      {{tag.label}}
+    </a>
+  </li>
+</ul>

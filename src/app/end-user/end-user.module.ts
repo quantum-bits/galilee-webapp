@@ -35,10 +35,11 @@ import {SharedModule} from '../shared/shared.module';
 import {SimpleModalComponent} from './readings/simple-modal.component';
 import {TruncatePipe} from '../shared/pipes/truncate.pipe';
 import {UpdateJournalEntryComponent} from './update-journal-entry/update-journal-entry.component';
-import { UpdatePostComponent } from './update-post/update-post.component';
-import { PostDashboardComponent } from './post-dashboard/post-dashboard.component';
-import { InfoGalileeComponent } from './info-galilee/info-galilee.component';
-import { InfoRCLComponent } from './info-rcl/info-rcl.component';
+import {UpdatePostComponent} from './update-post/update-post.component';
+import {PostDashboardComponent} from './post-dashboard/post-dashboard.component';
+import {InfoGalileeComponent} from './info-galilee/info-galilee.component';
+import {InfoRCLComponent} from './info-rcl/info-rcl.component';
+import {TagPickerComponent} from './tag-picker/tag-picker.component';
 
 const routes: Routes = [
   {
@@ -165,7 +166,8 @@ const routes: Routes = [
     UpdatePostComponent,
     PostDashboardComponent,
     InfoGalileeComponent,
-    InfoRCLComponent
+    InfoRCLComponent,
+    TagPickerComponent
   ]
 })
 export class EndUserModule {

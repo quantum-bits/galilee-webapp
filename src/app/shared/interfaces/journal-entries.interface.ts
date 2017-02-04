@@ -1,11 +1,11 @@
 import {CalendarEntries} from './calendar-entries.interface';
 import {JournalEntry} from '../models/journal-entry.model';
-import {UserTag} from '../interfaces/tag.interface';
+import {Tag} from '../interfaces/tag.interface';
 
 export interface JournalMetadata {
   totalEntries: number,
-  mostUsedTags: Array<UserTag>,
-  allUsedTags: Array<UserTag>,
+  mostUsedTags: Array<Tag>,
+  allUsedTags: Array<Tag>,
   calendarJournalEntries: CalendarEntries
 }
 
