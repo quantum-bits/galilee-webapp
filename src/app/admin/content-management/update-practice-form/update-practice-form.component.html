@@ -32,7 +32,7 @@
                               <select
                                 materialize="material_select"
                                 [materializeSelectOptions]="selectOptions"
-                                formControlName="practiceID"
+                                formControlName="practiceTypeId"
                               >
                                 <option *ngIf="isNewApplication" value="" disabled selected>Choose a practice</option>
                                 <option *ngFor="let practice of availablePractices"
@@ -40,7 +40,7 @@
                                 >{{practice.title}}</option>
                               </select>
 
-                              <div *ngIf="applicationForm.controls.practiceID.errors && applicationForm.controls.practiceID.touched">                                <small class="warning">
+                              <div *ngIf="applicationForm.controls.practiceTypeId.errors && applicationForm.controls.practiceTypeId.touched">                                <small class="warning">
                                 This field is required.
                               </small>
                               </div>
@@ -77,12 +77,13 @@
                               <div [formGroupName]="i" class="col s10 offset-s1">
                                 <!--description-->
                                 <div class="input-field">
-                                  <label for="description">Description</label>
+                                  <label [attr.for]="'description'+i">Description</label>
                                   <textarea
                                     class="materialize-textarea"
-                                    [input-wake-up]="'description'"
+                                    [input-wake-up]="'description'+i"
+                                    [textarea-autoresize]="'description'+i"
                                     [class.warning-background]="applicationForm.controls.steps.controls[i].controls.description.errors && applicationForm.controls.steps.controls[i].controls.description.touched"
-                                    id="description"
+                                    id="description{{i}}"
                                     type="text"
                                     formControlName="description">
                                   </textarea>
@@ -139,9 +140,8 @@
                     -->
 
                   <button
-                    class="waves-effect waves-light btn right"
+                    class="waves-effect waves-light btn right modal-action modal-close"
                     type="button"
-                    (click)="onCancel()"
                   >Cancel
                   </button>
                 </div>
@@ -153,8 +153,5 @@
       </div>
     </div>
 
-  </div>
-  <div class="modal-footer">
-    <a class="waves-effect waves-green btn-flat modal-action modal-close">Ok</a>
   </div>
 </div>

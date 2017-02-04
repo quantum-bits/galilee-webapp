@@ -1,8 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 
+import {IReading} from '../../../shared/interfaces/readings-data.interface';
 
 import {Application} from '../../../shared/interfaces/application.interface';
+import {ApplicationFormData} from '../../../shared/interfaces/application-form-data.interface';
+
 import {IPractice} from '../../../shared/interfaces/practice.interface';
 
 @Component({
@@ -10,28 +13,15 @@ import {IPractice} from '../../../shared/interfaces/practice.interface';
   templateUrl: './update-practice-form.component.html',
   styleUrls: ['./update-practice-form.component.css']
 })
-export class UpdatePracticeFormComponent implements OnInit {
-  @Input() readingID: number; // this information if included in the application, if this is an update
+export class UpdatePracticeFormComponent implements OnInit, OnChanges {
+  @Input() readingId: number; // this information if included in the application, if this is an update
   @Input() application: Application = null; //null if new; otherwise it comes in from the parent component
   @Input() availablePractices: IPractice[] = []; //practices that have not yet been used for this application (not including the current one, if this is an update)
 
   modalActions = new EventEmitter();
 
+  @Output() submitSuccess = new EventEmitter<ApplicationFormData>();
 
-  @Output() submitSuccess = new EventEmitter<boolean>();
-
-  /*
-   import {IPractice} from './practice.interface';
-   import {Step} from './step.interface';
-
-   export interface Application {
-   id: number;
-   practice_id: number;
-   application_id: number;
-   steps: Step[];
-   practice: IPractice;
-   }
-   */
 
   /**
    * Add new form elements dynamically:
@@ -41,54 +31,81 @@ export class UpdatePracticeFormComponent implements OnInit {
 
   public applicationForm: FormGroup; // our model driven form
 
-  private isNewApplication: boolean = true;// TODO: fix this
+  private isNewApplication: boolean;
+  private applicationFormData: ApplicationFormData;
 
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+  }
+
+  ngOnChanges() {
     console.log('APPLICATION: ', this.application);
     console.log('available practices: ', this.availablePractices);
-    console.log('READING ID: ', this.readingID);
+    console.log('READING ID: ', this.readingId);
     this.initializeForm();
-
   }
 
   initializeForm(){
-    let applicationFormData: any;
-    if ((this.application === null)||(this.application === undefined)){
-      applicationFormData = {
-        practiceID: null
-      };
+    console.log('application coming into form: ', this.application);
+    if((this.application === null)||(this.application === undefined)){
+      this.isNewApplication = true;
+      this.applicationFormData = {
+        id: null, //for a new application
+        practiceTypeId: null,//will be set in the form
+        practiceId: null, // for a new application/practice
+        readingId: this.readingId,//TODO: may need to think about this....
+        steps: [{
+          id: null, // for a new application
+          description: ''
+        }]
+      }
     } else {
-      applicationFormData = {
-        practiceID: this.application.practice_id
-      };
+      this.isNewApplication = false;
+      let stepData = [];
+      for (let step of this.application.steps) {
+        stepData.push({
+          id: step.id, // Note: step.id is not serving any purpose here, since we lose it later anyways; in any case, the server is going to delete everything and start over
+          description: step.description
+        });
+      }
+      this.applicationFormData = {
+        id: this.application.id,
+        practiceTypeId: this.application.practiceId, // TODO: check if this is the correct field
+        practiceId: this.application.practice.id, // TODO: check if this is the correct field
+        readingId: this.application.readingId,
+        steps: stepData
+      }
     }
 
     this.applicationForm = this.formBuilder.group({
-      practiceID: [applicationFormData.practiceID, [<any>Validators.required]],
+      practiceTypeId: [this.applicationFormData.practiceTypeId, [<any>Validators.required]],
       steps: this.formBuilder.array([
-        this.initStep(),
       ])
     });
-    console.log(this.applicationForm);
+
+    for (let step of this.applicationFormData.steps){
+      this.addStep(step.description);
+    }
+    console.log('here is applicationFormData: ', this.applicationFormData);
+    console.log('here is the application form: ', this.applicationForm);
   }
 
-  initStep() {
-    // initialize our address
+  initStep(description?: string) {
+    // initialize our step
     return this.formBuilder.group({
-      description: ['', Validators.required]
+      description: [description||'', Validators.required]
     });
   }
 
-  addStep() {
-    // add address to the list
+  addStep(description?: string) {
+    // add step to the list
     const control = <FormArray>this.applicationForm.controls['steps'];
-    control.push(this.initStep());
+    control.push(this.initStep(description));
   }
 
   removeStep(i: number) {
-    // remove address from the list
+    // remove step from the list
     const control = <FormArray>this.applicationForm.controls['steps'];
     control.removeAt(i);
   }
@@ -104,14 +121,16 @@ export class UpdatePracticeFormComponent implements OnInit {
   }
 
   onSubmit(){
-    let success: boolean = true;
-    this.submitSuccess.next(success);
-    //
-  }
-
-  onCancel(){
-    let success: boolean = false;
-    this.submitSuccess.next(success);
+    this.applicationFormData.practiceTypeId = +this.applicationForm.value.practiceTypeId;
+    let stepData = [];
+    for (let step of this.applicationForm.value.steps){
+      stepData.push({
+        id: null,// let the server figure this out
+        description: step.description
+      });
+    }
+    this.applicationFormData['steps']=stepData;
+    this.submitSuccess.next(this.applicationFormData);
   }
 
   openModal() {

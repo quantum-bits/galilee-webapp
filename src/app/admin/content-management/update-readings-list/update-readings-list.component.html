@@ -33,7 +33,8 @@
         <li *ngFor="let application of reading.applications" class="collection-item white">
           <app-display-application-steps
             [application] = "application"
-            (deleteApplication)="displayDeleteApplicationModal($event)">
+            (deleteApplication)="displayDeleteApplicationModal($event)"
+            (editApplication)="launchEditPracticeModal($event)">
           </app-display-application-steps>
         </li>
 
@@ -43,7 +44,7 @@
         <p></p>
       </div>
 
-      <a class="waves-effect waves-light btn secondary-content" (click)="onAddPractice(i)">Add Practice</a>
+      <a class="waves-effect waves-light btn secondary-content" (click)="launchNewPracticeModal(reading)">Add Practice</a>
       <p>
         <br>
       </p>
@@ -51,6 +52,14 @@
     </li>
   </ul>
 </div>
+
+<app-update-practice-form
+  #updateApplicationModal
+  [readingId] = "readingID"
+  [application] = "application"
+  [availablePractices] = "availablePractices"
+  (submitSuccess) = "onAddPractice($event)">
+</app-update-practice-form>
 
 <app-display-reading-modal
   #displayReadingModal

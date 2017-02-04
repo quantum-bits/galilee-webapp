@@ -3,8 +3,8 @@ import {Step} from './step.interface';
 
 export interface Application {
   id: number;
-  practice_id: number;
-  reading_id: number;
+  practiceId: number;
+  readingId: number;
   steps: Step[];
   practice: IPractice;
 }

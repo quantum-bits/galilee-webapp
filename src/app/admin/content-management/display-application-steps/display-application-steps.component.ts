@@ -12,6 +12,7 @@ export class DisplayApplicationStepsComponent implements OnInit {
 
   @Input() application: Application;
   @Output() deleteApplication = new EventEmitter<Application>();
+  @Output() editApplication = new EventEmitter<Application>();
 
   private applicationTitle: string = '';
   private showSteps: boolean = false;
@@ -25,8 +26,9 @@ export class DisplayApplicationStepsComponent implements OnInit {
     this.showSteps = !this.showSteps;
   }
 
-  editPractice(){
+  displayEditApplicationModal(){
     console.log('edit!');
+    this.editApplication.emit(this.application);
   }
 
   displayDeleteModal(){

@@ -6,46 +6,11 @@ import {IReading, ReadingsData} from '../../../shared/interfaces/readings-data.i
 import {Application} from '../../../shared/interfaces/application.interface';
 
 import {ReadingService} from '../../../shared/services/reading.service';
-import {PracticeService} from '../../../shared/services/practice.service';
+//import {PracticeService} from '../../../shared/services/practice.service';
 
-import {UpdatePracticeFormComponent} from '../update-practice-form/update-practice-form.component';
+//import {UpdatePracticeFormComponent} from '../update-practice-form/update-practice-form.component';
 
 import {CalendarEntries} from '../../../shared/interfaces/calendar-entries.interface';
-
-const PRACTICE_GENERAL_INFO = [
-  {
-    id: 10,
-    title: 'Lectio Divina',
-    information: "There is nothing new about Scripture engagement! As I hope you’ve seen, Scripture engagement is thoroughly taught in the Scriptures. Christians have been developing and practicing various Scripture engagement techniques for hundreds of years. The goal of this website is not to introduce you to some new means of connecting with God. Our hope is to train people in tried and true methods of experiencing God through the Bible. One Scripture engagement technique that has a long and rich history, and that has been experiencing resurgence in recent years, is lectio divina."
-  },
-  {
-    id: 9,
-    title:      'Praying Scripture',
-    information: 'Here is some general information about praying scripture.  Praesent ac velit ac mi tincidunt molestie sit amet eu dolor. Duis sit amet est ligula. Aliquam bibendum maximus elit eget tincidunt. Proin non semper dui. Integer nec consequat nunc, et tincidunt risus. Fusce imperdiet id ligula eu bibendum. Curabitur venenatis dui et augue tincidunt, sit amet ultricies elit ultricies. Vestibulum a gravida nulla. Nam blandit, lacus eu commodo pretium, ex eros tincidunt odio, sed aliquet libero metus in justo. Nam in nunc justo. Nam pulvinar convallis placerat. Ut non molestie mi, nec cursus eros. Proin gravida rhoncus placerat.'
-  },
-  {
-    id: 12,
-    title:      'Journaling Scripture',
-    information: 'Here is some general information about journaling scripture.  Praesent ac velit ac mi tincidunt molestie sit amet eu dolor. Duis sit amet est ligula. Aliquam bibendum maximus elit eget tincidunt. Proin non semper dui. Integer nec consequat nunc, et tincidunt risus. Fusce imperdiet id ligula eu bibendum. Curabitur venenatis dui et augue tincidunt, sit amet ultricies elit ultricies. Vestibulum a gravida nulla. Nam blandit, lacus eu commodo pretium, ex eros tincidunt odio, sed aliquet libero metus in justo. Nam in nunc justo. Nam pulvinar convallis placerat. Ut non molestie mi, nec cursus eros. Proin gravida rhoncus placerat.'
-  },
-  {
-    id: 11,
-    title:      'Scripture Engagement through the Visual Arts',
-    information: 'Here is some general information about memorizing scripture.  Praesent ac velit ac mi tincidunt molestie sit amet eu dolor. Duis sit amet est ligula. Aliquam bibendum maximus elit eget tincidunt. Proin non semper dui. Integer nec consequat nunc, et tincidunt risus. Fusce imperdiet id ligula eu bibendum. Curabitur venenatis dui et augue tincidunt, sit amet ultricies elit ultricies. Vestibulum a gravida nulla. Nam blandit, lacus eu commodo pretium, ex eros tincidunt odio, sed aliquet libero metus in justo. Nam in nunc justo. Nam pulvinar convallis placerat. Ut non molestie mi, nec cursus eros. Proin gravida rhoncus placerat.'
-  },
-  {
-    id: 5,
-    title:      'Dramatizing Scripture',
-    information: 'Here is some general information about dramatizing scripture.  Praesent ac velit ac mi tincidunt molestie sit amet eu dolor. Duis sit amet est ligula. Aliquam bibendum maximus elit eget tincidunt. Proin non semper dui. Integer nec consequat nunc, et tincidunt risus. Fusce imperdiet id ligula eu bibendum. Curabitur venenatis dui et augue tincidunt, sit amet ultricies elit ultricies. Vestibulum a gravida nulla. Nam blandit, lacus eu commodo pretium, ex eros tincidunt odio, sed aliquet libero metus in justo. Nam in nunc justo. Nam pulvinar convallis placerat. Ut non molestie mi, nec cursus eros. Proin gravida rhoncus placerat.'
-  },
-  {
-    id: 6,
-    title:      'Singing Scripture',
-    information: 'Here is some general information about singing scripture.  Praesent ac velit ac mi tincidunt molestie sit amet eu dolor. Duis sit amet est ligula. Aliquam bibendum maximus elit eget tincidunt. Proin non semper dui. Integer nec consequat nunc, et tincidunt risus. Fusce imperdiet id ligula eu bibendum. Curabitur venenatis dui et augue tincidunt, sit amet ultricies elit ultricies. Vestibulum a gravida nulla. Nam blandit, lacus eu commodo pretium, ex eros tincidunt odio, sed aliquet libero metus in justo. Nam in nunc justo. Nam pulvinar convallis placerat. Ut non molestie mi, nec cursus eros. Proin gravida rhoncus placerat.'
-  }
-];
-
-
 
 
 @Component({
@@ -55,7 +20,7 @@ const PRACTICE_GENERAL_INFO = [
 })
 export class UpdateReadingsComponent implements OnInit {
 
-  @ViewChild('updatePractice') modal: UpdatePracticeFormComponent;
+  //@ViewChild('updatePractice') modal: UpdatePracticeFormComponent;
 
   private calendarReadings: CalendarEntries = {};
   private readingsData: ReadingsData = null;
@@ -67,16 +32,15 @@ export class UpdateReadingsComponent implements OnInit {
 
   private reading: IReading = null;
 
-  //TODO: fix!
-  private availablePractices = PRACTICE_GENERAL_INFO;
-  private readingID: number;
-  private application: Application;
+  //private readingID: number;
+  //private application: Application;
 
   private dateStringCalendarInit = moment(new Date()).format('YYYY-MM-DD');
 
   constructor(
-    private readingService: ReadingService,
-    private practiceService: PracticeService) { }
+    private readingService: ReadingService){}
+    //},
+    //private practiceService: PracticeService) { }
 
   ngOnInit() {
     //this.fetchPractices();
@@ -127,15 +91,6 @@ export class UpdateReadingsComponent implements OnInit {
       );
   }
 
-  fetchPractices(){
-    this.practiceService.getPractices()
-      .subscribe(
-        practices => {
-          console.log('PRACTICES: ', practices);
-        }
-      )
-  }
-
   addNewReading(){
     this.reading = null;
     this.addReadingModeOn = true;
@@ -156,6 +111,7 @@ export class UpdateReadingsComponent implements OnInit {
     this.addQuestionModeOn = false;
   }
 
+  /*
   onLaunchAddPracticeForm(readingIndex: number){
     // readingIndex is the index in the array of readings
     console.log('TIME TO LAUNCH THE PRACTICE FORM!!! READING: ', readingIndex);
@@ -164,11 +120,13 @@ export class UpdateReadingsComponent implements OnInit {
     this.addPracticeModeOn = true;
     this.modal.openModal();
   }
+  */
 
+  /*
   onAddPractice(success: boolean){
     console.log('succes?', success);
     this.addPracticeModeOn = false;
   }
-
+  */
 
 }
