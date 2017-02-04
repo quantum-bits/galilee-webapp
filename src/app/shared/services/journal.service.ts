@@ -3,6 +3,7 @@ import {Http} from '@angular/http';
 
 import {Observable} from 'rxjs/Observable';
 import {Subject}    from 'rxjs/Subject';
+import * as assert from 'assert';
 
 import {AuthHttp} from 'angular2-jwt';
 
@@ -72,9 +73,22 @@ export class JournalService {
     this.journalEntryToBeDeletedSource.next(journalEntryID);
   }
 
-  saveEntry(journalEntry: JournalEntry) {
-    return this.authHttp
-      .post('http://localhost:3000/entries', journalEntry)
-      .map(resp => resp.json());
+  saveEntry(journalEntry: JournalEntry, isNewEntry: boolean) {
+    const payload = {
+      title: journalEntry.title,
+      entry: journalEntry.entry,
+      tags: journalEntry.tags
+    };
+
+    if (isNewEntry) {
+      return this.authHttp
+        .post('http://localhost:3000/entries', payload)
+        .map(resp => resp.json());
+    } else {
+      assert(journalEntry.id, 'Journal entry has no id');
+      return this.authHttp
+        .patch(`http://localhost:3000/entries/${journalEntry.id}`, payload)
+        .map(resp => resp.json());
+    }
   }
 }

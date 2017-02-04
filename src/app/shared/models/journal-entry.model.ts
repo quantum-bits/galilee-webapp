@@ -12,7 +12,7 @@ export class JournalEntry  {
       this.id = obj.id;
       this.title = obj.title;
       this.entry = obj.entry;
-      this.tags = obj.tags;
+      this.tags = obj.tags || [];
       this.createdAt = obj.createdAt;
       this.updatedAt = obj.updatedAt;
   }

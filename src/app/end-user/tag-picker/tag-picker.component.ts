@@ -56,7 +56,7 @@ export class TagPickerComponent implements OnInit {
 
   onNewTag(label: string) {
     this.selectedTags.push({
-      id: 0,
+      id: -1,     // Negative value tells server that this is a new tag.
       label: label
     });
     this.emit();

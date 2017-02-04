@@ -63,9 +63,9 @@ export class UpdateJournalEntryComponent implements OnInit {
 
   onSubmit() {
     Object.assign(this.journalEntry, this.journalEntryForm.value);
-    this.journalService.saveEntry(this.journalEntry)
+    this.journalService.saveEntry(this.journalEntry, this.isNewEntry)
       .subscribe(
-        result => console.log('journal entry saved!', result),
+        result => console.log('Journal entry saved', result),
         err => console.error("FAILED TO SAVE")
       );
 
