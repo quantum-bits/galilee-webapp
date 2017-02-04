@@ -33,10 +33,11 @@
           </app-update-readings-list>
         </div>
       </div>
-      <div class="col s12 center-align btn-space">
-        <a class="waves-effect waves-light btn" (click)="addNewReading()">Add Reading</a>
+      <div *ngIf="!addReadingModeOn" class="row">
+        <div class="col s12 center-align btn-space">
+          <a class="waves-effect waves-light btn" (click)="addNewReading()">Add Reading</a>
+        </div>
       </div>
-
       <div *ngIf="addReadingModeOn" class="row">
         <app-update-reading-form
           [reading] = "reading"
@@ -65,7 +66,7 @@
 
 
 
-      <div *ngIf="!(addReadingModeOn || addQuestionModeOn)" class="row">
+      <div *ngIf="!addQuestionModeOn" class="row">
         <div class="col s12 center-align">
           <a class="waves-effect waves-light btn" (click)="addNewQuestion()">Add Question</a>
         </div>
@@ -81,11 +82,11 @@
   </div>
 </div>
 
-  <app-update-practice-form
-    #updatePractice
-    [readingID] = "readingID"
-    [application] = "application"
-    [availablePractices] = "availablePractices"
-    (submitSuccess) = "onAddPractice($event)">
-  </app-update-practice-form>
+<app-update-practice-form
+  #updatePractice
+  [readingID] = "readingID"
+  [application] = "application"
+  [availablePractices] = "availablePractices"
+  (submitSuccess) = "onAddPractice($event)">
+</app-update-practice-form>
 

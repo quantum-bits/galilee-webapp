@@ -162,7 +162,6 @@ export class UpdateReadingsComponent implements OnInit {
     this.application = null;
     this.readingID = this.readingsData.readings[readingIndex].id;
     this.addPracticeModeOn = true;
-    console.log(this.modal);
     this.modal.openModal();
   }
 

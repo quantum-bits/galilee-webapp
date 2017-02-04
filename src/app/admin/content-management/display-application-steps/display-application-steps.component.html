@@ -1,0 +1,36 @@
+<a
+  *ngIf="showSteps"
+  href="javascript:void(0)"
+  (click)="toggleShowSteps()"
+  class="grey-text text-darken-2">
+  <i class="material-icons lr-arrow">remove</i>
+  {{application.practice.title}}
+</a>
+<a
+  *ngIf="!showSteps"
+  href="javascript:void(0)"
+  (click)="toggleShowSteps()"
+  class="grey-text text-darken-2">
+  <i class="material-icons lr-arrow">add</i>
+  {{application.practice.title}}
+</a>
+<span class="right">
+  <a
+    href="javascript:void(0)"
+    (click)="displayDeleteModal()"
+    class="grey-text text-darken-2">
+  <i class="material-icons lr-arrow">delete</i>
+  </a>
+  <a
+    href="javascript:void(0)"
+    (click)="editPractice()"
+    class="grey-text text-darken-2">
+  <i class="material-icons lr-arrow">edit</i>
+  </a>
+</span>
+<div *ngIf="showSteps">
+  <p *ngFor="let step of application.steps" class="step">
+    {{step.seq}}. {{step.description}}
+  </p>
+</div>
+
