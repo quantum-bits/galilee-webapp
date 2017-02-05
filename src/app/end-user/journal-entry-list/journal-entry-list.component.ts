@@ -6,13 +6,8 @@ import {JournalEntry} from '../../shared/models/journal-entry.model';
   templateUrl: './journal-entry-list.component.html',
   styleUrls: ['./journal-entry-list.component.css']
 })
-export class JournalEntryListComponent implements OnInit {
+export class JournalEntryListComponent {
 
   @Input() journalEntries: Array<JournalEntry>;
-
-  ngOnInit() {
-    console.log('inside oninit for journalentrylist comp');
-    console.log(this.journalEntries);
-  }
 
 }

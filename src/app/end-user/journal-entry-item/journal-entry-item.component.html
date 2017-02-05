@@ -44,5 +44,11 @@
   {{tag.label}}
 </div>
 
-<div class="grey-text darken-3 right">{{journalEntry.updatedAt | amTimeAgo}}</div>
+<div class="grey-text darken-3 right tooltipped"
+     materialize="tooltip"
+     data-position="left"
+     data-delay="50"
+     [attr.data-tooltip]="journalEntry.updatedAt | amDateFormat:'LL'">
+  {{journalEntry.updatedAt | amTimeAgo}}
+</div>
 

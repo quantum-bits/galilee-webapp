@@ -33,7 +33,7 @@ export class JournalDashboardComponent implements OnInit, OnDestroy {
 
   // Offset into the current list of journal entries.
   private offset: number = 0;
-  private dateStringCalendarInit = moment(new Date()).format('YYYY-MM-DD');
+  private dateStringCalendarInit = moment().format('YYYY-MM-DD');
 
   private deletionSubscription: Subscription;
 
