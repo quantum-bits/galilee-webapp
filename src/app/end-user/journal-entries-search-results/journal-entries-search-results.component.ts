@@ -41,18 +41,9 @@ export class JournalEntriesSearchResultsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      this.filter = params;
-    });
-
-    this.journalService.getUserTags().subscribe(tags => {
-      this.userTags = tags;
-    });
-
-    this.journalService.getJournalMetadata().subscribe(metadata => {
-      this.journalMetadata = metadata
-    });
-
+    this.route.queryParams.subscribe(params => this.filter = params);
+    this.journalService.getUserTags().subscribe(tags => this.userTags = tags);
+    this.journalService.getJournalMetadata().subscribe(metadata => this.journalMetadata = metadata);
     this.loadMoreEntries();
   }
 

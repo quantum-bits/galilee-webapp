@@ -26,39 +26,38 @@ export class UpdateJournalEntryComponent implements OnInit {
               private router: Router) {
   }
 
-  // TODO: This can't be the right way to do this with RxJS.
   ngOnInit() {
     this.journalService.getUserTags()
-      .subscribe(tags => {
-        this.userTagList = tags;
-        this.route.params.subscribe(params => {
-          if ('journalEntryID' in params) {
-            let journalEntryID = +params['journalEntryID'];
-            this.journalService.getJournalEntry(journalEntryID)
-              .subscribe(journalEntry => {
-                this.journalEntry = journalEntry;
-                this.isNewEntry = false;
-                this.initializeForm();
-              });
-          } else {
-            this.journalEntry = new JournalEntry({});
-            this.isNewEntry = true;
+      .subscribe(tags => this.userTagList = tags);
+
+    this.route.params.subscribe(params => {
+      if ('journalEntryID' in params) {
+        // Retrieve existing entry.
+        let journalEntryID = +params['journalEntryID'];
+        this.journalService.getJournalEntry(journalEntryID)
+          .subscribe(journalEntry => {
+            this.journalEntry = journalEntry;
+            this.isNewEntry = false;
             this.initializeForm();
-          }
-        });
-      });
+          });
+      } else {
+        // Create new entry.
+        this.journalEntry = new JournalEntry({});
+        this.isNewEntry = true;
+        this.initializeForm();
+      }
+    });
   }
 
   initializeForm() {
     this.journalEntryForm = this.formBuilder.group({
-      title: [this.journalEntry.title, [<any>Validators.required]],
-      entry: [this.journalEntry.entry, [<any>Validators.required]]
+      title: [this.journalEntry.title, [Validators.required]],
+      entry: [this.journalEntry.entry, [Validators.required]]
     });
   }
 
-  setSelectedTags(tagList: Array<Tag>) {
+  setSelectedTags(tagList: Array < Tag >) {
     this.journalEntry.tags = tagList;
-    console.log("JOURNAL ENTRY", this.journalEntry);
   }
 
   onSubmit() {
@@ -78,13 +77,6 @@ export class UpdateJournalEntryComponent implements OnInit {
 
   fetchQuestions(date: string) {
     this.journalService.getDailyQuestions(date)
-      .subscribe(
-        questions => {
-          this.questions = questions;
-        },
-        error => {
-          console.log(error);
-        }
-      );
+      .subscribe(questions => this.questions = questions);
   }
 }
