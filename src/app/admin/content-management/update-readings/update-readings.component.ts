@@ -26,9 +26,6 @@ export class UpdateReadingsComponent implements OnInit {
   private readingsData: ReadingsData = null;
   private dateString: string = null;
   private questions: string[] = null;
-  private addReadingModeOn: boolean = false;
-  private addQuestionModeOn: boolean = false;
-  private addPracticeModeOn: boolean = false;
 
   private reading: IReading = null;
 
@@ -90,43 +87,5 @@ export class UpdateReadingsComponent implements OnInit {
         }
       );
   }
-
-  addNewReading(){
-    this.reading = null;
-    this.addReadingModeOn = true;
-  }
-
-  onAddReading(success: boolean){
-    console.log('succes?', success);
-    this.addReadingModeOn = false;
-  }
-
-  addNewQuestion(){
-    this.reading = null;
-    this.addQuestionModeOn = true;
-  }
-
-  onAddQuestion(success: boolean){
-    console.log('success?', success);
-    this.addQuestionModeOn = false;
-  }
-
-  /*
-  onLaunchAddPracticeForm(readingIndex: number){
-    // readingIndex is the index in the array of readings
-    console.log('TIME TO LAUNCH THE PRACTICE FORM!!! READING: ', readingIndex);
-    this.application = null;
-    this.readingID = this.readingsData.readings[readingIndex].id;
-    this.addPracticeModeOn = true;
-    this.modal.openModal();
-  }
-  */
-
-  /*
-  onAddPractice(success: boolean){
-    console.log('succes?', success);
-    this.addPracticeModeOn = false;
-  }
-  */
 
 }

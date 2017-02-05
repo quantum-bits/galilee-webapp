@@ -1,69 +1,76 @@
+<div class="modal"
+     materialize="modal"
+     [materializeParams]="[{dismissible: false}]"
+     [materializeActions]="modalActions">
+  <div class="modal-content">
 
-<div *ngIf="readingForm">
+    <div *ngIf="readingForm">
 
-  <div class="container">
+      <div class="container">
 
-    <form [formGroup]="readingForm" novalidate (ngSubmit)="onSubmit()">
+        <form [formGroup]="readingForm" novalidate (ngSubmit)="onSubmit()">
 
-      <div class="row">
-        <div class="col s12 ">
-          <div class="card">
-            <div class="card-content">
+          <div class="row">
+            <div class="col s12 ">
+              <div class="card">
+                <div class="card-content">
 
-              <span *ngIf="isNewReading" class="card-title">
-                Create New Reading
-              </span>
-              <span *ngIf="!isNewReading" class="card-title">
-                Update Reading
-              </span>
-              <div class="row">
-                <div class="input-field col s12">
-                  <label for="osis">OSIS (e.g., Hos.1.2-Hos.1.10)</label>
-                  <input
-                    [input-wake-up]="'osis'"
-                    [class.warning-background] = "readingForm.controls.osis.errors && readingForm.controls.osis.touched"
-                    id="osis"
-                    type="text"
-                    formControlName="osis">
+                  <span *ngIf="isNewReading" class="card-title">
+                    Create New Reading
+                  </span>
+                  <span *ngIf="!isNewReading" class="card-title">
+                    Update Reading
+                  </span>
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <label for="osis">OSIS (e.g., Hos.1.2-Hos.1.10)</label>
+                      <input
+                        [input-wake-up]="'osis'"
+                        [class.warning-background] = "readingForm.controls.osis.errors && readingForm.controls.osis.touched"
+                        id="osis"
+                        type="text"
+                        formControlName="osis">
+                    </div>
+                    <div *ngIf="readingForm.controls.osis.errors && readingForm.controls.osis.touched">
+                      <small class="warning">
+                        This field is required.
+                      </small>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <label for="seq">Sequence Number (e.g., 1, 2,....)</label>
+                      <input
+                        [input-wake-up]="'seq'"
+                        [class.warning-background] = "readingForm.controls.seq.errors && readingForm.controls.seq.touched"
+                        id="seq"
+                        type="text"
+                        formControlName="seq">
+                    </div>
+                    <div *ngIf="readingForm.controls.seq.errors && readingForm.controls.seq.touched">
+                      <small class="warning">
+                        {{readingForm.controls.seq.errors.error}}
+                      </small>
+                    </div>
+                  </div>
                 </div>
-                <div *ngIf="readingForm.controls.osis.errors && readingForm.controls.osis.touched">
-                  <small class="warning">
-                    This field is required.
-                  </small>
+                <div class="card-action">
+                  <button
+                    class="waves-effect waves-light btn"
+                    type="submit"
+                    [class.disabled]="!readingForm.valid"
+                    [disabled]="!readingForm.valid">Submit</button>
+                  <button
+                    class="waves-effect waves-light btn right"
+                    type="button"
+                    (click)="onCancel()"
+                  >Cancel</button>
                 </div>
               </div>
-              <div class="row">
-                <div class="input-field col s12">
-                  <label for="seq">Sequence Number (e.g., 1, 2,....)</label>
-                  <input
-                    [input-wake-up]="'seq'"
-                    [class.warning-background] = "readingForm.controls.seq.errors && readingForm.controls.seq.touched"
-                    id="seq"
-                    type="text"
-                    formControlName="seq">
-                </div>
-                <div *ngIf="readingForm.controls.seq.errors && readingForm.controls.seq.touched">
-                  <small class="warning">
-                    {{readingForm.controls.seq.errors.error}}
-                  </small>
-                </div>
-              </div>
-            </div>
-            <div class="card-action">
-              <button
-                class="waves-effect waves-light btn"
-                type="submit"
-                [class.disabled]="!readingForm.valid"
-                [disabled]="!readingForm.valid">Submit</button>
-              <button
-                class="waves-effect waves-light btn right"
-                type="button"
-                (click)="onCancel()"
-              >Cancel</button>
             </div>
           </div>
-        </div>
+        </form>
       </div>
-    </form>
+    </div>
   </div>
 </div>

@@ -1,56 +1,63 @@
-<div *ngIf="questionForm">
+<div class="modal"
+     materialize="modal"
+     [materializeParams]="[{dismissible: false}]"
+     [materializeActions]="modalActions">
+  <div class="modal-content">
+    <div *ngIf="questionForm">
 
-  <div class="container">
+      <div class="container">
 
-    <form [formGroup]="questionForm" novalidate (ngSubmit)="onSubmit()">
+        <form [formGroup]="questionForm" novalidate (ngSubmit)="onSubmit()">
 
-      <div class="row">
-        <div class="col s12 ">
-          <div class="card">
-            <div class="card-content">
+          <div class="row">
+            <div class="col s12 ">
+              <div class="card">
+                <div class="card-content">
 
-              <span *ngIf="isNewQuestion" class="card-title">
-                Create New question
-              </span>
-              <span *ngIf="!isNewQuestion" class="card-title">
-                Update question
-              </span>
-              <div class="row">
-                <div class="input-field col s12">
-                  <i class="material-icons prefix">mode_edit</i>
-                  <label for="question">Question</label>
-                  <input
-                    [input-wake-up]="'question'"
-                    [class.warning-background] = "questionForm.controls.question.errors && questionForm.controls.question.touched"
-                    id="question"
-                    type="text"
-                    formControlName="question">
+                  <span *ngIf="isNewQuestion" class="card-title">
+                    Create New question
+                  </span>
+                  <span *ngIf="!isNewQuestion" class="card-title">
+                    Update question
+                  </span>
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <i class="material-icons prefix">mode_edit</i>
+                      <label for="question">Question</label>
+                      <input
+                        [input-wake-up]="'question'"
+                        [class.warning-background] = "questionForm.controls.question.errors && questionForm.controls.question.touched"
+                        id="question"
+                        type="text"
+                        formControlName="question">
+                    </div>
+                    <div *ngIf="questionForm.controls.question.errors && questionForm.controls.question.touched">
+                      <small class="warning">
+                        This field is required.
+                      </small>
+                    </div>
+                  </div>
                 </div>
-                <div *ngIf="questionForm.controls.question.errors && questionForm.controls.question.touched">
-                  <small class="warning">
-                    This field is required.
-                  </small>
+
+                <div class="card-action">
+                  <button
+                    class="waves-effect waves-light btn"
+                    type="submit"
+                    [class.disabled]="!questionForm.valid"
+                    [disabled]="!questionForm.valid">Submit</button>
+                  <button
+                    class="waves-effect waves-light btn right"
+                    type="button"
+                    (click)="onCancel()"
+                    >Cancel</button>
                 </div>
+
+
               </div>
             </div>
-
-            <div class="card-action">
-              <button
-                class="waves-effect waves-light btn"
-                type="submit"
-                [class.disabled]="!questionForm.valid"
-                [disabled]="!questionForm.valid">Submit</button>
-              <button
-                class="waves-effect waves-light btn right"
-                type="button"
-                (click)="onCancel()"
-                >Cancel</button>
-            </div>
-
-
           </div>
-        </div>
+        </form>
       </div>
-    </form>
+    </div>
   </div>
 </div>

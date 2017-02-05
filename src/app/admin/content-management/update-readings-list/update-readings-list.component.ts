@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 
 import {UpdatePracticeFormComponent} from '../update-practice-form/update-practice-form.component';
+import {UpdateReadingFormComponent} from '../update-reading-form/update-reading-form.component';
 
 import {DisplayReadingModalComponent} from '../display-reading-modal/display-reading-modal.component';
 import {DeleteItemModalComponent} from '../../../shared/components/delete-item-modal/delete-item-modal.component';
@@ -62,6 +63,8 @@ export class UpdateReadingsListComponent implements OnInit {
   @ViewChild('deleteReadingModal') modalDeleteReading: DeleteItemModalComponent;
   @ViewChild('deleteApplicationModal') modalDeleteApplication: DeleteItemModalComponent;
   @ViewChild('updateApplicationModal') modalUpdateApplication: UpdatePracticeFormComponent;
+  @ViewChild('updateReadingModal') modalUpdateReading: UpdateReadingFormComponent;
+
 
   //TODO: fix!
   private availablePractices = PRACTICE_GENERAL_INFO;
@@ -71,6 +74,7 @@ export class UpdateReadingsListComponent implements OnInit {
   private singleApplicationTitle: string='';
   private readingID: number = null;
   private application: Application;
+  private incrementer: number = 0;
 
   constructor(private practiceService: PracticeService) { }
 
@@ -87,33 +91,40 @@ export class UpdateReadingsListComponent implements OnInit {
       )
   }
 
-  launchEditPracticeModal(application: Application){
-    console.log('TIME TO LAUNCH THE PRACTICE FORM!!! APPLICATION: ', application);
-    this.application = application;
-    this.singleReading = null;
-    this.modalUpdateApplication.openModal();
-  }
-
-
-
   launchNewPracticeModal(reading: IReading){
-    console.log('TIME TO LAUNCH THE PRACTICE FORM!!! READING: ', reading.id);
     this.application = null;
     this.readingID = reading.id;
+    this.incrementer++;
     this.modalUpdateApplication.openModal();
     //this.launchAddPracticeForm.emit(readingIndex);
   }
 
-  onAddPractice(applicationData: ApplicationFormData){
-    console.log('submit success: ', applicationData);
-    this.modalUpdateApplication.closeModal();
-    //TODO: save to db....
+  launchEditPracticeModal(application: Application){
+    console.log('TIME TO LAUNCH THE PRACTICE FORM!!! APPLICATION: ', application);
+    this.application = application;
+    this.singleReading = null;
+    this.incrementer++;
+    this.modalUpdateApplication.openModal();
   }
 
   displayReading(i: number){
     console.log('display reading....', i);
     this.singleReading = this.readingsData.readings[i];
     this.modal.openModal();
+  }
+
+  launchNewReadingModal(){
+    console.log('TIME TO LAUNCH THE READING FORM!!!');
+    this.incrementer++;
+    this.singleReading = null;
+    this.modalUpdateReading.openModal();
+  }
+
+  launchEditReadingModal(reading: IReading){
+    console.log('TIME TO LAUNCH THE READING FORM!!! APPLICATION: ', reading);
+    this.incrementer++;
+    this.singleReading = reading;
+    this.modalUpdateReading.openModal();
   }
 
   displayDeleteReadingModal(reading: IReading){
@@ -136,6 +147,19 @@ export class UpdateReadingsListComponent implements OnInit {
   onDeleteApplication(applicationID: number){
     console.log('delete applicationID: ', applicationID);
     // TODO: do the delete....
+  }
+
+  onAddPractice(applicationData: ApplicationFormData){
+    console.log('submit success: ', applicationData);
+    this.modalUpdateApplication.closeModal();
+    //TODO: save to db....
+  }
+
+  onAddReading(reading: IReading){
+    console.log('submit success: ', reading);
+    console.log('and the date is: ', this.dateString);
+    this.modalUpdateReading.closeModal();
+    //TODO: save to db....
   }
 
 }

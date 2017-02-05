@@ -7,9 +7,46 @@
 <div *ngIf="questions">
   <ul class="collection with-header">
     <li class="collection-header"><h5>Questions for {{dateString | amDateFormat: 'LL'}}</h5></li>
-    <li *ngFor="let question of questions" class="collection-item">
+    <li *ngFor="let question of questions; let i=index" class="collection-item grey lighten-5">
       <span class="title"> {{question}} </span>
+
+      <span class="right action-icons">
+        <a
+          href="javascript:void(0)"
+          (click)="displayDeleteQuestionModal(i)"
+          class="grey-text text-darken-2">
+        <i class="material-icons lr-arrow">delete</i>
+        </a>
+        <a
+          href="javascript:void(0)"
+          (click)="launchEditQuestionModal(i)"
+          class="grey-text text-darken-2">
+        <i class="material-icons lr-arrow">edit</i>
+        </a>
+      </span>
+
+
     </li>
   </ul>
 </div>
 
+<div class="row">
+  <div class="col s12 center-align">
+    <a class="waves-effect waves-light btn" (click)="launchNewQuestionModal()">Add Question</a>
+  </div>
+</div>
+
+<app-delete-item-modal
+  #deleteQuestionModal
+  [header]="'Delete Question: '+singleQuestion"
+  [message]="'Are you sure you want to delete this question?  This action is not reversible.'"
+  (deleteItem)="onDeleteQuestion($event)">
+</app-delete-item-modal>
+
+<app-update-question-form
+  #updateQuestionModal
+  [incrementer]="incrementer"
+  [question] = "singleQuestion"
+  [questionIndex] = "questionIndex"
+  (submitSuccess) = "onAddQuestion($event)">
+</app-update-question-form>

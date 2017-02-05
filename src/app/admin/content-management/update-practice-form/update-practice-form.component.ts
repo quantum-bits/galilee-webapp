@@ -17,6 +17,7 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
   @Input() readingId: number; // this information if included in the application, if this is an update
   @Input() application: Application = null; //null if new; otherwise it comes in from the parent component
   @Input() availablePractices: IPractice[] = []; //practices that have not yet been used for this application (not including the current one, if this is an update)
+  @Input() incrementer: number;
 
   modalActions = new EventEmitter();
 
@@ -131,6 +132,10 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
     }
     this.applicationFormData['steps']=stepData;
     this.submitSuccess.next(this.applicationFormData);
+  }
+
+  onCancel(){
+    this.closeModal();
   }
 
   openModal() {
