@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 import {IReading} from '../../../shared/interfaces/readings-data.interface';
@@ -11,39 +11,54 @@ import {IReading} from '../../../shared/interfaces/readings-data.interface';
 })
 export class UpdateReadingFormComponent implements OnInit {
 
-  @Input() reading: IReading = null;
-  @Output() submitSuccess = new EventEmitter<boolean>();
+  @Input() readingDayId: number;// if new, then this comes in
+  @Input() reading: IReading; // if update, then this comes in (and it contains the readingDayId)
+  @Input() incrementer: number; // this is to force ngOnChanges to fire in the update-reading-form component
+  @Output() submitSuccess = new EventEmitter();
+
+  modalActions = new EventEmitter();
+
+  /**
+   * note that the incrementer is just a trick to get ngOnChanges to fire; if we don't
+   * do this, we sometimes get unexpected behaviour (for example, if the user
+   * edits the form, hits cancel, and then clicks edit again.
+   */
 
   public readingForm: FormGroup; // our model driven form
 
-  private isNewReading: boolean = true;// TODO: fix this
+  private isNewReading: boolean;
+  private readingFormData: any;
 
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    console.log('READING: ', this.reading);
-    this.initializeForm();
-
   }
 
+  ngOnChanges() {
+    console.log('Change!!  READING: ', this.reading);
+    this.initializeForm();
+  }
 
   initializeForm(){
-    let readingFormData: any;
-    if (this.reading === null){
-      readingFormData = {
-        osis: null,
+    if ((this.reading === null)||(this.reading === undefined)){
+      this.isNewReading = true;
+      this.readingFormData = {
+        readingDayId: null, //TODO: fix this!
+        osisRef: null,
         seq: null
       };
     } else {
-      readingFormData = {
-        osis: this.reading.osisRef,
+      this.isNewReading = false;
+      this.readingFormData = {
+        readingDayId: this.reading.readingDayId,
+        osisRef: this.reading.osisRef,
         seq: this.reading.seq
       };
     }
 
     this.readingForm = this.formBuilder.group({
-      osis: [readingFormData.osis, [<any>Validators.required]],
-      seq: [readingFormData.seq, Validators.compose([<any>Validators.required, this.integerValidator])]
+      osis: [this.readingFormData.osisRef, [<any>Validators.required]],
+      seq: [this.readingFormData.seq, Validators.compose([<any>Validators.required, this.integerValidator])]
     });
     console.log(this.readingForm);
   }
@@ -58,15 +73,24 @@ export class UpdateReadingFormComponent implements OnInit {
   }
 
   onSubmit(){
-    let success: boolean = true;
-    this.submitSuccess.next(success);
-    //
+    this.readingFormData['osisRef']=this.readingForm.value.osis;
+    this.readingFormData['seq']=+this.readingForm.value.seq;
+    this.submitSuccess.next(this.readingFormData);
   }
 
   onCancel(){
-    let success: boolean = false;
-    this.submitSuccess.next(success);
+    this.closeModal();
   }
+
+  openModal() {
+    this.modalActions.emit({action: "modal", params: ['open']});
+  }
+
+  closeModal() {
+    this.modalActions.emit({action: "modal", params: ['close']});
+  }
+
+
 
 
 

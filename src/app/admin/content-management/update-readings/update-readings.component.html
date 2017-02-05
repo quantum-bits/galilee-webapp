@@ -33,18 +33,6 @@
           </app-update-readings-list>
         </div>
       </div>
-      <div *ngIf="!addReadingModeOn" class="row">
-        <div class="col s12 center-align btn-space">
-          <a class="waves-effect waves-light btn" (click)="addNewReading()">Add Reading</a>
-        </div>
-      </div>
-      <div *ngIf="addReadingModeOn" class="row">
-        <app-update-reading-form
-          [reading] = "reading"
-          (submitSuccess) = "onAddReading($event)">
-        </app-update-reading-form>
-      </div>
-
       <div class="row">
         <div class="col s12">
           <app-update-questions-list
@@ -52,31 +40,6 @@
             [questions] = "questions">
           </app-update-questions-list>
         </div>
-      </div>
-
-      <!--<div *ngIf="addPracticeModeOn" class="row">
-        <app-update-practice-form
-          [readingID] = "readingID"
-          [application] = "application"
-          [availablePractices] = "availablePractices"
-          (submitSuccess) = "onAddPractice($event)">
-        </app-update-practice-form>
-     </div>-->
-
-
-
-
-      <div *ngIf="!addQuestionModeOn" class="row">
-        <div class="col s12 center-align">
-          <a class="waves-effect waves-light btn" (click)="addNewQuestion()">Add Question</a>
-        </div>
-      </div>
-
-      <div *ngIf="addQuestionModeOn" class="row">
-        <app-update-question-form
-          [question] = "question"
-          (submitSuccess) = "onAddQuestion($event)">
-        </app-update-question-form>
       </div>
     </div>
   </div>
