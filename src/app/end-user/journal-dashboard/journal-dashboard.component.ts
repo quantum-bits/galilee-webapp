@@ -1,13 +1,14 @@
 import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import {Router, NavigationExtras} from '@angular/router';
 
-import { Subscription }   from 'rxjs/Subscription';
+import {Subscription} from 'rxjs/Subscription';
 
 import {DeleteJournalEntryModalComponent} from '../delete-journal-entry-modal';
 
 import {JournalEntry} from '../../shared/models/journal-entry.model';
-import {JournalMetadata, JournalEntryFilter} from '../../shared/interfaces/journal-entries.interface';
+import {JournalMetadata} from '../../shared/interfaces/journal-entries.interface';
 import {JournalService} from '../../shared/services/journal.service';
+import {Tag} from '../../shared/interfaces/tag.interface';
 
 import * as moment from 'moment';
 
@@ -63,23 +64,6 @@ export class JournalDashboardComponent implements OnInit, OnDestroy {
     return (this.journalEntries.length < this.journalMetadata.totalEntries);
   }
 
-  /*
-   Protocol for fetching journal/post entries:
-   DEPRECATED
-   - component initially requests N entries; passes dateOldestEntry and dateNewestEntry as undefined (or doesn't pass them at all)
-   - assuming service has no cached data, service goes to API endpoint; API endpoint returns N entries with the newest 'date updated' (or 'date created'? I would think maybe we would want to see things if they were updated recently, so maybe go with 'updated'....) time stamps
-   - service uses Subject.next(journalEntry) to send N entries, one after the other, starting with the newest (which will be at the top of the displayed list)
-   - component subscribes to the service and receives the entries one at a time, constructs a list of the objects, etc., and displays them
-   - if the component wants more entries, it sends back a request for N more entries, and also sends a Date object with the ('created' or 'updated'?!?) date of the oldest and newest entries in its possession
-   - service goes to the API endpoint; API returns any newer entries (if such exist), any updated entries with date stamps newer than the oldest, and several older entries, for a total of N entries
-   - component looks at the ids and datestamps and interleaves/replaces the entries as appropriate so that the revised list is in the appropriate order
-   - service does the same thing, thereby keeping a set of entries that is up to date with what is in the component(?)
-
-   Protocol for fetching with filters:
-   - ...?
-
-   */
-
   launchDeleteEntryModal(entryId: number) {
     console.log('LAUNCHING delete entry modal....');
     this.modal.openModal(entryId);
@@ -98,23 +82,21 @@ export class JournalDashboardComponent implements OnInit, OnDestroy {
   }
 
   daySelected(dateString: string) {
-    let journalEntryQueryFilters: JournalEntryFilter = {
-      'date': dateString
+    let navExtras: NavigationExtras = {
+      queryParams: {
+        date: dateString
+      }
     };
-    let navigationExtras: NavigationExtras = {
-      queryParams: journalEntryQueryFilters
-    };
-    this.router.navigate(['/end-user/journal/search-results'], navigationExtras);
+    this.router.navigate(['/end-user/journal/search-results'], navExtras);
   }
 
-  tagSelected(tag: string) {
-    let journalEntryQueryFilters: JournalEntryFilter = {
-      'tag': tag
+  tagSelected(tagId: number) {
+    let navExtras: NavigationExtras = {
+      queryParams: {
+        tag: tagId
+      }
     };
-    let navigationExtras: NavigationExtras = {
-      queryParams: journalEntryQueryFilters
-    };
-    this.router.navigate(['/end-user/journal/search-results'], navigationExtras);
+    this.router.navigate(['/end-user/journal/search-results'], navExtras);
   }
 
   newJournalEntry() {

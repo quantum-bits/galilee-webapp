@@ -16,7 +16,7 @@ export interface JournalEntries {
 }
 
 export interface JournalEntryFilter {
-  date?: string,//'YYYY-MM-DD' format
-  tag?: string,
+  date?: string,    // YYYY-MM-DD
+  tag?: number,
   text?: string
 }

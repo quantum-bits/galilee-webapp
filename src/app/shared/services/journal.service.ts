@@ -25,10 +25,19 @@ export class JournalService {
               private authHttp: AuthHttp) {
   }
 
-  getJournalEntries(startIndex: number, count: number, filter?: JournalEntryFilter): Observable<JournalEntries> {
-    return this.authHttp
-      .get(`http://localhost:3000/entries?offset=${startIndex}&limit=${count}`)
-      .map(resp => resp.json());
+  getJournalEntries(offset: number,
+                    limit: number,
+                    filter?: JournalEntryFilter): Observable<JournalEntries> {
+    let url = `http://localhost:3000/entries?offset=${offset}&limit=${limit}`;
+    if (filter) {
+      if (filter.tag) {
+        url += `&tag=${filter.tag}`;
+      }
+      if (filter.date) {
+        url += `&date=${filter.date}`;
+      }
+    }
+    return this.authHttp.get(url).map(resp => resp.json());
   }
 
   getJournalMetadata(): Observable<JournalMetadata> {

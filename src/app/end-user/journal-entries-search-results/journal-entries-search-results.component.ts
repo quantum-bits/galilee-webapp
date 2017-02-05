@@ -1,15 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-
-import * as moment from 'moment';
 
 import {DeleteJournalEntryModalComponent} from '../delete-journal-entry-modal';
 
 import {JournalEntry} from '../../shared/models/journal-entry.model';
-import {JournalEntries, JournalEntryFilter} from '../../shared/interfaces/journal-entries.interface';
+import {JournalMetadata, JournalEntryFilter} from '../../shared/interfaces/journal-entries.interface';
 import {JournalService} from '../../shared/services/journal.service';
+import {Tag} from "../../shared/interfaces/tag.interface";
 
-const DEFAULT_NUMBER_ENTRIES = 2; // default number of entries to show
+const ENTRIES_PER_LOAD = 3;
 
 @Component({
   selector: 'app-journal-entries-search-results',
@@ -20,98 +19,74 @@ export class JournalEntriesSearchResultsComponent implements OnInit {
 
   @ViewChild('deleteEntryModal') modal: DeleteJournalEntryModalComponent;
 
-  //private journalEntriesData: JournalEntries; not currently being used
-  private journalEntries: JournalEntry[];
+  private journalEntries: Array<JournalEntry> = [];
+  private journalMetadata: JournalMetadata = {
+    totalEntries: 0,
+    mostUsedTags: [],
+    allUsedTags: [],
+    calendarJournalEntries: {}
+  };
+  private offset: number = 0;
 
-  private startIndex: number = 0;
-  //private count: number = DEFAULT_NUMBER_ENTRIES;
-  private maxEntriesToShow: number = DEFAULT_NUMBER_ENTRIES;
-  private searchParams: JournalEntryFilter = {};
+  private filter: JournalEntryFilter = {};
+  private userTags: Array<Tag> = [];
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private journalService: JournalService) {
-    journalService.journalEntryToBeDeleted$.subscribe(
-      journalEntryID => {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private journalService: JournalService) {
+    journalService.journalEntryToBeDeleted$
+      .subscribe(journalEntryID => {
         this.launchDeleteEntryModal(journalEntryID);
       });
   }
 
   ngOnInit() {
-
-    // Capture the session ID if available
-
-    console.log('inside oninit for search results comp');
     this.route.queryParams.subscribe(params => {
-      console.log('query params: ');
-      console.log(params);
-      this.searchParams = params;
-      this.journalService.getJournalEntries(this.startIndex, DEFAULT_NUMBER_ENTRIES, params)
-        .subscribe(
-          journalEntriesData=> {
-            this.journalEntries = [];
-            for (let entry of journalEntriesData.entries) {
-              this.journalEntries.push(new JournalEntry(entry));//need to use the constructor, etc., if want access to the methods
-            }
-          },
-          error => {
-            console.log(error);
-            //this.modal.openModal();
-          }
-        );
-      },
-      error => {
-        console.log(error);
-        //this.modal.openModal();
-      }
-    );
-  }
+      this.filter = params;
+    });
 
-  launchDeleteEntryModal(entryID: number){
-    console.log(entryID);
-    this.modal.openModal(entryID);
-  }
+    this.journalService.getUserTags().subscribe(tags => {
+      this.userTags = tags;
+    });
 
-  deleteEntry(entryID: number) {
-    console.log(entryID);
-    //
-    //TODO: delete journal entry via service; then reload this page
-  }
+    this.journalService.getJournalMetadata().subscribe(metadata => {
+      this.journalMetadata = metadata
+    });
 
-  updateEntry(entryID: number){
-    this.router.navigate(['/end-user/journal-entry', entryID]);
-  }
-
-  moreEntriesMayExist(){
-    if (this.journalEntries.length === this.maxEntriesToShow) {
-      return true;
-    } else {
-      return false;
-    }
+    this.loadMoreEntries();
   }
 
   loadMoreEntries() {
-    if (this.moreEntriesMayExist()) {
-      this.maxEntriesToShow = this.maxEntriesToShow + DEFAULT_NUMBER_ENTRIES;
-      this.journalService.getJournalEntries(this.maxEntriesToShow - DEFAULT_NUMBER_ENTRIES, DEFAULT_NUMBER_ENTRIES)
-        .subscribe(
-          journalEntriesData=> {
-            //this.journalEntries = [];
-            let newJournalEntries = [];
-            for (let entry of journalEntriesData.entries) {
-              newJournalEntries.push(new JournalEntry(entry));
-            }
-            this.journalEntries = newJournalEntries.concat(this.journalEntries);
-          },
-          error => {
-            console.log(error);
-            //this.modal.openModal();
-          }
-        );
-    }
+    this.journalService.getJournalEntries(this.offset, ENTRIES_PER_LOAD, this.filter)
+      .subscribe(result => {
+        result.entries.map(entry => this.journalEntries.push(new JournalEntry(entry)));
+        this.offset += result.count;
+      })
   }
 
+  findTagLabel(tagId: number): string {
+    return this.userTags.find(tag => tag.id === +tagId).label;
+  }
 
+  haveMoreEntries() {
+    return (this.journalEntries.length < this.journalMetadata.totalEntries);
+  }
 
+  launchDeleteEntryModal(entryID: number) {
+    this.modal.openModal(entryID);
+  }
+
+  deleteEntry(entryId: number) {
+    this.journalService.deleteEntry(entryId)
+      .subscribe(result => {
+        const index = this.journalEntries.findIndex(entry => entry.id === entryId);
+        if (index >= 0) {
+          this.journalEntries.splice(index, 1);
+        }
+      });
+  }
+
+  updateEntry(entryID: number) {
+    this.router.navigate(['/end-user/journal-entry', entryID]);
+  }
 }
