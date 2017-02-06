@@ -5,7 +5,7 @@ import {Observable} from 'rxjs/Rx';
 import {AuthHttp} from 'angular2-jwt';
 
 import {Reading} from '../models/reading.model';
-import {ReadingsData} from '../interfaces/readings-data.interface';
+import {ReadingDay} from '../interfaces/readings.interface';
 import {CalendarEntries} from '../interfaces/calendar-entries.interface';
 
 // TODO: Move this to a shared module.
@@ -16,7 +16,7 @@ function todaysDate(): string {
 @Injectable()
 export class ReadingService {
 
-  private readingsData: ReadingsData;
+  private readingsData: ReadingDay;
   private RCLDate: Date; // keeps track of the RCL date that the user is currently looking at (since this could be different than today's date)
 
   constructor(private http: Http, private authHttp: AuthHttp) {
@@ -43,7 +43,7 @@ export class ReadingService {
       .map(res => res.json());
   }
 
-  storeReadings(readingsData: ReadingsData){
+  storeReadings(readingsData: ReadingDay){
     this.readingsData = readingsData;
   }
 
@@ -58,7 +58,7 @@ export class ReadingService {
     data already exists in memory, it returns that data instead of making
     a new trip to the db
   */
-  fetchSavedReadings(date: string): Observable<ReadingsData> {
+  fetchSavedReadings(date: string): Observable<ReadingDay> {
     let dateString: string;
     let savedDateString: string;
     if (typeof this.readingsData === 'undefined') {
@@ -114,5 +114,7 @@ export class ReadingService {
       return false;
     }
   }
+
+
 
 }

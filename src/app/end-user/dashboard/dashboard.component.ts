@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 
 import * as moment from 'moment';
 
-import {ReadingsData} from '../../shared/interfaces/readings-data.interface';
+import {ReadingDay} from '../../shared/interfaces/readings.interface';
 import {GroupPostData} from '../../shared/models/group-post-data.model';
 //import {Post} from '../../shared/models/post.model';
 
@@ -24,7 +24,7 @@ export class DashboardComponent implements OnInit {
 
   private RCLDate: Date;
   private days: any;
-  private readingsData: ReadingsData;
+  private readingsData: ReadingDay;
   private multiGroupPostData: GroupPostData[];
 
   private maxNumberPosts = MAX_NUMBER_POSTS;

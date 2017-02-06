@@ -1,19 +1,16 @@
-import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
+import {Component, OnInit, OnChanges, Input, Output, EventEmitter} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
+import {DailyQuestion} from '../../../shared/interfaces/readings.interface';
 
 @Component({
   selector: 'app-update-question-form',
   templateUrl: './update-question-form.component.html',
   styleUrls: ['./update-question-form.component.css']
 })
-export class UpdateQuestionFormComponent implements OnInit, OnChanges {
+export class UpdateQuestionFormComponent implements OnChanges {
 
-  @Input() question: string = null;
+  @Input() question: DailyQuestion = null;
   @Input() questionIndex: number; //the array index for the question
   @Input() incrementer: number;
   @Output() submitSuccess = new EventEmitter();
@@ -24,27 +21,25 @@ export class UpdateQuestionFormComponent implements OnInit, OnChanges {
 
   private isNewQuestion: boolean;
 
-  constructor(private formBuilder: FormBuilder) { }
-
-  ngOnInit() {
+  constructor(private formBuilder: FormBuilder) {
   }
 
-  ngOnChanges(){
+  ngOnChanges() {
     console.log('QUESTION: ', this.question);
     this.initializeForm();
   }
 
-  initializeForm(){
+  initializeForm() {
     let questionFormData: any;
-    if ((this.question === null)||(this.question === undefined)){
+    if ((this.question === null) || (this.question === undefined)) {
       this.isNewQuestion = true;
       questionFormData = {
         question: null,
       };
     } else {
       this.isNewQuestion = false;
-      questionFormData = {
-        question: this.question
+        questionFormData = {
+        question: this.question.text
       };
     }
 
@@ -54,15 +49,16 @@ export class UpdateQuestionFormComponent implements OnInit, OnChanges {
     console.log(this.questionForm);
   }
 
-  onSubmit(){
+  onSubmit() {
+    this.question.text = this.questionForm.value.question;
     let questionData = {
       index: this.questionIndex,
-      question: this.questionForm.value.question
+      question: this.question
     }
     this.submitSuccess.next(questionData);
   }
 
-  onCancel(){
+  onCancel() {
     this.closeModal();
   }
 
@@ -73,5 +69,4 @@ export class UpdateQuestionFormComponent implements OnInit, OnChanges {
   closeModal() {
     this.modalActions.emit({action: "modal", params: ['close']});
   }
-
 }

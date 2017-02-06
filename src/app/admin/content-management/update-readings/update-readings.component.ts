@@ -2,16 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 
 import * as moment from 'moment';
 
-import {IReading, ReadingsData} from '../../../shared/interfaces/readings-data.interface';
+import {IReading, ReadingDay} from '../../../shared/interfaces/readings.interface';
 import {Application} from '../../../shared/interfaces/application.interface';
 
 import {ReadingService} from '../../../shared/services/reading.service';
-//import {PracticeService} from '../../../shared/services/practice.service';
-
-//import {UpdatePracticeFormComponent} from '../update-practice-form/update-practice-form.component';
-
 import {CalendarEntries} from '../../../shared/interfaces/calendar-entries.interface';
-
+import {DailyQuestion} from '../../../shared/interfaces/readings.interface';
 
 @Component({
   selector: 'app-update-readings',
@@ -23,9 +19,9 @@ export class UpdateReadingsComponent implements OnInit {
   //@ViewChild('updatePractice') modal: UpdatePracticeFormComponent;
 
   private calendarReadings: CalendarEntries = {};
-  private readingsData: ReadingsData = null;
+  private readingsData: ReadingDay = null;
   private dateString: string = null;
-  private questions: string[] = null;
+  private questions: Array<DailyQuestion> = [];
 
   private reading: IReading = null;
 

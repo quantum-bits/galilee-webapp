@@ -9,9 +9,15 @@ export interface IReading {
   applications?: any;
 }
 
-export interface ReadingsData {
-  date: string;
+export interface DailyQuestion {
   id: number;
-  questions?: string[];
-  readings: IReading[];
+  seq: number;
+  text: string;
+}
+
+export interface ReadingDay {
+  id: number;
+  date: string;
+  questions: Array<DailyQuestion>;
+  readings: Array<IReading>;
 }

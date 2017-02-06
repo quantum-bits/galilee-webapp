@@ -5,7 +5,7 @@ import {UpdateReadingFormComponent} from '../update-reading-form/update-reading-
 
 import {DisplayReadingModalComponent} from '../display-reading-modal/display-reading-modal.component';
 import {DeleteItemModalComponent} from '../../../shared/components/delete-item-modal/delete-item-modal.component';
-import {IReading, ReadingsData} from '../../../shared/interfaces/readings-data.interface';
+import {IReading, ReadingDay} from '../../../shared/interfaces/readings.interface';
 import {Application} from '../../../shared/interfaces/application.interface';
 import {ApplicationFormData} from '../../../shared/interfaces/application-form-data.interface';
 
@@ -56,7 +56,7 @@ const PRACTICE_GENERAL_INFO = [
 export class UpdateReadingsListComponent implements OnInit {
 
   @Input() dateString: string;
-  @Input() readingsData: ReadingsData;
+  @Input() readingsData: ReadingDay;
   @Output() launchAddPracticeForm = new EventEmitter<number>();
 
   @ViewChild('displayReadingModal') modal: DisplayReadingModalComponent;
