@@ -41,7 +41,7 @@
 
 <app-delete-item-modal
   #deleteQuestionModal
-  [header]="'Delete Question: '+singleQuestion"
+  [header]="'Delete Question: '+singleQuestionText"
   [message]="'Are you sure you want to delete this question?  This action is not reversible.'"
   (deleteItem)="onDeleteQuestion($event)">
 </app-delete-item-modal>

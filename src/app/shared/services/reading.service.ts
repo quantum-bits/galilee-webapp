@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 
 import {Observable} from 'rxjs/Rx';
+import {Subject}    from 'rxjs/Subject';
 import {AuthHttp} from 'angular2-jwt';
 
 import {Reading} from '../models/reading.model';
@@ -17,8 +18,16 @@ function todaysDate(): string {
 @Injectable()
 export class ReadingService {
 
-  private readingsData: ReadingDay;
+  private readingsData: ReadingDay = null;
   private RCLDate: Date; // keeps track of the RCL date that the user is currently looking at (since this could be different than today's date)
+
+  // Observable string source; used for various subcomponents to inform
+  // update-readings that readings have been updated in the db and it is
+  // time to refetch data
+  private updateReadingsRefreshSource = new Subject();
+
+  // Observable string stream
+  updateReadingsRefresh$ = this.updateReadingsRefreshSource.asObservable();
 
   constructor(private http: Http, private authHttp: AuthHttp) {
   }
@@ -48,6 +57,10 @@ export class ReadingService {
     this.readingsData = readingsData;
   }
 
+  dumpStoredReadings() {
+    this.readingsData = null;
+  }
+
   getReadingMetadata(): Observable<CalendarEntries> {
     return this.authHttp
       .get('http://localhost:3000/readings/meta')
@@ -62,7 +75,7 @@ export class ReadingService {
   fetchSavedReadings(date: string): Observable<ReadingDay> {
     let dateString: string;
     let savedDateString: string;
-    if (typeof this.readingsData === 'undefined') {
+    if (this.readingsData === null) {
       // if readingsData doesn't exist, go get it
       return this.http
         .get(`http://localhost:3000/daily/${date}`)
@@ -98,6 +111,12 @@ export class ReadingService {
           });
       }
     }
+  }
+
+  // Service message command
+  announceReadingsRefresh() {
+    this.dumpStoredReadings();
+    this.updateReadingsRefreshSource.next('time to refresh data');
   }
 
   setRCLDate(date: Date) {

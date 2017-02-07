@@ -21,6 +21,7 @@ export class UpdateQuestionsListComponent implements OnInit, OnChanges {
 
   private incrementer: number = 0;
   private singleQuestion: DailyQuestion;
+  private singleQuestionText: string = null;
   private questionsThisDay: boolean = false; // true if >0 questions already
 
   constructor(private readingService: ReadingService) {
@@ -39,7 +40,7 @@ export class UpdateQuestionsListComponent implements OnInit, OnChanges {
 
   displayDeleteQuestionModal(questionIndex: number) {
     console.log('display delete question modal: ', questionIndex);
-    this.singleQuestion = this.readingDay.questions[questionIndex];
+    this.singleQuestionText = this.readingDay.questions[questionIndex].text;
     this.modalDeleteQuestion.openModal(questionIndex);
   }
 
@@ -56,20 +57,19 @@ export class UpdateQuestionsListComponent implements OnInit, OnChanges {
     this.modalUpdateQuestion.openModal();
   }
 
-  /*
-  onAddQuestion(question: string) {
-    console.log('response: ', question);
-    this.modalUpdateQuestion.closeModal();
-
-
-    //TODO: save to db....
-  }
-  */
-
   onDeleteQuestion(questionIndex: number) {
     console.log('delete questionID: ', questionIndex);
     let questionId = this.readingDay.questions[questionIndex].id;
-    // TODO: do the delete....
+    this.readingService.deleteQuestion(questionId)
+      .subscribe(
+        response => {
+          console.log('response from question delete: ', response);
+          this.readingService.announceReadingsRefresh();
+        },
+        error => {
+          console.log('error: ', error);
+        }
+      )
   }
 
 }

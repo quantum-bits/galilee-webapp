@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
+import { Subscription }   from 'rxjs/Subscription';
 
 import * as moment from 'moment';
 
@@ -15,7 +16,7 @@ import {DailyQuestion} from '../../../shared/interfaces/reading.interface';
   templateUrl: './update-readings.component.html',
   styleUrls: ['./update-readings.component.css']
 })
-export class UpdateReadingsComponent implements OnInit {
+export class UpdateReadingsComponent implements OnInit, OnDestroy {
 
   //@ViewChild('updatePractice') modal: UpdatePracticeFormComponent;
 
@@ -31,10 +32,20 @@ export class UpdateReadingsComponent implements OnInit {
 
   private dateStringCalendarInit = moment(new Date()).format('YYYY-MM-DD');
 
+  subscription: Subscription;
+
   constructor(
     private readingService: ReadingService,
     private route: ActivatedRoute,
-    private router: Router){}
+    private router: Router){
+    this.subscription = this.readingService.updateReadingsRefresh$.subscribe(
+      message => {
+        console.log('received instructions to refresh!');
+        if (this.dateString!==null){
+          this.reloadPageData(this.dateString);
+        }
+      });
+  }
     //},
     //private practiceService: PracticeService) { }
 
@@ -58,6 +69,20 @@ export class UpdateReadingsComponent implements OnInit {
       );
   }
 
+  reloadPageData(dateString: string){
+    this.readingService.getReadingMetadata()
+      .subscribe(
+        calendarReadings => {
+          console.log(calendarReadings);
+          this.calendarReadings = calendarReadings;
+          this.fetchReadings(dateString);
+        },
+        error => {
+          console.log('error: ', error);
+        }
+      );
+  }
+
   daySelected(dateString: string) {
     // do something....
     console.log('dateString: ', dateString);
@@ -68,8 +93,6 @@ export class UpdateReadingsComponent implements OnInit {
     //this.fetchReadings(dateString);
 
   }
-
-
 
   fetchReadings(dateString: string) {
     this.readingService.fetchSavedReadings(dateString)
@@ -96,5 +119,11 @@ export class UpdateReadingsComponent implements OnInit {
         }
       );
   }
+
+  ngOnDestroy() {
+    // prevent memory leak when component destroyed
+    this.subscription.unsubscribe();
+  }
+
 
 }

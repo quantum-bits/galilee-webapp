@@ -75,19 +75,13 @@ export class UpdateQuestionFormComponent implements OnChanges {
     console.log('question to be submitted: ', this.localQuestion);
     console.log('this is a new question?', this.isNewQuestion);
 
-
     if (this.isNewQuestion) { //POST
       console.log('posting....');
       this.readingService.createQuestion(this.localQuestion, this.readingDay)
         .subscribe(
           question => {
             console.log('returned! question:', question);
-
-            let localDateString = moment(this.readingDay.date).format('YYYY-MM-DD');
-            this.router.navigate(['/admin/update-readings', localDateString]);
-
-            // WORKING HERE: use reading service to comm back to readings component and tell it to refresh data
-
+            this.readingService.announceReadingsRefresh();
           },
           error => {
             console.log('error!', error);
@@ -99,10 +93,7 @@ export class UpdateQuestionFormComponent implements OnChanges {
         .subscribe(
           question => {
             console.log('returned! question:', question);
-
-            // WORKING HERE: use reading service to comm back to readings component and tell it to refresh data
-
-
+            this.readingService.announceReadingsRefresh();
           },
           error => {
             console.log('error!', error);
