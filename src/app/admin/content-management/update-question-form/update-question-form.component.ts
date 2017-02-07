@@ -1,7 +1,7 @@
 import {Component, OnInit, OnChanges, Input, Output, EventEmitter} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
-import {DailyQuestion} from '../../../shared/interfaces/readings.interface';
+import {DailyQuestion, ReadingDay} from '../../../shared/interfaces/readings.interface';
 
 @Component({
   selector: 'app-update-question-form',
@@ -11,8 +11,8 @@ import {DailyQuestion} from '../../../shared/interfaces/readings.interface';
 export class UpdateQuestionFormComponent implements OnChanges {
 
   @Input() question: DailyQuestion = null;
-  @Input() questionIndex: number; //the array index for the question
   @Input() incrementer: number;
+  @Input() readingDay: ReadingDay =  null;
   @Output() submitSuccess = new EventEmitter();
 
   modalActions = new EventEmitter();
@@ -30,32 +30,37 @@ export class UpdateQuestionFormComponent implements OnChanges {
   }
 
   initializeForm() {
-    let questionFormData: any;
-    if ((this.question === null) || (this.question === undefined)) {
-      this.isNewQuestion = true;
-      questionFormData = {
-        question: null,
-      };
-    } else {
-      this.isNewQuestion = false;
-        questionFormData = {
-        question: this.question.text
+    //let questionFormData: any;
+    this.isNewQuestion = ((this.question === null) || (this.question === undefined));
+    if (this.isNewQuestion) {
+      this.question = {
+        id: null,
+        seq: null,
+        text: ''
       };
     }
-
     this.questionForm = this.formBuilder.group({
-      question: [questionFormData.question, [<any>Validators.required]]
+      question: [this.question.text, [<any>Validators.required]],
+      seq: [this.question.seq, Validators.compose([<any>Validators.required, this.integerValidator])]
     });
     console.log(this.questionForm);
   }
 
+  integerValidator(control) {
+    //see: http://stackoverflow.com/questions/34072092/generic-mail-validator-in-angular2
+    //http://stackoverflow.com/questions/39799436/angular-2-custom-validator-check-if-the-input-value-is-an-integer
+    let INTEGER_REGEXP = /^([0-9]+)$/;
+    if (!INTEGER_REGEXP.test(control.value)) {
+      return {error: 'This field must be a non-negative integer.'};
+    }
+  }
+
   onSubmit() {
     this.question.text = this.questionForm.value.question;
-    let questionData = {
-      index: this.questionIndex,
-      question: this.question
-    }
-    this.submitSuccess.next(questionData);
+    this.question.seq = +this.questionForm.value.seq;
+    console.log('question to be submitted: ', this.question);
+
+    //hit method in readings service to post/patch; supply question and readingDay
   }
 
   onCancel() {

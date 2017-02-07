@@ -55,14 +55,7 @@ export class UpdateReadingsComponent implements OnInit {
     console.log('dateString: ', dateString);
     this.dateString = dateString;
     //this.fetchReadings()
-    if (dateString in this.calendarReadings) {
-      console.log('we have data, fetching....');
-      this.fetchReadings(dateString);
-    } else {
-      console.log('no data for this date');
-      this.readingsData = null;
-      this.questions = null;
-    }
+    this.fetchReadings(dateString);
   }
 
   fetchReadings(dateString: string) {
@@ -80,6 +73,13 @@ export class UpdateReadingsComponent implements OnInit {
           console.log('error: ', error);
           this.readingsData = null;
           this.questions = null;
+          /*
+          if 404 error, immediately create a new readingDay object
+          in the database, wait for the reply, and then set readingsData to the response;
+          then it will be ready for posting questions/readings, etc.
+           */
+
+
         }
       );
   }
