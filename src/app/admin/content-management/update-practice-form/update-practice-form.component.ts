@@ -23,14 +23,6 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
 
 
 
-  // what should pass into this component?!?  readingId?
-
-
-
-
-
-
-
 
 
 
@@ -49,7 +41,7 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
   public applicationForm: FormGroup; // our model driven form
 
   //private isNewApplication: boolean;
-  private applicationFormData: ApplicationFormData;
+  private applicationFormData: Application;
   private availablePractices: IPractice[] = [];
   private havePracticeTypes: boolean = false;
   //private haveApplication: boolean = false;
@@ -76,39 +68,63 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
     console.log('readingIndex: ', this.readingIndex);
     console.log('applicationIndex: ', this.applicationIndex);
 
+    /*
+
+
+     import {IPractice} from './practice.interface';
+     import {Step} from './step.interface';
+
+     export interface Application {
+     id: number;
+     seq: number;
+     steps: Step[];
+     practice: IPractice;
+     }
+
+     export interface Step {
+     id: number;
+     description: string;
+     applicationId: number;
+     resources?: IResource[];
+     }
+
+     export interface IPractice {
+     id: number;
+     title: string;
+     description: string;
+     summary: string;
+     }
+
+
+     */
+
+
     if (this.isNewApplication) {
       this.applicationFormData = {
         id: null, //for a new application
-        practiceId: null, // will be set in the form
-        readingId: null, //
+        seq: null,
+        practice: {
+          id: null,
+          title: '',
+          description: '',
+          summary: ''
+        },
         steps: [{
           id: null, // for a new application
-          description: ''
+          description: '',
+          applicationId: null,
+          seq: null
         }]
       }
     } else {
-      let stepData = [];
-      let application = this.readingDay.readings[this.readingIndex].applications[this.applicationIndex];
-
-      for (let step of application.steps) {
-        stepData.push({
-          id: step.id, // Note: step.id is not serving any purpose here, since we lose it later anyways; in any case, the server is going to delete everything and start over
-          description: step.description
-        });
-      }
-      this.applicationFormData = {
-        id: application.id,
-        practiceId: application.practice.id, // TODO: check if this is the correct field
-        readingId: application.readingId,
-        steps: stepData
-      }
+      this.applicationFormData = this.readingDay.readings[this.readingIndex].applications[this.applicationIndex];
     }
-
 
     this.determineAvailablePractices();
 
     this.applicationForm = this.formBuilder.group({
-      practiceId: [this.applicationFormData.practiceId, [<any>Validators.required]],
+      practiceId: [this.applicationFormData.practice.id, [<any>Validators.required]],
+      seq: [this.applicationFormData.seq, Validators.compose([<any>Validators.required, this.integerValidator])],
       steps: this.formBuilder.array([
       ])
     });
@@ -143,7 +159,6 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
 
   }
 
-
   initStep(description?: string) {
     // initialize our step
     return this.formBuilder.group({
@@ -163,7 +178,6 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
     control.removeAt(i);
   }
 
-
   integerValidator(control) {
     //see: http://stackoverflow.com/questions/34072092/generic-mail-validator-in-angular2
     //http://stackoverflow.com/questions/39799436/angular-2-custom-validator-check-if-the-input-value-is-an-integer
@@ -174,18 +188,30 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
   }
 
   onSubmit(){
-    this.applicationFormData.practiceId = +this.applicationForm.value.practiceId;
+    let practiceId = +this.applicationForm.value.practiceId;
+    for (let practice of this.allPractices) {
+      if (practice.id === practiceId){
+        this.applicationFormData.practice = practice;
+      }
+    }
+    this.applicationFormData.seq = +this.applicationForm.value.seq;
     let stepData = [];
+    let counter = 0;
     for (let step of this.applicationForm.value.steps){
+      counter++;
       stepData.push({
         id: null,// let the server figure this out
-        description: step.description
+        seq: counter,
+        description: step.description,
+        applicationId: null //let the server figure this out(?)
       });
     }
     this.applicationFormData['steps']=stepData;
 
+    console.log('final application object: ', this.applicationFormData);
     // hit method in service to post/patch data
     //this.submitSuccess.next(this.applicationFormData);
+
   }
 
   onCancel(){
@@ -199,7 +225,6 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
   closeModal() {
     this.modalActions.emit({action: "modal", params: ['close']});
   }
-
 
 
 
