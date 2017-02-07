@@ -1,5 +1,5 @@
 import {Post} from './post.model';
-import {IGroupPostData} from '../interfaces/group-post-data.interface';
+import {IGroupPostData} from '../interfaces/post.interface';
 import {PostQueryFilters} from '../interfaces/post-query-filters.interface';
 
 export class GroupPostData implements IGroupPostData {

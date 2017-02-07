@@ -3,11 +3,11 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Subject}    from 'rxjs/Subject';
 
-import {IPost} from '../interfaces/post.interface';
-import {IGroupPostData} from '../interfaces/group-post-data.interface';
+import {IGroupPostData} from '../interfaces/post.interface';
 import {PostQueryFilters} from '../interfaces/post-query-filters.interface';
 import {Post} from "../models/post.model";
 import {AuthHttp} from "angular2-jwt";
+import {UserService} from "../../authentication/user.service";
 
 //import {JournalEntryFilter} from '../interfaces/journal-entry-query-filters.interface';
 
@@ -208,13 +208,19 @@ export class PostService {
   // Observable string streams
   postToBeDeleted$ = this.postToBeDeletedSource.asObservable();
 
-  constructor(private authHttp: AuthHttp) {
+  constructor(private authHttp: AuthHttp,
+              private userService: UserService) {
 
   }
 
   // fetches recent posts for all groups of which the user is a member, up to a certain
   // max # of posts per group
   getPostsAllGroups(maxNumber: number): Observable<Array<IGroupPostData>> {
+    user
+    return this.authHttp
+      .get(`http://localhost:3000/posts?groupId=${groupId}`)
+      .map(resp => resp.json());
+
     var promise = Promise.resolve(GROUP_POSTS);
     return Observable.fromPromise(promise);
   }
@@ -238,12 +244,6 @@ export class PostService {
       var promise = Promise.resolve(POST_DATA_GROUP1);
       return Observable.fromPromise(promise);
     }
-  }
-
-  getGroupPosts(groupId: number): Observable<Array<Post>> {
-    return this.authHttp
-      .get(`http://localhost:3000/posts?groupId=${groupId}`)
-      .map(resp => resp.json());
   }
 
   // Service message commands

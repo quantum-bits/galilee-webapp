@@ -11,3 +11,11 @@ export interface IPost {
   // TODO: add name for user so can include that in the post
   group_id: number;
 }
+
+export interface IGroupPostData {
+  startIndex: number;
+  count: number;
+  group_id: number;
+  group_name: string;
+  posts: IPost[];
+}

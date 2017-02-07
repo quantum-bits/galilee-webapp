@@ -1,5 +1,16 @@
 import {Permission} from './permission.model';
 
+export interface Organization {
+  id: number;
+  name: string;
+}
+
+export interface Group {
+  id: number;
+  name: string;
+  organization: Organization;
+}
+
 export class User {
   id: number;
   email: string;
@@ -9,6 +20,7 @@ export class User {
   enabled: boolean;
   preferredVersionID: number;
   permissions: Array<Permission>;
+  groups: Array<Group>;
 
   constructor(obj){
     this.id = obj.id;
@@ -18,8 +30,9 @@ export class User {
     this.joinedOn = obj.joinedOn;
     this.enabled = obj.enabled;
     this.preferredVersionID = obj.preferredVersionId;
-    this.permissions = [];
 
+    // TODO: This can probably be simplified.
+    this.permissions = [];
     obj.permissions.forEach(permission => {
       this.permissions.push(new Permission(permission));
     });
