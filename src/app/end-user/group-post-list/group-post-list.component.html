@@ -1,57 +1,57 @@
 <div *ngIf="groupPostData">
 
-<div *ngIf="!groupNameInTitleBar">
-  <h5>{{groupPostData.group_name}}</h5>
-</div>
-<ul class="collection with-header">
   <div *ngIf="!groupNameInTitleBar">
-    <li class="collection-header">
-      <h5>Recent Forum Posts</h5>
-    </li>
+    <h5>{{groupPostData.group_name}}</h5>
+  </div>
+  <ul class="collection with-header">
+    <div *ngIf="!groupNameInTitleBar">
+      <li class="collection-header">
+        <h5>Recent Forum Posts</h5>
+      </li>
 
-  </div>
-  <div *ngIf="groupNameInTitleBar">
-    <li class="collection-header">
-      <h5>{{groupPostData.group_name}}
-        <a materialize="dropdown"
-           class="dropdown-button right"
-           [attr.data-activates]="'groupPostDataDropdown'+groupPostData.group_id"
-        >
-          <i class="material-icons white-text">filter_list</i>
-        </a>
-      </h5>
+    </div>
+    <div *ngIf="groupNameInTitleBar">
+      <li class="collection-header">
+        <h5>{{groupPostData.group_name}}
+          <a materialize="dropdown"
+             class="dropdown-button right"
+             [attr.data-activates]="'groupPostDataDropdown'+groupPostData.group_id"
+          >
+            <i class="material-icons white-text">filter_list</i>
+          </a>
+        </h5>
+      </li>
+    </div>
+    <li *ngFor="let post of filteredPostList" class="collection-item avatar">
+      <img src="app/images_temp/face_image.png" alt="" class="circle">
+      <app-post-item
+        [post]="post"
+        [closed]="postsClosed"
+        [openable]=false
+      >
+      </app-post-item>
     </li>
-  </div>
-  <li *ngFor="let post of filteredPostList" class="collection-item avatar">
-    <img src="app/images_temp/face_image.png" alt="" class="circle">
-    <app-post-item
-      [post]="post"
-      [closed]="postsClosed"
-      [openable]=false
-    >
-    </app-post-item>
-  </li>
-  <!--
-  <li class="collection-item">
-    <span class="left-align">
-      <a class="waves-effect waves-light btn">new post</a>
-    </span>
-    <span class="right-align">
-      <a class="waves-effect waves-light btn">all posts</a>
-    </span>
-  </li>
--->
-  <li class="collection-item">
+    <!--
+    <li class="collection-item">
+      <span class="left-align">
+        <a class="waves-effect waves-light btn">new post</a>
+      </span>
+      <span class="right-align">
+        <a class="waves-effect waves-light btn">all posts</a>
+      </span>
+    </li>
+  -->
+    <li class="collection-item">
     <span>
       <a (click)="newPost()" class="waves-effect waves-light btn">New Post</a>
     </span>
-    <span class="right">
+      <span class="right">
       <a (click)="goToPostDashboard()" class="waves-effect waves-light btn">All Posts</a>
     </span>
-  </li>
+    </li>
 
 
-</ul>
+  </ul>
 
 </div>
 
@@ -60,7 +60,6 @@
   <li><a (click)="dropFilters()">all</a></li>
   <li><a (click)="filterListThisReading()">this passage</a></li>
 </ul>
-
 
 
 <!--

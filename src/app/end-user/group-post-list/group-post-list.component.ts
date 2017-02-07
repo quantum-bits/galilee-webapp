@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, OnInit, Input, OnChanges} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { Post } from '../../shared/models/post.model';
+import {Post} from '../../shared/models/post.model';
 import {GroupPostData} from '../../shared/models/group-post-data.model';
 import {PostQueryFilters} from '../../shared/interfaces/post-query-filters.interface';
 
@@ -21,7 +21,8 @@ export class GroupPostListComponent implements OnInit, OnChanges {
   private postQueryFilters: PostQueryFilters;
   private filteredPostList: Post[];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {
+  }
 
   ngOnInit() {
     console.log('inside oninit for grouppostlistcomp');
@@ -36,7 +37,7 @@ export class GroupPostListComponent implements OnInit, OnChanges {
     console.log('change occurred!', this.filteredPostList);
   }
 
-  initializeFilters(){
+  initializeFilters() {
     this.postQueryFilters = {
       group_id: this.groupPostData.groupID(),
     }
@@ -48,7 +49,7 @@ export class GroupPostListComponent implements OnInit, OnChanges {
     this.initializeFilters();
   }
 
-  filterListThisReading(){
+  filterListThisReading() {
     console.log('about to filter posts; reading ID is: ', this.readingID);
     this.postQueryFilters = {
       group_id: this.groupPostData.groupID(),
@@ -58,11 +59,11 @@ export class GroupPostListComponent implements OnInit, OnChanges {
     console.log('back from the method call; here is the filtered post list: ', this.filteredPostList);
   }
 
-  newPost(){
+  newPost() {
     this.router.navigate(['/end-user/post-entry']);
   }
 
-  goToPostDashboard(){
+  goToPostDashboard() {
     this.router.navigate(['/end-user/post']);
   }
 

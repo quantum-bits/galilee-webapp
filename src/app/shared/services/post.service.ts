@@ -1,11 +1,13 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 import {Observable} from 'rxjs/Observable';
-import { Subject }    from 'rxjs/Subject';
+import {Subject}    from 'rxjs/Subject';
 
 import {IPost} from '../interfaces/post.interface';
 import {IGroupPostData} from '../interfaces/group-post-data.interface';
 import {PostQueryFilters} from '../interfaces/post-query-filters.interface';
+import {Post} from "../models/post.model";
+import {AuthHttp} from "angular2-jwt";
 
 //import {JournalEntryFilter} from '../interfaces/journal-entry-query-filters.interface';
 
@@ -13,8 +15,8 @@ import {PostQueryFilters} from '../interfaces/post-query-filters.interface';
 const POST_ENTRY = {
   id: 1,
   title: 'What did you think?',
-  entry: 'What did everybody think of the reading for today?'+
-  'After I read this, I thought about some things. '+
+  entry: 'What did everybody think of the reading for today?' +
+  'After I read this, I thought about some things. ' +
   'unde omnis iste natus error sit voluptatem accusantium ' +
   'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
   'ab illo inventore veritatis et quasi architecto beatae vitae ' +
@@ -37,8 +39,8 @@ const POST_ENTRIES = [
   {
     id: 1,
     title: 'What did you think?',
-    entry: 'What did everybody think of the reading for today?'+
-    'After I read this, I thought about some things. '+
+    entry: 'What did everybody think of the reading for today?' +
+    'After I read this, I thought about some things. ' +
     'unde omnis iste natus error sit voluptatem accusantium ' +
     'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
     'ab illo inventore veritatis et quasi architecto beatae vitae ' +
@@ -58,8 +60,8 @@ const POST_ENTRIES = [
   },
   {
     id: 2,// entry with no title
-    entry: 'What did everybody think of the reading for today?'+
-    'After I read this, I thought about some things. '+
+    entry: 'What did everybody think of the reading for today?' +
+    'After I read this, I thought about some things. ' +
     'unde omnis iste natus error sit voluptatem accusantium ' +
     'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
     'ab illo inventore veritatis et quasi architecto beatae vitae ' +
@@ -80,8 +82,8 @@ const POST_ENTRIES = [
   {
     id: 3,
     title: 'The reading today really helped me understand something',
-    entry: 'Here is what I have been thinking about. '+
-    'After I read this, I thought about some things. '+
+    entry: 'Here is what I have been thinking about. ' +
+    'After I read this, I thought about some things. ' +
     'unde omnis iste natus error sit voluptatem accusantium ' +
     'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
     'ab illo inventore veritatis et quasi architecto beatae vitae ' +
@@ -101,8 +103,8 @@ const POST_ENTRIES = [
   },
   {
     id: 4,// entry with no title
-    entry: 'What did everybody think of the reading for today?'+
-    'After I read this, I thought about some things. '+
+    entry: 'What did everybody think of the reading for today?' +
+    'After I read this, I thought about some things. ' +
     'unde omnis iste natus error sit voluptatem accusantium ' +
     'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
     'ab illo inventore veritatis et quasi architecto beatae vitae ' +
@@ -124,8 +126,8 @@ const POST_ENTRIES2 = [
   {
     id: 1,
     title: 'Here are some thoughts that I had',
-    entry: 'You know how sometimes you think like....'+
-    'After I read this, I thought about some things. '+
+    entry: 'You know how sometimes you think like....' +
+    'After I read this, I thought about some things. ' +
     'unde omnis iste natus error sit voluptatem accusantium ' +
     'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
     'ab illo inventore veritatis et quasi architecto beatae vitae ' +
@@ -143,8 +145,8 @@ const POST_ENTRIES2 = [
   },
   {
     id: 2,// entry with no title
-    entry: 'What did everybody think of the reading for today?'+
-    'After I read this, I thought about some things. '+
+    entry: 'What did everybody think of the reading for today?' +
+    'After I read this, I thought about some things. ' +
     'unde omnis iste natus error sit voluptatem accusantium ' +
     'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
     'ab illo inventore veritatis et quasi architecto beatae vitae ' +
@@ -163,7 +165,6 @@ const POST_ENTRIES2 = [
     group_id: 2
   }
 ]
-
 
 
 const POST_DATA_GROUP1 = {
@@ -207,7 +208,9 @@ export class PostService {
   // Observable string streams
   postToBeDeleted$ = this.postToBeDeletedSource.asObservable();
 
-  constructor() { }
+  constructor(private authHttp: AuthHttp) {
+
+  }
 
   // fetches recent posts for all groups of which the user is a member, up to a certain
   // max # of posts per group
@@ -237,15 +240,16 @@ export class PostService {
     }
   }
 
-
+  getGroupPosts(groupId: number): Observable<Array<Post>> {
+    return this.authHttp
+      .get(`http://localhost:3000/posts?groupId=${groupId}`)
+      .map(resp => resp.json());
+  }
 
   // Service message commands
   announceDeletion(postID: number) {
     this.postToBeDeletedSource.next(postID);
   }
-
-
-
 
 
 }
