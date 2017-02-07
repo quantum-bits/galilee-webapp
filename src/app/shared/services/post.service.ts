@@ -216,13 +216,10 @@ export class PostService {
   // fetches recent posts for all groups of which the user is a member, up to a certain
   // max # of posts per group
   getPostsAllGroups(maxNumber: number): Observable<Array<IGroupPostData>> {
-    user
+    const user = this.userService.getCurrentUser();
     return this.authHttp
-      .get(`http://localhost:3000/posts?groupId=${groupId}`)
+      .get(`http://localhost:3000/posts?userId=${user.id}`)
       .map(resp => resp.json());
-
-    var promise = Promise.resolve(GROUP_POSTS);
-    return Observable.fromPromise(promise);
   }
 
   // within a certain group, need to be able to load posts (or more posts) by:
