@@ -6,10 +6,12 @@ import {UpdateReadingFormComponent} from '../update-reading-form/update-reading-
 import {DisplayReadingModalComponent} from '../display-reading-modal/display-reading-modal.component';
 import {DeleteItemModalComponent} from '../../../shared/components/delete-item-modal/delete-item-modal.component';
 import {IReading, ReadingDay} from '../../../shared/interfaces/reading.interface';
+import {Practice} from '../../../shared/models/practice.model';
+
 import {Application} from '../../../shared/interfaces/application.interface';
 import {ApplicationFormData} from '../../../shared/interfaces/application-form-data.interface';
 
-import {PracticeService} from '../../../shared/services/practice.service';
+import {ReadingService} from '../../../shared/services/reading.service';
 
 const PRACTICE_GENERAL_INFO = [
   {
@@ -65,9 +67,7 @@ export class UpdateReadingsListComponent implements OnInit {
   @ViewChild('updateApplicationModal') modalUpdateApplication: UpdatePracticeFormComponent;
   @ViewChild('updateReadingModal') modalUpdateReading: UpdateReadingFormComponent;
 
-
-  //TODO: fix!
-  private availablePractices = PRACTICE_GENERAL_INFO;
+  private allPractices: Practice[];
 
   private singleReading: IReading;
   private singleReadingStdRef: string='';
@@ -76,33 +76,39 @@ export class UpdateReadingsListComponent implements OnInit {
   private application: Application;
   private incrementer: number = 0;
 
-  constructor(private practiceService: PracticeService) { }
+  private readingIndex: number = null;
+  private applicationIndex: number = null;
+  private isNewApplication: boolean = true;
+
+
+  constructor(private readingService: ReadingService) { }
 
   ngOnInit() {
-
+    this.fetchPractices();
   }
 
   fetchPractices(){
-    this.practiceService.getPractices()
+    this.readingService.readAllPractices()
       .subscribe(
         practices => {
-          console.log('PRACTICES: ', practices);
+          this.allPractices = practices;
+          console.log('ALL PRACTICES: ', this.allPractices);
         }
       )
   }
 
-  launchNewPracticeModal(reading: IReading){
-    this.application = null;
-    this.readingID = reading.id;
+  launchNewPracticeModal(readingIndex: number){
+    this.readingIndex = readingIndex;
+    this.applicationIndex = null;
+    this.isNewApplication = true;
     this.incrementer++;
     this.modalUpdateApplication.openModal();
-    //this.launchAddPracticeForm.emit(readingIndex);
   }
 
-  launchEditPracticeModal(application: Application){
-    console.log('TIME TO LAUNCH THE PRACTICE FORM!!! APPLICATION: ', application);
-    this.application = application;
-    this.singleReading = null;
+  launchEditPracticeModal(eventData){
+    this.readingIndex = eventData.readingIndex;
+    this.applicationIndex = eventData.applicationIndex;
+    this.isNewApplication = false;
     this.incrementer++;
     this.modalUpdateApplication.openModal();
   }

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 
-import {IReading} from '../../../shared/interfaces/reading.interface';
+import {IReading, ReadingDay} from '../../../shared/interfaces/reading.interface';
 
 import {Application} from '../../../shared/interfaces/application.interface';
 import {ApplicationFormData} from '../../../shared/interfaces/application-form-data.interface';
@@ -14,10 +14,26 @@ import {IPractice} from '../../../shared/interfaces/practice.interface';
   styleUrls: ['./update-practice-form.component.css']
 })
 export class UpdatePracticeFormComponent implements OnInit, OnChanges {
-  @Input() readingId: number; // this information if included in the application, if this is an update
-  @Input() application: Application = null; //null if new; otherwise it comes in from the parent component
-  @Input() availablePractices: IPractice[] = []; //practices that have not yet been used for this application (not including the current one, if this is an update)
-  @Input() incrementer: number;
+  @Input() readingDay: ReadingDay = null;
+  @Input() readingIndex: number = null; //index of the reading in the readings array (within readingDay)
+  @Input() applicationIndex: number = null; //index of the application in the applications array (within readingDay); application index will be null/ignored if this is a new entry
+  @Input() isNewApplication: boolean; //true if new, false for an update of an existing application
+  @Input() allPractices: IPractice[] = []; //this does not actually seem to initialize it to []
+  @Input() incrementer: number = 0;
+
+
+
+  // what should pass into this component?!?  readingId?
+
+
+
+
+
+
+
+
+
+
 
   modalActions = new EventEmitter();
 
@@ -32,8 +48,12 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
 
   public applicationForm: FormGroup; // our model driven form
 
-  private isNewApplication: boolean;
+  //private isNewApplication: boolean;
   private applicationFormData: ApplicationFormData;
+  private availablePractices: IPractice[] = [];
+  private havePracticeTypes: boolean = false;
+  //private haveApplication: boolean = false;
+  private haveReadingDay: boolean = false;
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -41,46 +61,54 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    console.log('APPLICATION: ', this.application);
-    console.log('available practices: ', this.availablePractices);
-    console.log('READING ID: ', this.readingId);
+    console.log('INSIDE FORM! Change....');
+    //console.log('APPLICATION: ', this.application);
+    console.log('AVAILABLE practices: ', this.allPractices);
+    console.log('READINGS Data: ', this.readingDay);
+    this.havePracticeTypes = !((this.allPractices === null)||(typeof this.allPractices === 'undefined'));
+    //this.haveApplication = !((this.application === null)||(typeof this.application === 'undefined'));
+    this.haveReadingDay = !((this.readingDay === null)||(typeof this.readingDay === 'undefined'));
     this.initializeForm();
   }
 
   initializeForm(){
-    console.log('application coming into form: ', this.application);
-    if((this.application === null)||(this.application === undefined)){
-      this.isNewApplication = true;
+    console.log('INITIALIZE form; readingDay is: ', this.readingDay);
+    console.log('readingIndex: ', this.readingIndex);
+    console.log('applicationIndex: ', this.applicationIndex);
+
+    if (this.isNewApplication) {
       this.applicationFormData = {
         id: null, //for a new application
-        practiceTypeId: null,//will be set in the form
-        practiceId: null, // for a new application/practice
-        readingId: this.readingId,//TODO: may need to think about this....
+        practiceId: null, // will be set in the form
+        readingId: null, //
         steps: [{
           id: null, // for a new application
           description: ''
         }]
       }
     } else {
-      this.isNewApplication = false;
       let stepData = [];
-      for (let step of this.application.steps) {
+      let application = this.readingDay.readings[this.readingIndex].applications[this.applicationIndex];
+
+      for (let step of application.steps) {
         stepData.push({
           id: step.id, // Note: step.id is not serving any purpose here, since we lose it later anyways; in any case, the server is going to delete everything and start over
           description: step.description
         });
       }
       this.applicationFormData = {
-        id: this.application.id,
-        practiceTypeId: this.application.practiceId, // TODO: check if this is the correct field
-        practiceId: this.application.practice.id, // TODO: check if this is the correct field
-        readingId: this.application.readingId,
+        id: application.id,
+        practiceId: application.practice.id, // TODO: check if this is the correct field
+        readingId: application.readingId,
         steps: stepData
       }
     }
 
+
+    this.determineAvailablePractices();
+
     this.applicationForm = this.formBuilder.group({
-      practiceTypeId: [this.applicationFormData.practiceTypeId, [<any>Validators.required]],
+      practiceId: [this.applicationFormData.practiceId, [<any>Validators.required]],
       steps: this.formBuilder.array([
       ])
     });
@@ -91,6 +119,30 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
     console.log('here is applicationFormData: ', this.applicationFormData);
     console.log('here is the application form: ', this.applicationForm);
   }
+
+  determineAvailablePractices(){
+    if (this.havePracticeTypes){
+      if (this.isNewApplication){
+        this.availablePractices = this.allPractices;
+      } else {
+        let practiceIdsUsedThisReading = [];// these are (generally) the ones we don't want in the dropdown list
+        for (let localApplication of this.readingDay.readings[this.readingIndex].applications){
+          practiceIdsUsedThisReading.push(localApplication.practice.id);
+        }
+        this.availablePractices = [];
+        // add one in by hand....
+        this.availablePractices.push(this.readingDay.readings[this.readingIndex].applications[this.applicationIndex].practice);
+        for (let practice of this.allPractices) {
+          if (!(practiceIdsUsedThisReading.indexOf(practice.id) > -1)) {
+            this.availablePractices.push(practice);
+          }
+        }
+        console.log('final list: ', this.availablePractices);
+      }
+    }
+
+  }
+
 
   initStep(description?: string) {
     // initialize our step
@@ -122,7 +174,7 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
   }
 
   onSubmit(){
-    this.applicationFormData.practiceTypeId = +this.applicationForm.value.practiceTypeId;
+    this.applicationFormData.practiceId = +this.applicationForm.value.practiceId;
     let stepData = [];
     for (let step of this.applicationForm.value.steps){
       stepData.push({
@@ -131,7 +183,9 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
       });
     }
     this.applicationFormData['steps']=stepData;
-    this.submitSuccess.next(this.applicationFormData);
+
+    // hit method in service to post/patch data
+    //this.submitSuccess.next(this.applicationFormData);
   }
 
   onCancel(){

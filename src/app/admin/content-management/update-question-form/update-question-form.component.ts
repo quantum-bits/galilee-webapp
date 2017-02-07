@@ -101,7 +101,6 @@ export class UpdateQuestionFormComponent implements OnChanges {
         );
     }
     this.closeModal();
-    //hit method in readings service to post/patch; supply question and readingDay
   }
 
   onCancel() {

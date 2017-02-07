@@ -7,7 +7,7 @@
 <div *ngIf="readingsData">
   <ul class="collection with-header">
     <li class="collection-header"><h5>Readings for {{dateString | amDateFormat: 'LL'}}</h5></li>
-    <li *ngFor="let reading of readingsData.readings; let i=index" class="collection-item grey lighten-5">
+    <li *ngFor="let reading of readingsData.readings; let rIndex=index" class="collection-item grey lighten-5">
       <span class="title"> {{reading.stdRef}}</span>
       <span class="right action-icons">
         <a
@@ -30,8 +30,10 @@
         </a>
       </span>
       <ul *ngIf="reading.applications.length" class="collection">
-        <li *ngFor="let application of reading.applications" class="collection-item white">
+        <li *ngFor="let application of reading.applications; let aIndex=index" class="collection-item white">
           <app-display-application-steps
+            [readingIndex] = "rIndex"
+            [applicationIndex] = "aIndex"
             [application] = "application"
             (deleteApplication)="displayDeleteApplicationModal($event)"
             (editApplication)="launchEditPracticeModal($event)">
@@ -44,7 +46,7 @@
         <p></p>
       </div>
 
-      <a class="waves-effect waves-light btn secondary-content" (click)="launchNewPracticeModal(reading)">Add Practice</a>
+      <a class="waves-effect waves-light btn secondary-content" (click)="launchNewPracticeModal(rIndex)">Add Practice</a>
       <p>
         <br>
       </p>
@@ -58,13 +60,14 @@
   </div>
 </div>
 
-
 <app-update-practice-form
   #updateApplicationModal
   [incrementer] = "incrementer"
-  [readingId] = "readingID"
-  [application] = "application"
-  [availablePractices] = "availablePractices"
+  [readingDay] = "readingsData"
+  [readingIndex] = "readingIndex"
+  [applicationIndex] = "applicationIndex"
+  [isNewApplication] = "isNewApplication"
+  [allPractices] = "allPractices"
   (submitSuccess) = "onAddPractice($event)">
 </app-update-practice-form>
 

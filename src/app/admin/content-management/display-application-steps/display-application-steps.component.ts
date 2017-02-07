@@ -11,8 +11,10 @@ import {Application} from '../../../shared/interfaces/application.interface';
 export class DisplayApplicationStepsComponent implements OnInit {
 
   @Input() application: Application;
+  @Input() readingIndex: number;
+  @Input() applicationIndex: number;
   @Output() deleteApplication = new EventEmitter<Application>();
-  @Output() editApplication = new EventEmitter<Application>();
+  @Output() editApplication = new EventEmitter();
 
   private applicationTitle: string = '';
   private showSteps: boolean = false;
@@ -28,7 +30,10 @@ export class DisplayApplicationStepsComponent implements OnInit {
 
   displayEditApplicationModal(){
     console.log('edit!');
-    this.editApplication.emit(this.application);
+    this.editApplication.emit({
+      applicationIndex: this.applicationIndex,
+      readingIndex: this.readingIndex
+    });
   }
 
   displayDeleteModal(){

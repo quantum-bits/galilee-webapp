@@ -10,7 +10,6 @@ import {Step} from './step.interface';
 
 export interface ApplicationFormData {
   id: number; //id of the application object itself in the database
-  practiceTypeId: number; // id of the practice type in the database
   practiceId: number; // id of the practice object itself in the database
   readingId: number; // id of the associated reading object in the database
   steps: Step[];

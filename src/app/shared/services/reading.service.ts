@@ -36,17 +36,6 @@ export class ReadingService {
     return this.readingsData;
   }
 
-  /* Deprecated -- fetchSavedReadings checks first to see if the readings
-   are in memory; if not, it gets them from the db
-   getTodaysReadings(date: string): Observable<Array<Reading>> {//the type is no longer correct here
-   //date = date || 'today';
-   return this.http
-   //.get(`http://localhost:3000/readingday/${date}`)
-   .get(`http://localhost:3000/daily/${date}`)
-   .map(res => res.json());
-   }
-   */
-
   getReadingById(id: number): Observable<Reading> {
     return this.http
       .get(`http://localhost:3000/readings/${id}`)

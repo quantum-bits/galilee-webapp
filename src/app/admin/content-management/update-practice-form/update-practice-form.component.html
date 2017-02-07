@@ -32,7 +32,7 @@
                               <select
                                 materialize="material_select"
                                 [materializeSelectOptions]="selectOptions"
-                                formControlName="practiceTypeId"
+                                formControlName="practiceId"
                               >
                                 <option *ngIf="isNewApplication" value="" disabled selected>Choose a practice</option>
                                 <option *ngFor="let practice of availablePractices"
@@ -40,7 +40,7 @@
                                 >{{practice.title}}</option>
                               </select>
 
-                              <div *ngIf="applicationForm.controls.practiceTypeId.errors && applicationForm.controls.practiceTypeId.touched">                                <small class="warning">
+                              <div *ngIf="applicationForm.controls.practiceId.errors && applicationForm.controls.practiceId.touched">                                <small class="warning">
                                 This field is required.
                               </small>
                               </div>

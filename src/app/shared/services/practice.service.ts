@@ -46,11 +46,13 @@ export class PracticeService {
 
   constructor(private http:Http) {  }
 
-  getPractices(): Observable<Array<Practice>> {
+  /* deprecated
+   getPractices(): Observable<Array<Practice>> {
     return this.http
       .get(PracticesUrl)
       .map(response => response.json());
   }
+  */
 
   //MOCK...maybe this information will simply be in getPractices?!?
   getPracticeGeneralInformation(id) {
