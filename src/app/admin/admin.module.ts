@@ -42,7 +42,14 @@ const routes: Routes = [
       {path: '', redirectTo: 'edit-reading-resources', pathMatch: 'full'},
       {path: 'edit-reading-resources', component: EditReadingResourcesComponent},
       {path: 'manage-users', component: ManageUsersComponent},
-      {path: 'update-readings', component: UpdateReadingsComponent},
+      {
+        path: 'update-readings',
+        component: UpdateReadingsComponent
+      },
+      { // go directly to the specified date
+        path: 'update-readings/:dateString',
+        component: UpdateReadingsComponent
+      },
       {path: 'manage-readings', component: ManageReadingComponent}
     ]
   },

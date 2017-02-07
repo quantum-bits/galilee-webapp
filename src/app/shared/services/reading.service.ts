@@ -139,9 +139,13 @@ export class ReadingService {
       .map(resp => resp.json());
   }
 
-  updateQuestion(questionId: number, question: DailyQuestion): Observable<DailyQuestion> {
+  updateQuestion(questionId: number, question: DailyQuestion, readingDay: ReadingDay): Observable<DailyQuestion> {
     return this.authHttp
-      .patch(`http://localhost:3000/questions/${questionId}`, question)
+      .patch(`http://localhost:3000/questions/${questionId}`, {
+        text: question.text,
+        seq: question.seq,
+        readingDayId: readingDay.id
+      })
       .map(resp => resp.json());
   }
 

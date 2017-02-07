@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
 
 import * as moment from 'moment';
 
@@ -31,18 +32,25 @@ export class UpdateReadingsComponent implements OnInit {
   private dateStringCalendarInit = moment(new Date()).format('YYYY-MM-DD');
 
   constructor(
-    private readingService: ReadingService){}
+    private readingService: ReadingService,
+    private route: ActivatedRoute,
+    private router: Router){}
     //},
     //private practiceService: PracticeService) { }
 
   ngOnInit() {
-    //this.fetchPractices();
-
     this.readingService.getReadingMetadata()
       .subscribe(
         calendarReadings => {
           console.log(calendarReadings);
           this.calendarReadings = calendarReadings;
+          this.route.params.subscribe(params => {
+            console.log('update-readings -- received route params');
+            if ('dateString' in params) {
+              this.dateString = params['dateString'];
+              this.fetchReadings(this.dateString);
+            }
+          });
         },
         error => {
           console.log('error: ', error);
@@ -54,9 +62,14 @@ export class UpdateReadingsComponent implements OnInit {
     // do something....
     console.log('dateString: ', dateString);
     this.dateString = dateString;
+    this.router.navigate(['/admin/update-readings', this.dateString]);
+
     //this.fetchReadings()
-    this.fetchReadings(dateString);
+    //this.fetchReadings(dateString);
+
   }
+
+
 
   fetchReadings(dateString: string) {
     this.readingService.fetchSavedReadings(dateString)

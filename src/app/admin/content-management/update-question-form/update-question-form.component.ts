@@ -1,7 +1,12 @@
 import {Component, OnInit, OnChanges, Input, Output, EventEmitter} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+
+import * as moment from 'moment';
 
 import {DailyQuestion, ReadingDay} from '../../../shared/interfaces/reading.interface';
+
+import {ReadingService} from '../../../shared/services/reading.service';
 
 @Component({
   selector: 'app-update-question-form',
@@ -20,8 +25,12 @@ export class UpdateQuestionFormComponent implements OnChanges {
   public questionForm: FormGroup; // our model driven form
 
   private isNewQuestion: boolean;
+  private localQuestion: DailyQuestion;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private readingService: ReadingService,
+    private router: Router) {
   }
 
   ngOnChanges() {
@@ -32,16 +41,21 @@ export class UpdateQuestionFormComponent implements OnChanges {
   initializeForm() {
     //let questionFormData: any;
     this.isNewQuestion = ((this.question === null) || (this.question === undefined));
+    console.log('initializing form; this is a new question?', this.isNewQuestion);
+
     if (this.isNewQuestion) {
-      this.question = {
+      this.localQuestion = {
         id: null,
         seq: null,
         text: ''
       };
+    } else {
+      this.localQuestion = this.question;
     }
+
     this.questionForm = this.formBuilder.group({
-      question: [this.question.text, [<any>Validators.required]],
-      seq: [this.question.seq, Validators.compose([<any>Validators.required, this.integerValidator])]
+      question: [this.localQuestion.text, [<any>Validators.required]],
+      seq: [this.localQuestion.seq, Validators.compose([<any>Validators.required, this.integerValidator])]
     });
     console.log(this.questionForm);
   }
@@ -56,10 +70,46 @@ export class UpdateQuestionFormComponent implements OnChanges {
   }
 
   onSubmit() {
-    this.question.text = this.questionForm.value.question;
-    this.question.seq = +this.questionForm.value.seq;
-    console.log('question to be submitted: ', this.question);
+    this.localQuestion.text = this.questionForm.value.question;
+    this.localQuestion.seq = +this.questionForm.value.seq;
+    console.log('question to be submitted: ', this.localQuestion);
+    console.log('this is a new question?', this.isNewQuestion);
 
+
+    if (this.isNewQuestion) { //POST
+      console.log('posting....');
+      this.readingService.createQuestion(this.localQuestion, this.readingDay)
+        .subscribe(
+          question => {
+            console.log('returned! question:', question);
+
+            let localDateString = moment(this.readingDay.date).format('YYYY-MM-DD');
+            this.router.navigate(['/admin/update-readings', localDateString]);
+
+            // WORKING HERE: use reading service to comm back to readings component and tell it to refresh data
+
+          },
+          error => {
+            console.log('error!', error);
+          }
+        );
+    } else { //PATCH
+      console.log('patching....');
+      this.readingService.updateQuestion(this.localQuestion.id, this.localQuestion, this.readingDay)
+        .subscribe(
+          question => {
+            console.log('returned! question:', question);
+
+            // WORKING HERE: use reading service to comm back to readings component and tell it to refresh data
+
+
+          },
+          error => {
+            console.log('error!', error);
+          }
+        );
+    }
+    this.closeModal();
     //hit method in readings service to post/patch; supply question and readingDay
   }
 
