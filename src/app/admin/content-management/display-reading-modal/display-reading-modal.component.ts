@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
 
-import {IReading} from '../../../shared/interfaces/readings.interface';
+import {IReading} from '../../../shared/interfaces/reading.interface';
 
 @Component({
   selector: 'app-display-reading-modal',

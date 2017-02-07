@@ -1,7 +1,7 @@
 import {Component, OnInit, OnChanges, Input, Output, EventEmitter} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
-import {DailyQuestion} from '../../../shared/interfaces/readings.interface';
+import {DailyQuestion} from '../../../shared/interfaces/reading.interface';
 
 @Component({
   selector: 'app-update-question-form',

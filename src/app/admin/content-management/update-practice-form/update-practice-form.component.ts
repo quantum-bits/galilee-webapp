@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 
-import {IReading} from '../../../shared/interfaces/readings.interface';
+import {IReading} from '../../../shared/interfaces/reading.interface';
 
 import {Application} from '../../../shared/interfaces/application.interface';
 import {ApplicationFormData} from '../../../shared/interfaces/application-form-data.interface';

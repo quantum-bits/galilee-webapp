@@ -5,7 +5,7 @@ import {UpdateReadingFormComponent} from '../update-reading-form/update-reading-
 
 import {DisplayReadingModalComponent} from '../display-reading-modal/display-reading-modal.component';
 import {DeleteItemModalComponent} from '../../../shared/components/delete-item-modal/delete-item-modal.component';
-import {IReading, ReadingDay} from '../../../shared/interfaces/readings.interface';
+import {IReading, ReadingDay} from '../../../shared/interfaces/reading.interface';
 import {Application} from '../../../shared/interfaces/application.interface';
 import {ApplicationFormData} from '../../../shared/interfaces/application-form-data.interface';
 

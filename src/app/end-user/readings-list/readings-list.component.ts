@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import * as moment from 'moment';
 
-import {ReadingDay} from '../../shared/interfaces/readings.interface';
+import {ReadingDay} from '../../shared/interfaces/reading.interface';
 import {ReadingService} from '../../shared/services/reading.service';
 
 

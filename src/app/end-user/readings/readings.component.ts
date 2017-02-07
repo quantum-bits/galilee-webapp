@@ -5,7 +5,7 @@ import {ReadingService} from '../../shared/services/reading.service';
 import {PostService} from '../../shared/services/post.service';
 
 import {Reading} from '../../shared/models/reading.model';
-import {ReadingDay} from '../../shared/interfaces/readings.interface';
+import {ReadingDay} from '../../shared/interfaces/reading.interface';
 import {GroupPostData} from '../../shared/models/group-post-data.model';
 
 import {SimpleModalComponent} from "./simple-modal.component";

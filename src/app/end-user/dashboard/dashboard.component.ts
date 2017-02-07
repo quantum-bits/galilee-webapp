@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 
 import * as moment from 'moment';
 
-import {ReadingDay} from '../../shared/interfaces/readings.interface';
+import {ReadingDay} from '../../shared/interfaces/reading.interface';
 import {GroupPostData} from '../../shared/models/group-post-data.model';
 //import {Post} from '../../shared/models/post.model';
 

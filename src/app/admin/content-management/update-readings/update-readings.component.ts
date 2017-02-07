@@ -2,12 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 
 import * as moment from 'moment';
 
-import {IReading, ReadingDay} from '../../../shared/interfaces/readings.interface';
+import {IReading, ReadingDay} from '../../../shared/interfaces/reading.interface';
 import {Application} from '../../../shared/interfaces/application.interface';
 
 import {ReadingService} from '../../../shared/services/reading.service';
 import {CalendarEntries} from '../../../shared/interfaces/calendar-entries.interface';
-import {DailyQuestion} from '../../../shared/interfaces/readings.interface';
+import {DailyQuestion} from '../../../shared/interfaces/reading.interface';
 
 @Component({
   selector: 'app-update-readings',

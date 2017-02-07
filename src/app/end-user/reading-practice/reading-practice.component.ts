@@ -5,7 +5,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {ReadingService} from '../../shared/services/reading.service';
 import {PracticeService} from '../../shared/services/practice.service';
 import {Reading} from '../../shared/models/reading.model';
-import {ReadingDay} from '../../shared/interfaces/readings.interface';
+import {ReadingDay} from '../../shared/interfaces/reading.interface';
 
 import {SimpleModalComponent} from "../readings/simple-modal.component";
 

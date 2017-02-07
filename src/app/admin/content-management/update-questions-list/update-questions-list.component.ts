@@ -3,7 +3,7 @@ import {Component, OnInit, Input, ViewChild} from '@angular/core';
 import {DeleteItemModalComponent} from '../../../shared/components/delete-item-modal/delete-item-modal.component';
 import {UpdateQuestionFormComponent} from '../update-question-form/update-question-form.component';
 
-import {DailyQuestion} from '../../../shared/interfaces/readings.interface';
+import {DailyQuestion} from '../../../shared/interfaces/reading.interface';
 import {ReadingService} from "../../../shared/services/reading.service";
 
 @Component({
