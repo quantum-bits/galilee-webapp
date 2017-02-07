@@ -38,6 +38,24 @@
                       </small>
                     </div>
                   </div>
+
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <label for="seq">Sequence Number (e.g., 1, 2,....)</label>
+                      <input
+                        [input-wake-up]="'seq'"
+                        [class.warning-background] = "questionForm.controls.seq.errors && questionForm.controls.seq.touched"
+                        id="seq"
+                        type="text"
+                        formControlName="seq">
+                    </div>
+                    <div *ngIf="questionForm.controls.seq.errors && questionForm.controls.seq.touched">
+                      <small class="warning">
+                        {{questionForm.controls.seq.errors.error}}
+                      </small>
+                    </div>
+                  </div>
+
                 </div>
 
                 <div class="card-action">

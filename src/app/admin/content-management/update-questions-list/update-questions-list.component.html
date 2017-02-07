@@ -1,33 +1,36 @@
-<div *ngIf="!questions && dateString">
-  <ul class="collection with-header">
-    <li class="collection-header"><h5>No questions yet for {{dateString | amDateFormat: 'LL'}}</h5></li>
-  </ul>
-</div>
+<div *ngIf="readingDay">
+  <div *ngIf="!questionsThisDay">
+    <ul class="collection with-header">
+      <li class="collection-header"><h5>No questions yet for {{readingDay.date | amDateFormat: 'LL'}}</h5></li>
+    </ul>
+  </div>
 
-<div *ngIf="questions">
-  <ul class="collection with-header">
-    <li class="collection-header"><h5>Questions for {{dateString | amDateFormat: 'LL'}}</h5></li>
-    <li *ngFor="let question of questions; let i=index" class="collection-item grey lighten-5">
-      <span class="title"> {{question.text}} </span>
+  <div *ngIf="questionsThisDay">
+    <ul class="collection with-header">
+      <li class="collection-header"><h5>Questions for {{readingDay.date | amDateFormat: 'LL'}}</h5></li>
+      <li *ngFor="let question of readingDay.questions; let i=index" class="collection-item grey lighten-5">
+        <span class="title"> {{question.seq}}. {{question.text}} </span>
 
-      <span class="right action-icons">
-        <a
-          href="javascript:void(0)"
-          (click)="displayDeleteQuestionModal(i)"
-          class="grey-text text-darken-2">
-        <i class="material-icons lr-arrow">delete</i>
-        </a>
-        <a
-          href="javascript:void(0)"
-          (click)="launchEditQuestionModal(i)"
-          class="grey-text text-darken-2">
-        <i class="material-icons lr-arrow">edit</i>
-        </a>
-      </span>
+        <span class="right action-icons">
+          <a
+            href="javascript:void(0)"
+            (click)="displayDeleteQuestionModal(i)"
+            class="grey-text text-darken-2">
+          <i class="material-icons lr-arrow">delete</i>
+          </a>
+          <a
+            href="javascript:void(0)"
+            (click)="launchEditQuestionModal(i)"
+            class="grey-text text-darken-2">
+          <i class="material-icons lr-arrow">edit</i>
+          </a>
+        </span>
 
 
-    </li>
-  </ul>
+      </li>
+    </ul>
+  </div>
+
 </div>
 
 <div class="row">
@@ -47,6 +50,5 @@
   #updateQuestionModal
   [incrementer]="incrementer"
   [question] = "singleQuestion"
-  [questionIndex] = "questionIndex"
-  (submitSuccess) = "onAddQuestion($event)">
+  [readingDay] = "readingDay">
 </app-update-question-form>
