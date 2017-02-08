@@ -70,6 +70,10 @@ export class ReadingsComponent implements OnInit {
         this.currentReadingIndex = +params['readingIndex'];
       }
       this.fetchReadings();
+      //TODO: fix this in a more robust way; currently, when
+      //      user logs out, this info stays on the page, b/c
+      //      the redirect does not reload this page's data if the
+      //      user is already on this page
       if (this.userService.isLoggedIn()) {
         this.fetchGroupPosts();
       }

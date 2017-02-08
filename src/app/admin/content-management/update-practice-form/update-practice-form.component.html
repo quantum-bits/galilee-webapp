@@ -40,17 +40,36 @@
                                 >{{practice.title}}</option>
                               </select>
 
-                              <div *ngIf="applicationForm.controls.practiceId.errors && applicationForm.controls.practiceId.touched">                                <small class="warning">
-                                This field is required.
-                              </small>
+                              <div *ngIf="applicationForm.controls.practiceId.errors && applicationForm.controls.practiceId.touched">
+                                <small class="warning">
+                                  This field is required.
+                                </small>
                               </div>
-
                             </div>
                           </div>
+
+                          <div class="row">
+                            <div class="input-field col s10 offset-s1">
+                              <label for="seq">Sequence Number (e.g., 1, 2,....)</label>
+                              <input
+                                [input-wake-up]="'seq'"
+                                [class.warning-background] = "applicationForm.controls.seq.errors && applicationForm.controls.seq.touched"
+                                id="seq"
+                                type="text"
+                                formControlName="seq">
+                            </div>
+                            <div *ngIf="applicationForm.controls.seq.errors && applicationForm.controls.seq.touched">
+                              <small class="warning">
+                                {{applicationForm.controls.seq.errors.error}}
+                              </small>
+                            </div>
+                          </div>
+
                         </li>
                       </ul>
                     </div>
                   </div>
+
                     <!-- https://scotch.io/tutorials/how-to-build-nested-model-driven-forms-in-angular-2 -->
                   <div class="row">
                     <div class="col s12">
