@@ -3,6 +3,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 
 import {ReadingService} from '../../shared/services/reading.service';
 import {PostService} from '../../shared/services/post.service';
+import {UserService} from '../../authentication/user.service';
 
 import {Reading} from '../../shared/models/reading.model';
 import {ReadingDay} from '../../shared/interfaces/reading.interface';
@@ -49,6 +50,7 @@ export class ReadingsComponent implements OnInit {
 
   constructor(private readingService: ReadingService,
               private postService: PostService,
+              private userService: UserService,
               private router: Router,
               private route: ActivatedRoute) {
   }
@@ -68,8 +70,9 @@ export class ReadingsComponent implements OnInit {
         this.currentReadingIndex = +params['readingIndex'];
       }
       this.fetchReadings();
-      this.fetchGroupPosts();
-
+      if (this.userService.isLoggedIn()) {
+        this.fetchGroupPosts();
+      }
     });
   }
 
