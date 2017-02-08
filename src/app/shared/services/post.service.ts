@@ -3,187 +3,9 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Subject}    from 'rxjs/Subject';
 
-import {IGroupPostData} from '../interfaces/post.interface';
-import {PostQueryFilters} from '../interfaces/post-query-filters.interface';
-import {Post} from "../models/post.model";
+import {UserPostData} from '../interfaces/post.interface';
 import {AuthHttp} from "angular2-jwt";
 import {UserService} from "../../authentication/user.service";
-
-//import {JournalEntryFilter} from '../interfaces/journal-entry-query-filters.interface';
-
-// MOCK
-const POST_ENTRY = {
-  id: 1,
-  title: 'What did you think?',
-  entry: 'What did everybody think of the reading for today?' +
-  'After I read this, I thought about some things. ' +
-  'unde omnis iste natus error sit voluptatem accusantium ' +
-  'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
-  'ab illo inventore veritatis et quasi architecto beatae vitae ' +
-  'dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas ' +
-  'sit aspernatur aut odit aut fugit, sed quia' +
-  'unde omnis iste natus error sit voluptatem accusantium ' +
-  'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
-  'ab illo inventore veritatis et quasi architecto beatae vitae ' +
-  'dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas ' +
-  'sit aspernatur aut odit aut fugit, sed quia',
-  date: "2017-01-16T05:00:00.000Z",
-  RCL_date: "2017-01-14",
-  reading_id: 1,
-  reading_std_ref: 'Gen. 1: 3-5',
-  user_id: 1,
-  group_id: 1
-}
-
-const POST_ENTRIES = [
-  {
-    id: 1,
-    title: 'What did you think?',
-    entry: 'What did everybody think of the reading for today?' +
-    'After I read this, I thought about some things. ' +
-    'unde omnis iste natus error sit voluptatem accusantium ' +
-    'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
-    'ab illo inventore veritatis et quasi architecto beatae vitae ' +
-    'dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas ' +
-    'sit aspernatur aut odit aut fugit, sed quia' +
-    'unde omnis iste natus error sit voluptatem accusantium ' +
-    'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
-    'ab illo inventore veritatis et quasi architecto beatae vitae ' +
-    'dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas ' +
-    'sit aspernatur aut odit aut fugit, sed quia',
-    date: "2017-01-16T05:00:00.000Z",
-    RCL_date: "2017-01-16",
-    reading_id: 1,
-    reading_std_ref: 'Hos. 1: 2-10',
-    user_id: 1,
-    group_id: 1
-  },
-  {
-    id: 2,// entry with no title
-    entry: 'What did everybody think of the reading for today?' +
-    'After I read this, I thought about some things. ' +
-    'unde omnis iste natus error sit voluptatem accusantium ' +
-    'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
-    'ab illo inventore veritatis et quasi architecto beatae vitae ' +
-    'dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas ' +
-    'sit aspernatur aut odit aut fugit, sed quia' +
-    'unde omnis iste natus error sit voluptatem accusantium ' +
-    'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
-    'ab illo inventore veritatis et quasi architecto beatae vitae ' +
-    'dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas ' +
-    'sit aspernatur aut odit aut fugit, sed quia',
-    date: "2017-01-14T05:00:00.000Z",
-    RCL_date: "2017-01-12",
-    reading_id: 2,
-    reading_std_ref: 'Ps. 85',
-    user_id: 1,
-    group_id: 1
-  },
-  {
-    id: 3,
-    title: 'The reading today really helped me understand something',
-    entry: 'Here is what I have been thinking about. ' +
-    'After I read this, I thought about some things. ' +
-    'unde omnis iste natus error sit voluptatem accusantium ' +
-    'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
-    'ab illo inventore veritatis et quasi architecto beatae vitae ' +
-    'dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas ' +
-    'sit aspernatur aut odit aut fugit, sed quia' +
-    'unde omnis iste natus error sit voluptatem accusantium ' +
-    'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
-    'ab illo inventore veritatis et quasi architecto beatae vitae ' +
-    'dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas ' +
-    'sit aspernatur aut odit aut fugit, sed quia',
-    date: "2017-01-14T05:00:00.000Z",
-    RCL_date: "2017-01-15",
-    reading_id: 1,
-    reading_std_ref: 'Hos. 1: 2-10',
-    user_id: 1,
-    group_id: 1
-  },
-  {
-    id: 4,// entry with no title
-    entry: 'What did everybody think of the reading for today?' +
-    'After I read this, I thought about some things. ' +
-    'unde omnis iste natus error sit voluptatem accusantium ' +
-    'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
-    'ab illo inventore veritatis et quasi architecto beatae vitae ' +
-    'dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas ' +
-    'sit aspernatur aut odit aut fugit, sed quia' +
-    'unde omnis iste natus error sit voluptatem accusantium ' +
-    'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
-    'ab illo inventore veritatis et quasi architecto beatae vitae ' +
-    'dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas ' +
-    'sit aspernatur aut odit aut fugit, sed quia',
-    date: "2017-01-14T05:00:00.000Z",
-    RCL_date: "2017-01-12",
-    user_id: 1,
-    group_id: 1
-  }
-]
-
-const POST_ENTRIES2 = [
-  {
-    id: 1,
-    title: 'Here are some thoughts that I had',
-    entry: 'You know how sometimes you think like....' +
-    'After I read this, I thought about some things. ' +
-    'unde omnis iste natus error sit voluptatem accusantium ' +
-    'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
-    'ab illo inventore veritatis et quasi architecto beatae vitae ' +
-    'dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas ' +
-    'sit aspernatur aut odit aut fugit, sed quia' +
-    'unde omnis iste natus error sit voluptatem accusantium ' +
-    'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
-    'ab illo inventore veritatis et quasi architecto beatae vitae ' +
-    'dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas ' +
-    'sit aspernatur aut odit aut fugit, sed quia',
-    date: "2017-01-16T05:00:00.000Z",
-    RCL_date: "2017-01-16",
-    user_id: 1,
-    group_id: 2
-  },
-  {
-    id: 2,// entry with no title
-    entry: 'What did everybody think of the reading for today?' +
-    'After I read this, I thought about some things. ' +
-    'unde omnis iste natus error sit voluptatem accusantium ' +
-    'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
-    'ab illo inventore veritatis et quasi architecto beatae vitae ' +
-    'dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas ' +
-    'sit aspernatur aut odit aut fugit, sed quia' +
-    'unde omnis iste natus error sit voluptatem accusantium ' +
-    'doloremque laudantium, totam rem aperiam, eaque ipsa quae ' +
-    'ab illo inventore veritatis et quasi architecto beatae vitae ' +
-    'dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas ' +
-    'sit aspernatur aut odit aut fugit, sed quia',
-    date: "2017-01-14T05:00:00.000Z",
-    RCL_date: "2017-01-14",
-    reading_id: 1,
-    reading_std_ref: 'Hos. 1: 2-10',
-    user_id: 1,
-    group_id: 2
-  }
-]
-
-
-const POST_DATA_GROUP1 = {
-  startIndex: 0,
-  count: 2,
-  group_id: 1,
-  group_name: "Bob's Bible-study group",
-  posts: POST_ENTRIES
-}
-
-const POST_DATA_GROUP2 = {
-  startIndex: 0,
-  count: 2,
-  group_id: 2,
-  group_name: "Thoroughly deep Bible study group",
-  posts: POST_ENTRIES2
-}
-
-const GROUP_POSTS = [POST_DATA_GROUP1, POST_DATA_GROUP2];
 
 //TODO: QUESTION -- can we 'load more' the same way we do for
 //                  journal entries?  What if other group members have
@@ -215,7 +37,7 @@ export class PostService {
 
   // fetches recent posts for all groups of which the user is a member, up to a certain
   // max # of posts per group
-  getPostsAllGroups(maxNumber: number): Observable<Array<IGroupPostData>> {
+  getAllUserPosts(maxNumber: number): Observable<UserPostData> {
     const user = this.userService.getCurrentUser();
     return this.authHttp
       .get(`http://localhost:3000/posts?userId=${user.id}`)
@@ -229,19 +51,20 @@ export class PostService {
   // ===> write methods on GroupPosts that can sort things based on readings, etc.
   // QUESTION: is it part of MVP to be able to group posts as responses to other posts?
 
-  getPosts(startIndex: number, count: number, filter?: PostQueryFilters): Observable<IGroupPostData> {
-    console.log('inside the post service; here are the query parameters:');
-    console.log(filter);
-    // QUESTION: should 'load more' actually reload everything, in case there
-    //           have been new posts by other group members?
-    if (startIndex === 0) {
-      var promise = Promise.resolve(POST_DATA_GROUP1);
-      return Observable.fromPromise(promise);
-    } else {
-      var promise = Promise.resolve(POST_DATA_GROUP1);
-      return Observable.fromPromise(promise);
-    }
-  }
+  // FIXME: Is this used??
+  // getPosts(startIndex: number, count: number, filter?: PostQueryFilters): Observable<IGroupPostData> {
+  //   console.log('inside the post service; here are the query parameters:');
+  //   console.log(filter);
+  //   // QUESTION: should 'load more' actually reload everything, in case there
+  //   //           have been new posts by other group members?
+  //   if (startIndex === 0) {
+  //     var promise = Promise.resolve(POST_DATA_GROUP1);
+  //     return Observable.fromPromise(promise);
+  //   } else {
+  //     var promise = Promise.resolve(POST_DATA_GROUP1);
+  //     return Observable.fromPromise(promise);
+  //   }
+  // }
 
   // Service message commands
   announceDeletion(postID: number) {

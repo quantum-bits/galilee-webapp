@@ -10,7 +10,7 @@ import {DeleteJournalEntryModalComponent} from '../delete-journal-entry-modal';
 
 import {Post} from '../../shared/models/post.model';
 import {GroupPostData} from '../../shared/models/group-post-data.model';
-import {PostQueryFilters} from '../../shared/interfaces/post-query-filters.interface';
+import {PostQueryFilters} from '../../shared/interfaces/post.interface';
 
 import {PostService} from '../../shared/services/post.service';
 
@@ -46,11 +46,11 @@ export class PostDashboardComponent implements OnInit, OnDestroy {
   }
 
   fetchGroupPosts(){
-    this.postService.getPostsAllGroups(this.maxNumberPosts)
+    this.postService.getAllUserPosts(this.maxNumberPosts)
       .subscribe(
-        multiGroupPostData => {
+        userPostData => {
           this.multiGroupPostData = [];
-          for (let groupPostData of multiGroupPostData) {
+          for (let groupPostData of userPostData.groups) {
             this.multiGroupPostData.push(new GroupPostData(groupPostData));//need to use the constructor, etc., if want access to the methods
           }
           console.log('group posts!', this.multiGroupPostData);

@@ -3,11 +3,11 @@ import {Router} from '@angular/router';
 
 import {Post} from '../../shared/models/post.model';
 import {GroupPostData} from '../../shared/models/group-post-data.model';
-import {PostQueryFilters} from '../../shared/interfaces/post-query-filters.interface';
+import {PostQueryFilters} from '../../shared/interfaces/post.interface';
 
 
 @Component({
-  selector: 'app-group-post-list',
+  selector: 'group-post-list',
   templateUrl: './group-post-list.component.html',
   styleUrls: ['./group-post-list.component.css']
 })
@@ -19,7 +19,7 @@ export class GroupPostListComponent implements OnInit, OnChanges {
   @Input() postsClosed: boolean;
 
   private postQueryFilters: PostQueryFilters;
-  private filteredPostList: Post[];
+  private filteredPostList: Array<Post>;
 
   constructor(private router: Router) {
   }
@@ -39,10 +39,12 @@ export class GroupPostListComponent implements OnInit, OnChanges {
 
   initializeFilters() {
     this.postQueryFilters = {
-      group_id: this.groupPostData.groupID(),
+      groupId: this.groupPostData.groupId,
     }
-    this.filteredPostList = this.groupPostData.filteredPosts(this.postQueryFilters);
-    console.log('here are the original posts: ', this.filteredPostList);
+    // TODO: Make filtering work as desired.
+    this.filteredPostList = this.groupPostData.posts;
+    // this.filteredPostList = this.groupPostData.filteredPosts(this.postQueryFilters);
+    // console.log('here are the original posts: ', this.filteredPostList);
   }
 
   dropFilters() {
@@ -52,8 +54,8 @@ export class GroupPostListComponent implements OnInit, OnChanges {
   filterListThisReading() {
     console.log('about to filter posts; reading ID is: ', this.readingID);
     this.postQueryFilters = {
-      group_id: this.groupPostData.groupID(),
-      reading_id: this.readingID
+      groupId: this.groupPostData.groupId,
+      readingId: this.readingID
     }
     this.filteredPostList = this.groupPostData.filteredPosts(this.postQueryFilters);
     console.log('back from the method call; here is the filtered post list: ', this.filteredPostList);

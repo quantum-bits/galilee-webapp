@@ -17,8 +17,8 @@ export class JournalEntry {
     this.updatedAt = obj.updatedAt;
   }
 
+  // Entry long enough to be truncated after numWords words?
   entryIsLong(numWords: number): boolean {
-    // Return true if the entry is long enough to be truncated after numWords words.
     return (this.entry.split(" ").length >= numWords);
   }
 }

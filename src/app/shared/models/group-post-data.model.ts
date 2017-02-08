@@ -1,32 +1,28 @@
 import {Post} from './post.model';
 import {IGroupPostData} from '../interfaces/post.interface';
-import {PostQueryFilters} from '../interfaces/post-query-filters.interface';
+import {PostQueryFilters} from '../interfaces/post.interface';
 
 export class GroupPostData implements IGroupPostData {
   startIndex: number;
   count: number;
-  group_id: number;
-  group_name: string;
+  groupId: number;
+  groupName: string;
   posts: Post[];
 
   constructor(obj) {
     this.startIndex = obj.startIndex;
     this.count = obj.count;
-    this.group_id = obj.group_id;
-    this.group_name = obj.group_name;
+    this.groupId = obj.groupId;
+    this.groupName = obj.groupName;
     this.posts = [];
     for (let post of obj.posts) {
       this.posts.push(new Post(post));
     }
   }
 
-  groupID() {
-    return this.group_id;
-  }
-
   filteredPosts(filters: PostQueryFilters) {
     console.log(filters);
-    // returns a subset of posts, for which (a) the given property (e.g., reading_id)
+    // returns a subset of posts, for which (a) the given property (e.g., readingId)
     // does exist on the post key is included and (b) post's value for that key
     // matches the filter's value for the key
     let filteredPostList = [];
@@ -46,7 +42,6 @@ export class GroupPostData implements IGroupPostData {
       if (showPost) {
         filteredPostList.push(this.posts[postIndex]);
       }
-
     }
 
     console.log('filtered post list: ', filteredPostList);
@@ -54,12 +49,4 @@ export class GroupPostData implements IGroupPostData {
     return filteredPostList;
 
   }
-  /*
-   group_id: number;// required
-   reading_id?: number;
-   response_post_id?: number;
-   */
-
-
-
 }

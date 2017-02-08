@@ -58,12 +58,11 @@
     <div class="row">
       <div class="col s12 m6 l8 offset-l2">
         <div *ngFor="let groupPostData of multiGroupPostData" class="group-post-list-container">
-          <app-group-post-list
+          <group-post-list
             [groupPostData] = 'groupPostData'
             [groupNameInTitleBar] = false
-            [postsClosed] = true
-          >
-          </app-group-post-list>
+            [postsClosed] = false>
+          </group-post-list>
         </div>
       </div>
     </div>

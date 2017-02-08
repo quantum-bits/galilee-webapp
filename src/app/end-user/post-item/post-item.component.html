@@ -1,26 +1,16 @@
-<div *ngIf="closed" class="title"><!-- show either the title or a very truncated version of the entry -->
-  <span *ngIf="post.tiedToReading()">
-    {{post.reading_std_ref}} -
-  </span>
-  <span *ngIf="post.hasTitle()">
-    {{post.title}}
-  </span>
-  <span *ngIf="!post.hasTitle()">
-    <span *ngIf="post.entryIsLong(shortTruncationLimit)">
-      {{post.entry | truncate : shortTruncationLimit}}
-    </span>
-    <span *ngIf="!post.entryIsLong(shortTruncationLimit)">
-      {{post.entry}}
-    </span>
-  </span>
+<img src="{{post.user.avatarUrl}}" class="circle">
+
+
+<div *ngIf="closed" class="title">
+  {{postUserName()}}<br/>
+  {{postTitle()}}
 </div>
 
-
 <div *ngIf="!closed">
-
   <div class="row">
     <div class="col s8">
-      <span class="title">{{post.title}}</span>
+      {{postUserName()}}<br/>
+      <span class="title">{{postTitle()}}</span>
     </div>
     <!--
     need to think about this...in some views, if the post is owned by the
@@ -51,26 +41,31 @@
 
   <div class="row">
     <div class="col s12">
+
       <div *ngIf="allowTruncation">
         <p>
-          {{post.entry | truncate : truncationLimit}}
+          {{postBody()}}
         </p>
-        <div *ngIf="post.entryIsLong(truncationLimit)">
+        <div *ngIf="showMoreLess()">
           <br>
-          <a class="grey-text darken-3" (click)="toggleAllowTruncation()"> Read More... </a>
+          <a class="grey-text darken-3" (click)="toggleAllowTruncation()">Read More... </a>
         </div>
       </div>
+
       <div *ngIf="!allowTruncation">
         <p>
-          {{post.entry }}
+          {{postBody()}}
         </p>
-        <div *ngIf="post.entryIsLong(truncationLimit)">
+        <div *ngIf="showMoreLess()">
           <br>
-          <a class="grey-text darken-3" (click)="toggleAllowTruncation()"> Read Less </a>
+          <a class="grey-text darken-3" (click)="toggleAllowTruncation()">Read Less</a>
         </div>
       </div>
+
       <br>
-      <div class="grey-text darken-3 right">{{post.date | amTimeAgo}}</div>
+      <div class="grey-text darken-3 right">
+        {{post.updatedAt | amTimeAgo}}
+      </div>
       <br>
     </div>
   </div>

@@ -91,11 +91,11 @@ export class ReadingsComponent implements OnInit {
   }
 
   fetchGroupPosts(){
-    this.postService.getPostsAllGroups(this.maxNumberPosts)
+    this.postService.getAllUserPosts(this.maxNumberPosts)
       .subscribe(
-        multiGroupPostData => {
+        userPostData => {
           this.multiGroupPostData = [];
-          for (let groupPostData of multiGroupPostData) {
+          for (let groupPostData of userPostData.groups) {
             this.multiGroupPostData.push(new GroupPostData(groupPostData));//need to use the constructor, etc., if want access to the methods
           }
           console.log('group posts!', this.multiGroupPostData);

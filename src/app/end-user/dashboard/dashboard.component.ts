@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 
 import * as moment from 'moment';
@@ -29,10 +29,10 @@ export class DashboardComponent implements OnInit {
 
   private maxNumberPosts = MAX_NUMBER_POSTS;
 
-  constructor(
-    private readingService: ReadingService,
-    private postService: PostService,
-    private router: Router) { }
+  constructor(private readingService: ReadingService,
+              private postService: PostService,
+              private router: Router) {
+  }
 
   ngOnInit() {
     console.log('RCL date set? ', this.readingService.RCLDateIsSet());
@@ -48,7 +48,7 @@ export class DashboardComponent implements OnInit {
     this.fetchGroupPosts();
   }
 
-  fetchReadings(){
+  fetchReadings() {
     let dateString = this.convertToDateString(this.RCLDate);
     this.readingService.fetchSavedReadings(dateString)
       .subscribe(
@@ -57,35 +57,26 @@ export class DashboardComponent implements OnInit {
         },
         error => {
           this.readingsData = undefined;
-          this.modal.openModal('', 'No readings for '+dateString);
+          this.modal.openModal('', 'No readings for ' + dateString);
         }
       );
   }
 
-  fetchGroupPosts(){
-    this.postService.getPostsAllGroups(this.maxNumberPosts)
-      .subscribe(
-        multiGroupPostData => {
-          this.multiGroupPostData = [];
-          for (let groupPostData of multiGroupPostData) {
-            this.multiGroupPostData.push(new GroupPostData(groupPostData));//need to use the constructor, etc., if want access to the methods
-          }
-          console.log('group posts!', this.multiGroupPostData);
+  fetchGroupPosts() {
+    this.postService.getAllUserPosts(this.maxNumberPosts)
+      .subscribe(userPostData => {
+          this.multiGroupPostData =
+            userPostData.groups.map(groupData => new GroupPostData(groupData));
         },
-        error => {
-          this.multiGroupPostData = undefined;
-          //this.modal.openModal('', 'No readings for '+dateString);
-        }
-      );
+        error => this.multiGroupPostData = undefined)
   }
 
-
-  initializeDateNav(){
+  initializeDateNav() {
     // some help from the mini-calendar component by Blaine Backman
     let middleDate = moment(this.RCLDate).clone();
     console.log('middle date is: ', middleDate);
     let days = [];
-    let date = middleDate.add(-3,'d');
+    let date = middleDate.add(-3, 'd');
     for (let i = 0; i < 7; i++) {
       days.push({
         name: date.format('MMM DD'),
@@ -100,13 +91,13 @@ export class DashboardComponent implements OnInit {
   }
 
   shiftDays(dayShift: number) {//shifts the date range on the navbar by dayShift days
-    let newRCLDateMoment = moment(this.RCLDate).clone().add(dayShift,'d')
+    let newRCLDateMoment = moment(this.RCLDate).clone().add(dayShift, 'd')
     //newRCLDateMoment.date.add(dayShift,'d');
     this.RCLDate = newRCLDateMoment.toDate();
     this.readingService.setRCLDate(this.RCLDate);//update the RCLDate in the service
     console.log(this.RCLDate);
     for (let day of this.days) {
-      day.date.add(dayShift,'d');
+      day.date.add(dayShift, 'd');
       day.name = day.date.format('MMM DD');
       day.isRCLToday = day.date.isSame(this.RCLDate, 'day');
     }
@@ -125,7 +116,7 @@ export class DashboardComponent implements OnInit {
     this.fetchReadings(); // get the readings for the new RCLDate
   }
 
-  fetchRCLDate(){
+  fetchRCLDate() {
     console.log(this.readingService.fetchRCLDate());
   }
 
@@ -138,12 +129,12 @@ export class DashboardComponent implements OnInit {
     return dateString;
   }
 
-  openJournal(){
+  openJournal() {
     console.log('open the journal!');
     this.router.navigate(['/end-user/journal-entry']);
   }
 
-  openReadings(){
+  openReadings() {
     console.log('open the readings!');
     let dateString = this.convertToDateString(this.RCLDate);
     this.router.navigate(['/end-user/readings', dateString]);

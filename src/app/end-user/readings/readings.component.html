@@ -117,13 +117,13 @@
 
       <div *ngIf="multiGroupPostData">
         <div *ngFor="let groupPostData of multiGroupPostData">
-          <app-group-post-list
+          <group-post-list
             [groupPostData]='groupPostData'
             [groupNameInTitleBar]=true
             [readingID]="readingsData.readings[currentReadingIndex].id"
             [postsClosed] = true
           >
-          </app-group-post-list>
+          </group-post-list>
         </div>
       </div>
 

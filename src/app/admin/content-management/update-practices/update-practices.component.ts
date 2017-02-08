@@ -75,6 +75,7 @@ export class UpdatePracticesComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     console.log('update practices oninit');
+    /* TODO: The getPractices method is deprecated so comment out for now.
     this.practiceService.getPractices().subscribe(
       practices => {
         this.practices = practices;
@@ -83,6 +84,7 @@ export class UpdatePracticesComponent implements OnInit, OnChanges {
       },
       err => console.log("ERROR", err),
       () => console.log("Practices fetched"));
+      */
   }
 
   ngOnChanges() {
