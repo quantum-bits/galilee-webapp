@@ -1,5 +1,6 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
 
 import {DeleteJournalEntryModalComponent} from '../delete-journal-entry-modal';
 
@@ -30,11 +31,12 @@ export class JournalEntriesSearchResultsComponent implements OnInit {
 
   private filter: JournalEntryFilter = {};
   private userTags: Array<Tag> = [];
+  private subscription: Subscription;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private journalService: JournalService) {
-    journalService.journalEntryToBeDeleted$
+    this.subscription = journalService.journalEntryToBeDeleted$
       .subscribe(journalEntryID => {
         this.launchDeleteEntryModal(journalEntryID);
       });
@@ -79,5 +81,9 @@ export class JournalEntriesSearchResultsComponent implements OnInit {
 
   updateEntry(entryID: number) {
     this.router.navigate(['/end-user/journal-entry', entryID]);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

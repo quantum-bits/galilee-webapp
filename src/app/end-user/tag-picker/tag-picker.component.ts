@@ -4,7 +4,8 @@ import {Tag} from "../../shared/interfaces/tag.interface";
 
 @Component({
   selector: 'tag-picker',
-  templateUrl: './tag-picker.component.html'
+  templateUrl: './tag-picker.component.html',
+  styleUrls: ['./tag-picker.component.css']
 })
 export class TagPickerComponent implements OnInit {
   @Input() selectedTags: Array<Tag> = [];
