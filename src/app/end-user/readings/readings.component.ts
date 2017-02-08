@@ -68,7 +68,7 @@ export class ReadingsComponent implements OnInit {
         this.currentReadingIndex = +params['readingIndex'];
       }
       this.fetchReadings();
-      this.fetchGroupPosts();
+      //this.fetchGroupPosts();
 
     });
   }

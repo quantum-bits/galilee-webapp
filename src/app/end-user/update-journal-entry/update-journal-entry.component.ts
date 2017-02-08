@@ -39,6 +39,8 @@ export class UpdateJournalEntryComponent implements OnInit {
             this.journalEntry = journalEntry;
             this.isNewEntry = false;
             this.initializeForm();
+
+            console.log(this.journalEntry);
           });
       } else {
         // Create new entry.
