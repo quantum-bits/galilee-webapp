@@ -103,6 +103,10 @@ export class AppComponent implements OnInit {
     this.router.navigate(['/end-user/journal']);
   }
 
+  goToForum(){
+    this.router.navigate(['/end-user/post']);
+  }
+
   goHome(){
     this.router.navigate(['/end-user']);
   }
