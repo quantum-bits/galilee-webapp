@@ -34,7 +34,6 @@ import {Permission} from '../shared/models/permission.model';
  https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/subjects/replaysubject.md
  */
 
-const BASE_URL = 'http://localhost:3001';
 const DEFAULT_REDIRECT_URL = '/end-user/dashboard';
 const CURRENT_USER_KEY = 'current-user';
 
@@ -91,23 +90,23 @@ export class UserService {
 
   updateName(userId: number, firstName: string, lastName: string) {
     return this.authHttp
-      .patch(`http://localhost:3000/users/name`, {firstName: firstName, lastName: lastName});
+      .patch(`/api/users/name`, {firstName: firstName, lastName: lastName});
   }
 
   updateEmail(userId: number, email: string) {
     return this.authHttp
-      .patch(`http://localhost:3000/users/email`, {email: email});
+      .patch(`/api/users/email`, {email: email});
   }
 
   updatePassword(userId: number, password: string) {
     console.log('updating password: ', password);
     return this.authHttp
-      .patch(`http://localhost:3000/users/password`, {password: password});
+      .patch(`/api/users/password`, {password: password});
   }
 
 
   signup(email, password, firstName, lastName) {
-    return this.http.post('http://localhost:3000/users', {
+    return this.http.post('/api/users', {
       email: email,
       password: password,
       firstName: firstName,
@@ -149,12 +148,12 @@ export class UserService {
   }
 
   getUsers() {
-    return this.authHttp.get('http://localhost:3000/admin/users')
+    return this.authHttp.get('/api/admin/users')
       .map(res => res.json());
   }
 
   getPermissionTypes() {
-    return this.http.get('http://localhost:3000/users/permissions')
+    return this.http.get('/api/users/permissions')
       .map(res => res.json());
   }
 

@@ -40,7 +40,7 @@ export class PostService {
   getAllUserPosts(maxNumber: number): Observable<UserPostData> {
     const user = this.userService.getCurrentUser();
     return this.authHttp
-      .get(`http://localhost:3000/posts?userId=${user.id}`)
+      .get(`/api/posts?userId=${user.id}`)
       .map(resp => resp.json());
   }
 

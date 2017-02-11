@@ -27,7 +27,7 @@ export class AuthenticationService {
   }
 
   authenticate(email: string, password: string): Observable<User> {
-    return this.http.post('http://localhost:3000/authenticate', {email, password})
+    return this.http.post('/api/authenticate', {email, password})
       .map(response => {
         if (response.ok) {
           let loginData: LoginData = response.json();

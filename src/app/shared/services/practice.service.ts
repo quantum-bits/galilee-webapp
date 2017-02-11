@@ -3,7 +3,6 @@ import {Http} from '@angular/http';
 
 import {Observable} from 'rxjs/Rx';
 
-import {PracticesUrl} from '../urls';
 import {Practice} from '../models/practice.model';
 
 // MOCK

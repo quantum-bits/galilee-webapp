@@ -37,7 +37,7 @@ export class ResourceService {
    * @returns {Observable<R>}
    */
   getResourceTypes():Observable<any> {
-    return this.http.get('http://localhost:3000/resources/types')
+    return this.http.get('/api/resources/types')
       .map(res => res.json());
   }
 

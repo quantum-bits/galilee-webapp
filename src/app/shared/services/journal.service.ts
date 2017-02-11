@@ -28,7 +28,7 @@ export class JournalService {
   getJournalEntries(offset: number,
                     limit: number,
                     filter?: JournalEntryFilter): Observable<JournalEntries> {
-    let url = `http://localhost:3000/entries?offset=${offset}&limit=${limit}`;
+    let url = `/api/entries?offset=${offset}&limit=${limit}`;
     if (filter) {
       if (filter.tag) {
         url += `&tag=${filter.tag}`;
@@ -42,7 +42,7 @@ export class JournalService {
 
   getJournalMetadata(): Observable<JournalMetadata> {
     return this.authHttp
-      .get('http://localhost:3000/entries/meta')
+      .get('/api/entries/meta')
       .map(resp => resp.json());
   }
 
@@ -53,7 +53,7 @@ export class JournalService {
    */
   getJournalEntry(entryId: number): Observable<JournalEntry> {
     return this.authHttp
-      .get(`http://localhost:3000/entries/${entryId}`)
+      .get(`/api/entries/${entryId}`)
       .map(resp => new JournalEntry(resp.json()));
   }
 
@@ -62,7 +62,7 @@ export class JournalService {
    */
   getUserTags(): Observable<Array<Tag>> {
     return this.authHttp
-      .get('http://localhost:3000/tags')
+      .get('/api/tags')
       .map(resp => resp.json());
   }
 
@@ -73,7 +73,7 @@ export class JournalService {
    */
   getDailyQuestions(dateString: string): Observable<Array<string>> {
     return this.http
-      .get(`http://localhost:3000/daily/${dateString}/questions`)
+      .get(`/api/daily/${dateString}/questions`)
       .map(resp => resp.json());
   }
 
@@ -84,7 +84,7 @@ export class JournalService {
 
   deleteEntry(entryId: number) {
     return this.authHttp
-      .delete(`http://localhost:3000/entries/${entryId}`)
+      .delete(`/api/entries/${entryId}`)
       .map(resp => resp.json);
   }
 
@@ -97,12 +97,12 @@ export class JournalService {
 
     if (isNewEntry) {
       return this.authHttp
-        .post('http://localhost:3000/entries', payload)
+        .post('/api/entries', payload)
         .map(resp => resp.json());
     } else {
       assert(journalEntry.id, 'Journal entry has no id');
       return this.authHttp
-        .patch(`http://localhost:3000/entries/${journalEntry.id}`, payload)
+        .patch(`/api/entries/${journalEntry.id}`, payload)
         .map(resp => resp.json());
     }
   }

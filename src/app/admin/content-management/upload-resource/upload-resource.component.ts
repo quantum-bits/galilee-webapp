@@ -17,7 +17,7 @@ import {ResourceCollection} from '../../../shared/interfaces/resource-collection
 
 import {UpdateResourceItemBindingService} from '../update-resource-item-binding.service';
 
-const URL = 'http://localhost:3000/resources';
+const URL = '/api/resources';
 
 declare var $: any; // for using jQuery within this angular component
 

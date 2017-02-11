@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  base_url: 'FIX ME'
+  base_url: 'https://galilee.cse.taylor.edu'
 };

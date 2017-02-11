@@ -38,7 +38,7 @@ export class ReadingService {
 
   getReadingById(id: number): Observable<Reading> {
     return this.http
-      .get(`http://localhost:3000/readings/${id}`)
+      .get(`/api/readings/${id}`)
       .map(res => res.json());
   }
 
@@ -52,7 +52,7 @@ export class ReadingService {
 
   getReadingMetadata(): Observable<CalendarEntries> {
     return this.authHttp
-      .get('http://localhost:3000/readings/meta')
+      .get('/api/readings/meta')
       .map(resp => resp.json());
   }
 
@@ -67,7 +67,7 @@ export class ReadingService {
     if (this.readingsData === null) {
       // if readingsData doesn't exist, go get it
       return this.http
-        .get(`http://localhost:3000/daily/${date}`)
+        .get(`/api/daily/${date}`)
         .map(res => res.json())
         .do(res => {
           console.log('fetched readings from db');
@@ -91,7 +91,7 @@ export class ReadingService {
       } else {
         // date mismatch; fetch data from the db....
         return this.http
-          .get(`http://localhost:3000/daily/${date}`)
+          .get(`/api/daily/${date}`)
           .map(res => res.json())
           .do(res => {
             console.log('fetched readings from db');
@@ -126,14 +126,14 @@ export class ReadingService {
 
   readAllPractices(): Observable<Array<Practice>> {
     return this.authHttp
-      .get('http://localhost:3000/practices')
+      .get('/api/practices')
       .map(resp => resp.json());
   }
 
   // Create a question. Must be associated with a reading day.
   createQuestion(question: DailyQuestion, readingDay: ReadingDay): Observable<DailyQuestion> {
     return this.authHttp
-      .post('http://localhost:3000/questions', {
+      .post('/api/questions', {
         text: question.text,
         seq: question.seq,
         readingDayId: readingDay.id
@@ -143,13 +143,13 @@ export class ReadingService {
 
   readQuestion(questionId: number): Observable<DailyQuestion> {
     return this.authHttp
-      .get(`http://localhost:3000/questions/${questionId}`)
+      .get(`/api/questions/${questionId}`)
       .map(resp => resp.json());
   }
 
   updateQuestion(questionId: number, question: DailyQuestion, readingDay: ReadingDay): Observable<DailyQuestion> {
     return this.authHttp
-      .patch(`http://localhost:3000/questions/${questionId}`, {
+      .patch(`/api/questions/${questionId}`, {
         text: question.text,
         seq: question.seq,
         readingDayId: readingDay.id
@@ -159,7 +159,7 @@ export class ReadingService {
 
   deleteQuestion(questionId: number): Observable<number> {
     return this.authHttp
-      .delete(`http://localhost:3000/questions/${questionId}`)
+      .delete(`/api/questions/${questionId}`)
       .map(resp => resp.json());
   }
 
