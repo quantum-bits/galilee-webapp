@@ -124,12 +124,6 @@ export class ReadingService {
     }
   }
 
-  readAllPractices(): Observable<Array<Practice>> {
-    return this.authHttp
-      .get('/api/practices')
-      .map(resp => resp.json());
-  }
-
   // Create a question. Must be associated with a reading day.
   createQuestion(question: DailyQuestion, readingDay: ReadingDay): Observable<DailyQuestion> {
     return this.authHttp.post('/api/questions', {

@@ -26,11 +26,11 @@
     <div *ngIf="dateString || readingsData" class="col s12 m8 offset-m2 l8">
       <div class="row">
         <div class="col s12">
-          <app-update-readings-list
+          <update-readings-list
             [dateString] = "dateString"
             [readingsData] = "readingsData"
             (launchAddPracticeForm) = "onLaunchAddPracticeForm($event)">
-          </app-update-readings-list>
+          </update-readings-list>
         </div>
       </div>
       <div class="row">

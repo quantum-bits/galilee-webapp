@@ -60,7 +60,7 @@
   </div>
 </div>
 
-<app-update-practice-form
+<update-practice-form
   #updateApplicationModal
   [incrementer] = "incrementer"
   [readingDay] = "readingsData"
@@ -69,7 +69,7 @@
   [isNewApplication] = "isNewApplication"
   [allPractices] = "allPractices"
   (submitSuccess) = "onAddPractice($event)">
-</app-update-practice-form>
+</update-practice-form>
 
 <app-display-reading-modal
   #displayReadingModal

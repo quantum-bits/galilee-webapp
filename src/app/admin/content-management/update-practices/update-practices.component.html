@@ -19,9 +19,9 @@
       </ul>
       <div class='dragula-container' [dragula]='"practices-bag"' [dragulaModel]='practicesThisReading'>
         <div *ngFor="let practice of practicesThisReading">
-          <app-update-practice-item
+          <update-practice-item
             [practice]="practice"
-          ></app-update-practice-item>
+          ></update-practice-item>
         </div>
       </div>
     </div>

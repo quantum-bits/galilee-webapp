@@ -11,7 +11,7 @@ import {UpdatePracticeItemBindingService} from '../update-practice-item-binding.
 declare var $: any; // for using jQuery within this angular component
 
 @Component({
-  selector: 'app-update-practice-item',
+  selector: 'update-practice-item',
   templateUrl: './update-practice-item.component.html',
   styleUrls: ['./update-practice-item.component.css'],
   providers: []

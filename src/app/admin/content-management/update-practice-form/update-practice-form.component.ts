@@ -9,7 +9,7 @@ import {ApplicationFormData} from '../../../shared/interfaces/application-form-d
 import {IPractice} from '../../../shared/interfaces/practice.interface';
 
 @Component({
-  selector: 'app-update-practice-form',
+  selector: 'update-practice-form',
   templateUrl: './update-practice-form.component.html',
   styleUrls: ['./update-practice-form.component.css']
 })
@@ -21,16 +21,9 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
   @Input() allPractices: IPractice[] = []; //this does not actually seem to initialize it to []
   @Input() incrementer: number = 0;
 
-
-
-
-
-
-
   modalActions = new EventEmitter();
 
   @Output() submitSuccess = new EventEmitter<ApplicationFormData>();
-
 
   /**
    * Add new form elements dynamically:
