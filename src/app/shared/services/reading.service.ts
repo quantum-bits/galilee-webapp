@@ -6,9 +6,8 @@ import {Subject}    from 'rxjs/Subject';
 import {AuthHttp} from 'angular2-jwt';
 
 import {Reading} from '../models/reading.model';
-import {ReadingDay, DailyQuestion} from '../interfaces/reading.interface';
+import {ReadingDay, DailyQuestion, IReading} from '../interfaces/reading.interface';
 import {CalendarEntries} from '../interfaces/calendar-entries.interface';
-import {Practice} from "../models/practice.model";
 
 // TODO: Move this to a shared module.
 function todaysDate(): string {
@@ -124,34 +123,34 @@ export class ReadingService {
     }
   }
 
-  // Create a question. Must be associated with a reading day.
-  createQuestion(question: DailyQuestion, readingDay: ReadingDay): Observable<DailyQuestion> {
-    return this.authHttp.post('/api/questions', {
-      text: question.text,
-      seq: question.seq,
+  createReading(reading: IReading, readingDay: ReadingDay): Observable<IReading> {
+    return this.authHttp.post('/api/readings', {
+      seq: reading.seq,
+      stdRef: reading.stdRef,
+      osisRef: reading.osisRef,
       readingDayId: readingDay.id
     }).map(resp => resp.json());
   }
 
-  readQuestion(questionId: number): Observable<DailyQuestion> {
+  readReading(readingId: number): Observable<IReading> {
     return this.authHttp
-      .get(`/api/questions/${questionId}`)
+      .get(`/api/readings/${readingId}`)
       .map(resp => resp.json());
   }
 
-  updateQuestion(questionId: number, question: DailyQuestion, readingDay: ReadingDay): Observable<DailyQuestion> {
+  updateReading(readingId: number, reading: IReading, readingDay: ReadingDay): Observable<IReading> {
     return this.authHttp
-      .patch(`/api/questions/${questionId}`, {
-        text: question.text,
-        seq: question.seq,
-        readingDayId: readingDay.id
+      .patch(`/api/readings/${readingId}`, {
+        seq: reading.seq,
+        stdRef: reading.stdRef,
+        osisRef: reading.osisRef,
       })
       .map(resp => resp.json());
   }
 
-  deleteQuestion(questionId: number): Observable<number> {
+  deleteReading(readingId: number): Observable<number> {
     return this.authHttp
-      .delete(`/api/questions/${questionId}`)
+      .delete(`/api/readings/${readingId}`)
       .map(resp => resp.json());
   }
 

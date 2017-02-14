@@ -18,6 +18,7 @@ export interface DailyQuestion {
 export interface ReadingDay {
   id: number;
   date: string;
+  name?: string
   questions: Array<DailyQuestion>;
   readings: Array<IReading>;
 }

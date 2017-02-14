@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import {DailyQuestion, ReadingDay} from '../../../shared/interfaces/reading.interface';
 
 import {ReadingService} from '../../../shared/services/reading.service';
+import {QuestionService} from "../../../shared/services/question.service";
 
 @Component({
   selector: 'app-update-question-form',
@@ -30,6 +31,7 @@ export class UpdateQuestionFormComponent implements OnChanges {
   constructor(
     private formBuilder: FormBuilder,
     private readingService: ReadingService,
+    private questionService: QuestionService,
     private router: Router) {
   }
 
@@ -77,7 +79,7 @@ export class UpdateQuestionFormComponent implements OnChanges {
 
     if (this.isNewQuestion) { //POST
       console.log('posting....');
-      this.readingService.createQuestion(this.localQuestion, this.readingDay)
+      this.questionService.createQuestion(this.localQuestion, this.readingDay)
         .subscribe(
           question => {
             console.log('returned! question:', question);
@@ -89,7 +91,7 @@ export class UpdateQuestionFormComponent implements OnChanges {
         );
     } else { //PATCH
       console.log('patching....');
-      this.readingService.updateQuestion(this.localQuestion.id, this.localQuestion, this.readingDay)
+      this.questionService.updateQuestion(this.localQuestion.id, this.localQuestion, this.readingDay)
         .subscribe(
           question => {
             console.log('returned! question:', question);

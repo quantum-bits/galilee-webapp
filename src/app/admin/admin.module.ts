@@ -5,7 +5,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {MaterializeModule} from "angular2-materialize";
 import {SharedModule} from '../shared/shared.module';
-//import {AuthenticationModule} from '../authentication/authentication.module';
 
 import {Ng2PaginationModule} from 'ng2-pagination';
 import {MomentModule} from 'angular2-moment';
@@ -25,14 +24,14 @@ import {UpdateResourceItemComponent} from './content-management/update-resource-
 import {UpdateResourcesComponent} from './content-management/update-resources';
 import {UploadResourceComponent} from './content-management/upload-resource';
 import {ManageReadingComponent} from './content-management/manage-reading/manage-reading.component';
-import { UpdateReadingsComponent } from './content-management/update-readings/update-readings.component';
-import { UpdateReadingsListComponent } from './content-management/update-readings-list/update-readings-list.component';
-import { UpdateQuestionsListComponent } from './content-management/update-questions-list/update-questions-list.component';
-import { UpdateReadingFormComponent } from './content-management/update-reading-form/update-reading-form.component';
-import { UpdateQuestionFormComponent } from './content-management/update-question-form/update-question-form.component';
-import { UpdatePracticeFormComponent } from './content-management/update-practice-form/update-practice-form.component';
-import { DisplayApplicationStepsComponent } from './content-management/display-application-steps/display-application-steps.component';
-import { DisplayReadingModalComponent } from './content-management/display-reading-modal/display-reading-modal.component';
+import {UpdateReadingsComponent} from './content-management/update-readings/update-readings.component';
+import {UpdateReadingsListComponent} from './content-management/update-readings-list/update-readings-list.component';
+import {UpdateQuestionsListComponent} from './content-management/update-questions-list/update-questions-list.component';
+import {UpdateReadingFormComponent} from './content-management/update-reading-form/update-reading-form.component';
+import {UpdateQuestionFormComponent} from './content-management/update-question-form/update-question-form.component';
+import {UpdatePracticeFormComponent} from './content-management/update-practice-form/update-practice-form.component';
+import {DisplayApplicationStepsComponent} from './content-management/display-application-steps/display-application-steps.component';
+import {DisplayReadingModalComponent} from './content-management/display-reading-modal/display-reading-modal.component';
 
 const routes: Routes = [
   {

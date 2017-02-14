@@ -9,6 +9,8 @@ import {User} from './shared/models/user.model';
 import {ADMIN} from './shared/models/permission.model';
 import {JournalService} from './shared/services/journal.service';
 import {PostService} from './shared/services/post.service';
+import {QuestionService} from "./shared/services/question.service";
+import {ReadingDayService} from "./shared/services/reading-day.service";
 
 @Component({
   selector: 'app-root',
@@ -17,6 +19,8 @@ import {PostService} from './shared/services/post.service';
   //styleUrls: ['../materialize-src/sass/ghpages-materialize.scss','./app.component.css'],
   providers: [
     ReadingService,
+    QuestionService,
+    ReadingDayService,
     PracticeService,
     ResourceService,
     JournalService,

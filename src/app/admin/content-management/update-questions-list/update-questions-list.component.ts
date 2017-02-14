@@ -5,6 +5,7 @@ import {UpdateQuestionFormComponent} from '../update-question-form/update-questi
 
 import {DailyQuestion, ReadingDay} from '../../../shared/interfaces/reading.interface';
 import {ReadingService} from "../../../shared/services/reading.service";
+import {QuestionService} from "../../../shared/services/question.service";
 
 @Component({
   selector: 'app-update-questions-list',
@@ -24,7 +25,8 @@ export class UpdateQuestionsListComponent implements OnInit, OnChanges {
   private singleQuestionText: string = null;
   private questionsThisDay: boolean = false; // true if >0 questions already
 
-  constructor(private readingService: ReadingService) {
+  constructor(private readingService: ReadingService,
+              private questionService: QuestionService) {
   }
 
   ngOnInit() {
@@ -33,7 +35,7 @@ export class UpdateQuestionsListComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     console.log('CHANGE in question list comp!');
-    if (!((this.readingDay === null)||(this.readingDay === undefined))){
+    if (!((this.readingDay === null) || (this.readingDay === undefined))) {
       this.questionsThisDay = (this.readingDay.questions.length > 0);
     }
   }
@@ -60,7 +62,7 @@ export class UpdateQuestionsListComponent implements OnInit, OnChanges {
   onDeleteQuestion(questionIndex: number) {
     console.log('delete questionID: ', questionIndex);
     let questionId = this.readingDay.questions[questionIndex].id;
-    this.readingService.deleteQuestion(questionId)
+    this.questionService.deleteQuestion(questionId)
       .subscribe(
         response => {
           console.log('response from question delete: ', response);
