@@ -132,13 +132,11 @@ export class ReadingService {
 
   // Create a question. Must be associated with a reading day.
   createQuestion(question: DailyQuestion, readingDay: ReadingDay): Observable<DailyQuestion> {
-    return this.authHttp
-      .post('/api/questions', {
-        text: question.text,
-        seq: question.seq,
-        readingDayId: readingDay.id
-      })
-      .map(resp => resp.json());
+    return this.authHttp.post('/api/questions', {
+      text: question.text,
+      seq: question.seq,
+      readingDayId: readingDay.id
+    }).map(resp => resp.json());
   }
 
   readQuestion(questionId: number): Observable<DailyQuestion> {

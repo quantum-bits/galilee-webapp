@@ -1,13 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 
-import {
-  FormBuilder,
-  FormGroup,
-  FormArray,
-  Validators,
-  FormControl
-} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-update-post',
@@ -27,7 +21,6 @@ export class UpdatePostComponent implements OnInit {
   // date.toISOString()
 
   private newPost: boolean; // true if this is a new post; false if updating
-
 
   constructor( private formBuilder: FormBuilder,
                private route: ActivatedRoute,
@@ -85,7 +78,4 @@ export class UpdatePostComponent implements OnInit {
     //
     this.router.navigate(['/end-user/post']);
   }
-
-
-
 }

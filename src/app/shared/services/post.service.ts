@@ -3,9 +3,10 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Subject}    from 'rxjs/Subject';
 
-import {UserPostData} from '../interfaces/post.interface';
+import {UserPostData, IPost} from '../interfaces/post.interface';
 import {AuthHttp} from "angular2-jwt";
 import {UserService} from "../../authentication/user.service";
+import {Group} from "../models/user.model";
 
 //TODO: QUESTION -- can we 'load more' the same way we do for
 //                  journal entries?  What if other group members have
@@ -71,5 +72,34 @@ export class PostService {
     this.postToBeDeletedSource.next(postID);
   }
 
+  createPost(post: IPost, group: Group): Observable<IPost> {
+    return this.authHttp
+      .post('/api/posts', {
+        title: post.title,
+        content: post.content,
+        userId: this.userService.getCurrentUser().id,
+        groupId: group.id
+      }).map(resp => resp.json());
+  }
 
+  readPost(postId: number): Observable<IPost> {
+    return this.authHttp
+      .get(`/api/posts/${postId}`)
+      .map(resp => resp.json());
+  }
+
+  updatePost(post: IPost): Observable<IPost> {
+    return this.authHttp
+      .patch(`/api/posts/${post.id}`, {
+        title: post.title,
+        content: post.content
+      })
+      .map(resp => resp.json());
+  }
+
+  deletePost(postId: number): Observable<number> {
+    return this.authHttp
+      .delete(`/api/posts/${postId}`)
+      .map(resp => resp.json());
+  }
 }
