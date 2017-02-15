@@ -3,7 +3,7 @@ import {Router, NavigationExtras} from '@angular/router';
 
 import {Subscription} from 'rxjs/Subscription';
 
-import {DeleteJournalEntryModalComponent} from '../delete-journal-entry-modal';
+import {DeleteItemModalComponent} from '../../shared/components/delete-item-modal/delete-item-modal.component';
 
 import {JournalEntry} from '../../shared/models/journal-entry.model';
 import {JournalMetadata} from '../../shared/interfaces/journal-entries.interface';
@@ -21,7 +21,7 @@ const ENTRIES_PER_LOAD = 3;
 })
 export class JournalDashboardComponent implements OnInit, OnDestroy {
 
-  @ViewChild('deleteJournalEntryModal') modal: DeleteJournalEntryModalComponent;
+  @ViewChild('deleteJournalEntryModal') modal: DeleteItemModalComponent;
 
   private journalEntries: Array<JournalEntry> = [];
   private journalMetadata: JournalMetadata = {

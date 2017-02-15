@@ -1,6 +1,6 @@
 <div *ngIf="groupPostData">
   <div *ngIf="!groupNameInTitleBar">
-    <h5>{{groupPostData.groupName}}</h5>
+    <h5>{{groupPostData.name}}</h5>
   </div>
   <ul class="collection with-header">
     <div *ngIf="!groupNameInTitleBar">
@@ -10,10 +10,10 @@
     </div>
     <div *ngIf="groupNameInTitleBar">
       <li class="collection-header">
-        <h5>{{groupPostData.groupName}}
+        <h5>{{groupPostData.name}}
           <a materialize="dropdown"
              class="dropdown-button right"
-             [attr.data-activates]="'groupPostDataDropdown'+groupPostData.groupId">
+             [attr.data-activates]="'groupPostDataDropdown'+groupPostData.id">
             <i class="material-icons white-text">filter_list</i>
           </a>
         </h5>
@@ -40,7 +40,7 @@
 </div>
 
 <!-- Dropdown Structure-->
-<ul id="groupPostDataDropdown{{groupPostData.groupId}}" class='dropdown-content'>
+<ul id="groupPostDataDropdown{{groupPostData.id}}" class='dropdown-content'>
   <li><a (click)="dropFilters()">all</a></li>
   <li><a (click)="filterListThisReading()">this passage</a></li>
 </ul>

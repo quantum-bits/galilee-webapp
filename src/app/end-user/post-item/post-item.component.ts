@@ -4,6 +4,8 @@ import {Router} from '@angular/router';
 
 import {PostService} from '../../shared/services/post.service';
 import {Post} from '../../shared/models/post.model';
+import {UserService} from '../../authentication/user.service';
+import {User} from '../../shared/models/user.model';
 
 const TRUNCATION_LIMIT = 25; //number of words in a post after which to truncate
 const SHORT_TRUNCATION_LIMIT = 8;
@@ -13,16 +15,25 @@ const SHORT_TRUNCATION_LIMIT = 8;
   templateUrl: './post-item.component.html',
   styleUrls: ['./post-item.component.css']
 })
-export class PostItemComponent {
+export class PostItemComponent implements OnInit {
 
   @Input() post: Post;
   @Input() closed: boolean;   // if closed ==== true, then only show the title
   @Input() openable: boolean; // if openable ==== true, then clicking can open, etc.
 
   private allowTruncation: boolean = true;//allow truncation of text for this entry
+  private editable: boolean = false;
 
   constructor(private postService: PostService,
+              private userService: UserService,
               private router: Router) {
+  }
+
+  ngOnInit() {
+    if (this.userService.isLoggedIn()){
+      //presumably the user is logged in, but just in case....
+      this.editable = (this.userService.getCurrentUser().id === this.post.user.id);
+    }
   }
 
   // Count the words in 'text'.
@@ -81,8 +92,7 @@ export class PostItemComponent {
   }
 
   deleteEntry() {
-    // TODO: implement this....
-    //this.postService.announceDeletion(this.post.id);
+    this.postService.announceDeletion(this.post.id);
   }
 
   updateEntry() {

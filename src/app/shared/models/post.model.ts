@@ -1,18 +1,19 @@
 import {IPost} from '../interfaces/post.interface';
 
 export class Post implements IPost {
+  content: string;
+  groupId: number;
   id: number;
   title?: string;
-  content: string;
   updatedAt: string;
+  user: any; // TODO: this should be typed as a User object
   RCL_date?: string;//YYYY-MM-DD
   reading_id?: number;
   reading_std_ref?: string;
   response_post_id?: number; //if present, then the current post is a response to another post
-  userId: number;
-  groupId: number;
-  user: any;
-  reading: any;
+  //userId: number;
+
+  reading: any; // TODO: this should be typed as a Reading object
 
   constructor(obj) {
     this.id = obj.id;
@@ -33,9 +34,9 @@ export class Post implements IPost {
     if ("response_post_id" in obj) {
       this.response_post_id = obj.response_post_id;
     }
-    this.userId = obj.userId;
+    //this.userId = obj.userId;
     this.groupId = obj.groupId;
-    this.user = obj.user;
+    this.user = obj.user; // this is not truly a User object
     this.reading = obj.reading;
   }
 

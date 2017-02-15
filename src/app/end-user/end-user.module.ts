@@ -11,7 +11,6 @@ import {DatePickerModule} from 'ng2-datepicker';
 import {AuthGuard} from '../authentication/auth.guard';
 
 import {DashboardComponent} from './dashboard/dashboard.component';
-import {DeleteJournalEntryModalComponent} from './delete-journal-entry-modal/delete-journal-entry-modal.component';
 import {EndUserComponent} from './end-user.component';
 import {GroupPostListComponent} from './group-post-list/group-post-list.component';
 import {JournalDashboardComponent} from './journal-dashboard/journal-dashboard.component';
@@ -139,7 +138,6 @@ const routes: Routes = [
   ],
   declarations: [
     DashboardComponent,
-    DeleteJournalEntryModalComponent,
     EndUserComponent,
     GroupPostListComponent,
     JournalDashboardComponent,
