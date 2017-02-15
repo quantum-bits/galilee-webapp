@@ -11,6 +11,7 @@ import {JournalService} from './shared/services/journal.service';
 import {PostService} from './shared/services/post.service';
 import {QuestionService} from "./shared/services/question.service";
 import {ReadingDayService} from "./shared/services/reading-day.service";
+import {ApplicationService} from "./shared/services/application.service";
 
 @Component({
   selector: 'app-root',
@@ -18,13 +19,14 @@ import {ReadingDayService} from "./shared/services/reading-day.service";
   styleUrls: ['./app.component.css'],
   //styleUrls: ['../materialize-src/sass/ghpages-materialize.scss','./app.component.css'],
   providers: [
-    ReadingService,
+    JournalService,
+    PostService,
+    PracticeService,
     QuestionService,
     ReadingDayService,
-    PracticeService,
+    ReadingService,
     ResourceService,
-    JournalService,
-    PostService
+    ApplicationService
   ]
 })
 export class AppComponent implements OnInit {
