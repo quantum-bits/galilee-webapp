@@ -3,6 +3,10 @@ import {Router, ActivatedRoute} from '@angular/router';
 
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
+import {IPost} from '../../shared/interfaces/post.interface';
+import {UserService} from '../../authentication/user.service';
+import {User} from '../../shared/models/user.model';
+
 @Component({
   selector: 'app-update-post',
   templateUrl: './update-post.component.html',
@@ -10,7 +14,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class UpdatePostComponent implements OnInit {
 
-  private postData: any;
+  private postData: IPost;
   public postForm: FormGroup; // our model driven form
 
   // TODO: this date should probably be the date for the readings that
@@ -21,12 +25,25 @@ export class UpdatePostComponent implements OnInit {
   // date.toISOString()
 
   private newPost: boolean; // true if this is a new post; false if updating
+  private currentUser: User;
 
-  constructor( private formBuilder: FormBuilder,
+  constructor( private userService: UserService,
+               private formBuilder: FormBuilder,
                private route: ActivatedRoute,
                private router: Router) { }
 
   ngOnInit() {
+    if (this.userService.isLoggedIn()){
+      this.currentUser = this.userService.getCurrentUser();
+    }
+    console.log(this.currentUser);
+
+    // WORKING HERE:
+    // - update Group interface to match User data?
+    // - need to pass the groupId into this form; then match up with
+    //   user's group; alternatively, could have a getGroups endpoint
+
+
     this.newPost = true;
     this.createEmptyPostData(); // fills postData with initial values
     console.log('here is postData: ', this.postData);
@@ -39,8 +56,7 @@ export class UpdatePostComponent implements OnInit {
     this.postForm = this.formBuilder.group({
       id: [this.postData.id, [<any>Validators.required]],
       title: [this.postData.title,[]],
-      entry: [this.postData.entry, [<any>Validators.required]],
-      date: [this.postData.date, [<any>Validators.required]]
+      content: [this.postData.content, [<any>Validators.required]],
     });
 
   }
@@ -48,24 +64,39 @@ export class UpdatePostComponent implements OnInit {
   /*
   TODO: add other properties...?
 
+   content: string;
+   groupId: number;
    id: number;
    title?: string;
-   entry: string;
-   date: string;
+   updatedAt: string;
+   user?: User; // this should probably be required
    RCL_date?: string;//YYYY-MM-DD
    reading_id?: number;
    reading_std_ref?: string;
    response_post_id?: number; //if present, then the current post is a response to another post
-   user_id: number;
-   group_id: number;
+   //userId: number;
+
+   reading: any; // TODO: this should be typed as a Reading object
+
+   createPost(post: IPost, group: Group): Observable<IPost> {
+   return this.authHttp
+   .post('/api/posts', {
+   title: post.title,
+   content: post.content,
+   userId: this.userService.getCurrentUser().id,
+   groupId: group.id
+   }).map(resp => resp.json());
+   }
+
+
    */
   createEmptyPostData() {
     this.postData = {
-      id: 0, // id will eventually need to be managed by the server-side code
+      content: '',
+      groupId: null,
+      id: null,
       title: '',
-      entry: '',
-      // TODO: fix (toISOString() method does not properly take into account time zones)
-      date: this.date.toISOString()
+      updatedAt: null
     }
   }
 

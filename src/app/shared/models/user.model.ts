@@ -36,6 +36,15 @@ export class User {
     obj.permissions.forEach(permission => {
       this.permissions.push(new Permission(permission));
     });
+    this.groups = [];
+    console.log('XXXXXXX user object: ', obj);
+    console.log(obj.groups);
+
+    obj.groups.forEach(group => {
+      this.groups.push(group);
+    });
+
+
   }
 
   isEnabled() {
