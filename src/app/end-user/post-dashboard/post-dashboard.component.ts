@@ -73,25 +73,18 @@ export class PostDashboardComponent implements OnInit, OnDestroy {
     console.log('about to delete: ', postId);
     this.postService.deletePost(postId)
       .subscribe(result => {
-        console.log('result from delete: ', result);
-        /*
+          console.log('result from delete: ', result);
+          console.log(this.multiGroupPostData);
 
-        FIX!!!!
-        >>>>> instances of groupId and groupName need to be
-        >>>>> hunted down and fixed, including in PostQueryFilters
-
-
-
-
-
-
-
-
-          const index = this.journalEntries.findIndex(entry => entry.id === entryId);
-          if (index >= 0) {
-            this.journalEntries.splice(index, 1);
+          let index: number;
+          for (let i in this.multiGroupPostData) {
+            index = this.multiGroupPostData[i].posts.findIndex(post => post.id === postId);
+            if (index >= 0) {
+              this.multiGroupPostData[i].posts.splice(index, 1);
+              //TODO: does any counting need to be updated? (for the #
+              //      of entries displayed on the page, etc....)
+            }
           }
-          */
         },
         error => {
           console.log('error deleting entry: ', error);
