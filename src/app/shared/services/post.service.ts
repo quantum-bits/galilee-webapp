@@ -73,6 +73,12 @@ export class PostService {
   }
 
   createPost(post: IPost, group: Group): Observable<IPost> {
+    console.log('CREATING POST');
+    console.log(post.title);
+    console.log(post.content);
+    console.log(this.userService.getCurrentUser().id);
+    console.log(group.id);
+
     return this.authHttp
       .post('/api/posts', {
         title: post.title,

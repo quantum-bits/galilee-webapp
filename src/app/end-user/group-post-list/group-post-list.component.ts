@@ -39,7 +39,7 @@ export class GroupPostListComponent implements OnInit, OnChanges {
 
   initializeFilters() {
     this.postQueryFilters = {
-      groupId: this.groupPostData.groupId,
+      groupId: this.groupPostData.id,
     }
     // TODO: Make filtering work as desired.
     this.filteredPostList = this.groupPostData.posts;
@@ -54,7 +54,7 @@ export class GroupPostListComponent implements OnInit, OnChanges {
   filterListThisReading() {
     console.log('about to filter posts; reading ID is: ', this.readingID);
     this.postQueryFilters = {
-      groupId: this.groupPostData.groupId,
+      groupId: this.groupPostData.id,
       readingId: this.readingID
     }
     this.filteredPostList = this.groupPostData.filteredPosts(this.postQueryFilters);
@@ -62,7 +62,7 @@ export class GroupPostListComponent implements OnInit, OnChanges {
   }
 
   newPost() {
-    this.router.navigate(['/end-user/post-entry']);
+    this.router.navigate(['/end-user/post-entry/create',this.groupPostData.id]);
   }
 
   goToPostDashboard() {

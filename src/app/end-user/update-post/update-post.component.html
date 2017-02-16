@@ -16,13 +16,15 @@
         <form materialize [formGroup]="postForm" novalidate (ngSubmit)="onSubmit()">
           <div class="card">
             <div class="card-content">
-              <div *ngIf="newPost" class="card-title">
+              <div *ngIf="isNewPost" class="card-title">
                 New Post
               </div>
-              <div *ngIf="!newPost" class="card-title">
+              <div *ngIf="!isNewPost" class="card-title">
                 Update Post
               </div>
-
+              <div class="group-name">
+                {{group.name}}
+              </div>
               <div class="row">
                 <div class="input-field col s12">
                   <label for="title">Title (optional)</label>
@@ -36,17 +38,17 @@
 
               <div class="row">
                 <div class="input-field col s12">
-                  <label for="entry">Entry</label>
+                  <label for="content">Entry</label>
                   <textarea
                     class="materialize-textarea"
-                    [input-wake-up]="'entry'"
-                    [class.warning-background]="postForm.controls.entry.errors && postForm.controls.entry.touched"
-                    id="entry"
+                    [input-wake-up]="'content'"
+                    [class.warning-background]="postForm.controls.content.errors && postForm.controls.content.touched"
+                    id="content"
                     type="text"
-                    formControlName="entry">
+                    formControlName="content">
                   </textarea>
                 </div>
-                <div *ngIf="postForm.controls.entry.errors && postForm.controls.entry.touched">
+                <div *ngIf="postForm.controls.content.errors && postForm.controls.content.touched">
                   <small class="warning">
                     This field is required.
                   </small>

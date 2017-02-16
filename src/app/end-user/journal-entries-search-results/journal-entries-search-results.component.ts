@@ -2,7 +2,7 @@ import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 
-import {DeleteJournalEntryModalComponent} from '../delete-journal-entry-modal';
+import {DeleteItemModalComponent} from '../../shared/components/delete-item-modal/delete-item-modal.component';
 
 import {JournalEntry} from '../../shared/models/journal-entry.model';
 import {JournalMetadata, JournalEntryFilter} from '../../shared/interfaces/journal-entries.interface';
@@ -18,7 +18,7 @@ const ENTRIES_PER_LOAD = 3;
 })
 export class JournalEntriesSearchResultsComponent implements OnInit {
 
-  @ViewChild('deleteEntryModal') modal: DeleteJournalEntryModalComponent;
+  @ViewChild('deleteEntryModal') modal: DeleteItemModalComponent;
 
   private journalEntries: Array<JournalEntry> = [];
   private journalMetadata: JournalMetadata = {
@@ -76,6 +76,9 @@ export class JournalEntriesSearchResultsComponent implements OnInit {
         if (index >= 0) {
           this.journalEntries.splice(index, 1);
         }
+      },
+      error => {
+        console.log('error deleting entry: ', error);
       });
   }
 

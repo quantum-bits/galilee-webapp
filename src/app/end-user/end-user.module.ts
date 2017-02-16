@@ -11,7 +11,6 @@ import {DatePickerModule} from 'ng2-datepicker';
 import {AuthGuard} from '../authentication/auth.guard';
 
 import {DashboardComponent} from './dashboard/dashboard.component';
-import {DeleteJournalEntryModalComponent} from './delete-journal-entry-modal/delete-journal-entry-modal.component';
 import {EndUserComponent} from './end-user.component';
 import {GroupPostListComponent} from './group-post-list/group-post-list.component';
 import {JournalDashboardComponent} from './journal-dashboard/journal-dashboard.component';
@@ -108,7 +107,13 @@ const routes: Routes = [
       },
       {
         //create new forum post
-        path: 'post-entry',
+        path: 'post-entry/create/:groupId',
+        component: UpdatePostComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        //update existing forum post
+        path: 'post-entry/update/:postId',
         component: UpdatePostComponent,
         canActivate: [AuthGuard]
       },
@@ -139,7 +144,6 @@ const routes: Routes = [
   ],
   declarations: [
     DashboardComponent,
-    DeleteJournalEntryModalComponent,
     EndUserComponent,
     GroupPostListComponent,
     JournalDashboardComponent,

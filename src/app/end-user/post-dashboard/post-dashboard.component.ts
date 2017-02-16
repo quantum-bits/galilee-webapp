@@ -6,7 +6,7 @@ import { Subscription }   from 'rxjs/Subscription';
 
 import * as moment from 'moment';
 
-import {DeleteJournalEntryModalComponent} from '../delete-journal-entry-modal';
+import {DeleteItemModalComponent} from '../../shared/components/delete-item-modal/delete-item-modal.component';
 
 import {Post} from '../../shared/models/post.model';
 import {GroupPostData} from '../../shared/models/group-post-data.model';
@@ -23,7 +23,7 @@ const DEFAULT_NUMBER_ENTRIES = 2; // default number of entries to show
 })
 export class PostDashboardComponent implements OnInit, OnDestroy {
 
-  @ViewChild('deletePostModal') modal: DeleteJournalEntryModalComponent;
+  @ViewChild('deletePostModal') modal: DeleteItemModalComponent;
 
   //private journalEntriesData: JournalEntries; not currently being used
   private multiGroupPostData: GroupPostData[];
@@ -67,10 +67,25 @@ export class PostDashboardComponent implements OnInit, OnDestroy {
     this.modal.openModal(postID);
   }
 
-  deletePost(postID: number) {
-    console.log(postID);
-    //
-    //TODO: delete journal entry via service; then reload this page
+
+  deleteEntry(postId: number) {
+    console.log('about to delete: ', postId);
+    this.postService.deletePost(postId)
+      .subscribe(result => {
+          console.log('result from delete: ', result);
+          let index: number;
+          for (let i in this.multiGroupPostData) {
+            index = this.multiGroupPostData[i].posts.findIndex(post => post.id === postId);
+            if (index >= 0) {
+              this.multiGroupPostData[i].posts.splice(index, 1);
+              //TODO: does any counting need to be updated? (for the #
+              //      of entries displayed on the page, etc....)
+            }
+          }
+        },
+        error => {
+          console.log('error deleting entry: ', error);
+        });
   }
 
 

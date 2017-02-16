@@ -1,20 +1,22 @@
 export interface IPost {
+  content: string;
+  groupId: number;
   id: number;
   title?: string;
-  content: string;
   updatedAt: string;
+  user?: User; // this should probably be required
   RCL_date?: string;//YYYY-MM-DD
   reading_id?: number;
   reading_std_ref?: string;
   response_post_id?: number; //if present, then the current post is a response to another post
-  userId: number;
+  //userId: number;
   // TODO: add name for user so can include that in the post
-  groupId: number;
+
 }
 
 export interface IGroupPostData {
-  groupId: number;
-  groupName: string;
+  id: number; // group id
+  name: string; // group name
   startIndex: number;
   count: number;
   posts: IPost[];
@@ -30,5 +32,5 @@ export interface UserPostData {
 export interface PostQueryFilters {
   groupId: number;// required
   readingId?: number;
-  response_post_id?: number;
+  responsePostId?: number;
 }

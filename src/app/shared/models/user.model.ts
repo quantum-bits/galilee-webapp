@@ -8,7 +8,10 @@ export interface Organization {
 export interface Group {
   id: number;
   name: string;
-  organization: Organization;
+  //organization: Organization;
+  organizationId: number;
+  createdAt: string;
+  enabled: boolean;
 }
 
 export class User {
@@ -36,6 +39,12 @@ export class User {
     obj.permissions.forEach(permission => {
       this.permissions.push(new Permission(permission));
     });
+    this.groups = [];
+    obj.groups.forEach(group => {
+      this.groups.push(group);
+    });
+
+
   }
 
   isEnabled() {

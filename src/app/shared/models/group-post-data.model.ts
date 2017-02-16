@@ -5,15 +5,15 @@ import {PostQueryFilters} from '../interfaces/post.interface';
 export class GroupPostData implements IGroupPostData {
   startIndex: number;
   count: number;
-  groupId: number;
-  groupName: string;
+  id: number; // group ID
+  name: string; // group name
   posts: Post[];
 
   constructor(obj) {
     this.startIndex = obj.startIndex;
     this.count = obj.count;
-    this.groupId = obj.groupId;
-    this.groupName = obj.groupName;
+    this.id = obj.id;
+    this.name = obj.name;
     this.posts = [];
     for (let post of obj.posts) {
       this.posts.push(new Post(post));
