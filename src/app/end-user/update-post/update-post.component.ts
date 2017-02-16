@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 import {IPost} from '../../shared/interfaces/post.interface';
 import {UserService} from '../../authentication/user.service';
-import {User} from '../../shared/models/user.model';
+import {User, Group} from '../../shared/models/user.model';
+
+import {PostService} from '../../shared/services/post.service';
+import {JournalEntry} from '../../shared/models/journal-entry.model';
 
 @Component({
   selector: 'app-update-post',
@@ -13,6 +16,8 @@ import {User} from '../../shared/models/user.model';
   styleUrls: ['./update-post.component.css']
 })
 export class UpdatePostComponent implements OnInit {
+
+  @Input() groupId: number;
 
   private postData: IPost;
   public postForm: FormGroup; // our model driven form
@@ -24,10 +29,12 @@ export class UpdatePostComponent implements OnInit {
   private date = new Date();
   // date.toISOString()
 
-  private newPost: boolean; // true if this is a new post; false if updating
+  private isNewPost: boolean = true; // true if this is a new post; false if updating
   private currentUser: User;
+  private group: Group = null;
 
   constructor( private userService: UserService,
+               private postService: PostService,
                private formBuilder: FormBuilder,
                private route: ActivatedRoute,
                private router: Router) { }
@@ -38,45 +45,57 @@ export class UpdatePostComponent implements OnInit {
     }
     console.log(this.currentUser);
 
+    let index: number;
+    index = this.route.snapshot.url.findIndex(UrlSegment => UrlSegment.path === 'create');
+    if (index >= 0) { // create
+      this.isNewPost = true;
+      let groupId = +this.route.snapshot.params['groupId'];
+      this.setGroup(groupId);
+      this.createEmptyPostData(groupId); // fills postData with initial values
+      console.log('here is postData: ', this.postData);
+      this.initializeForm();
+      console.log('here is postForm: ', this.postForm);
+    } else { //update
+      index = this.route.snapshot.url.findIndex(UrlSegment => UrlSegment.path === 'update');
+      if (index >= 0) { // update
+        this.isNewPost = false;
+        let postId = +this.route.snapshot.params['postId'];
+        this.postService.readPost(postId)
+          .subscribe(post => {
+            this.postData = post;
+            this.setGroup(this.postData.groupId);
+            this.initializeForm();
+            console.log(this.postData);
+          });
+      }
+
+    }
+
     // WORKING HERE:
-    // - update Group interface to match User data?
-    // - need to pass the groupId into this form; then match up with
+        // - need to pass the groupId into this form; then match up with
     //   user's group; alternatively, could have a getGroups endpoint
 
-
-    this.newPost = true;
-    this.createEmptyPostData(); // fills postData with initial values
-    console.log('here is postData: ', this.postData);
-    this.initializeForm();
-    console.log('here is postForm: ', this.postForm);
 
   }
 
   initializeForm() {
     this.postForm = this.formBuilder.group({
-      id: [this.postData.id, [<any>Validators.required]],
       title: [this.postData.title,[]],
       content: [this.postData.content, [<any>Validators.required]],
     });
 
   }
 
+  setGroup(groupId: number){
+    let index = this.currentUser.groups.findIndex(array => array.id === groupId);
+    if (index >= 0) {
+      this.group = this.currentUser.groups[index];
+    } else {
+      // TODO: give the user a message
+    }
+  }
   /*
   TODO: add other properties...?
-
-   content: string;
-   groupId: number;
-   id: number;
-   title?: string;
-   updatedAt: string;
-   user?: User; // this should probably be required
-   RCL_date?: string;//YYYY-MM-DD
-   reading_id?: number;
-   reading_std_ref?: string;
-   response_post_id?: number; //if present, then the current post is a response to another post
-   //userId: number;
-
-   reading: any; // TODO: this should be typed as a Reading object
 
    createPost(post: IPost, group: Group): Observable<IPost> {
    return this.authHttp
@@ -90,19 +109,43 @@ export class UpdatePostComponent implements OnInit {
 
 
    */
-  createEmptyPostData() {
+  createEmptyPostData(groupId: number) {
     this.postData = {
       content: '',
-      groupId: null,
+      groupId: groupId,
       id: null,
       title: '',
       updatedAt: null
     }
   }
 
-  onSubmit(){
-    //
-    this.router.navigate(['/end-user/post']);
+  onSubmit() {
+    Object.assign(this.postData, this.postForm.value);
+    //let groupId = +this.postData.groupId;
+    //let index = this.currentUser.groups.findIndex(array => array.id === groupId);
+    //let group: Group = null;
+    /*
+    if (index >= 0) {
+      group = this.currentUser.groups[index];
+    } else {
+      // TODO: give the user a message
+    }
+    */
+
+    console.log(this.postData, this.group);
+
+    this.postService.createPost(this.postData, this.group)
+      .subscribe(
+        result => {
+          console.log('Post saved', result);
+          this.router.navigate(['/end-user/post']);
+        },
+        err => {
+          console.error("FAILED TO SAVE");
+          // TODO: give the user a message
+        }
+      );
+
   }
 
   onCancel(){

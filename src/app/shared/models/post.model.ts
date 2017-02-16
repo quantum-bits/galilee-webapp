@@ -13,7 +13,7 @@ export class Post implements IPost {
   response_post_id?: number; //if present, then the current post is a response to another post
   //userId: number;
 
-  reading: any; // TODO: this should be typed as a Reading object
+  reading: any; // TODO: should this be typed as a Reading object?
 
   constructor(obj) {
     this.id = obj.id;

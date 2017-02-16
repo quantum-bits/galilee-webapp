@@ -62,7 +62,7 @@ export class GroupPostListComponent implements OnInit, OnChanges {
   }
 
   newPost() {
-    this.router.navigate(['/end-user/post-entry']);
+    this.router.navigate(['/end-user/post-entry/create',this.groupPostData.id]);
   }
 
   goToPostDashboard() {

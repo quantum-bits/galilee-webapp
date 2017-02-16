@@ -107,7 +107,13 @@ const routes: Routes = [
       },
       {
         //create new forum post
-        path: 'post-entry',
+        path: 'post-entry/create/:groupId',
+        component: UpdatePostComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        //update existing forum post
+        path: 'post-entry/update/:postId',
         component: UpdatePostComponent,
         canActivate: [AuthGuard]
       },

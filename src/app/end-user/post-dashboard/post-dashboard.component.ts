@@ -69,13 +69,10 @@ export class PostDashboardComponent implements OnInit, OnDestroy {
 
 
   deleteEntry(postId: number) {
-
     console.log('about to delete: ', postId);
     this.postService.deletePost(postId)
       .subscribe(result => {
           console.log('result from delete: ', result);
-          console.log(this.multiGroupPostData);
-
           let index: number;
           for (let i in this.multiGroupPostData) {
             index = this.multiGroupPostData[i].posts.findIndex(post => post.id === postId);

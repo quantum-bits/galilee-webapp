@@ -8,7 +8,10 @@ export interface Organization {
 export interface Group {
   id: number;
   name: string;
-  organization: Organization;
+  //organization: Organization;
+  organizationId: number;
+  createdAt: string;
+  enabled: boolean;
 }
 
 export class User {
