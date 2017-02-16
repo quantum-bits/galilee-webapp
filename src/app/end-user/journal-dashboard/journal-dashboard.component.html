@@ -27,6 +27,9 @@
       </app-journal-entries-list>
 
       <div class="row center-align">
+
+        <a class="waves-effect waves-light btn" (click)="newJournalEntry()">New Entry</a>
+
         <span *ngIf="haveMoreEntries()">
           <a class="waves-effect waves-light btn" (click)="loadMoreEntries()">Load More</a>
         </span>
@@ -36,11 +39,13 @@
   </div>
 </div>
 
+<!--
 <div class="fixed-action-btn">
   <a class="btn-floating btn-large waves-effect waves-light" (click)="newJournalEntry()">
     <i class="large material-icons">add</i>
   </a>
 </div>
+-->
 
 <app-delete-item-modal
   #deleteJournalEntryModal

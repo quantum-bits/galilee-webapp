@@ -40,9 +40,6 @@ export class User {
       this.permissions.push(new Permission(permission));
     });
     this.groups = [];
-    console.log('XXXXXXX user object: ', obj);
-    console.log(obj.groups);
-
     obj.groups.forEach(group => {
       this.groups.push(group);
     });

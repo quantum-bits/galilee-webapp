@@ -87,7 +87,35 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
     // do something....
     console.log('dateString: ', dateString);
     this.dateString = dateString;
-    this.router.navigate(['/admin/update-readings', this.dateString]);
+    if (dateString in this.calendarReadings) {
+      console.log('XXXX we have a reading for this day!');
+      this.router.navigate(['/admin/update-readings', this.dateString]);
+    } else {
+      console.log('XXXX NO readings for this day');
+      /** TODO: check if there is a readingDay for this date (using readAllReadingDays()); if not, create one:
+       *    - modal with form to ask for readingDay.name, if appropriate
+       *    - onCancel reloads '/admin/update-readings', but with no dateString
+       *    - onSubmit creates the readingDay and then, upon success, loads '/admin/update-readings' with the dateString for the new readingDay
+       */
+
+      /*
+      createReadingDay(readingDay: ReadingDay): Observable<ReadingDay> {
+        return this.authHttp
+          .post('/api/readingdays', {
+            date: readingDay.date,
+            name: readingDay.name
+          })
+          .map(resp => resp.json());
+    }
+
+    */
+
+
+    }
+
+    console.log('XXXX calendar readings:', this.calendarReadings);
+
+    //this.router.navigate(['/admin/update-readings', this.dateString]);
 
     //this.fetchReadings()
     //this.fetchReadings(dateString);
