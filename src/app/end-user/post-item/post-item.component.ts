@@ -95,10 +95,13 @@ export class PostItemComponent implements OnInit {
     this.postService.announceDeletion(this.post.id);
   }
 
+  /*
   updateEntry() {
+    this.router.navigate(['/end-user/post-entry/update',this.post.id]);
     // TODO: implement this....
     //this.router.navigate(['/end-user/journal-entry', this.journalEntry.id]);
   }
+  */
 
 
 }

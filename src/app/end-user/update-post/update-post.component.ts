@@ -121,31 +121,34 @@ export class UpdatePostComponent implements OnInit {
 
   onSubmit() {
     Object.assign(this.postData, this.postForm.value);
-    //let groupId = +this.postData.groupId;
-    //let index = this.currentUser.groups.findIndex(array => array.id === groupId);
-    //let group: Group = null;
-    /*
-    if (index >= 0) {
-      group = this.currentUser.groups[index];
-    } else {
-      // TODO: give the user a message
-    }
-    */
 
     console.log(this.postData, this.group);
 
-    this.postService.createPost(this.postData, this.group)
-      .subscribe(
-        result => {
-          console.log('Post saved', result);
-          this.router.navigate(['/end-user/post']);
-        },
-        err => {
-          console.error("FAILED TO SAVE");
-          // TODO: give the user a message
-        }
-      );
-
+    if (this.isNewPost) {
+      this.postService.createPost(this.postData, this.group)
+        .subscribe(
+          result => {
+            console.log('Post saved', result);
+            this.router.navigate(['/end-user/post']);
+          },
+          err => {
+            console.error("FAILED TO SAVE");
+            // TODO: give the user a message
+          }
+        );
+    } else {
+      this.postService.updatePost(this.postData)
+        .subscribe(
+          result => {
+            console.log('Post updated', result);
+            this.router.navigate(['/end-user/post']);
+          },
+          err => {
+            console.error("FAILED TO SAVE");
+            // TODO: give the user a message
+          }
+        );
+    }
   }
 
   onCancel(){
