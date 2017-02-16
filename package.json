@@ -5,6 +5,8 @@
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
+    "build:dev": "ng build --dev",
+    "build:prod": "ng build --prod",
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
     "lint": "tslint \"src/**/*.ts\"",
