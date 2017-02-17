@@ -118,8 +118,7 @@ export class UpdateReadingsListComponent implements OnInit {
     this.readingService.deleteReading(readingId)
       .subscribe(
         result=> {
-          console.log('result from delete: ', result);
-          // TODO: refresh data in page
+          this.readingService.announceReadingsRefresh();
         },
         error => console.log('error on deleting reading: ', error)
       );
@@ -130,8 +129,7 @@ export class UpdateReadingsListComponent implements OnInit {
     this.applicationService.deleteApplication(applicationId)
       .subscribe(
         result=>{
-          console.log('result from delete: ', result);
-          // TODO: refresh data in page
+          this.readingService.announceReadingsRefresh();
         },
         error => console.log('error on deleting application: ', error)
       );
