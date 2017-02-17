@@ -83,7 +83,6 @@ export class PostService {
       .post('/api/posts', {
         title: post.title,
         content: post.content,
-        userId: this.userService.getCurrentUser().id,
         groupId: group.id
       }).map(resp => resp.json());
   }
