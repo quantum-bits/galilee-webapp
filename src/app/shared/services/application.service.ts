@@ -10,7 +10,7 @@ export class ApplicationService {
   constructor(private authHttp: AuthHttp) {
   }
 
-  createApplication(application: Application, readingId: number, practiceId: number): Observable<Application> {
+  createApplication(application: any, readingId: number, practiceId: number): Observable<Application> {
     return this.authHttp
       .post('/api/applications', {
         seq: application.seq,

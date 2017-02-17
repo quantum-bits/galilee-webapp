@@ -8,6 +8,7 @@ import {DeleteItemModalComponent} from '../../../shared/components/delete-item-m
 import {IReading, ReadingDay} from '../../../shared/interfaces/reading.interface';
 import {Practice} from '../../../shared/models/practice.model';
 
+import {ApplicationService} from  '../../../shared/services/application.service';
 import {Application} from '../../../shared/interfaces/application.interface';
 import {ApplicationFormData} from '../../../shared/interfaces/application-form-data.interface';
 
@@ -46,6 +47,7 @@ export class UpdateReadingsListComponent implements OnInit {
 
 
   constructor(private readingService: ReadingService,
+              private applicationService: ApplicationService,
               private practiceService: PracticeService) {
   }
 
@@ -111,14 +113,28 @@ export class UpdateReadingsListComponent implements OnInit {
     this.modalDeleteApplication.openModal(application.id);
   }
 
-  onDeleteReading(readingID: number) {
-    console.log('delete readingID: ', readingID);
-    // TODO: do the delete....
+  onDeleteReading(readingId: number) {
+    console.log('delete readingID: ', readingId);
+    this.readingService.deleteReading(readingId)
+      .subscribe(
+        result=> {
+          console.log('result from delete: ', result);
+          // TODO: refresh data in page
+        },
+        error => console.log('error on deleting reading: ', error)
+      );
   }
 
-  onDeleteApplication(applicationID: number) {
-    console.log('delete applicationID: ', applicationID);
-    // TODO: do the delete....
+  onDeleteApplication(applicationId: number) {
+    console.log('delete applicationID: ', applicationId);
+    this.applicationService.deleteApplication(applicationId)
+      .subscribe(
+        result=>{
+          console.log('result from delete: ', result);
+          // TODO: refresh data in page
+        },
+        error => console.log('error on deleting application: ', error)
+      );
   }
 
   onAddPractice(applicationData: ApplicationFormData) {

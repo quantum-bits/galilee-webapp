@@ -57,11 +57,12 @@
                                 id="seq"
                                 type="text"
                                 formControlName="seq">
-                            </div>
-                            <div *ngIf="applicationForm.controls.seq.errors && applicationForm.controls.seq.touched">
-                              <small class="warning">
-                                {{applicationForm.controls.seq.errors.error}}
-                              </small>
+
+                              <div *ngIf="applicationForm.controls.seq.errors && applicationForm.controls.seq.touched">
+                                <small class="warning">
+                                  {{applicationForm.controls.seq.errors.error}}
+                                </small>
+                              </div>
                             </div>
                           </div>
 
