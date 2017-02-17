@@ -1,10 +1,12 @@
-import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, EventEmitter } from '@angular/core';
+import {Router} from '@angular/router';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 import {IReading, ReadingDay} from '../../../shared/interfaces/reading.interface';
 
 import {Application} from '../../../shared/interfaces/application.interface';
 import {ApplicationFormData} from '../../../shared/interfaces/application-form-data.interface';
+import {ApplicationService} from '../../../shared/services/application.service';
 
 import {IPractice} from '../../../shared/interfaces/practice.interface';
 
@@ -23,13 +25,12 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
 
   modalActions = new EventEmitter();
 
-  @Output() submitSuccess = new EventEmitter<ApplicationFormData>();
-
   /**
    * Add new form elements dynamically:
    * https://scotch.io/tutorials/how-to-build-nested-model-driven-forms-in-angular-2
    */
 
+    //TODO: could probably get rid of the ApplicationFormData interface
 
   public applicationForm: FormGroup; // our model driven form
 
@@ -40,7 +41,9 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
   //private haveApplication: boolean = false;
   private haveReadingDay: boolean = false;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder,
+              private router: Router,
+              private applicationService: ApplicationService) { }
 
   ngOnInit() {
   }
@@ -57,41 +60,6 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
   }
 
   initializeForm(){
-    console.log('INITIALIZE form; readingDay is: ', this.readingDay);
-    console.log('readingIndex: ', this.readingIndex);
-    console.log('applicationIndex: ', this.applicationIndex);
-
-    /*
-
-
-     import {IPractice} from './practice.interface';
-     import {Step} from './step.interface';
-
-     export interface Application {
-     id: number;
-     seq: number;
-     steps: Step[];
-     practice: IPractice;
-     }
-
-     export interface Step {
-     id: number;
-     description: string;
-     applicationId: number;
-     resources?: IResource[];
-     }
-
-     export interface IPractice {
-     id: number;
-     title: string;
-     description: string;
-     summary: string;
-     }
-
-
-     */
-
-
     if (this.isNewApplication) {
       this.applicationFormData = {
         id: null, //for a new application
@@ -125,8 +93,6 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
     for (let step of this.applicationFormData.steps){
       this.addStep(step.description);
     }
-    console.log('here is applicationFormData: ', this.applicationFormData);
-    console.log('here is the application form: ', this.applicationForm);
   }
 
   determineAvailablePractices(){
@@ -182,29 +148,58 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
 
   onSubmit(){
     let practiceId = +this.applicationForm.value.practiceId;
-    for (let practice of this.allPractices) {
-      if (practice.id === practiceId){
-        this.applicationFormData.practice = practice;
-      }
-    }
-    this.applicationFormData.seq = +this.applicationForm.value.seq;
+    let application = {seq: +this.applicationForm.value.seq};
     let stepData = [];
     let counter = 0;
     for (let step of this.applicationForm.value.steps){
       counter++;
       stepData.push({
-        id: null,// let the server figure this out
         seq: counter,
         description: step.description,
-        applicationId: null //let the server figure this out(?)
       });
     }
-    this.applicationFormData['steps']=stepData;
+    application['steps']=stepData;
+    let readingId = this.readingDay.readings[this.readingIndex].id;
+    console.log('readingDay: ',this.readingDay );
 
-    console.log('final application object: ', this.applicationFormData);
-    // hit method in service to post/patch data
-    //this.submitSuccess.next(this.applicationFormData);
-
+    /**
+     * If !this.isNewApplication, need to delete the existing application and then create a new one
+     */
+    if (this.isNewApplication) {
+      this.applicationService.createApplication(application, readingId, practiceId)
+        .subscribe(
+          result => {
+            console.log('result from creating/updating application: ', result);
+            this.closeModal();
+            //TODO: force a page reload somehow....  maybe
+            //      - let the reading service know that the readingDay data
+            //        needs to be updated
+            //      - set up a BehaviorSubject (or something), like we do with watchCurrentUser() in the user.service
+          },
+          error => console.log('error! ', error)
+        );
+    } else {// if this is an update, need to delete the existing application first....
+      let applicationId = this.applicationFormData.id;
+      this.applicationService.deleteApplication(applicationId)
+        .subscribe(
+          result => {
+            console.log('successfully deleted existing application: ', result);
+            this.applicationService.createApplication(application, readingId, practiceId)
+              .subscribe(
+                result => {
+                  console.log('result from creating/updating application: ', result);
+                  this.closeModal();
+                  //TODO: force a page reload somehow....  maybe
+                  //      - let the reading service know that the readingDay data
+                  //        needs to be updated
+                  //      - set up a BehaviorSubject (or something), like we do with watchCurrentUser() in the user.service
+                },
+                error => console.log('error! ', error)
+              );
+          },
+          error => console.log('could not delete application: ', error)
+        );
+    }
   }
 
   onCancel(){
