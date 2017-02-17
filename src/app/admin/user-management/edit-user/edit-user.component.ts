@@ -115,7 +115,8 @@ export class EditUserComponent implements OnInit {
       joinedOn: null,//this will be assigned by the server-side code later
       enabled: true,
       preferredVersionID: null,
-      permissions: []
+      permissions: [],
+      groups: []
     });
   }
 
