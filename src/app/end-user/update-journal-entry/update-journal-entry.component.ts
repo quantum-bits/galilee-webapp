@@ -66,11 +66,15 @@ export class UpdateJournalEntryComponent implements OnInit {
     Object.assign(this.journalEntry, this.journalEntryForm.value);
     this.journalService.saveEntry(this.journalEntry, this.isNewEntry)
       .subscribe(
-        result => console.log('Journal entry saved', result),
-        err => console.error("FAILED TO SAVE")
+        result => {
+          console.log('Journal entry saved', result);
+          this.router.navigate(['/end-user/journal']);
+        },
+        err => {
+          console.error("FAILED TO SAVE");
+          this.router.navigate(['/end-user/journal']);
+        }
       );
-
-    this.router.navigate(['/end-user/journal']);
   }
 
   onCancel() {
