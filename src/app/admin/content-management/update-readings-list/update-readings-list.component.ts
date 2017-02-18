@@ -88,33 +88,28 @@ export class UpdateReadingsListComponent implements OnInit {
   }
 
   launchNewReadingModal() {
-    console.log('TIME TO LAUNCH THE READING FORM!!!');
     this.incrementer++;
     this.singleReading = null;
     this.modalUpdateReading.openModal();
   }
 
   launchEditReadingModal(reading: IReading) {
-    console.log('TIME TO LAUNCH THE READING FORM!!! APPLICATION: ', reading);
     this.incrementer++;
     this.singleReading = reading;
     this.modalUpdateReading.openModal();
   }
 
   displayDeleteReadingModal(reading: IReading) {
-    console.log('display delete reading modal: ', reading.id);
     this.singleReadingStdRef = reading.stdRef;
     this.modalDeleteReading.openModal(reading.id);
   }
 
   displayDeleteApplicationModal(application: Application) {
-    console.log('display delete application modal: ', application.id);
     this.singleApplicationTitle = application.practice.title;
     this.modalDeleteApplication.openModal(application.id);
   }
 
   onDeleteReading(readingId: number) {
-    console.log('delete readingID: ', readingId);
     this.readingService.deleteReading(readingId)
       .subscribe(
         result=> {
@@ -125,7 +120,6 @@ export class UpdateReadingsListComponent implements OnInit {
   }
 
   onDeleteApplication(applicationId: number) {
-    console.log('delete applicationID: ', applicationId);
     this.applicationService.deleteApplication(applicationId)
       .subscribe(
         result=>{
@@ -135,17 +129,34 @@ export class UpdateReadingsListComponent implements OnInit {
       );
   }
 
-  onAddPractice(applicationData: ApplicationFormData) {
-    console.log('submit success: ', applicationData);
-    this.modalUpdateApplication.closeModal();
-    //TODO: save to db....
-  }
+  onAddReading(readingInfo: {reading: IReading, isNewReading: boolean}) {
+    if (readingInfo.isNewReading) {
+      this.readingService.createReading(readingInfo.reading, this.readingsData)
+        .subscribe(
+          result => {
+            console.log('reading created!', result);
+            this.readingService.announceReadingsRefresh();
+          },
+          error => {
+            console.log('error trying to save reading: ', error);
+            //TODO: do something...?
+          }
+        );
+    } else {
+      this.readingService.updateReading(readingInfo.reading.id, readingInfo.reading, this.readingsData)
+        .subscribe(
+          result => {
+            console.log('reading updated!', result);
+            this.readingService.announceReadingsRefresh();
+          },
+          error => {
+            console.log('error trying to update reading: ', error);
+            //TODO: do something...?
+          }
+        );
 
-  onAddReading(reading: IReading) {
-    console.log('submit success: ', reading);
-    console.log('and the date is: ', this.dateString);
+    }
     this.modalUpdateReading.closeModal();
-    //TODO: save to db....
   }
 
 }

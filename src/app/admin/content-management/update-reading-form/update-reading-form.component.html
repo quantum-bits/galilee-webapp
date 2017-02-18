@@ -23,15 +23,31 @@
                   </span>
                   <div class="row">
                     <div class="input-field col s12">
-                      <label for="osis">OSIS (e.g., Hos.1.2-Hos.1.10)</label>
+                      <label for="osisRef">OSIS (e.g., Hos.1.2-Hos.1.10)</label>
                       <input
-                        [input-wake-up]="'osis'"
-                        [class.warning-background] = "readingForm.controls.osis.errors && readingForm.controls.osis.touched"
-                        id="osis"
+                        [input-wake-up]="'osisRef'"
+                        [class.warning-background] = "readingForm.controls.osisRef.errors && readingForm.controls.osisRef.touched"
+                        id="osisRef"
                         type="text"
-                        formControlName="osis">
+                        formControlName="osisRef">
                     </div>
-                    <div *ngIf="readingForm.controls.osis.errors && readingForm.controls.osis.touched">
+                    <div *ngIf="readingForm.controls.osisRef.errors && readingForm.controls.osisRef.touched">
+                      <small class="warning">
+                        This field is required.
+                      </small>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <label for="stdRef">Display (e.g., Hosea 1:2-10)</label>
+                      <input
+                        [input-wake-up]="'stdRef'"
+                        [class.warning-background] = "readingForm.controls.stdRef.errors && readingForm.controls.stdRef.touched"
+                        id="stdRef"
+                        type="text"
+                        formControlName="stdRef">
+                    </div>
+                    <div *ngIf="readingForm.controls.stdRef.errors && readingForm.controls.stdRef.touched">
                       <small class="warning">
                         This field is required.
                       </small>
