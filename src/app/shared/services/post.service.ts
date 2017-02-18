@@ -69,6 +69,7 @@ export class PostService {
 
   // Service message commands
   announceDeletion(postID: number) {
+    console.log('inside post service; postID: ', postID);
     this.postToBeDeletedSource.next(postID);
   }
 

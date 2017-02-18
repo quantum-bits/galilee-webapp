@@ -67,7 +67,6 @@ export class PostDashboardComponent implements OnInit, OnDestroy {
     this.modal.openModal(postID);
   }
 
-
   deleteEntry(postId: number) {
     console.log('about to delete: ', postId);
     this.postService.deletePost(postId)

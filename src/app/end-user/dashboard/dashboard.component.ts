@@ -5,13 +5,9 @@ import * as moment from 'moment';
 
 import {ReadingDay} from '../../shared/interfaces/reading.interface';
 import {GroupPostData} from '../../shared/models/group-post-data.model';
-//import {Post} from '../../shared/models/post.model';
 
 import {ReadingService} from '../../shared/services/reading.service';
-import {PostService} from '../../shared/services/post.service';
 import {SimpleModalComponent} from "../readings/simple-modal.component";
-
-const MAX_NUMBER_POSTS = 5;
 
 @Component({
   selector: 'app-dashboard',
@@ -25,12 +21,8 @@ export class DashboardComponent implements OnInit {
   private RCLDate: Date;
   private days: any;
   private readingsData: ReadingDay;
-  private multiGroupPostData: GroupPostData[];
-
-  private maxNumberPosts = MAX_NUMBER_POSTS;
 
   constructor(private readingService: ReadingService,
-              private postService: PostService,
               private router: Router) {
   }
 
@@ -45,7 +37,6 @@ export class DashboardComponent implements OnInit {
     console.log('RCL Date:', this.RCLDate);
     this.days = this.initializeDateNav();
     this.fetchReadings();
-    this.fetchGroupPosts();
   }
 
   fetchReadings() {
@@ -60,15 +51,6 @@ export class DashboardComponent implements OnInit {
           this.modal.openModal('', 'No readings for ' + dateString);
         }
       );
-  }
-
-  fetchGroupPosts() {
-    this.postService.getAllUserPosts(this.maxNumberPosts)
-      .subscribe(userPostData => {
-          this.multiGroupPostData =
-            userPostData.groups.map(groupData => new GroupPostData(groupData));
-        },
-        error => this.multiGroupPostData = undefined)
   }
 
   initializeDateNav() {
