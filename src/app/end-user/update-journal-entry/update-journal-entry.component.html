@@ -58,16 +58,19 @@
               </div>
 
               <!-- Tag Picker -->
-              <tag-picker [allTags]="userTagList"
-                          [selectedTags]="journalEntry.tags || []"
-                          (onUpdate)="setSelectedTags($event)">
-              </tag-picker>
+              <div *ngIf="tagsReady">
+                <tag-picker [allTags]="userTagList"
+                            [selectedTags]="journalEntry.tags || []"
+                            (onUpdate)="setSelectedTags($event)">
+                </tag-picker>
+              </div>
             </div>
 
             <!-- Questions -->
+            <!--
             <div class="row center-align">
               <div *ngIf="!questions">
-                <!-- use type="button" instead of type="submit", or else the Enter key in a text field can submit the form by accident -->
+                <!-- use type="button" instead of type="submit", or else the Enter key in a text field can submit the form by accident
                 <button
                   type="button"
                   class="waves-effect waves-light btn-flat"
@@ -76,17 +79,30 @@
                 </button>
               </div>
             </div>
+            -->
 
             <!-- Actions -->
             <div class="card-action">
               <!-- use type="button" instead of type="submit", or else the Enter key in a text field can submit the form by accident -->
-              <span>
+              <span *ngIf="isNewEntry">
                 <button
                   class="waves-effect waves-light btn"
                   type="button"
                   (click)="onSubmit()"
                   [class.disabled]="!journalEntryForm.valid"
-                  [disabled]="!journalEntryForm.valid">Save</button>
+                  [disabled]="!journalEntryForm.valid">
+                  Save
+                </button>
+              </span>
+              <span *ngIf="!isNewEntry">
+                <button
+                  class="waves-effect waves-light btn"
+                  type="button"
+                  (click)="onSubmit()"
+                  [class.disabled]="!journalEntryForm.valid"
+                  [disabled]="!journalEntryForm.valid">
+                  Update
+                </button>
               </span>
               <span class="right">
                 <!-- use type="button" instead of type="submit", or else the Enter key in a text field can submit the form by accident -->

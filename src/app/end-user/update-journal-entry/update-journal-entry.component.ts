@@ -20,6 +20,8 @@ export class UpdateJournalEntryComponent implements OnInit {
   private isNewEntry: boolean; // true if this is a new Journal entry; false if updating
   private questions: Array<string>;
 
+  private tagsReady: boolean = false;
+
   constructor(private formBuilder: FormBuilder,
               private journalService: JournalService,
               private route: ActivatedRoute,
@@ -28,7 +30,11 @@ export class UpdateJournalEntryComponent implements OnInit {
 
   ngOnInit() {
     this.journalService.getUserTags()
-      .subscribe(tags => this.userTagList = tags);
+      .subscribe(tags => {
+        this.userTagList = tags;
+        console.log(this.userTagList);
+        this.tagsReady = true;
+      });
 
     this.route.params.subscribe(params => {
       if ('journalEntryID' in params) {
@@ -66,11 +72,15 @@ export class UpdateJournalEntryComponent implements OnInit {
     Object.assign(this.journalEntry, this.journalEntryForm.value);
     this.journalService.saveEntry(this.journalEntry, this.isNewEntry)
       .subscribe(
-        result => console.log('Journal entry saved', result),
-        err => console.error("FAILED TO SAVE")
+        result => {
+          console.log('Journal entry saved', result);
+          this.router.navigate(['/end-user/journal']);
+        },
+        err => {
+          console.error("FAILED TO SAVE");
+          this.router.navigate(['/end-user/journal']);
+        }
       );
-
-    this.router.navigate(['/end-user/journal']);
   }
 
   onCancel() {
@@ -78,6 +88,8 @@ export class UpdateJournalEntryComponent implements OnInit {
   }
 
   fetchQuestions(date: string) {
+    console.log('inside fetch questions method', date);
+
     this.journalService.getDailyQuestions(date)
       .subscribe(questions => this.questions = questions);
   }

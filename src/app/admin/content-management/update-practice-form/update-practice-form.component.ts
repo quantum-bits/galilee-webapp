@@ -7,6 +7,7 @@ import {IReading, ReadingDay} from '../../../shared/interfaces/reading.interface
 import {Application} from '../../../shared/interfaces/application.interface';
 import {ApplicationFormData} from '../../../shared/interfaces/application-form-data.interface';
 import {ApplicationService} from '../../../shared/services/application.service';
+import {ReadingService} from '../../../shared/services/reading.service';
 
 import {IPractice} from '../../../shared/interfaces/practice.interface';
 
@@ -43,6 +44,7 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
+              private readingService: ReadingService,
               private applicationService: ApplicationService) { }
 
   ngOnInit() {
@@ -169,12 +171,8 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
       this.applicationService.createApplication(application, readingId, practiceId)
         .subscribe(
           result => {
-            console.log('result from creating/updating application: ', result);
+            this.readingService.announceReadingsRefresh();
             this.closeModal();
-            //TODO: force a page reload somehow....  maybe
-            //      - let the reading service know that the readingDay data
-            //        needs to be updated
-            //      - set up a BehaviorSubject (or something), like we do with watchCurrentUser() in the user.service
           },
           error => console.log('error! ', error)
         );
@@ -187,12 +185,8 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
             this.applicationService.createApplication(application, readingId, practiceId)
               .subscribe(
                 result => {
-                  console.log('result from creating/updating application: ', result);
+                  this.readingService.announceReadingsRefresh();
                   this.closeModal();
-                  //TODO: force a page reload somehow....  maybe
-                  //      - let the reading service know that the readingDay data
-                  //        needs to be updated
-                  //      - set up a BehaviorSubject (or something), like we do with watchCurrentUser() in the user.service
                 },
                 error => console.log('error! ', error)
               );

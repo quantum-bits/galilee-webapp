@@ -24,9 +24,9 @@ export class LoginComponent implements OnInit, OnDestroy {
               private router: Router,
               private formBuilder: FormBuilder) {
     this.authenticationFailureSubscription = this.userService.authenticationFailure$.subscribe(
-      message => {
-        this.signinServerError = message;
-        console.log(message);
+      error => {
+        this.generateLoginErrorMessage(error);
+        console.log(error);
       }
     );
   }
@@ -36,6 +36,39 @@ export class LoginComponent implements OnInit, OnDestroy {
       username: ['', [<any>Validators.required]],
       password: ['', [<any>Validators.required]]
     });
+  }
+
+  generateLoginErrorMessage(error){
+    let errorBody = JSON.parse(error._body);
+    /**
+     * TODO: check the logic in the following; in particular, the "catch"
+     *       doesn't really do anything.  If it's not included, there is
+     *       an error (apparently "finally" is required in that case); don't
+     *       really need catch or finally, since we already have a default
+     *       error message specified.  Note that we do need to do *something*
+     *       to make sure that the 'validation' and 'keys' keys exist, though,
+     *       since they don't, for example, for a 400 error.  So maybe they don't
+     *       exist for other types of errors, too....
+     */
+    let index: number;
+    // default message....
+    this.signinServerError = 'Sorry, an error has occurred; please try again';
+
+    if (error.status === 401) {
+      this.signinServerError = JSON.parse(error._body).message;
+    } else if (error.status === 400) {
+      try {
+        index = errorBody.validation.keys.indexOf('email');
+        if (index >= 0) {
+          this.signinServerError = 'Login must have the form of an email address';
+        }
+      }
+      catch(err) {
+        console.log(err.name);
+        console.log(err.message);
+      }
+    }
+
   }
 
   onLogin() {

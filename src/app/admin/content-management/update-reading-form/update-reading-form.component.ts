@@ -27,7 +27,7 @@ export class UpdateReadingFormComponent implements OnInit {
   public readingForm: FormGroup; // our model driven form
 
   private isNewReading: boolean;
-  private readingFormData: any;
+  private readingFormData: IReading;
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -43,21 +43,29 @@ export class UpdateReadingFormComponent implements OnInit {
     if ((this.reading === null)||(this.reading === undefined)){
       this.isNewReading = true;
       this.readingFormData = {
-        readingDayId: null, //TODO: fix this!
+        id: null,
         osisRef: null,
-        seq: null
+        readingDayId: null,//does this need to be there?
+        seq: null,
+        stdRef: null,
+        text: null
       };
     } else {
       this.isNewReading = false;
-      this.readingFormData = {
+      this.readingFormData = this.reading;
+      console.log('editing reading; readingFormData: ', this.readingFormData);
+      /*{
         readingDayId: this.reading.readingDayId,
         osisRef: this.reading.osisRef,
+        stdRef: this.reading.stdRef,
         seq: this.reading.seq
       };
+      */
     }
 
     this.readingForm = this.formBuilder.group({
-      osis: [this.readingFormData.osisRef, [<any>Validators.required]],
+      osisRef: [this.readingFormData.osisRef, [<any>Validators.required]],
+      stdRef: [this.readingFormData.stdRef, [<any>Validators.required]],
       seq: [this.readingFormData.seq, Validators.compose([<any>Validators.required, this.integerValidator])]
     });
     console.log(this.readingForm);
@@ -73,9 +81,8 @@ export class UpdateReadingFormComponent implements OnInit {
   }
 
   onSubmit(){
-    this.readingFormData['osisRef']=this.readingForm.value.osis;
-    this.readingFormData['seq']=+this.readingForm.value.seq;
-    this.submitSuccess.next(this.readingFormData);
+    Object.assign(this.readingFormData, this.readingForm.value);
+    this.submitSuccess.next({reading: this.readingFormData, isNewReading: this.isNewReading});
   }
 
   onCancel(){

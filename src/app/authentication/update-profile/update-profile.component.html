@@ -45,23 +45,24 @@
             </div>
 
             <div class="section">
-              <h5>Groups</h5>
+              <h5>Group(s)</h5>
               <div class="divider"></div>
               <br>
-              <span class="row">
-                <div class="col s6">
-                  Group 1
-                </div>
-                <div class="col s6 right-align">
-                  <a> Leave Group</a>
+              <span *ngIf = "currentUser.groups.length == 0">
+                <div class="row">
+                  <div class="col s12">
+                    Not a member of any groups at present.
+                  </div>
                 </div>
               </span>
-              <span class="row">
-                <div class="col s6">
-                  Group 2
-                </div>
-                <div class="col s6 right-align">
-                  <a> Leave Group</a>
+              <span *ngFor = "let group of currentUser.groups">
+                <div class="row">
+                  <div class="col s6">
+                    {{group.name}}
+                  </div>
+                  <div class="col s6 right-align">
+                    <!--<a> Leave Group</a>-->
+                  </div>
                 </div>
               </span>
             </div>
@@ -74,7 +75,12 @@
                 <div class="col s6">
                   Verse Numbers
                 </div>
+
+                <div class="col s6">
+                  On
+                </div>
                 <!-- Switch -->
+                <!--
                 <div class="col s6 switch">
                   <label>
                     off
@@ -83,11 +89,16 @@
                     on
                   </label>
                 </div>
+                -->
               </div>
               <div class="row valign-wrapper">
                 <div class="col s6 valign">
                   Default Translation
                 </div>
+                <div class="col s6 valign">
+                  NKJV
+                </div>
+                <!--
                 <div class="col s6 valign">
                   <a materialize="dropdown"
                      class='dropdown-button'
@@ -98,6 +109,7 @@
                     </span>
                   </a>
                 </div>
+                -->
               </div>
             </div>
 

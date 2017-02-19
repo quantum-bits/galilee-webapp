@@ -30,8 +30,10 @@ nav {
   a {
     -webkit-font-smoothing: antialiased;
   }
+
   ul li a:hover, ul li.active {
     background-color: $primary-color-dark;/* KK */ /* color("materialize-red", "lighten-1"); */
+    color: $dropdown-color;/* KK */
   }
 }
 

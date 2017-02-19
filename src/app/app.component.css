@@ -5,6 +5,26 @@ header, main, footer {
   padding-left: 0px;
 }
 
+/*
+the body and main style declarations in the following
+are intended to make the footer 'sticky'
+
+http://html5doctor.com/the-main-element/
+http://materializecss.com/footer.html
+*/
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+/*
+end of sticky footer declarations
+*/
+
 .toolbar-wrapper {
   margin-left: 20px;
   margin-right: 20px;
@@ -30,4 +50,17 @@ header, main, footer {
 .nav-wrapper-small {
   padding-right: 10px;
 }
+
+.dropdown-content {
+  min-width: 150px
+}
+
+.link-underline {
+  border-bottom: 1px dotted #fff;
+}
+
+.link-underline:hover {
+  border-bottom: 1px solid #fff;
+}
+
 

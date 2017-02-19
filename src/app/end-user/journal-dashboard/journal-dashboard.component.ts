@@ -52,6 +52,11 @@ export class JournalDashboardComponent implements OnInit, OnDestroy {
       .subscribe(metadata => this.journalMetadata = metadata);
   }
 
+  updateCalendar(){
+    this.journalService.getJournalMetadata()
+      .subscribe(metadata => this.journalMetadata = metadata);
+  }
+
   loadMoreEntries() {
     this.journalService.getJournalEntries(this.offset, ENTRIES_PER_LOAD)
       .subscribe(result => {
@@ -72,12 +77,17 @@ export class JournalDashboardComponent implements OnInit, OnDestroy {
   deleteEntry(entryId: number) {
     this.journalService.deleteEntry(entryId)
       .subscribe(result => {
-        // TODO: Check the status of the result and act accordingly.
-
         const index = this.journalEntries.findIndex(entry => entry.id === entryId);
         if (index >= 0) {
           this.journalEntries.splice(index, 1);
         }
+        // Note: we could also update this.journalMetadata manually, but that
+        // seems a bit risky (for example, would need to know which data
+        // to decrement the count for, and if the server side changes --
+        // such as grouping by updatedAt vs. createdAt -- the code will
+        // break here.  Instead, just update the calendar data by refetching
+        // from the server....
+        this.updateCalendar();
       });
   }
 

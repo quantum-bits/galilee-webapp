@@ -92,6 +92,7 @@ export class PostItemComponent implements OnInit {
   }
 
   deleteEntry() {
+    console.log('inside delete entry; post.id: ', this.post.id);
     this.postService.announceDeletion(this.post.id);
   }
 
