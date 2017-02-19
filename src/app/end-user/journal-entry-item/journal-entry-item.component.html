@@ -16,39 +16,42 @@
   </div>
 </div>
 
-<div *ngIf="allowTruncation">
-  <div>
-    {{journalEntry.entry | truncate : truncationLimit}}
-    <!--{{journalEntry.hasTags()}}-->
-  </div>
-  <div *ngIf="journalEntry.entryIsLong(truncationLimit)">
+<div class="row">
+  <div class="col s12">
+    <div *ngIf="allowTruncation">
+      <div>
+        {{journalEntry.entry | truncate : truncationLimit}}
+        <!--{{journalEntry.hasTags()}}-->
+      </div>
+      <div *ngIf="journalEntry.entryIsLong(truncationLimit)">
+        <br>
+        <a class="grey-text darken-3" (click)="toggleAllowTruncation()"> Read More... </a>
+      </div>
+    </div>
+
+    <div *ngIf="!allowTruncation">
+      <div>
+        {{journalEntry.entry }}
+        <!--{{journalEntry.hasTags()}}-->
+      </div>
+      <div *ngIf="journalEntry.entryIsLong(truncationLimit)">
+        <br>
+        <a class="grey-text darken-3" (click)="toggleAllowTruncation()"> Read Less </a>
+      </div>
+    </div>
+
     <br>
-    <a class="grey-text darken-3" (click)="toggleAllowTruncation()"> Read More... </a>
+
+    <div class="chip" *ngFor="let tag of journalEntry.tags">
+      {{tag.label}}
+    </div>
+
+    <div class="grey-text darken-3 right tooltipped"
+         materialize="tooltip"
+         data-position="left"
+         data-delay="50"
+         [attr.data-tooltip]="journalEntry.updatedAt | amDateFormat:'LL'">
+      {{journalEntry.updatedAt | amTimeAgo}}
+    </div>
   </div>
 </div>
-
-<div *ngIf="!allowTruncation">
-  <div>
-    {{journalEntry.entry }}
-    <!--{{journalEntry.hasTags()}}-->
-  </div>
-  <div *ngIf="journalEntry.entryIsLong(truncationLimit)">
-    <br>
-    <a class="grey-text darken-3" (click)="toggleAllowTruncation()"> Read Less </a>
-  </div>
-</div>
-
-<br>
-
-<div class="chip" *ngFor="let tag of journalEntry.tags">
-  {{tag.label}}
-</div>
-
-<div class="grey-text darken-3 right tooltipped"
-     materialize="tooltip"
-     data-position="left"
-     data-delay="50"
-     [attr.data-tooltip]="journalEntry.updatedAt | amDateFormat:'LL'">
-  {{journalEntry.updatedAt | amTimeAgo}}
-</div>
-

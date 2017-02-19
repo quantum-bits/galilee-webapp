@@ -16,6 +16,8 @@ export class TagPickerComponent implements OnInit {
 
   ngOnInit() {
     // Put any tag that isn't in selectedTags into deselectedTags.
+    console.log('seletected tags: ', this.selectedTags);
+    console.log('all tags: ', this.allTags);
     this.allTags.forEach(aTag => {
       if (!this.selectedTags.find(sTag => sTag.id === aTag.id)) {
         this.deselectedTags.push(aTag);

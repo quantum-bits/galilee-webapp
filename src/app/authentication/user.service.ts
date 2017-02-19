@@ -74,7 +74,8 @@ export class UserService {
           this.clearCurrentUser();
         }
       },
-      error => this.announceAuthenticationFailure(JSON.parse(error._body).message));
+      error => this.announceAuthenticationFailure(error)//._body).message));
+      );
   }
 
   announceAuthenticationFailure(message){

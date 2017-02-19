@@ -132,6 +132,4 @@ export class AppComponent implements OnInit {
     this.showAdminDropdown = !this.showAdminDropdown;
   }
 
-
-
 }

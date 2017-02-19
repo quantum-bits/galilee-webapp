@@ -23,6 +23,7 @@
 
     &:hover, &.active, &.selected {
       background-color: $dropdown-hover-bg-color;
+      color: $dropdown-color;/* KK */
     }
 
     &.active.selected {
@@ -36,7 +37,7 @@
 
     & > a, & > span {
       font-size: 16px;
-      color: $dropdown-color;
+      color: $primary-color;/* KK */
       display: block;
       line-height: 22px;
       padding: (($dropdown-item-height - 22) / 2) 16px;

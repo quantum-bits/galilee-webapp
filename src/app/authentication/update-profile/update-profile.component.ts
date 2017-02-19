@@ -27,6 +27,7 @@ export class UpdateProfileComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.userService.getCurrentUser();
+    console.log(this.currentUser);
     this.route.url.map(segments => segments.join(''))
       .subscribe(url=>{
         console.log('received url! ',url);
