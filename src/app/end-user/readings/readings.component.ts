@@ -114,6 +114,10 @@ export class ReadingsComponent implements OnInit {
       );
   }
 
+  userLoggedIn(){
+    return this.userService.isLoggedIn();
+  }
+
   currentReadingExists(){
     if ((this.currentReadingIndex < 0)||(this.currentReadingIndex >= this.readingsData.readings.length)) {
       return false;

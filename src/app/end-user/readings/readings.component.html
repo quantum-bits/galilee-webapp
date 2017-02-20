@@ -16,16 +16,19 @@
               </span>
             </a>
           </div>
+
+          <!--
           <div class="col s4 center-align verticalRightLine">
             <a materialize="dropdown"
                class='dropdown-button'
                data-activates='translationsDropdownMenu'>
               <span *ngIf="initializationComplete" class="card-title grey-text">
-                  Translation <!--{{readingsData.readings[currentReadingIndex].std_ref}}-->
+                  Translation <!--{{readingsData.readings[currentReadingIndex].std_ref}}
                 <i class="material-icons right">arrow_drop_down</i>
               </span>
             </a>
           </div>
+          -->
           <!--
           <div class="col s1 center-align verticalRightLine">
             <span class="card-title materialize-red-text lighten-2">
@@ -115,7 +118,7 @@
       >
       </app-question-list>
 
-      <div *ngIf="multiGroupPostData">
+      <div *ngIf="multiGroupPostData && userLoggedIn()">
         <div *ngFor="let groupPostData of multiGroupPostData">
           <group-post-list
             [groupPostData]='groupPostData'

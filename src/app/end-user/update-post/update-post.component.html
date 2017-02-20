@@ -57,21 +57,29 @@
 
               <div class="card-action">
                 <!-- use type="button" instead of type="submit", or else the Enter key in a text field can submit the form by accident -->
-                <span>
-                <button
-                  class="waves-effect waves-light btn"
-                  type="button"
-                  (click)="onSubmit()"
-                  [class.disabled]="!postForm.valid"
-                  [disabled]="!postForm.valid">Save</button>
+                <span *ngIf="isNewPost">
+                  <button
+                    class="waves-effect waves-light btn"
+                    type="button"
+                    (click)="onSubmit()"
+                    [class.disabled]="!postForm.valid"
+                    [disabled]="!postForm.valid">Save</button>
+                </span>
+                <span *ngIf="!isNewPost">
+                  <button
+                    class="waves-effect waves-light btn"
+                    type="button"
+                    (click)="onSubmit()"
+                    [class.disabled]="!postForm.valid"
+                    [disabled]="!postForm.valid">Update</button>
                 </span>
                 <span class="right">
                 <!-- use type="button" instead of type="submit", or else the Enter key in a text field can submit the form by accident -->
-                <button
-                  type="button"
-                  class="waves-effect waves-light btn"
-                  (click)="onCancel()"
-                >Cancel</button>
+                  <button
+                    type="button"
+                    class="waves-effect waves-light btn"
+                    (click)="onCancel()"
+                  >Cancel</button>
                 </span>
               </div>
 
