@@ -29,8 +29,10 @@
   </a>
 </span>
 <div *ngIf="showSteps">
-  <p *ngFor="let step of application.steps" class="step">
-    {{step.seq}}. {{step.description}}
-  </p>
+  <div *ngFor="let step of application.steps" class="step">
+    <span>Step {{step.seq}}:
+      <p [innerHTML]="step.description"></p>
+    </span>
+  </div>
 </div>
 
