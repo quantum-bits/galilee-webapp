@@ -73,9 +73,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   onLogin() {
     this.signinServerError = null;
+    //let username = this.loginForm.value.username.trim();
+    //let password = this.loginForm.value.password.trim();
 
     if (this.loginForm.valid) {
-      this.userService.login(this.loginForm.value.username, this.loginForm.value.password);
+      this.userService.login(this.loginForm.value.username.trim(), this.loginForm.value.password.trim());
     }
   }
 

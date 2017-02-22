@@ -188,6 +188,14 @@ export class EditUserComponent implements OnInit {
     }
   }
 
+  passwordWhitespaceValidator(control) {
+    //make sure that password does not have leading or trailing whitespace
+    if (control.value.trim() !== control.value) {
+      console.log('control: ', control);
+      return {error: 'Password may not contain spaces at the beginning or end.'};
+    }
+  }
+
   postNewUser(){
     this.userService.signup(
       this.userForm.value.email,
@@ -335,8 +343,8 @@ export class EditUserComponent implements OnInit {
       this.userForm = this.formBuilder.group({
         email: [this.userData.email, Validators.compose([<any>Validators.required, this.emailValidator])],
         passwords: this.formBuilder.group({
-          password: ['', Validators.compose([<any>Validators.required, this.passwordValidator])],
-          password2: ['', Validators.compose([<any>Validators.required, this.passwordValidator])]
+          password: ['', Validators.compose([<any>Validators.required, this.passwordValidator, this.passwordWhitespaceValidator])],
+          password2: ['', Validators.compose([<any>Validators.required, this.passwordValidator, this.passwordWhitespaceValidator])]
         }, {validator: this.areEqual}),
         firstName: [this.userData.firstName, [<any>Validators.required]],
         lastName: [this.userData.lastName, [<any>Validators.required]],
