@@ -42,6 +42,30 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
   //private haveApplication: boolean = false;
   private haveReadingDay: boolean = false;
 
+  private modules = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+      ['blockquote', 'code-block'],
+
+      [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+      [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+      [{ 'direction': 'rtl' }],                         // text direction
+
+      [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+      ['clean'],                                         // remove formatting button
+
+      ['link']                         // link, but not image or video
+    ]
+  };
+
+
+
+
+
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private readingService: ReadingService,

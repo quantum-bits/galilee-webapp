@@ -10,6 +10,7 @@ import {Ng2PaginationModule} from 'ng2-pagination';
 import {MomentModule} from 'angular2-moment';
 import {DragulaModule} from 'ng2-dragula/ng2-dragula';
 import {FileUploadModule} from 'ng2-file-upload';
+import { QuillModule } from 'ngx-quill'
 
 import {EditUserComponent} from './user-management/edit-user/edit-user.component';
 
@@ -95,6 +96,7 @@ const routes: Routes = [
     MomentModule,
     DragulaModule,
     FileUploadModule,
+    QuillModule,
     SharedModule
   ],
 })
