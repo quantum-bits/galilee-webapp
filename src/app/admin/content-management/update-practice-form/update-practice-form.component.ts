@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, Input, EventEmitter } from '@angular/core';
 import {Router} from '@angular/router';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 import {IReading, ReadingDay} from '../../../shared/interfaces/reading.interface';
 
@@ -171,6 +171,12 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
       return {error: 'This field must be a non-negative integer.'};
     }
   }
+
+  setStepDescription(i:number, event) {
+    const control = <FormArray>this.applicationForm.controls['steps'];
+    control.at(i).setValue({description: event.html});
+  }
+
 
   onSubmit(){
     let practiceId = +this.applicationForm.value.practiceId;

@@ -96,8 +96,16 @@
                               <!-- Angular assigns array index as group name by default 0, 1, 2, ... -->
                               <div [formGroupName]="i" class="col s10 offset-s1">
                                 <!--description-->
-                                <div class="input-field">
+                                <!--<div class="input-field">
                                   <label [attr.for]="'description'+i">Description</label>
+                                  -->
+                                  <quill-editor
+                                    [modules]="modules"
+                                    [minLength]="1"
+                                    (onContentChanged)="setStepDescription(i, $event)"
+                                  >
+                                  </quill-editor>
+                                  <!--
                                   <textarea
                                     class="materialize-textarea"
                                     [input-wake-up]="'description'+i"
@@ -107,18 +115,14 @@
                                     type="text"
                                     formControlName="description">
                                   </textarea>
-                                </div>
+                                  -->
+                                <!--</div>-->
                                 <div *ngIf="applicationForm.controls.steps.controls[i].controls.description.errors && applicationForm.controls.steps.controls[i].controls.description.touched">                                <small class="warning">
                                     This field is required.
                                   </small>
                                 </div>
                               </div>
                             </div>
-
-                            <quill-editor
-                              [modules]="modules"
-                            >
-                            </quill-editor>
                           </li>
                         </ul>
                       </div>
