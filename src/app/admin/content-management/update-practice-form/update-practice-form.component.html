@@ -101,7 +101,8 @@
                                   -->
                                   <quill-editor
                                     [modules]="modules"
-                                    [minLength]="1"
+                                    [minLength]="'1'"
+                                    (onEditorCreated)="onCreated(i, $event)"
                                     (onContentChanged)="setStepDescription(i, $event)"
                                   >
                                   </quill-editor>

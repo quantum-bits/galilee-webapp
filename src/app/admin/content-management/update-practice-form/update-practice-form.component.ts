@@ -172,6 +172,10 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
     }
   }
 
+  onCreated(i: number, event) {
+    event.root.innerHTML = this.applicationForm.value.steps[i].description;
+  }
+
   setStepDescription(i:number, event) {
     const control = <FormArray>this.applicationForm.controls['steps'];
     control.at(i).setValue({description: event.html});
