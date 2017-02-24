@@ -1,5 +1,6 @@
 export interface IReading {
   id: number;
+  //versionId: number;
   osisRef: string;
   passage?: any; // not sure what this is
   readingDayId: number;

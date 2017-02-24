@@ -6,3 +6,14 @@
   vertical-align: middle;
   padding-left: 0px;
 }
+
+/* following not working */
+ul li {
+  list-style-type: circle;
+  padding-bottom: 10px;
+}
+
+ol li {
+  list-style-type: decimal;
+  padding-bottom: 10px;
+}

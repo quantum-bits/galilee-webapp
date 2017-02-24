@@ -97,6 +97,19 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
        *    - onCancel reloads '/admin/update-readings', but with no dateString
        *    - onSubmit creates the readingDay and then, upon success, loads '/admin/update-readings' with the dateString for the new readingDay
        */
+      let readingDayData = {dateString: dateString, name: 'Easter'}
+      this.readingService.createReadingDay(readingDayData)
+        .subscribe(
+          result => {
+            console.log('new readingDay created: ', result);
+            this.router.navigate(['/admin/update-readings', this.dateString]);
+          },
+          error => {
+            console.log('error trying to create new readingDay', error);
+          }
+        );
+
+
 
       /*
       createReadingDay(readingDay: ReadingDay): Observable<ReadingDay> {

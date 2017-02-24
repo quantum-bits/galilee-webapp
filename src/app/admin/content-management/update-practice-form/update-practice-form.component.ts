@@ -44,21 +44,21 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
 
   private modules = {
     toolbar: [
-      ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-      ['blockquote', 'code-block'],
+      ['bold', 'italic', 'underline'],        // toggled buttons
+      ['blockquote'],// 'code-block'],
 
-      [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+      //[{ 'header': 1 }, { 'header': 2 }],               // custom button values
       [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-      [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+      //[{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
       [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-      [{ 'direction': 'rtl' }],                         // text direction
+      //[{ 'direction': 'rtl' }],                         // text direction
 
-      [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      //[{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+      //[{ 'header': [3, 4, false] }],
 
-      ['clean'],                                         // remove formatting button
+      //['clean'],                                         // remove formatting button
 
-      ['link']                         // link, but not image or video
+      //['link']                         // link, but not image or video
     ]
   };
 
@@ -196,7 +196,7 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
     }
     application['steps']=stepData;
     let readingId = this.readingDay.readings[this.readingIndex].id;
-    console.log('readingDay: ',this.readingDay );
+    console.log('application: ', application);
 
     /**
      * If !this.isNewApplication, need to delete the existing application and then create a new one

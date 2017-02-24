@@ -12,3 +12,7 @@
   /* so select menu is visible outside of collection; otherwise can be cut off */
   /* https://github.com/Dogfalo/materialize/issues/1385 */
 }
+
+strong {
+  font-weight: bold; /* not working; getting overridden by materialize-css...? */
+}

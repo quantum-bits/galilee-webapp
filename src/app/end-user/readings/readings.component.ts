@@ -7,6 +7,7 @@ import {UserService} from '../../authentication/user.service';
 
 import {Reading} from '../../shared/models/reading.model';
 import {ReadingDay} from '../../shared/interfaces/reading.interface';
+//import {Version} from '../../shared/interfaces/version.interface';
 import {GroupPostData} from '../../shared/models/group-post-data.model';
 
 import {SimpleModalComponent} from "./simple-modal.component";
@@ -16,7 +17,7 @@ import {SimpleModalComponent} from "./simple-modal.component";
 //TODO: fix BUG -- on secondary side-nav, clicking on a passage goes to the passage,
 //      but does not close the side-nav
 
-const TRANSLATIONS = ["NLT", "NIV", "RSV", "KJV", "NKJV"];
+//const TRANSLATIONS = ["NLT", "NIV", "RSV", "KJV", "NKJV"];
 
 const MAX_NUMBER_POSTS = 5;
 
@@ -39,7 +40,7 @@ export class ReadingsComponent implements OnInit {
 
   private readingsData: ReadingDay;//Reading[];
   //TODO: translations need to come from a service (bundled with the readings?):
-  private translations = TRANSLATIONS;
+  //private translations: Version[] = [];
 
   private showReadingsDropdown: boolean = true;
   private showTranslationsDropdown: boolean = false;
@@ -85,6 +86,7 @@ export class ReadingsComponent implements OnInit {
       .subscribe(
         readings => {
           this.readingsData = readings;
+          console.log(this.readingsData);
           if (this.currentReadingExists()) {
             this.initializeReadingInfo();
           } else {

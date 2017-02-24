@@ -17,7 +17,7 @@
             </a>
           </div>
 
-          <!--
+<!--
           <div class="col s4 center-align verticalRightLine">
             <a materialize="dropdown"
                class='dropdown-button'
@@ -29,6 +29,7 @@
             </a>
           </div>
           -->
+
           <!--
           <div class="col s1 center-align verticalRightLine">
             <span class="card-title materialize-red-text lighten-2">
@@ -74,6 +75,7 @@
         </li>
       </ul>
     </li>
+    <!--
     <li>
       <a (click)="toggleTranslationsDropdown($event)" class="waves-effect">
         Translations
@@ -86,6 +88,7 @@
         </li>
       </ul>
     </li>
+    -->
   </ul>
 </nav>
 
@@ -148,10 +151,12 @@
 </ul>
 
 <!-- Dropdown Structure -->
+<!--
 <ul id='translationsDropdownMenu' class='dropdown-content'>
   <li *ngFor="let translation of translations">
     <a>
-      {{translation}}
+      {{translation.title}}
     </a>
   </li>
 </ul>
+-->

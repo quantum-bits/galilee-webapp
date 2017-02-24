@@ -2,9 +2,21 @@
   <div class="card ">
     <!-- I can't figure out how to get a title bar in a solid color, so I'm cheating and using the card-action class -->
     <div class="card-title-bar">
-      <div class="card-title">Scripture</div>
+      <div class="card-title">{{ reading.stdRef }}</div>
     </div>
     <div class="card-content">
+
+      <div class="left-align">
+        <a materialize="dropdown"
+           class='dropdown-button'
+           data-activates='versionsDropdownMenu'>
+              <span class="card-title">
+                  Translation <!--{{readingsData.readings[currentReadingIndex].std_ref}}-->
+                <i class="material-icons">arrow_drop_down</i>
+              </span>
+        </a>
+      </div>
+
       <div class="card-title">{{ reading.stdRef }}
         <!--
         <div class="hide-on-med-and-up">
@@ -50,3 +62,13 @@
   </div>
 
 </div>
+
+
+<!-- Dropdown Structure -->
+<ul id='versionsDropdownMenu' class='dropdown-content'>
+  <li *ngFor="let version of versions">
+    <a>
+      {{version.title}}
+    </a>
+  </li>
+</ul>

@@ -1,6 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
+import {ReadingService} from '../../shared/services/reading.service';
+import {Version} from '../../shared/interfaces/version.interface';
+
+
 @Component({
   selector: 'app-reading-item',
   templateUrl: './reading-item.component.html',
@@ -13,15 +17,29 @@ export class ReadingItemComponent implements OnInit {
   @Input() currentReadingIndex: number;
   @Input() dateString: string;
 
+  private versions: Version[] = [];
   //private hideContent: boolean;//hide the content of the reading if on a mobile device
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+              private readingService: ReadingService) {
   }
 
   ngOnInit(){
     console.log('inside ngoninit for reading-item');
     console.log(this.includeNavigationButtons);
     this.modifyHeaderStyle();
+
+    this.readingService.getVersions()
+      .subscribe(
+        versions => {
+          console.log('versions: ', versions);
+          this.versions = versions;
+        },
+        error => {
+          console.log('error retrieving versions');
+        }
+      );
+
   }
 
   displayInfo(reading) {

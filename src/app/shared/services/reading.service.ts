@@ -8,6 +8,7 @@ import {AuthHttp} from 'angular2-jwt';
 import {Reading} from '../models/reading.model';
 import {ReadingDay, DailyQuestion, IReading} from '../interfaces/reading.interface';
 import {CalendarEntries} from '../interfaces/calendar-entries.interface';
+import {Version} from '../interfaces/version.interface';
 
 // TODO: Move this to a shared module.
 function todaysDate(): string {
@@ -52,6 +53,12 @@ export class ReadingService {
   getReadingMetadata(): Observable<CalendarEntries> {
     return this.authHttp
       .get('/api/readings/meta')
+      .map(resp => resp.json());
+  }
+
+  getVersions(): Observable<Array<Version>> {
+    return this.http
+      .get('/api/versions')
       .map(resp => resp.json());
   }
 
@@ -121,6 +128,16 @@ export class ReadingService {
     } else {
       return false;
     }
+  }
+
+  createReadingDay(readingDayData: {dateString: string, name: string}){//: Observable<ReadingDay>{
+    // should do something to check that dateString is a dateString?
+
+    console.log('inside service: ',readingDayData);
+    return this.authHttp.post('/api/readingdays', {
+      date: readingDayData.dateString,
+      name: readingDayData.name
+    }).map(resp => resp.json());
   }
 
   createReading(reading: IReading, readingDay: ReadingDay): Observable<IReading> {

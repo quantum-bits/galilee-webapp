@@ -2,3 +2,9 @@
   vertical-align: middle;
   padding-left: 10px;
 }
+
+ul.browser-default li {
+  list-style-type: initial;
+  padding-bottom: 10px;
+}
+
