@@ -1,8 +1,13 @@
 .dropdown-content {
-  min-width: 250px
+  min-width: 300px
 }
 
 .material-icons.lr-arrow {
   vertical-align: middle;
   padding-left: 10px;
+}
+
+.version-drop-down {
+  /*padding-top: 0px;*/
+  /*margin-top: 0px;*/
 }

@@ -21,7 +21,7 @@ import {Ng2CompleterModule} from "ng2-completer";
 import {Ng2PaginationModule} from 'ng2-pagination';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/end-user/readings/today', pathMatch: 'full'}
+  {path: '', redirectTo: '/end-user/readings/default/today', pathMatch: 'full'}
 ];
 
 // TODO: Figure out why this is declared as it is (from the angular2-jwt docs).

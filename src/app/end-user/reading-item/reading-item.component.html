@@ -2,17 +2,18 @@
   <div class="card ">
     <!-- I can't figure out how to get a title bar in a solid color, so I'm cheating and using the card-action class -->
     <div class="card-title-bar">
-      <div class="card-title">{{ reading.stdRef }}</div>
+      <div class="card-title">{{ reading.stdRef }} ({{reading.version.code}})</div>
     </div>
     <div class="card-content">
 
-      <div class="left-align">
+      <div class="right-align version-drop-down">
         <a materialize="dropdown"
-           class='dropdown-button'
+           [materializeParams]="[{alignment:'right'}]"
+           class='dropdown-button waves-effect btn-flat'
            data-activates='versionsDropdownMenu'>
-              <span class="card-title">
-                  Translation <!--{{readingsData.readings[currentReadingIndex].std_ref}}-->
-                <i class="material-icons">arrow_drop_down</i>
+              <span>
+                  {{reading.version.code}} <!--{{readingsData.readings[currentReadingIndex].std_ref}}-->
+                <i class="material-icons lr-arrow">arrow_drop_down</i>
               </span>
         </a>
       </div>
@@ -67,8 +68,8 @@
 <!-- Dropdown Structure -->
 <ul id='versionsDropdownMenu' class='dropdown-content'>
   <li *ngFor="let version of versions">
-    <a>
-      {{version.title}}
+    <a (click)="updateReadingsNewVersion(version)">
+      {{version.title}} ({{version.code}})
     </a>
   </li>
 </ul>

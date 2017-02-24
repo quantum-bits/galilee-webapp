@@ -58,6 +58,12 @@ export class ReadingItemComponent implements OnInit {
   }
   */
 
+  updateReadingsNewVersion(version: Version){
+    console.log('new version: ', version);
+    this.readingService.dumpStoredReadings();//delete readings stored in local memory, so page will refresh
+
+  }
+
   showPreviousButton() {
     if (this.currentReadingIndex > 0) {
       return true;
@@ -79,11 +85,11 @@ export class ReadingItemComponent implements OnInit {
   }
 
   nextReading() {
-    this.router.navigate(['/end-user/readings', this.dateString, this.currentReadingIndex+1]);
+    this.router.navigate(['/end-user/readings/default', this.dateString, this.currentReadingIndex+1]);
   }
 
   previousReading() {
-    this.router.navigate(['/end-user/readings', this.dateString, this.currentReadingIndex-1]);
+    this.router.navigate(['/end-user/readings/default', this.dateString, this.currentReadingIndex-1]);
   }
 
   //TODO: this might not be the best way to override the header styling;

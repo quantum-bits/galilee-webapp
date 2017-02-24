@@ -56,13 +56,13 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        // dateString can be 'YYYY-MM-DD' or 'today'
-        path: 'readings/:dateString',
+        // versionCode can be something like 'NKJV' or 'default'; dateString can be 'YYYY-MM-DD' or 'today'
+        path: 'readings/:versionCode/:dateString',
         component: ReadingsComponent,
       },
       {
         // Show the specified reading
-        path: 'readings/:dateString/:readingIndex',
+        path: 'readings/:versionCode/:dateString/:readingIndex',
         component: ReadingsComponent,
       },
       {

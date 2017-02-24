@@ -119,7 +119,7 @@ export class DashboardComponent implements OnInit {
   openReadings() {
     console.log('open the readings!');
     let dateString = this.convertToDateString(this.RCLDate);
-    this.router.navigate(['/end-user/readings', dateString]);
+    this.router.navigate(['/end-user/default/readings', dateString]);
   }
 
 }

@@ -82,7 +82,7 @@ export class ManageUsersComponent implements OnInit {
   public autoHide: boolean = false;//used by pagination component
   public config: PaginationInstance = {//used by pagination component
     id: 'advanced',
-    itemsPerPage: 2,
+    itemsPerPage: 10,
     currentPage: 1
   };
 

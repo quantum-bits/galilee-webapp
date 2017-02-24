@@ -102,7 +102,7 @@ export class AppComponent implements OnInit {
 
   logout() {
     this.userService.logout();
-    this.router.navigate(['/end-user/readings/today']);
+    this.router.navigate(['/end-user/readings/default/today']);
   }
 
   goToJournal(){

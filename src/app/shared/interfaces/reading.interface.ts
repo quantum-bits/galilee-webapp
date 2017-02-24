@@ -1,3 +1,5 @@
+import {Version} from './version.interface';
+
 export interface IReading {
   id: number;
   //versionId: number;
@@ -22,4 +24,5 @@ export interface ReadingDay {
   name?: string
   questions: Array<DailyQuestion>;
   readings: Array<IReading>;
+  version: Version;
 }

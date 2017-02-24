@@ -16,7 +16,7 @@ http://materializecss.com/footer.html
             </a>
           </li>
           <li *ngIf="!isLoggedIn()">
-            <a [routerLink]="['/end-user/readings/today']">
+            <a [routerLink]="['/end-user/readings/default/today']">
               Engage
             </a>
           </li>
@@ -138,7 +138,7 @@ http://materializecss.com/footer.html
         </ul>
       </li>
       <li *ngIf="!isLoggedIn()">
-        <a [routerLink]="['/end-user/readings/today']">
+        <a [routerLink]="['/end-user/readings/default/today']">
           Engage
         </a>
       </li>
