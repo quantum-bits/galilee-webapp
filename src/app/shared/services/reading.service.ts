@@ -5,6 +5,8 @@ import {Observable} from 'rxjs/Rx';
 import {Subject}    from 'rxjs/Subject';
 import {AuthHttp} from 'angular2-jwt';
 
+import * as moment from 'moment';
+
 import {Reading} from '../models/reading.model';
 import {ReadingDay, DailyQuestion, IReading} from '../interfaces/reading.interface';
 import {CalendarEntries} from '../interfaces/calendar-entries.interface';
@@ -12,7 +14,8 @@ import {Version} from '../interfaces/version.interface';
 
 // TODO: Move this to a shared module.
 function todaysDate(): string {
-  return new Date().toISOString().substring(0, 10);
+  console.log('the date today is: ', moment(new Date()).format('YYYY-MM-DD'));
+  return moment(new Date()).format('YYYY-MM-DD');
 }
 
 @Injectable()
@@ -94,7 +97,8 @@ export class ReadingService {
       } else {
         dateString = date;
       }
-      savedDateString = this.readingsData.date.substring(0, 10);
+
+      savedDateString = moment(this.readingsData.date).format('YYYY-MM-DD');
       if (savedDateString !== dateString) {
         // the requested date and the saved date do not agree; will need to refetch from the db
         returnSavedReadings = false;

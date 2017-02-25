@@ -1,6 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 //import { ROUTER_DIRECTIVES } from '@angular/router';
 import {Router, ActivatedRoute} from '@angular/router';
+import { Subscription }   from 'rxjs/Subscription';
 
 import {ReadingService} from '../../shared/services/reading.service';
 import {PracticeService} from '../../shared/services/practice.service';
@@ -9,13 +10,14 @@ import {ReadingDay} from '../../shared/interfaces/reading.interface';
 
 import {SimpleModalComponent} from "../readings/simple-modal.component";
 
+
 @Component({
   selector: 'app-reading-practice',
   templateUrl: './reading-practice.component.html',
   styleUrls: ['./reading-practice.component.css'],
   providers: [PracticeService]
 })
-export class ReadingPracticeComponent implements OnInit {
+export class ReadingPracticeComponent implements OnInit, OnDestroy {
 
   @ViewChild('readingPracticeSorry') modal: SimpleModalComponent;
 
@@ -36,10 +38,16 @@ export class ReadingPracticeComponent implements OnInit {
   practiceGeneralInformation: any;
   includeBackButton = true;
 
+  subscription: Subscription;
+
   constructor(private router: Router,
               private route: ActivatedRoute,
               private readingService: ReadingService) {
-    console.log('inside constructor for reading-practice');
+    this.subscription = this.readingService.updateReadingsRefresh$.subscribe(
+      message => {
+        console.log('received instructions to refresh!');
+        this.fetchReadings();
+      });
   }
 
   ngOnInit() {
@@ -72,39 +80,43 @@ export class ReadingPracticeComponent implements OnInit {
       // only the required reading, etc.  One option would be to write an API endpoint
       // for this, but for now we're just sending the whole works over
       // in either case.
-      this.readingService.fetchSavedReadings(this.dateString)
-        .subscribe(
-          readingsData => {
-            this.readingsData = readingsData;
+      this.fetchReadings();
+    });
+  }
 
-            console.log(this.readingsData);
-
-            // now check if the required reading/practice/step exists, and display
-            // the page (or an error message)
-            if (this.practiceExists(this.readingsData, this.readingIndex, this.practiceIndex)) {
-              if (!this.displayStep) {
-                this.practiceData = this.readingsData.readings[this.readingIndex].applications[this.practiceIndex];
-              } else {
-                let pD = this.readingsData.readings[this.readingIndex].applications[this.practiceIndex];
-                if (this.stepIndex >= 0 && this.stepIndex < pD.steps.length) {
-                  // good to go....
-                  this.practiceData = pD;
-                } else {
-                  // oops -- the requested step doesn't exist
-                  this.modal.openModal();
-                }
-              }
+  fetchReadings(){
+    this.readingService.fetchSavedReadings(this.dateString)
+      .subscribe(
+        readingsData => {
+          this.readingsData = readingsData;
+          console.log(this.readingsData);
+          // now check if the required reading/practice/step exists, and display
+          // the page (or an error message)
+          if (this.practiceExists(this.readingsData, this.readingIndex, this.practiceIndex)) {
+            if (!this.displayStep) {
+              this.practiceData = this.readingsData.readings[this.readingIndex].applications[this.practiceIndex];
             } else {
-              this.modal.openModal();
+              let pD = this.readingsData.readings[this.readingIndex].applications[this.practiceIndex];
+              if (this.stepIndex >= 0 && this.stepIndex < pD.steps.length) {
+                // good to go....
+                this.practiceData = pD;
+              } else {
+                // oops -- the requested step doesn't exist
+                this.modal.openModal();
+              }
             }
-          },
-          error => {
+          } else {
             this.modal.openModal();
           }
-        );
-
-    })
+        },
+        error => {
+          this.modal.openModal();
+        }
+      );
   }
+
+
+
 
   // TODO: make this a method on the model instead
   practiceExists(readingsData, readingIndex, practiceIndex){
@@ -133,6 +145,11 @@ export class ReadingPracticeComponent implements OnInit {
     }
     this.displaySummary = false;
     this.displayPreparation = true;
+  }
+
+  ngOnDestroy() {
+    // prevent memory leak when component destroyed
+    this.subscription.unsubscribe();
   }
 
 }
