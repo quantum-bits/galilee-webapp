@@ -20,6 +20,7 @@ export class ReadingService {
 
   private readingsData: ReadingDay = null;
   private RCLDate: Date; // keeps track of the RCL date that the user is currently looking at (since this could be different than today's date)
+  private currentVersion: Version = null; //version to be used when displaying passages; null means the server should choose (using defaults, the current user's preferred version, etc.)
 
   // Observable string source; used for various subcomponents to inform
   // update-readings that readings have been updated in the db and it is
@@ -61,6 +62,31 @@ export class ReadingService {
       .get('/api/versions')
       .map(resp => resp.json());
   }
+
+  setCurrentVersion(versionId: number){
+    this.getVersions()
+      .subscribe(
+        versions => {
+          console.log(versions);
+          if (versions.length > 0) {
+            const index = versions.findIndex(version => version.id === versionId);
+            if (index >=0){
+              this.currentVersion = versions[index];
+            }
+          }
+        },
+        error => console.log('error fetching versions: ', error)
+      );
+  }
+
+  unSetCurrentVersion(){
+    this.currentVersion = null;
+  }
+
+  fetchCurrentVersion(): Version {
+    return this.currentVersion;
+  }
+
 
   /*
    this method is almost identical to getTodaysReadings, but if the
@@ -128,16 +154,6 @@ export class ReadingService {
     } else {
       return false;
     }
-  }
-
-  createReadingDay(readingDayData: {dateString: string, name: string}){//: Observable<ReadingDay>{
-    // should do something to check that dateString is a dateString?
-
-    console.log('inside service: ',readingDayData);
-    return this.authHttp.post('/api/readingdays', {
-      date: readingDayData.dateString,
-      name: readingDayData.name
-    }).map(resp => resp.json());
   }
 
   createReading(reading: IReading, readingDay: ReadingDay): Observable<IReading> {

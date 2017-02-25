@@ -85,11 +85,11 @@ export class ReadingItemComponent implements OnInit {
   }
 
   nextReading() {
-    this.router.navigate(['/end-user/readings/default', this.dateString, this.currentReadingIndex+1]);
+    this.router.navigate(['/end-user/readings', this.dateString, this.currentReadingIndex+1]);
   }
 
   previousReading() {
-    this.router.navigate(['/end-user/readings/default', this.dateString, this.currentReadingIndex-1]);
+    this.router.navigate(['/end-user/readings', this.dateString, this.currentReadingIndex-1]);
   }
 
   //TODO: this might not be the best way to override the header styling;

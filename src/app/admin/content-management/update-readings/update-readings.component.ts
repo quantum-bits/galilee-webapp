@@ -8,6 +8,8 @@ import {IReading, ReadingDay} from '../../../shared/interfaces/reading.interface
 import {Application} from '../../../shared/interfaces/application.interface';
 
 import {ReadingService} from '../../../shared/services/reading.service';
+import {ReadingDayService} from '../../../shared/services/reading-day.service';
+
 import {CalendarEntries} from '../../../shared/interfaces/calendar-entries.interface';
 import {DailyQuestion} from '../../../shared/interfaces/reading.interface';
 
@@ -36,6 +38,7 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
 
   constructor(
     private readingService: ReadingService,
+    private readingDayService: ReadingDayService,
     private route: ActivatedRoute,
     private router: Router){
     this.subscription = this.readingService.updateReadingsRefresh$.subscribe(
@@ -88,17 +91,24 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
     console.log('dateString: ', dateString);
     this.dateString = dateString;
     if (dateString in this.calendarReadings) {
-      console.log('XXXX we have a reading for this day!');
+      console.log('we have a reading for this day!');
       this.router.navigate(['/admin/update-readings', this.dateString]);
     } else {
-      console.log('XXXX NO readings for this day');
-      /** TODO: check if there is a readingDay for this date (using readAllReadingDays()); if not, create one:
+      console.log('no readings for this day; creating one....');
+      /** TODO:
        *    - modal with form to ask for readingDay.name, if appropriate
        *    - onCancel reloads '/admin/update-readings', but with no dateString
        *    - onSubmit creates the readingDay and then, upon success, loads '/admin/update-readings' with the dateString for the new readingDay
        */
-      let readingDayData = {dateString: dateString, name: 'Easter'}
-      this.readingService.createReadingDay(readingDayData)
+      let readingDay: ReadingDay = {
+        id: null,
+        date: dateString,
+        name: '',// for now, create a new ReadingDay with no 'name' field
+        questions: [],
+        readings: [],
+        version: null
+      };
+      this.readingDayService.createReadingDay(readingDay)
         .subscribe(
           result => {
             console.log('new readingDay created: ', result);
@@ -108,31 +118,7 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
             console.log('error trying to create new readingDay', error);
           }
         );
-
-
-
-      /*
-      createReadingDay(readingDay: ReadingDay): Observable<ReadingDay> {
-        return this.authHttp
-          .post('/api/readingdays', {
-            date: readingDay.date,
-            name: readingDay.name
-          })
-          .map(resp => resp.json());
     }
-
-    */
-
-
-    }
-
-    console.log('XXXX calendar readings:', this.calendarReadings);
-
-    //this.router.navigate(['/admin/update-readings', this.dateString]);
-
-    //this.fetchReadings()
-    //this.fetchReadings(dateString);
-
   }
 
   fetchReadings(dateString: string) {

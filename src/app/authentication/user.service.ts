@@ -11,6 +11,7 @@ import {AuthenticationService} from './authentication.service';
 
 import {User} from '../shared/models/user.model';
 import {LoginData} from '../shared/interfaces/login-data.interface';
+import {Version} from '../shared/interfaces/version.interface';
 
 import {Permission} from '../shared/models/permission.model';
 
@@ -41,6 +42,7 @@ const CURRENT_USER_KEY = 'current-user';
 export class UserService {
   // TODO: There must be a better way to expose state as an observable.
   private currentUser: User;
+
   private observableUser: Subject<User> = new BehaviorSubject<User>(null);
 
   // Observable used to inform the Login page that there has been a problem

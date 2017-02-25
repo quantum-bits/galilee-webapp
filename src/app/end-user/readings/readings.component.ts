@@ -153,7 +153,7 @@ export class ReadingsComponent implements OnInit {
   }
 
   onReadingUpdated(updatedReadingIndex: number) {
-    this.router.navigate(['/end-user/readings/default', this.dateString, updatedReadingIndex]);
+    this.router.navigate(['/end-user/readings', this.dateString, updatedReadingIndex]);
   }
 
   // for the secondary side-nav
