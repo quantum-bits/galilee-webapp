@@ -1,8 +1,7 @@
 <div *ngIf="reading">
   <div class="card ">
-    <!-- I can't figure out how to get a title bar in a solid color, so I'm cheating and using the card-action class -->
     <div class="card-title-bar">
-      <div class="card-title">{{ reading.stdRef }} ({{reading.version.code}})</div>
+      <div class="card-title">{{ reading.stdRef }}</div>
     </div>
     <div class="card-content">
 
@@ -69,7 +68,7 @@
 <ul id='versionsDropdownMenu' class='dropdown-content'>
   <li *ngFor="let version of selectableVersions">
     <a (click)="updateReadingsNewVersion(version)">
-      {{version.title}} ({{version.code}})
+      {{version.title}}
     </a>
   </li>
 </ul>
