@@ -105,8 +105,7 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
         date: dateString,
         name: '',// for now, create a new ReadingDay with no 'name' field
         questions: [],
-        readings: [],
-        version: null
+        readings: []
       };
       this.readingDayService.createReadingDay(readingDay)
         .subscribe(

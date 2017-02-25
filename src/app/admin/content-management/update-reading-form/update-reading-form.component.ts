@@ -48,7 +48,8 @@ export class UpdateReadingFormComponent implements OnInit {
         readingDayId: null,//does this need to be there?
         seq: null,
         stdRef: null,
-        text: null
+        text: null,
+        version: null
       };
     } else {
       this.isNewReading = false;
