@@ -63,20 +63,8 @@ export class ReadingService {
       .map(resp => resp.json());
   }
 
-  setCurrentVersion(versionId: number){
-    this.getVersions()
-      .subscribe(
-        versions => {
-          console.log(versions);
-          if (versions.length > 0) {
-            const index = versions.findIndex(version => version.id === versionId);
-            if (index >=0){
-              this.currentVersion = versions[index];
-            }
-          }
-        },
-        error => console.log('error fetching versions: ', error)
-      );
+  setCurrentVersion(version: Version){
+    this.currentVersion = version;
   }
 
   unSetCurrentVersion(){
@@ -87,7 +75,6 @@ export class ReadingService {
     return this.currentVersion;
   }
 
-
   /*
    this method is almost identical to getTodaysReadings, but if the
    data already exists in memory, it returns that data instead of making
@@ -96,18 +83,11 @@ export class ReadingService {
   fetchSavedReadings(date: string): Observable<ReadingDay> {
     let dateString: string;
     let savedDateString: string;
+    let returnSavedReadings: boolean = true;
     if (this.readingsData === null) {
-      // if readingsData doesn't exist, go get it
-      return this.http
-        .get(`/api/daily/${date}`)
-        .map(res => res.json())
-        .do(res => {
-          console.log('fetched readings from db');
-          this.storeReadings(res); // saving local copy
-          return res;
-        });
+      returnSavedReadings = false;
     } else {
-      // there is a readingsData object in memory, but is it for the correct date?
+      //there is a readingsData object in memory, but is it for the correct date?
       console.log(date);
       if (date === 'today') {
         dateString = todaysDate();
@@ -115,13 +95,18 @@ export class ReadingService {
         dateString = date;
       }
       savedDateString = this.readingsData.date.substring(0, 10);
-      if (savedDateString === dateString) {
-        // the requested date and the saved date agree; return the saved data....
-        console.log('fetched readings from saved copy');
-        var promise = Promise.resolve(this.readingsData);
-        return Observable.fromPromise(promise);
-      } else {
-        // date mismatch; fetch data from the db....
+      if (savedDateString !== dateString) {
+        // the requested date and the saved date do not agree; will need to refetch from the db
+        returnSavedReadings = false;
+      }
+    }
+
+    if (returnSavedReadings){
+      console.log('fetched readings from saved copy');
+      var promise = Promise.resolve(this.readingsData);
+      return Observable.fromPromise(promise);
+    } else {
+      if (this.currentVersion === null) {
         return this.http
           .get(`/api/daily/${date}`)
           .map(res => res.json())
@@ -130,8 +115,18 @@ export class ReadingService {
             this.storeReadings(res); // saving local copy
             return res;
           });
+      } else {
+        return this.http
+          .get(`/api/daily/${date}/${this.currentVersion.code}`)
+          .map(res => res.json())
+          .do(res => {
+            console.log('fetched readings from db for specific version: ', this.currentVersion.code);
+            this.storeReadings(res); // saving local copy
+            return res;
+          });
       }
     }
+
   }
 
   // Service message command

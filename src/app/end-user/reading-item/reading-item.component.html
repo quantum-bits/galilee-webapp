@@ -12,7 +12,7 @@
            class='dropdown-button waves-effect btn-flat'
            data-activates='versionsDropdownMenu'>
               <span>
-                  {{reading.version.code}} <!--{{readingsData.readings[currentReadingIndex].std_ref}}-->
+                  {{reading.version.title}} <!--{{readingsData.readings[currentReadingIndex].std_ref}}-->
                 <i class="material-icons lr-arrow">arrow_drop_down</i>
               </span>
         </a>
@@ -67,7 +67,7 @@
 
 <!-- Dropdown Structure -->
 <ul id='versionsDropdownMenu' class='dropdown-content'>
-  <li *ngFor="let version of versions">
+  <li *ngFor="let version of selectableVersions">
     <a (click)="updateReadingsNewVersion(version)">
       {{version.title}} ({{version.code}})
     </a>

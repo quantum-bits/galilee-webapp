@@ -1,7 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, OnChanges} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {ReadingService} from '../../shared/services/reading.service';
+import {IReading} from '../../shared/interfaces/reading.interface';
 import {Version} from '../../shared/interfaces/version.interface';
 
 
@@ -10,14 +11,15 @@ import {Version} from '../../shared/interfaces/version.interface';
   templateUrl: './reading-item.component.html',
   styleUrls: ['./reading-item.component.css']
 })
-export class ReadingItemComponent implements OnInit {
-  @Input() reading: any;
+export class ReadingItemComponent implements OnInit, OnChanges {
+  @Input() reading: IReading = null;
   @Input() includeNavigationBar: boolean;
   @Input() numberReadings: number;
   @Input() currentReadingIndex: number;
   @Input() dateString: string;
 
-  private versions: Version[] = [];
+  //private versions: Version[] = [];
+  private selectableVersions: Version[] = [];
   //private hideContent: boolean;//hide the content of the reading if on a mobile device
 
   constructor(private router: Router,
@@ -25,15 +27,26 @@ export class ReadingItemComponent implements OnInit {
   }
 
   ngOnInit(){
-    console.log('inside ngoninit for reading-item');
+    console.log('inside ngoninit for reading-item; reading:', this.reading);
     console.log(this.includeNavigationButtons);
     this.modifyHeaderStyle();
+  }
 
+  ngOnChanges(){
+    this.selectableVersions = [];
     this.readingService.getVersions()
       .subscribe(
         versions => {
           console.log('versions: ', versions);
-          this.versions = versions;
+          if (this.reading === null){
+            this.selectableVersions = versions; // apparently don't have a reading yet
+          } else {
+            versions.forEach(aVersion => {
+              if (aVersion.id !== this.reading.version.id) {
+                this.selectableVersions.push(aVersion);
+              }
+            });
+          }
         },
         error => {
           console.log('error retrieving versions');
@@ -46,22 +59,9 @@ export class ReadingItemComponent implements OnInit {
     console.log(reading);
   }
 
-  /*
-  onSelectPractice(reading, practice) {
-    this.router.navigate(['/end-user/reading-practice', reading.id, practice.id]);
-  }
-  */
-
-  /*
-  onSelectResource(reading, resourceCollection) {
-    this.router.navigate(['/end-user/reading-resource', reading.id, resourceCollection.id]);
-  }
-  */
-
   updateReadingsNewVersion(version: Version){
-    console.log('new version: ', version);
-    this.readingService.dumpStoredReadings();//delete readings stored in local memory, so page will refresh
-
+    this.readingService.setCurrentVersion(version);
+    this.readingService.announceReadingsRefresh();
   }
 
   showPreviousButton() {

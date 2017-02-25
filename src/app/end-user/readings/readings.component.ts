@@ -1,5 +1,6 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
+import { Subscription }   from 'rxjs/Subscription';
 
 import {ReadingService} from '../../shared/services/reading.service';
 import {PostService} from '../../shared/services/post.service';
@@ -12,12 +13,9 @@ import {GroupPostData} from '../../shared/models/group-post-data.model';
 
 import {SimpleModalComponent} from "./simple-modal.component";
 
-
-//TODO: determine translations actively
 //TODO: fix BUG -- on secondary side-nav, clicking on a passage goes to the passage,
 //      but does not close the side-nav
 
-//const TRANSLATIONS = ["NLT", "NIV", "RSV", "KJV", "NKJV"];
 
 const MAX_NUMBER_POSTS = 5;
 
@@ -28,7 +26,7 @@ const MAX_NUMBER_POSTS = 5;
   providers: [//ReadingService
     ]
 })
-export class ReadingsComponent implements OnInit {
+export class ReadingsComponent implements OnInit, OnDestroy {
 
   // NOTE: to add a modal-type of full view for images, do the following:
   // https://github.com/InfomediaLtd/angular2-materialize/issues/88
@@ -49,11 +47,18 @@ export class ReadingsComponent implements OnInit {
 
   @ViewChild('sorry') modal: SimpleModalComponent;
 
+  subscription: Subscription;
+
   constructor(private readingService: ReadingService,
               private postService: PostService,
               private userService: UserService,
               private router: Router,
               private route: ActivatedRoute) {
+    this.subscription = this.readingService.updateReadingsRefresh$.subscribe(
+      message => {
+        console.log('received instructions to refresh!');
+        this.fetchReadings();
+      });
   }
 
   private multiGroupPostData: GroupPostData[];
@@ -176,5 +181,11 @@ export class ReadingsComponent implements OnInit {
   getTemp(){
     console.log(this.readingService.returnTemp());
   }
+
+  ngOnDestroy() {
+    // prevent memory leak when component destroyed
+    this.subscription.unsubscribe();
+  }
+
 
 }

@@ -10,6 +10,7 @@ export interface IReading {
   stdRef: string;
   text: string;
   applications?: any;
+  version: Version;
 }
 
 export interface DailyQuestion {
@@ -24,5 +25,4 @@ export interface ReadingDay {
   name?: string
   questions: Array<DailyQuestion>;
   readings: Array<IReading>;
-  version: Version;
 }
