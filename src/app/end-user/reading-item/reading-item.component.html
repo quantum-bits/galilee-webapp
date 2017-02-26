@@ -1,9 +1,36 @@
 <div *ngIf="reading">
   <div class="card ">
     <div class="card-title-bar">
-      <div class="card-title">{{ reading.stdRef }}</div>
+      <div>
+        <span class="card-title">Scripture</span>
+        <span *ngIf="includeReadingsDropdown()" class="right">
+          <a materialize="dropdown"
+             [materializeParams]="[{alignment:'right'}]"
+             class='dropdown-button waves-effect btn-flat'
+             data-activates='todaysReadingsDropdownMenu'>
+                <span class="right-align grey-text text-lighten-4">
+                    Readings
+                  <i class="material-icons lr-arrow">arrow_drop_down</i>
+                </span>
+          </a>
+        </span>
+      </div>
     </div>
     <div class="card-content">
+
+    <!--
+      <span class="right-align version-drop-down">
+        <a materialize="dropdown"
+           [materializeParams]="[{alignment:'right'}]"
+           class='dropdown-button waves-effect btn-flat'
+           data-activates='todaysReadingsDropdownMenu'>
+              <span>
+                  Today's Readings
+                <i class="material-icons lr-arrow">arrow_drop_down</i>
+              </span>
+        </a>
+      </span>
+      -->
 
       <div class="right-align version-drop-down">
         <a materialize="dropdown"
@@ -17,6 +44,9 @@
         </a>
       </div>
 
+      <div class="card-title">{{ reading.stdRef }}</div>
+      <br>
+<!--
       <div class="card-title">{{ reading.stdRef }}
         <!--
         <div class="hide-on-med-and-up">
@@ -26,9 +56,10 @@
             </a>
           </div>
         </div>
-        -->
+
       </div>
       <br>
+      -->
       <!--hideContent: {{hideContent}}-->
       <div class="flow-text">
         <div [innerHTML]="reading.text"></div>
@@ -54,9 +85,9 @@
     </div>
 
     <div *ngIf="includeNavigationButtons()" class="card-action">
-      <a *ngIf="showPreviousButton()" (click)="previousReading()"> <i class="material-icons lr-arrow">navigate_before</i> Previous</a>
+      <a href="javascript:void(0)" *ngIf="showPreviousButton()" (click)="previousReading()"> <i class="material-icons lr-arrow">navigate_before</i> Previous</a>
       <a></a> <!-- this is here b/c otherwise the vertical spacing gets messed up by the class="right" statement in the following (if Next is all that shows up) -->
-      <a *ngIf="showNextButton()" (click)="nextReading()" class="right">Next <i class="material-icons lr-arrow">navigate_next</i></a>
+      <a href="javascript:void(0)" *ngIf="showNextButton()" (click)="nextReading()" class="right">Next <i class="material-icons lr-arrow">navigate_next</i></a>
     </div>
 
   </div>
@@ -69,6 +100,15 @@
   <li *ngFor="let version of selectableVersions">
     <a (click)="updateReadingsNewVersion(version)">
       {{version.title}}
+    </a>
+  </li>
+</ul>
+
+<!-- Dropdown Structure -->
+<ul id='todaysReadingsDropdownMenu' class='dropdown-content'>
+  <li *ngFor="let reading of todaysReadings; let i=index">
+    <a (click)="goToReading(i)">
+      {{reading}}
     </a>
   </li>
 </ul>

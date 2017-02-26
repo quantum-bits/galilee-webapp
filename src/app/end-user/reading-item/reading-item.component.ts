@@ -13,10 +13,11 @@ import {Version} from '../../shared/interfaces/version.interface';
 })
 export class ReadingItemComponent implements OnInit, OnChanges {
   @Input() reading: IReading = null;
-  @Input() includeNavigationBar: boolean;
+  @Input() includeNavigationBar: boolean = false;
   @Input() numberReadings: number;
   @Input() currentReadingIndex: number;
   @Input() dateString: string;
+  @Input() todaysReadings: string[] = [];
 
   //private versions: Version[] = [];
   private selectableVersions: Version[] = [];
@@ -28,7 +29,8 @@ export class ReadingItemComponent implements OnInit, OnChanges {
 
   ngOnInit(){
     console.log('inside ngoninit for reading-item; reading:', this.reading);
-    console.log(this.includeNavigationButtons);
+    console.log('today readings: ', this.todaysReadings);
+    console.log(this.includeNavigationBar);
     this.modifyHeaderStyle();
   }
 
@@ -84,12 +86,19 @@ export class ReadingItemComponent implements OnInit, OnChanges {
     return this.includeNavigationBar && (this.showPreviousButton() || this.showNextButton());
   }
 
+  includeReadingsDropdown(){
+    return this.includeNavigationBar;
+  }
   nextReading() {
     this.router.navigate(['/end-user/readings', this.dateString, this.currentReadingIndex+1]);
   }
 
   previousReading() {
     this.router.navigate(['/end-user/readings', this.dateString, this.currentReadingIndex-1]);
+  }
+
+  goToReading(i: number) {
+    this.router.navigate(['/end-user/readings', this.dateString, i]);
   }
 
   //TODO: this might not be the best way to override the header styling;
@@ -99,11 +108,5 @@ export class ReadingItemComponent implements OnInit, OnChanges {
     //console.log(this.reading.text);
     this.reading.text = this.reading.text.replace(/<h3>/g, "<h4>").replace(/<\/h3>/g, "</h4>");
   }
-
-  /*
-  toggleHideContent(){
-    this.hideContent = !this.hideContent;
-  }
-  */
 
 }

@@ -1,6 +1,7 @@
 <!-- Secondary navbar -->
 <!-- NEXT: figure out how to remove vertical padding in row -->
 <!-- Might eventually want to make this secondary navbar its own component -->
+<!--
 <div *ngIf="initializationComplete">
   <div class="container hide-on-med-and-down">
     <div class="card ">
@@ -11,7 +12,7 @@
                class='dropdown-button'
                data-activates='readingsDropdownMenu'>
               <span *ngIf="initializationComplete" class="card-title grey-text">
-                  Today's Readings <!--{{readingsData.readings[currentReadingIndex].std_ref}}-->
+                  Today's Readings <!--{{readingsData.readings[currentReadingIndex].std_ref}}
                 <i class="material-icons right">arrow_drop_down</i>
               </span>
             </a>
@@ -44,7 +45,7 @@
                 Timeline <i class="material-icons">call_made</i>
             </span>
           </div>
-          -->
+
 
         </div>
       </div>
@@ -88,16 +89,17 @@
         </li>
       </ul>
     </li>
-    -->
+
   </ul>
 </nav>
-
+-->
 
 <!-- Current reading, possibly with practice types shown -->
 <div class="container row">
   <div *ngIf="initializationComplete ">
-    <div class="col s12 m6 l7">
+    <div class="col s12 m10 offset-m1 l7">
       <app-reading-item
+        [todaysReadings]="todaysReadings"
         [includeNavigationBar]=true
         [reading]="readingsData.readings[currentReadingIndex]"
         [numberReadings]="numberReadings"
@@ -106,7 +108,7 @@
       >
       </app-reading-item>
     </div>
-    <div class="col s12 m6 l5">
+    <div class="col s12 m10 offset-m1 l5">
       <app-practice-list
         [reading]="readingsData.readings[currentReadingIndex]"
         [readingIndex]="currentReadingIndex"

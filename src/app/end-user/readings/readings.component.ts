@@ -67,6 +67,7 @@ export class ReadingsComponent implements OnInit, OnDestroy {
   private numberReadings: number;
   private currentReadingIndex: number = 0; // the index # of the reading that is currently being displayed
   private initializationComplete = false;
+  private todaysReadings: string[] = []; // list of human-readable reading descriptions, in the same order as the actual readings
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -92,6 +93,10 @@ export class ReadingsComponent implements OnInit, OnDestroy {
         readings => {
           this.readingsData = readings;
           console.log(this.readingsData);
+          this.todaysReadings = [];
+          this.readingsData.readings.forEach(aReading => {
+            this.todaysReadings.push(aReading.stdRef);
+          });
           if (this.currentReadingExists()) {
             this.initializeReadingInfo();
           } else {
