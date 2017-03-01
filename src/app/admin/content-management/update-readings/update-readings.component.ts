@@ -111,7 +111,21 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
         .subscribe(
           result => {
             console.log('new readingDay created: ', result);
-            this.router.navigate(['/admin/update-readings', this.dateString]);
+            // now need to update the calendarReadings....; this is not done
+            // automatically, since ngOnInit only gets run when the page is
+            // initially loaded; also, can't just launch readingService.announceReadingsRefresh(),
+            // since we're actually going to a different day....
+            this.readingService.getReadingMetadata()
+              .subscribe(
+                calendarReadings => {
+                  console.log(calendarReadings);
+                  this.calendarReadings = calendarReadings;
+                  // now can reload the page
+                  this.router.navigate(['/admin/update-readings', this.dateString]);
+                },
+                error => {
+                  console.log('error trying to load calendar readings....', error);
+                });
           },
           error => {
             console.log('error trying to create new readingDay', error);
