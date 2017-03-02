@@ -7,7 +7,7 @@
 
   <div *ngIf="questionsThisDay">
     <ul class="collection with-header">
-      <li class="collection-header"><h5>Questions for {{readingDay.date | amDateFormat: 'LL'}}</h5></li>
+      <li class="collection-header"><h5>Small Group Questions for {{readingDay.date | amDateFormat: 'LL'}}</h5></li>
       <li *ngFor="let question of readingDay.questions; let i=index" class="collection-item grey lighten-5">
         <span class="title"> {{question.seq}}. {{question.text}} </span>
 

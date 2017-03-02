@@ -58,7 +58,7 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
 
       //['clean'],                                         // remove formatting button
 
-      //['link']                         // link, but not image or video
+      ['link']                         // link, but not image or video
     ]
   };
 

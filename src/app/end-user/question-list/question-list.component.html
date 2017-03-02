@@ -1,5 +1,5 @@
 <ul class="collection with-header">
-  <li class="collection-header"><h5>Questions for {{dateString | amDateFormat: 'LL'}}</h5></li>
+  <li class="collection-header"><h5>Small Group Questions for {{dateString | amDateFormat: 'LL'}}</h5></li>
   <li *ngFor="let question of questions" class="collection-item">
       <span class="title">{{question.text}}</span>
   </li>
