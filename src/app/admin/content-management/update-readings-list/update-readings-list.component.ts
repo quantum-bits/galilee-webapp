@@ -6,14 +6,12 @@ import {UpdateReadingFormComponent} from '../update-reading-form/update-reading-
 import {DisplayReadingModalComponent} from '../display-reading-modal/display-reading-modal.component';
 import {DeleteItemModalComponent} from '../../../shared/components/delete-item-modal/delete-item-modal.component';
 import {IReading, ReadingDay} from '../../../shared/interfaces/reading.interface';
-import {Practice} from '../../../shared/models/practice.model';
 
 import {ApplicationService} from  '../../../shared/services/application.service';
 import {Application} from '../../../shared/interfaces/application.interface';
 import {ApplicationFormData} from '../../../shared/interfaces/application-form-data.interface';
 
 import {ReadingService} from '../../../shared/services/reading.service';
-import {PracticeService} from "../../../shared/services/practice.service";
 
 @Component({
   selector: 'update-readings-list',
@@ -32,8 +30,6 @@ export class UpdateReadingsListComponent implements OnInit {
   @ViewChild('updateApplicationModal') modalUpdateApplication: UpdatePracticeFormComponent;
   @ViewChild('updateReadingModal') modalUpdateReading: UpdateReadingFormComponent;
 
-  private allPractices: Practice[];
-
   private singleReading: IReading;
   private singleReadingStdRef: string = '';
   private singleApplicationTitle: string = '';
@@ -47,22 +43,10 @@ export class UpdateReadingsListComponent implements OnInit {
 
 
   constructor(private readingService: ReadingService,
-              private applicationService: ApplicationService,
-              private practiceService: PracticeService) {
+              private applicationService: ApplicationService) {
   }
 
   ngOnInit() {
-    this.fetchPractices();
-  }
-
-  fetchPractices() {
-    this.practiceService.readAllPractices()
-      .subscribe(
-        practices => {
-          this.allPractices = practices;
-          console.log('ALL PRACTICES: ', this.allPractices);
-        }
-      )
   }
 
   launchNewPracticeModal(readingIndex: number) {

@@ -14,20 +14,21 @@
             <div class="col s12 ">
               <div class="card">
                 <div class="card-content">
-
                   <span *ngIf="isNewApplication" class="card-title">
                     Add New Practice and Steps
                   </span>
                   <span *ngIf="!isNewApplication" class="card-title">
                     Update Practice and/or Steps
                   </span>
-
+                  <div *ngIf="readingStdRef">
+                    - {{readingStdRef}} -
+                  </div>
                   <div class="row">
                     <div class="col s12">
                       <ul class="collection with-header">
                         <li class="collection-header"><span class="title">Practice</span></li>
                         <li class="collection-item">
-                          <div class="row">
+                          <div *ngIf="havePracticeTypes" class="row">
                             <div class="input-field col s10 offset-s1">
                               <select
                                 materialize="material_select"
@@ -47,25 +48,6 @@
                               </div>
                             </div>
                           </div>
-
-                          <div class="row">
-                            <div class="input-field col s10 offset-s1">
-                              <label for="seq">Sequence Number (e.g., 1, 2,....)</label>
-                              <input
-                                [input-wake-up]="'seq'"
-                                [class.warning-background] = "applicationForm.controls.seq.errors && applicationForm.controls.seq.touched"
-                                id="seq"
-                                type="text"
-                                formControlName="seq">
-
-                              <div *ngIf="applicationForm.controls.seq.errors && applicationForm.controls.seq.touched">
-                                <small class="warning">
-                                  {{applicationForm.controls.seq.errors.error}}
-                                </small>
-                              </div>
-                            </div>
-                          </div>
-
                         </li>
                       </ul>
                     </div>
