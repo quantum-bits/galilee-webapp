@@ -1,0 +1,37 @@
+<div>
+    <h6>VERSE RANGE</h6>
+
+    <select #fromChapter materialize="material_select"
+            [value]="verseRange.fromChapter"
+            (change)="onFromChapter(fromChapter.value)">
+        <option *ngFor="let chapter of fromChapters"
+                [value]="chapter">{{chapter}}</option>
+    </select>
+
+    <select #fromVerse materialize="material_select"
+            [value]="verseRange.fromVerse"
+            (change)="onFromVerse(fromVerse.value)">
+        <option *ngFor="let verse of fromVerses"
+                [value]="verse">{{verse}}</option>
+    </select>
+
+    <span> to </span>
+
+    <select #toChapter materialize="material_select"
+            [value]="verseRange.toChapter"
+            (change)="onToChapter(toChapter.value)">
+        <option *ngFor="let chapter of toChapters"
+                [value]="chapter">{{chapter}}</option>
+    </select>
+
+    <select #toVerse materialize="material_select"
+            [value]="verseRange.toVerse"
+            (change)="onToVerse(toVerse.value)">
+        <option *ngFor="let verse of toVerses"
+                [value]="verse">{{verse}}</option>
+    </select>
+
+    <button (click)="deletePicker()">Remove Picker</button>
+
+    <p>{{verseRange.displayRef()}}</p>
+</div>

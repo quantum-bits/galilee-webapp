@@ -1,0 +1,23 @@
+<div>
+    <h6>PASSAGE PICKER</h6>
+
+    <select #book
+            materialize="material_select"
+            [materializeSelectOptions]="selectOptions"
+            [value]="passageRef.bibleBook.osisName"
+            (change)="onBook(book.value)">
+        <option *ngFor="let bibleBook of bibleInfo.bibleBooks"
+                [value]="bibleBook.osisName">{{bibleBook.displayName}}
+        </option>
+    </select>
+
+    <button (click)="addNewPicker()">Add Picker</button>
+
+    <p>{{passageRef.displayRef()}}</p>
+    <p>{{passageRef.osisRef(passageRef.bibleBook.osisName)}}</p>
+
+    <button (click)="donePicking()">Done Picking</button>
+
+    <div picker-anchor></div>
+
+</div>
