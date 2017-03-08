@@ -6,6 +6,8 @@ import {BibleInfoService, BibleBook} from '../bible-info/bible-info.service';
 import {PassageRef, VerseRange} from "./passage.model";
 
 import * as _ from "lodash";
+import {UpdateReadingsListComponent} from "../update-readings-list/update-readings-list.component";
+import {IReading} from "../../../shared/interfaces/reading.interface";
 
 @Directive({
   selector: '[picker-anchor]',
@@ -103,8 +105,11 @@ export class VerseRangeComponent implements OnInit {
 export class PassagePickerComponent implements OnInit {
   @ViewChild(PickerAnchorDirective) pickerAnchor: PickerAnchorDirective;
 
+  @Input() updaterComponent: any = null;
+
   @Input() passageRef: PassageRef = null;
-  @Output() refPicked: EventEmitter<PassageRef> = new EventEmitter();
+  @Input() readingsList: UpdateReadingsListComponent = null;
+  @Output() passagePicked: EventEmitter<PassageRef> = new EventEmitter();
 
   private verseRangeViewContainerRef: ViewContainerRef = null;
 
@@ -117,11 +122,13 @@ export class PassagePickerComponent implements OnInit {
       this.passageRef = new PassageRef(this.bibleInfo.defaultBook(), [new VerseRange()]);
     }
     this.addPickers(this.passageRef.verseRanges);
+    console.log("UPDATER", this.updaterComponent);
   }
 
   private donePicking() {
     console.log("Done Picking", this.passageRef.displayRef());
-    this.refPicked.emit(this.passageRef);
+    this.passagePicked.emit(this.passageRef);
+    // this.updaterComponent.addReading(this.passageRef);
   }
 
   private addPickers(verseRanges: Array<VerseRange>) {

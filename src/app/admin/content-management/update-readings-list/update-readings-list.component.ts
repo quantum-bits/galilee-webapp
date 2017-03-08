@@ -14,6 +14,7 @@ import {ApplicationFormData} from '../../../shared/interfaces/application-form-d
 
 import {ReadingService} from '../../../shared/services/reading.service';
 import {PracticeService} from "../../../shared/services/practice.service";
+import {PassageRef} from "../passage-picker/passage.model";
 
 @Component({
   selector: 'update-readings-list',
@@ -65,6 +66,13 @@ export class UpdateReadingsListComponent implements OnInit {
       )
   }
 
+  public addReading(passageRef: PassageRef) {
+    this.readingService.createReading2(42, passageRef.displayRef(), passageRef.osisRef(), 4)
+      .subscribe(
+        result => console.log(`Added ${passageRef.displayRef()}`),
+        err => console.error('Failed to add passage', err));
+  }
+
   launchNewPracticeModal(readingIndex: number) {
     this.readingIndex = readingIndex;
     this.applicationIndex = null;
@@ -112,7 +120,7 @@ export class UpdateReadingsListComponent implements OnInit {
   onDeleteReading(readingId: number) {
     this.readingService.deleteReading(readingId)
       .subscribe(
-        result=> {
+        result => {
           this.readingService.announceReadingsRefresh();
         },
         error => console.log('error on deleting reading: ', error)
@@ -122,7 +130,7 @@ export class UpdateReadingsListComponent implements OnInit {
   onDeleteApplication(applicationId: number) {
     this.applicationService.deleteApplication(applicationId)
       .subscribe(
-        result=>{
+        result => {
           this.readingService.announceReadingsRefresh();
         },
         error => console.log('error on deleting application: ', error)

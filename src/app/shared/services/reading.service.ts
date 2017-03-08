@@ -164,6 +164,15 @@ export class ReadingService {
     }).map(resp => resp.json());
   }
 
+  createReading2(seq, stdRef, osisRef, readingDayId): Observable<IReading> {
+    return this.authHttp.post('/api/readings', {
+      seq: seq,
+      stdRef: stdRef,
+      osisRef: osisRef,
+      readingDayId: readingDayId
+    }).map(resp => resp.json());
+  }
+
   readReading(readingId: number): Observable<IReading> {
     return this.authHttp
       .get(`/api/readings/${readingId}`)
