@@ -3,11 +3,10 @@ import {
   ComponentFactoryResolver, ReflectiveInjector, ViewChild, Directive, Output, EventEmitter, AfterViewInit
 } from '@angular/core';
 import {BibleInfoService, BibleBook} from '../bible-info/bible-info.service';
-import {PassageRef, VerseRange} from "./passage.model";
+import {PassageRef, VerseRange, PassageRefFactory} from "./passage.model";
+import {IReading} from "../../../shared/interfaces/reading.interface";
 
 import * as _ from "lodash";
-import {UpdateReadingsListComponent} from "../update-readings-list/update-readings-list.component";
-import {IReading} from "../../../shared/interfaces/reading.interface";
 
 @Directive({
   selector: '[picker-anchor]',
@@ -42,12 +41,12 @@ export class VerseRangeComponent implements OnInit {
     let lastChapter = verseCounts.length;
 
     this.fromChapters = _.range(1, lastChapter + 1);
-    this.fromVerses = _.range(1, verseCounts[this.verseRange.fromChapter - 1]);
+    this.fromVerses = _.range(1, verseCounts[this.verseRange.fromChapter - 1] + 1);
 
     this.toChapters = _.range(this.verseRange.fromChapter, lastChapter + 1);
     this.toVerses = _.range(
       this.verseRange.sameChapter() ? this.verseRange.fromVerse : 1,
-      verseCounts[this.verseRange.toChapter - 1]);
+      verseCounts[this.verseRange.toChapter - 1] + 1);
   }
 
   // User updated the 'from' chapter.
@@ -105,13 +104,11 @@ export class VerseRangeComponent implements OnInit {
 export class PassagePickerComponent implements OnInit {
   @ViewChild(PickerAnchorDirective) pickerAnchor: PickerAnchorDirective;
 
-  @Input() updaterComponent: any = null;
-
   @Input() passageRef: PassageRef = null;
-  @Input() readingsList: UpdateReadingsListComponent = null;
   @Output() passagePicked: EventEmitter<PassageRef> = new EventEmitter();
 
   private verseRangeViewContainerRef: ViewContainerRef = null;
+  private passageRefFactory: PassageRefFactory = null;
 
   constructor(private bibleInfo: BibleInfoService,
               private componentFactoryResolver: ComponentFactoryResolver) {
@@ -121,14 +118,19 @@ export class PassagePickerComponent implements OnInit {
     if (!this.passageRef) {
       this.passageRef = new PassageRef(this.bibleInfo.defaultBook(), [new VerseRange()]);
     }
+    this.passageRefFactory = new PassageRefFactory(this.bibleInfo);
     this.addPickers(this.passageRef.verseRanges);
-    console.log("UPDATER", this.updaterComponent);
   }
 
-  private donePicking() {
-    console.log("Done Picking", this.passageRef.displayRef());
+  editReadingPassage(reading: IReading) {
+    this.passageRef = this.passageRefFactory.create(reading.osisRef);
+    this.verseRangeViewContainerRef.clear();
+    this.addPickers(this.passageRef.verseRanges);
+  }
+
+  private onAddPassage() {
     this.passagePicked.emit(this.passageRef);
-    // this.updaterComponent.addReading(this.passageRef);
+    this.reset();
   }
 
   private addPickers(verseRanges: Array<VerseRange>) {
@@ -160,12 +162,15 @@ export class PassagePickerComponent implements OnInit {
     this.addPicker(newRange);
   }
 
-  // New book selected; retrieve details from BibleInfoService.
-  onBook(osisName: string) {
-    this.passageRef.bibleBook = this.bibleInfo.findBookByOsisName(osisName);
-
+  private reset() {
     this.passageRef.resetVerseRanges();
     this.verseRangeViewContainerRef.clear();
     this.addPickers(this.passageRef.verseRanges);
+  }
+
+  // New book selected; retrieve details from BibleInfoService.
+  onBook(osisName: string) {
+    this.passageRef.bibleBook = this.bibleInfo.findBookByOsisName(osisName);
+    this.reset();
   }
 }

@@ -1,4 +1,39 @@
-import {BibleBook} from "../bible-info/bible-info.service";
+import {BibleBook, BibleInfoService} from "../bible-info/bible-info.service";
+
+export class PassageRefFactory {
+
+  constructor(private bibleInfo: BibleInfoService) {
+  }
+
+  public create(osisRefs: string): PassageRef {
+    let bibleBook: BibleBook = null;
+    let verseRanges: Array<VerseRange> = [];
+
+    osisRefs.split(',').forEach(osisRef => {
+      let [osisFromRef, osisToRef] = osisRef.split('-');
+      let osisFrom = this.parseOsisRef(osisFromRef);
+      let osisTo = osisToRef ? this.parseOsisRef(osisToRef) : osisFrom;
+
+      if (!bibleBook) {
+        bibleBook = this.bibleInfo.findBookByOsisName(osisFrom.osisName);
+      }
+
+      verseRanges.push(new VerseRange(osisFrom.chapter, osisFrom.verse,
+        osisTo.chapter, osisTo.verse));
+    });
+
+    return new PassageRef(bibleBook, verseRanges);
+  }
+
+  private parseOsisRef(osisRef: string) {
+    let [_, osisName, chapter, verse] = osisRef.match(/([^.]+)\.(\d+)\.(\d+)/);
+    return {
+      osisName: osisName,
+      chapter: +chapter,
+      verse: +verse
+    };
+  }
+}
 
 export class PassageRef {
   constructor(public bibleBook: BibleBook,

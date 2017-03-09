@@ -9,9 +9,8 @@
             [calendarJournalEntries]="calendarReadings"
             (changeSelected)="daySelected($event)">
           </app-mini-calendar>
-          <passage-picker [updaterComponent]="zippyFlip"
-                          (passagePicked)="zippyFlip.addReading($event)"
-          >
+          <passage-picker #passagePicker
+                          (passagePicked)="readingsList.addReading($event)">
           </passage-picker>
         </div>
       </div>
@@ -30,9 +29,10 @@
     <div  class="col s12 m8 offset-m2 l8">
       <div class="row">
         <div class="col s12">
-          <update-readings-list #zippyFlip
+          <update-readings-list #readingsList
                                 [dateString]="dateString"
                                 [readingsData]="readingsData"
+                                (editReading)="passagePicker.editReadingPassage($event)"
                                 (launchAddPracticeForm)="onLaunchAddPracticeForm($event)">
           </update-readings-list>
         </div>

@@ -11,7 +11,6 @@ import {PassageRef} from "../passage-picker/passage.model";
   styleUrls: ['./update-reading-form.component.css']
 })
 export class UpdateReadingFormComponent implements OnInit {
-  @Input() readingDayId: number;// if new, then this comes in
   @Input() reading: IReading; // if update, then this comes in (and it contains the readingDayId)
   @Input() incrementer: number; // this is to force ngOnChanges to fire in the update-reading-form component
   @Output() submitSuccess = new EventEmitter();

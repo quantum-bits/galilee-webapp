@@ -10,7 +10,6 @@ import {Practice} from '../../../shared/models/practice.model';
 
 import {ApplicationService} from  '../../../shared/services/application.service';
 import {Application} from '../../../shared/interfaces/application.interface';
-import {ApplicationFormData} from '../../../shared/interfaces/application-form-data.interface';
 
 import {ReadingService} from '../../../shared/services/reading.service';
 import {PracticeService} from "../../../shared/services/practice.service";
@@ -27,6 +26,8 @@ export class UpdateReadingsListComponent implements OnInit {
   @Input() readingsData: ReadingDay;
   @Output() launchAddPracticeForm = new EventEmitter<number>();
 
+  @Output() editReading: EventEmitter<IReading> = new EventEmitter<IReading>();
+
   @ViewChild('displayReadingModal') modal: DisplayReadingModalComponent;
   @ViewChild('deleteReadingModal') modalDeleteReading: DeleteItemModalComponent;
   @ViewChild('deleteApplicationModal') modalDeleteApplication: DeleteItemModalComponent;
@@ -38,7 +39,6 @@ export class UpdateReadingsListComponent implements OnInit {
   private singleReading: IReading;
   private singleReadingStdRef: string = '';
   private singleApplicationTitle: string = '';
-  private readingID: number = null;
   private application: Application;
   private incrementer: number = 0;
 
@@ -66,10 +66,22 @@ export class UpdateReadingsListComponent implements OnInit {
       )
   }
 
-  public addReading(passageRef: PassageRef) {
-    this.readingService.createReading2(42, passageRef.displayRef(), passageRef.osisRef(), 4)
+  addReading(passageRef: PassageRef) {
+    let reading: IReading = {
+      id: null,
+      osisRef: passageRef.osisRef(),
+      readingDayId: this.readingsData.id,
+      seq: this.readingsData.readings.length + 1,
+      stdRef: passageRef.displayRef(),
+      text: null,
+      version: null
+    };
+    this.readingService.createReading(reading, this.readingsData)
       .subscribe(
-        result => console.log(`Added ${passageRef.displayRef()}`),
+        result => {
+          console.log(`Added ${passageRef.displayRef()}`);
+          this.readingService.announceReadingsRefresh();
+        },
         err => console.error('Failed to add passage', err));
   }
 
@@ -102,9 +114,10 @@ export class UpdateReadingsListComponent implements OnInit {
   }
 
   launchEditReadingModal(reading: IReading) {
-    this.incrementer++;
-    this.singleReading = reading;
-    this.modalUpdateReading.openModal();
+    this.editReading.emit(reading);
+    // this.incrementer++;
+    // this.singleReading = reading;
+    // this.modalUpdateReading.openModal();
   }
 
   displayDeleteReadingModal(reading: IReading) {

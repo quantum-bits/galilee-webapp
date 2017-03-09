@@ -66,11 +66,11 @@ export class ReadingService {
       .map(resp => resp.json());
   }
 
-  setCurrentVersion(version: Version){
+  setCurrentVersion(version: Version) {
     this.currentVersion = version;
   }
 
-  unSetCurrentVersion(){
+  unSetCurrentVersion() {
     this.currentVersion = null;
   }
 
@@ -105,7 +105,7 @@ export class ReadingService {
       }
     }
 
-    if (returnSavedReadings){
+    if (returnSavedReadings) {
       console.log('fetched readings from saved copy');
       var promise = Promise.resolve(this.readingsData);
       return Observable.fromPromise(promise);
@@ -161,15 +161,6 @@ export class ReadingService {
       stdRef: reading.stdRef,
       osisRef: reading.osisRef,
       readingDayId: readingDay.id
-    }).map(resp => resp.json());
-  }
-
-  createReading2(seq, stdRef, osisRef, readingDayId): Observable<IReading> {
-    return this.authHttp.post('/api/readings', {
-      seq: seq,
-      stdRef: stdRef,
-      osisRef: osisRef,
-      readingDayId: readingDayId
     }).map(resp => resp.json());
   }
 
