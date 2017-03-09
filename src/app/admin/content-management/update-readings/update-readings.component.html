@@ -9,6 +9,10 @@
             [calendarJournalEntries]="calendarReadings"
             (changeSelected)="daySelected($event)">
           </app-mini-calendar>
+          <passage-picker [updaterComponent]="zippyFlip"
+                          (passagePicked)="zippyFlip.addReading($event)"
+          >
+          </passage-picker>
         </div>
       </div>
     </div>
@@ -23,20 +27,20 @@
         </div>
       </div>
     </div>
-    <div *ngIf="dateString || readingsData" class="col s12 m8 offset-m2 l8">
+    <div  class="col s12 m8 offset-m2 l8">
       <div class="row">
         <div class="col s12">
-          <update-readings-list
-            [dateString] = "dateString"
-            [readingsData] = "readingsData"
-            (launchAddPracticeForm) = "onLaunchAddPracticeForm($event)">
+          <update-readings-list #zippyFlip
+                                [dateString]="dateString"
+                                [readingsData]="readingsData"
+                                (launchAddPracticeForm)="onLaunchAddPracticeForm($event)">
           </update-readings-list>
         </div>
       </div>
       <div class="row">
         <div class="col s12">
           <app-update-questions-list
-            [readingDay] = "readingsData">
+            [readingDay]="readingsData">
           </app-update-questions-list>
         </div>
       </div>

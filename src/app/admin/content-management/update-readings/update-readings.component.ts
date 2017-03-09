@@ -1,11 +1,10 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-import { Subscription }   from 'rxjs/Subscription';
+import {Subscription}   from 'rxjs/Subscription';
 
 import * as moment from 'moment';
 
 import {IReading, ReadingDay} from '../../../shared/interfaces/reading.interface';
-import {Application} from '../../../shared/interfaces/application.interface';
 
 import {ReadingService} from '../../../shared/services/reading.service';
 import {ReadingDayService} from '../../../shared/services/reading-day.service';
@@ -29,28 +28,25 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
 
   private reading: IReading = null;
 
-  //private readingID: number;
-  //private application: Application;
-
   private dateStringCalendarInit = moment(new Date()).format('YYYY-MM-DD');
 
   subscription: Subscription;
 
-  constructor(
-    private readingService: ReadingService,
-    private readingDayService: ReadingDayService,
-    private route: ActivatedRoute,
-    private router: Router){
+  constructor(private readingService: ReadingService,
+              private readingDayService: ReadingDayService,
+              private route: ActivatedRoute,
+              private router: Router) {
     this.subscription = this.readingService.updateReadingsRefresh$.subscribe(
       message => {
         console.log('received instructions to refresh!');
-        if (this.dateString!==null){
+        if (this.dateString !== null) {
           this.reloadPageData(this.dateString);
         }
       });
   }
-    //},
-    //private practiceService: PracticeService) { }
+
+  //},
+  //private practiceService: PracticeService) { }
 
   ngOnInit() {
     this.readingService.getReadingMetadata()
@@ -72,7 +68,7 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
       );
   }
 
-  reloadPageData(dateString: string){
+  reloadPageData(dateString: string) {
     this.readingService.getReadingMetadata()
       .subscribe(
         calendarReadings => {
@@ -140,7 +136,7 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
         readings => {
           this.readingsData = readings;
           console.log('READINGS: ', this.readingsData);
-          if ('questions' in this.readingsData){
+          if ('questions' in this.readingsData) {
             this.questions = this.readingsData.questions;
           }
         },
@@ -150,9 +146,9 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
           this.readingsData = null;
           this.questions = null;
           /*
-          if 404 error, immediately create a new readingDay object
-          in the database, wait for the reply, and then set readingsData to the response;
-          then it will be ready for posting questions/readings, etc.
+           if 404 error, immediately create a new readingDay object
+           in the database, wait for the reply, and then set readingsData to the response;
+           then it will be ready for posting questions/readings, etc.
            */
 
 

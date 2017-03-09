@@ -1,7 +1,8 @@
-import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 import {IReading} from '../../../shared/interfaces/reading.interface';
+import {PassageRef} from "../passage-picker/passage.model";
 
 
 @Component({
@@ -10,7 +11,6 @@ import {IReading} from '../../../shared/interfaces/reading.interface';
   styleUrls: ['./update-reading-form.component.css']
 })
 export class UpdateReadingFormComponent implements OnInit {
-
   @Input() readingDayId: number;// if new, then this comes in
   @Input() reading: IReading; // if update, then this comes in (and it contains the readingDayId)
   @Input() incrementer: number; // this is to force ngOnChanges to fire in the update-reading-form component
@@ -29,7 +29,10 @@ export class UpdateReadingFormComponent implements OnInit {
   private isNewReading: boolean;
   private readingFormData: IReading;
 
-  constructor(private formBuilder: FormBuilder) { }
+  private passageRef: PassageRef;
+
+  constructor(private formBuilder: FormBuilder) {
+  }
 
   ngOnInit() {
   }
@@ -39,8 +42,8 @@ export class UpdateReadingFormComponent implements OnInit {
     this.initializeForm();
   }
 
-  initializeForm(){
-    if ((this.reading === null)||(this.reading === undefined)){
+  initializeForm() {
+    if ((this.reading === null) || (this.reading === undefined)) {
       this.isNewReading = true;
       this.readingFormData = {
         id: null,
@@ -56,12 +59,12 @@ export class UpdateReadingFormComponent implements OnInit {
       this.readingFormData = this.reading;
       console.log('editing reading; readingFormData: ', this.readingFormData);
       /*{
-        readingDayId: this.reading.readingDayId,
-        osisRef: this.reading.osisRef,
-        stdRef: this.reading.stdRef,
-        seq: this.reading.seq
-      };
-      */
+       readingDayId: this.reading.readingDayId,
+       osisRef: this.reading.osisRef,
+       stdRef: this.reading.stdRef,
+       seq: this.reading.seq
+       };
+       */
     }
 
     this.readingForm = this.formBuilder.group({
@@ -81,12 +84,12 @@ export class UpdateReadingFormComponent implements OnInit {
     }
   }
 
-  onSubmit(){
+  onSubmit() {
     Object.assign(this.readingFormData, this.readingForm.value);
     this.submitSuccess.next({reading: this.readingFormData, isNewReading: this.isNewReading});
   }
 
-  onCancel(){
+  onCancel() {
     this.closeModal();
   }
 
@@ -97,9 +100,6 @@ export class UpdateReadingFormComponent implements OnInit {
   closeModal() {
     this.modalActions.emit({action: "modal", params: ['close']});
   }
-
-
-
 
 
 }

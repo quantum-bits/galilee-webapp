@@ -1,0 +1,43 @@
+<div class="row">
+  <select #fromChapter class="col s2 browser-default"
+          materialize="material_select"
+          [value]="verseRange.fromChapter"
+          (change)="onFromChapter(fromChapter.value)">
+    <option *ngFor="let chapter of fromChapters"
+            [value]="chapter">{{chapter}}
+    </option>
+  </select>
+
+  <select #fromVerse class="col s2 browser-default"
+          materialize="material_select"
+          [value]="verseRange.fromVerse"
+          (change)="onFromVerse(fromVerse.value)">
+    <option *ngFor="let verse of fromVerses"
+            [value]="verse">{{verse}}
+    </option>
+  </select>
+
+  <span class="col s1">to</span>
+
+  <select #toChapter class="col s2 browser-default"
+          materialize="material_select"
+          [value]="verseRange.toChapter"
+          (change)="onToChapter(toChapter.value)">
+    <option *ngFor="let chapter of toChapters"
+            [value]="chapter">{{chapter}}
+    </option>
+  </select>
+
+  <select #toVerse class="col s2 browser-default"
+          materialize="material_select"
+          [value]="verseRange.toVerse"
+          (change)="onToVerse(toVerse.value)">
+    <option *ngFor="let verse of toVerses"
+            [value]="verse">{{verse}}
+    </option>
+  </select>
+
+  <a class="btn col action-items right" (click)="deletePicker()">
+    <i class="material-icons">delete</i>
+  </a>
+</div>

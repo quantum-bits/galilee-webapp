@@ -10,7 +10,7 @@ import {Ng2PaginationModule} from 'ng2-pagination';
 import {MomentModule} from 'angular2-moment';
 import {DragulaModule} from 'ng2-dragula/ng2-dragula';
 import {FileUploadModule} from 'ng2-file-upload';
-import { QuillModule } from 'ngx-quill'
+import {QuillModule} from 'ngx-quill'
 
 import {EditUserComponent} from './user-management/edit-user/edit-user.component';
 
@@ -33,6 +33,11 @@ import {UpdateQuestionFormComponent} from './content-management/update-question-
 import {UpdatePracticeFormComponent} from './content-management/update-practice-form/update-practice-form.component';
 import {DisplayApplicationStepsComponent} from './content-management/display-application-steps/display-application-steps.component';
 import {DisplayReadingModalComponent} from './content-management/display-reading-modal/display-reading-modal.component';
+import {
+  PassagePickerComponent, VerseRangeComponent,
+  PickerAnchorDirective
+} from './content-management/passage-picker/passage-picker.component';
+import {BibleInfoService} from "./content-management/bible-info/bible-info.service";
 
 const routes: Routes = [
   {
@@ -77,13 +82,17 @@ const routes: Routes = [
     UpdateQuestionFormComponent,
     UpdatePracticeFormComponent,
     DisplayApplicationStepsComponent,
-    DisplayReadingModalComponent
+    DisplayReadingModalComponent,
+    PassagePickerComponent,
+    VerseRangeComponent,
+    PickerAnchorDirective
   ],
   exports: [
     EditUserComponent
   ],
   entryComponents: [
-    EditUserComponent
+    EditUserComponent,
+    VerseRangeComponent
   ],
   imports: [
     CommonModule,
@@ -99,6 +108,9 @@ const routes: Routes = [
     QuillModule,
     SharedModule
   ],
+  providers: [
+    BibleInfoService
+  ]
 })
 export class AdminModule {
 }
