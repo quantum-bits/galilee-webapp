@@ -1,6 +1,6 @@
 <ul class="collection with-header">
   <li class="collection-header">
-    <h5>{{addMode ? 'Add Reading' : 'Update Reading'}}</h5>
+    <h5>{{isAddMode ? 'Add Reading' : 'Update Reading'}}</h5>
   </li>
   <li class="collection-item">
     <div class="row">
@@ -14,7 +14,7 @@
         </option>
       </select>
 
-      <a class="btn col action-icons right" (click)="addNewPicker()">
+      <a class="btn col action-icons right" (click)="addNewVerseRange()">
         <i class="material-icons">add_box</i>
       </a>
     </div>
@@ -24,9 +24,9 @@
       <div class="col s12 center-align btn-space">
         <p>{{passageRef.displayRef()}}</p>
         <a class="btn waves-effect waves-light"
-           (click)="onUserAction()">{{addMode ? 'Add' : 'Update '}}</a>
-        <a *ngIf="!addMode" class="btn waves-effect waves-light"
-           (click)="onUserAction()">Cancel</a>
+           (click)="onAddOrUpdate()">{{isAddMode ? 'Add' : 'Update '}}</a>
+        <a *ngIf="!isAddMode" class="btn waves-effect waves-light"
+           (click)="onCancel()">Cancel</a>
       </div>
     </div>
   </li>

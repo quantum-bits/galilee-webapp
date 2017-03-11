@@ -5,6 +5,10 @@ export class PassageRefFactory {
   constructor(private bibleInfo: BibleInfoService) {
   }
 
+  public forOsisBook(osisName: string) {
+    return new PassageRef(this.bibleInfo.findBookByOsisName(osisName), [new VerseRange()]);
+  }
+
   public defaultPassage() {
     return new PassageRef(this.bibleInfo.defaultBook(), [new VerseRange()]);
   }

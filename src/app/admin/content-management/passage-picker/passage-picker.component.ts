@@ -18,13 +18,19 @@ export class PickerAnchorDirective {
 
 @Component({
   selector: 'verse-range',
-  templateUrl: 'verse-range.html'
+  templateUrl: './verse-range.html'
 })
 export class VerseRangeComponent implements OnInit {
   @Input() public bibleBook: BibleBook = null;
   @Input() public verseRange: VerseRange = null;
+
+  // Function that will delete this verse range component from the passage picker.
+  // It is set up by the passage picker because that's the component that knows
+  // how to remove a verse range component from the application. We expose it here
+  // so that we can bind to it from the view.
   public deletePicker = null;
 
+  // Arrays of values used by the select controls.
   private fromChapters: Array<number> = [];
   private fromVerses: Array<number> = [];
   private toChapters: Array<number> = [];
@@ -34,8 +40,9 @@ export class VerseRangeComponent implements OnInit {
     this.updateDropdowns();
   }
 
-  // Update the dropdown content. No manipulation of the selected
-  // chapters or verses.
+  // Update the dropdown content. Ensure that the "to" reference
+  // (both chapter and verse) is always at or after the "from."
+  // No manipulation of the selected chapters or verses.
   updateDropdowns() {
     let verseCounts = this.bibleBook.verseCounts;
     let lastChapter = verseCounts.length;
@@ -99,18 +106,26 @@ export class VerseRangeComponent implements OnInit {
 
 @Component({
   selector: 'passage-picker',
-  templateUrl: 'passage-picker.html'
+  templateUrl: './passage-picker.html'
 })
 export class PassagePickerComponent implements OnInit {
+  // Each verse range component is attached as a sibling of this view child.
   @ViewChild(PickerAnchorDirective) pickerAnchor: PickerAnchorDirective;
 
+  // Bound in template if we are to edit an existing passage reference.
   @Input() passageRef: PassageRef = null;
+
+  // Emit information when passage is added or updated.
   @Output() passageAdded: EventEmitter<PassageRef> = new EventEmitter();
   @Output() passageUpdated: EventEmitter<IReading> = new EventEmitter();
 
+  // Container for all verse range component.
   private verseRangeViewContainerRef: ViewContainerRef = null;
+  // Factory object that constucts passage references.
   private passageRefFactory: PassageRefFactory = null;
-  private addMode = true;
+  // Are we in add (vs. update) mode?
+  private isAddMode = true;
+  // Contains the reading being updated when in update mode.
   private currentReading: IReading = null;
 
   constructor(private bibleInfo: BibleInfoService,
@@ -119,40 +134,60 @@ export class PassagePickerComponent implements OnInit {
 
   ngOnInit() {
     this.passageRefFactory = new PassageRefFactory(this.bibleInfo);
-    if (!this.passageRef) {
-      this.passageRef = this.passageRefFactory.defaultPassage();
-    }
-    this.addPickers(this.passageRef.verseRanges);
+    this.verseRangeViewContainerRef = this.pickerAnchor.viewContainerRef;
+    this.configForPassage(this.passageRef);
   }
 
+  // Set up the component to work with a given passage. Sets the passage reference,
+  // clears any exsiting verse range pickers, and constructs a new set.
+  private configForPassage(passageRef?: PassageRef) {
+    if (!passageRef) {
+      // No passageRef supplied in template; create a default one.
+      passageRef = this.passageRefFactory.defaultPassage();
+    }
+    this.passageRef = passageRef;
+    this.verseRangeViewContainerRef.clear();
+    this.passageRef.verseRanges.forEach(range => this.appendVerseRange(range));
+  }
+
+  // Enter "update" mode for a given reading.
   editReadingPassage(reading: IReading) {
     this.currentReading = reading;
-    this.addMode = false;
-    this.passageRef = this.passageRefFactory.fromOsisRefs(reading.osisRef);
-    this.verseRangeViewContainerRef.clear();
-    this.addPickers(this.passageRef.verseRanges);
+    this.isAddMode = false;
+    this.configForPassage(this.passageRefFactory.fromOsisRefs(reading.osisRef));
   }
 
-  private onUserAction() {
-    if (this.addMode) {
+  // User chose a new book. Reset the picker to the first chapter/verse
+  // of the selected book.
+  onBook(osisName: string) {
+    this.configForPassage(this.passageRefFactory.forOsisBook(osisName));
+  }
+
+  // Respond to the add/update button.
+  private onAddOrUpdate() {
+    if (this.isAddMode) {
+      // Add a new passage.
       this.passageAdded.emit(this.passageRef);
     } else {
+      // Update an existing passage.
       this.currentReading.osisRef = this.passageRef.osisRef();
       this.currentReading.stdRef = this.passageRef.displayRef();
       this.passageUpdated.emit(this.currentReading);
+      this.isAddMode = true;
     }
-    this.reset();
+    // After emitting event, configure for the default passage.
+    this.configForPassage(null);
   }
 
-  private addPickers(verseRanges: Array<VerseRange>) {
-    verseRanges.forEach(range => this.addPicker(range));
+  // Respond to the cancel button.
+  private onCancel() {
+    this.configForPassage(null);
   }
 
-  private addPicker(verseRange: VerseRange) {
+  // Append a verse range component for the given VerseRange object.
+  private appendVerseRange(verseRange: VerseRange) {
     let componentFactory: ComponentFactory<VerseRangeComponent> =
       this.componentFactoryResolver.resolveComponentFactory(VerseRangeComponent);
-
-    this.verseRangeViewContainerRef = this.pickerAnchor.viewContainerRef;
 
     let componentRef: ComponentRef<VerseRangeComponent> =
       this.verseRangeViewContainerRef.createComponent(componentFactory);
@@ -167,22 +202,11 @@ export class PassagePickerComponent implements OnInit {
     };
   }
 
-  private addNewPicker() {
+  // Insert a new verse range component.
+  private addNewVerseRange() {
     const newRange = new VerseRange();
     this.passageRef.appendRange(newRange);
-    this.addPicker(newRange);
+    this.appendVerseRange(newRange);
   }
 
-  private reset() {
-    this.passageRef = this.passageRefFactory.defaultPassage();
-    this.verseRangeViewContainerRef.clear();
-    this.addMode = true;
-    this.addPickers(this.passageRef.verseRanges);
-  }
-
-  // New book selected; retrieve details from BibleInfoService.
-  onBook(osisName: string) {
-    this.passageRef.bibleBook = this.bibleInfo.findBookByOsisName(osisName);
-    this.reset();
-  }
 }
