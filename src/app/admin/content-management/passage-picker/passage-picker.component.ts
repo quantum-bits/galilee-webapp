@@ -1,6 +1,6 @@
 import {
   Component, Input, OnInit, ComponentRef, ComponentFactory, ViewContainerRef,
-  ComponentFactoryResolver, ReflectiveInjector, ViewChild, Directive, Output, EventEmitter, AfterViewInit
+  ComponentFactoryResolver, ViewChild, Directive, Output, EventEmitter
 } from '@angular/core';
 import {BibleInfoService, BibleBook} from '../bible-info/bible-info.service';
 import {PassageRef, VerseRange, PassageRefFactory} from "./passage.model";
@@ -181,6 +181,7 @@ export class PassagePickerComponent implements OnInit {
 
   // Respond to the cancel button.
   private onCancel() {
+    this.isAddMode = true;
     this.configForPassage(null);
   }
 
