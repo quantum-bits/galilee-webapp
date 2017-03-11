@@ -10,7 +10,8 @@
             (changeSelected)="daySelected($event)">
           </app-mini-calendar>
           <passage-picker #passagePicker
-                          (passagePicked)="readingsList.addReading($event)">
+                          (passageAdded)="readingsList.addReading($event)"
+                          (passageUpdated)="readingsList.updateReading($event)">
           </passage-picker>
         </div>
       </div>

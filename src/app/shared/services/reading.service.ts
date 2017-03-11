@@ -170,7 +170,7 @@ export class ReadingService {
       .map(resp => resp.json());
   }
 
-  updateReading(readingId: number, reading: IReading, readingDay: ReadingDay): Observable<IReading> {
+  updateReading(readingId: number, reading: IReading): Observable<IReading> {
     return this.authHttp
       .patch(`/api/readings/${readingId}`, {
         seq: reading.seq,

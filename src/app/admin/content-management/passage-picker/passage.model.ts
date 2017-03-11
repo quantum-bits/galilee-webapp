@@ -5,7 +5,11 @@ export class PassageRefFactory {
   constructor(private bibleInfo: BibleInfoService) {
   }
 
-  public create(osisRefs: string): PassageRef {
+  public defaultPassage() {
+    return new PassageRef(this.bibleInfo.defaultBook(), [new VerseRange()]);
+  }
+
+  public fromOsisRefs(osisRefs: string): PassageRef {
     let bibleBook: BibleBook = null;
     let verseRanges: Array<VerseRange> = [];
 
@@ -38,10 +42,6 @@ export class PassageRefFactory {
 export class PassageRef {
   constructor(public bibleBook: BibleBook,
               public verseRanges: Array<VerseRange>) {
-  }
-
-  resetVerseRanges() {
-    this.verseRanges = [new VerseRange()];
   }
 
   appendRange(newRange: VerseRange) {

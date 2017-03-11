@@ -1,7 +1,6 @@
 import {Component, OnInit, Input, Output, EventEmitter, ViewChild} from '@angular/core';
 
 import {UpdatePracticeFormComponent} from '../update-practice-form/update-practice-form.component';
-import {UpdateReadingFormComponent} from '../update-reading-form/update-reading-form.component';
 
 import {DisplayReadingModalComponent} from '../display-reading-modal/display-reading-modal.component';
 import {DeleteItemModalComponent} from '../../../shared/components/delete-item-modal/delete-item-modal.component';
@@ -32,7 +31,6 @@ export class UpdateReadingsListComponent implements OnInit {
   @ViewChild('deleteReadingModal') modalDeleteReading: DeleteItemModalComponent;
   @ViewChild('deleteApplicationModal') modalDeleteApplication: DeleteItemModalComponent;
   @ViewChild('updateApplicationModal') modalUpdateApplication: UpdatePracticeFormComponent;
-  @ViewChild('updateReadingModal') modalUpdateReading: UpdateReadingFormComponent;
 
   private allPractices: Practice[];
 
@@ -85,6 +83,16 @@ export class UpdateReadingsListComponent implements OnInit {
         err => console.error('Failed to add passage', err));
   }
 
+  updateReading(reading: IReading) {
+    this.readingService.updateReading(reading.id, reading)
+      .subscribe(
+        result => {
+          console.log(`Added ${reading.stdRef}`);
+          this.readingService.announceReadingsRefresh();
+        },
+        err => console.error('Failed to update passage', err));
+  }
+
   launchNewPracticeModal(readingIndex: number) {
     this.readingIndex = readingIndex;
     this.applicationIndex = null;
@@ -107,17 +115,8 @@ export class UpdateReadingsListComponent implements OnInit {
     this.modal.openModal();
   }
 
-  launchNewReadingModal() {
-    this.incrementer++;
-    this.singleReading = null;
-    this.modalUpdateReading.openModal();
-  }
-
   launchEditReadingModal(reading: IReading) {
     this.editReading.emit(reading);
-    // this.incrementer++;
-    // this.singleReading = reading;
-    // this.modalUpdateReading.openModal();
   }
 
   displayDeleteReadingModal(reading: IReading) {
@@ -148,36 +147,6 @@ export class UpdateReadingsListComponent implements OnInit {
         },
         error => console.log('error on deleting application: ', error)
       );
-  }
-
-  onAddReading(readingInfo: {reading: IReading, isNewReading: boolean}) {
-    if (readingInfo.isNewReading) {
-      this.readingService.createReading(readingInfo.reading, this.readingsData)
-        .subscribe(
-          result => {
-            console.log('reading created!', result);
-            this.readingService.announceReadingsRefresh();
-          },
-          error => {
-            console.log('error trying to save reading: ', error);
-            //TODO: do something...?
-          }
-        );
-    } else {
-      this.readingService.updateReading(readingInfo.reading.id, readingInfo.reading, this.readingsData)
-        .subscribe(
-          result => {
-            console.log('reading updated!', result);
-            this.readingService.announceReadingsRefresh();
-          },
-          error => {
-            console.log('error trying to update reading: ', error);
-            //TODO: do something...?
-          }
-        );
-
-    }
-    this.modalUpdateReading.closeModal();
   }
 
 }

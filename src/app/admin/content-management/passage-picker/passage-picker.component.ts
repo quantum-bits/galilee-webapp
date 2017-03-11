@@ -105,31 +105,42 @@ export class PassagePickerComponent implements OnInit {
   @ViewChild(PickerAnchorDirective) pickerAnchor: PickerAnchorDirective;
 
   @Input() passageRef: PassageRef = null;
-  @Output() passagePicked: EventEmitter<PassageRef> = new EventEmitter();
+  @Output() passageAdded: EventEmitter<PassageRef> = new EventEmitter();
+  @Output() passageUpdated: EventEmitter<IReading> = new EventEmitter();
 
   private verseRangeViewContainerRef: ViewContainerRef = null;
   private passageRefFactory: PassageRefFactory = null;
+  private addMode = true;
+  private currentReading: IReading = null;
 
   constructor(private bibleInfo: BibleInfoService,
               private componentFactoryResolver: ComponentFactoryResolver) {
   }
 
   ngOnInit() {
-    if (!this.passageRef) {
-      this.passageRef = new PassageRef(this.bibleInfo.defaultBook(), [new VerseRange()]);
-    }
     this.passageRefFactory = new PassageRefFactory(this.bibleInfo);
+    if (!this.passageRef) {
+      this.passageRef = this.passageRefFactory.defaultPassage();
+    }
     this.addPickers(this.passageRef.verseRanges);
   }
 
   editReadingPassage(reading: IReading) {
-    this.passageRef = this.passageRefFactory.create(reading.osisRef);
+    this.currentReading = reading;
+    this.addMode = false;
+    this.passageRef = this.passageRefFactory.fromOsisRefs(reading.osisRef);
     this.verseRangeViewContainerRef.clear();
     this.addPickers(this.passageRef.verseRanges);
   }
 
-  private onAddPassage() {
-    this.passagePicked.emit(this.passageRef);
+  private onUserAction() {
+    if (this.addMode) {
+      this.passageAdded.emit(this.passageRef);
+    } else {
+      this.currentReading.osisRef = this.passageRef.osisRef();
+      this.currentReading.stdRef = this.passageRef.displayRef();
+      this.passageUpdated.emit(this.currentReading);
+    }
     this.reset();
   }
 
@@ -163,8 +174,9 @@ export class PassagePickerComponent implements OnInit {
   }
 
   private reset() {
-    this.passageRef.resetVerseRanges();
+    this.passageRef = this.passageRefFactory.defaultPassage();
     this.verseRangeViewContainerRef.clear();
+    this.addMode = true;
     this.addPickers(this.passageRef.verseRanges);
   }
 

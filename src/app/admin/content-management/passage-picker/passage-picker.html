@@ -1,6 +1,6 @@
 <ul class="collection with-header">
   <li class="collection-header">
-    <h5>Add Reading</h5>
+    <h5>{{addMode ? 'Add Reading' : 'Update Reading'}}</h5>
   </li>
   <li class="collection-item">
     <div class="row">
@@ -24,10 +24,10 @@
       <div class="col s12 center-align btn-space">
         <p>{{passageRef.displayRef()}}</p>
         <a class="btn waves-effect waves-light"
-           (click)="onAddPassage()">Add Reading</a>
+           (click)="onUserAction()">{{addMode ? 'Add' : 'Update '}}</a>
+        <a *ngIf="!addMode" class="btn waves-effect waves-light"
+           (click)="onUserAction()">Cancel</a>
       </div>
     </div>
   </li>
 </ul>
-
-

@@ -28,7 +28,6 @@ import {ManageReadingComponent} from './content-management/manage-reading/manage
 import {UpdateReadingsComponent} from './content-management/update-readings/update-readings.component';
 import {UpdateReadingsListComponent} from './content-management/update-readings-list/update-readings-list.component';
 import {UpdateQuestionsListComponent} from './content-management/update-questions-list/update-questions-list.component';
-import {UpdateReadingFormComponent} from './content-management/update-reading-form/update-reading-form.component';
 import {UpdateQuestionFormComponent} from './content-management/update-question-form/update-question-form.component';
 import {UpdatePracticeFormComponent} from './content-management/update-practice-form/update-practice-form.component';
 import {DisplayApplicationStepsComponent} from './content-management/display-application-steps/display-application-steps.component';
@@ -78,7 +77,6 @@ const routes: Routes = [
     UpdateReadingsComponent,
     UpdateReadingsListComponent,
     UpdateQuestionsListComponent,
-    UpdateReadingFormComponent,
     UpdateQuestionFormComponent,
     UpdatePracticeFormComponent,
     DisplayApplicationStepsComponent,
