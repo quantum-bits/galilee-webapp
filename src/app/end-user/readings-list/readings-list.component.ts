@@ -24,8 +24,8 @@ export class ReadingsListComponent implements OnInit {
     console.log('inside readings-list oninit');
   }
 
-  goToReadings() {
-    this.openReadings.emit()
+  goToReadings(readingIndex: number) {
+    this.openReadings.emit(readingIndex)
   }
 
 }
