@@ -1,7 +1,13 @@
 <div *ngIf="practiceData">
   <div class="card ">
     <div class="card-title-bar">
-      <span class="card-title">{{practiceData.practice.title}}</span>
+      <span class="card-title">{{practiceData.practice.title}}
+        <a href="https://www.biblegateway.com/resources/scripture-engagement/" target="_blank">
+          <i
+            class="white-text right material-icons "
+          >help_outline</i>
+        </a>
+      </span>
     </div>
     <div class="card-content">
       <span class="card-title">Summary</span>
@@ -26,19 +32,10 @@
 
       <br>
 
-
-      <div class="card-action">
-        <div class="right">
-          <a href="https://www.biblegateway.com/resources/scripture-engagement/" target="_blank">About {{practiceData.practice.title}}
-          </a>
-        </div>
+      <div class="center">
+        <a class="waves-effect waves-light btn" (click)="closeSummary()"> Start </a>
       </div>
+
     </div>
   </div>
-</div>
-
-<div class="right">
-  <!-- href="javascript:void(0)" included as a hack so the link has expected behaviour when hovered over -->
-  <a href="javascript:void(0)" class="grey-text text-darken-2" (click)="closeSummary()">
-    Preparation<i class="material-icons lr-arrow">navigate_next</i></a>
 </div>

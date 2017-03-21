@@ -1,15 +1,6 @@
 <div *ngIf="displaySummary && practiceData">
   <div class="container">
     <div class="row">
-      <div class="col s12 m6 offset-m3 l6 offset-l3 back-link">
-        <a class="grey-text text-darken-2"
-           [routerLink]="['/end-user/readings', dateString, readingIndex]">
-          <i class="material-icons lr-arrow">navigate_before</i>
-          Back to Scripture Engagement
-        </a>
-      </div>
-    </div>
-    <div class="row">
       <div class="col s12 m6 offset-m3 l6 offset-l3">
         <app-practice-summary
           [practiceData] = "practiceData"
@@ -21,11 +12,6 @@
         </app-practice-summary>
       </div>
     </div>
-  </div>
-</div>
-
-<div *ngIf="displayPreparation && practiceData">
-  <div class="container">
     <div class="row">
       <div class="col s12 m6 offset-m3 l6 offset-l3 back-link">
         <a class="grey-text text-darken-2"
@@ -35,6 +21,11 @@
         </a>
       </div>
     </div>
+  </div>
+</div>
+
+<div *ngIf="displayPreparation && practiceData">
+  <div class="container">
     <div class="row">
       <div class="col s12 m6 offset-m3 l6 offset-l3">
         <app-practice-preparation
@@ -44,6 +35,15 @@
           [practiceIndex] = "practiceIndex"
         >
         </app-practice-preparation>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12 m6 offset-m3 l6 offset-l3 back-link">
+        <a class="grey-text text-darken-2"
+           [routerLink]="['/end-user/readings', dateString, readingIndex]">
+          <i class="material-icons lr-arrow">navigate_before</i>
+          Back to Scripture Engagement
+        </a>
       </div>
     </div>
   </div>
