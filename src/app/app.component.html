@@ -41,6 +41,7 @@ http://materializecss.com/footer.html
             </a>
           </li>
           -->
+          <!--
           <li>
             <a materialize="dropdown"
                data-beloworigin="true"
@@ -51,6 +52,7 @@ http://materializecss.com/footer.html
               <i class="material-icons right">arrow_drop_down</i>
             </a>
           </li>
+          -->
 
           <li [hidden] = "!currentUserIsAdmin">
             <a materialize="dropdown"
@@ -186,11 +188,42 @@ http://materializecss.com/footer.html
 <footer class="page-footer">
   <div class="container">
     <div class="row">
-      <div class="col l6 s12">
+      <div class="col l7 m12 s12">
         <h5 class="white-text">Taylor University Center for Scripture Engagement</h5>
         <p class="grey-text text-lighten-4">Engage scripture, engage God</p>
       </div>
-      <div class="col l4 offset-l2 s12">
+      <div class="col l2 m6 s12">
+        <h5 class="white-text">About</h5>
+        <ul>
+          <li>
+            <a
+              [routerLink]="['/end-user/info-galilee']"
+              class="white-text link-underline"
+            >Galilee</a>
+          </li>
+          <li>
+            <a
+              [routerLink]="['/end-user/info-rcl']"
+              class="white-text link-underline"
+            >Reading Plan</a>
+          </li>
+        </ul>
+      </div>
+<!--
+      <li>
+        <a materialize="dropdown"
+           data-beloworigin="true"
+           data-alignment="right"
+           class='dropdown-button'
+           data-activates='resourcesDropdownMenu'>
+          About
+          <i class="material-icons right">arrow_drop_down</i>
+        </a>
+      </li>
+-->
+
+
+      <div class="col l3 m6 s12">
         <h5 class="white-text">More Information</h5>
         <ul>
           <li>
@@ -244,12 +277,13 @@ http://materializecss.com/footer.html
   <li><a href="#!">Other...?</a></li>
 </ul>
 
-<!-- Dropdown Structure -->
+<!-- Dropdown Structure
 <ul id='resourcesDropdownMenu' class='dropdown-content'>
   <li><a [routerLink]="['/end-user/info-galilee']">Galilee</a></li>
   <li class="divider"></li>
   <li><a [routerLink]="['/end-user/info-rcl']">Reading Plan</a></li>
 </ul>
+-->
 
 <!-- Dropdown Structure -->
 <ul id='practicesDropdownMenu' class='dropdown-content'>

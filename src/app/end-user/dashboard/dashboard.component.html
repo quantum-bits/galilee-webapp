@@ -41,7 +41,6 @@
       </div>
       <div class="col s12 m6 l6 offset-l1">
         <app-question-list
-          [includeLinkToJournal] = true
           [questions] = "readingsData.questions"
           [dateString] = "convertToDateString(RCLDate)"
           (openJournal) = "openJournal()"

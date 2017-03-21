@@ -120,7 +120,6 @@
 
       <div *ngIf="questions" class="col s12 m8 offset-m2 l3">
         <app-question-list
-          [includeLinkToJournal]=false
           [questions]="questions"
           [dateString]="journalEntryData.date"
         >

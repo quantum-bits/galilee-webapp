@@ -11,7 +11,6 @@ import * as moment from 'moment';
 })
 export class QuestionListComponent implements OnInit, OnChanges {
 
-  @Input() includeLinkToJournal: boolean;
   @Input() questions: string[];
   @Input() dateString: string;
   @Output() openJournal = new EventEmitter();

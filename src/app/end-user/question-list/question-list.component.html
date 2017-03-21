@@ -3,8 +3,4 @@
   <li *ngFor="let question of questions" class="collection-item">
       <span class="title">{{question.text}}</span>
   </li>
-  <li *ngIf="includeLinkToJournal && currentUserLoggedIn" class="collection-item right">
-    <a (click)="goToJournal()" class="waves-effect waves-light btn">Open Journal</a>
-  </li>
-
 </ul>
