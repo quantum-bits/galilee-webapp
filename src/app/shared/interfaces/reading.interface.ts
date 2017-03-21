@@ -9,7 +9,7 @@ export interface IReading {
   seq: number;
   stdRef: string;
   text: string;
-  applications?: any;
+  directions?: any;
   version: Version;
 }
 

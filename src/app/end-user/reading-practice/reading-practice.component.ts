@@ -94,9 +94,9 @@ export class ReadingPracticeComponent implements OnInit, OnDestroy {
           // the page (or an error message)
           if (this.practiceExists(this.readingsData, this.readingIndex, this.practiceIndex)) {
             if (!this.displayStep) {
-              this.practiceData = this.readingsData.readings[this.readingIndex].applications[this.practiceIndex];
+              this.practiceData = this.readingsData.readings[this.readingIndex].directions[this.practiceIndex];
             } else {
-              let pD = this.readingsData.readings[this.readingIndex].applications[this.practiceIndex];
+              let pD = this.readingsData.readings[this.readingIndex].directions[this.practiceIndex];
               if (this.stepIndex >= 0 && this.stepIndex < pD.steps.length) {
                 // good to go....
                 this.practiceData = pD;
@@ -123,7 +123,7 @@ export class ReadingPracticeComponent implements OnInit, OnDestroy {
     // checks if the requested reading/practice exists in readingsData
     if (readingIndex >= this.readingsData.readings.length) {
       return false;
-    } else if (practiceIndex >= this.readingsData.readings[readingIndex].applications.length) {
+    } else if (practiceIndex >= this.readingsData.readings[readingIndex].directions.length) {
       return false;
     } else {
       return true;

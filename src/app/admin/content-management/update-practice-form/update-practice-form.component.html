@@ -4,20 +4,20 @@
      [materializeActions]="modalActions">
   <div class="modal-content">
 
-    <div *ngIf="applicationForm">
+    <div *ngIf="directionForm">
 
       <div class="container">
 
-        <form [formGroup]="applicationForm" novalidate (ngSubmit)="onSubmit()">
+        <form [formGroup]="directionForm" novalidate (ngSubmit)="onSubmit()">
 
           <div class="row">
             <div class="col s12 ">
               <div class="card">
                 <div class="card-content">
-                  <span *ngIf="isNewApplication" class="card-title">
+                  <span *ngIf="isNewDirection" class="card-title">
                     Add New Practice and Steps
                   </span>
-                  <span *ngIf="!isNewApplication" class="card-title">
+                  <span *ngIf="!isNewDirection" class="card-title">
                     Update Practice and/or Steps
                   </span>
                   <div *ngIf="readingStdRef">
@@ -35,13 +35,13 @@
                                 [materializeSelectOptions]="selectOptions"
                                 formControlName="practiceId"
                               >
-                                <option *ngIf="isNewApplication" value="" disabled selected>Choose a practice</option>
+                                <option *ngIf="isNewDirection" value="" disabled selected>Choose a practice</option>
                                 <option *ngFor="let practice of availablePractices"
                                         [value]="practice.id"
                                 >{{practice.title}}</option>
                               </select>
 
-                              <div *ngIf="applicationForm.controls.practiceId.errors && applicationForm.controls.practiceId.touched">
+                              <div *ngIf="directionForm.controls.practiceId.errors && directionForm.controls.practiceId.touched">
                                 <small class="warning">
                                   This field is required.
                                 </small>
@@ -61,12 +61,12 @@
 
                         <ul class="collection with-header">
                           <li class="collection-header"><span class="title">Step(s)</span></li>
-                          <li *ngFor="let step of applicationForm.controls.steps.controls; let i=index" class="collection-item">
+                          <li *ngFor="let step of directionForm.controls.steps.controls; let i=index" class="collection-item">
                             <!-- step header, show remove button when more than one address available -->
                             <div class="row">
                               <div class="input-field col s12">
                                 <span>Step {{i + 1}}</span>
-                                <a *ngIf="applicationForm.controls.steps.controls.length > 1"
+                                <a *ngIf="directionForm.controls.steps.controls.length > 1"
                                    href="javascript:void(0)"
                                    (click)="removeStep(i)"
                                    class="grey-text text-darken-2 right">
@@ -88,19 +88,8 @@
                                     (onContentChanged)="setStepDescription(i, $event)"
                                   >
                                   </quill-editor>
-                                  <!--
-                                  <textarea
-                                    class="materialize-textarea"
-                                    [input-wake-up]="'description'+i"
-                                    [textarea-autoresize]="'description'+i"
-                                    [class.warning-background]="applicationForm.controls.steps.controls[i].controls.description.errors && applicationForm.controls.steps.controls[i].controls.description.touched"
-                                    id="description{{i}}"
-                                    type="text"
-                                    formControlName="description">
-                                  </textarea>
-                                  -->
-                                <!--</div>-->
-                                <div *ngIf="applicationForm.controls.steps.controls[i].controls.description.errors && applicationForm.controls.steps.controls[i].controls.description.touched">                                <small class="warning">
+
+                                <div *ngIf="directionForm.controls.steps.controls[i].controls.description.errors && directionForm.controls.steps.controls[i].controls.description.touched">                                <small class="warning">
                                     This field is required.
                                   </small>
                                 </div>
@@ -118,38 +107,15 @@
 
                   </div>
                 </div>
-                  <!--
-                  <div class="row">
-                    <div class="input-field col s12">
-                      <i class="material-icons prefix">mode_edit</i>
-                      <label for="question">Question</label>
-                      <input
-                        [input-wake-up]="'question'"
-                        [class.warning-background] = "questionForm.controls.question.errors && questionForm.controls.question.touched"
-                        id="question"
-                        type="text"
-                        formControlName="question">
-                    </div>
-                    <div *ngIf="questionForm.controls.question.errors && questionForm.controls.question.touched">
-                      <small class="warning">
-                        This field is required.
-                      </small>
-                    </div>
-                  </div>
-                  -->
 
                 <div class="card-action">
                   <button
                     class="waves-effect waves-light btn"
                     type="submit"
-                    [class.disabled]="!applicationForm.valid"
-                    [disabled]="!applicationForm.valid"
+                    [class.disabled]="!directionForm.valid"
+                    [disabled]="!directionForm.valid"
                   >Submit
                   </button>
-
-                  <!--[class.disabled]="!applicationForm.valid"
-                    [disabled]="!applicationForm.valid"
-                    -->
 
                   <button
                     (click)="onCancel()"

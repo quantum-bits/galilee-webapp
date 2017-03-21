@@ -4,7 +4,7 @@
   (click)="toggleShowSteps()"
   class="grey-text text-darken-2">
   <i class="material-icons lr-arrow">remove</i>
-  {{application.practice.title}}
+  {{direction.practice.title}}
 </a>
 <a
   *ngIf="!showSteps"
@@ -12,7 +12,7 @@
   (click)="toggleShowSteps()"
   class="grey-text text-darken-2">
   <i class="material-icons lr-arrow">add</i>
-  {{application.practice.title}}
+  {{direction.practice.title}}
 </a>
 <span class="right">
   <a
@@ -23,13 +23,13 @@
   </a>
   <a
     href="javascript:void(0)"
-    (click)="displayEditApplicationModal()"
+    (click)="displayEditDirectionModal()"
     class="grey-text text-darken-2">
   <i class="material-icons lr-arrow">edit</i>
   </a>
 </span>
 <div *ngIf="showSteps">
-  <div *ngFor="let step of application.steps" class="step">
+  <div *ngFor="let step of direction.steps" class="step">
     <span>Step {{step.seq}}:
       <p [innerHTML]="step.description"></p>
     </span>

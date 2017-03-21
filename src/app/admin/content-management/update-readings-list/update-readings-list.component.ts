@@ -7,8 +7,8 @@ import {DeleteItemModalComponent} from '../../../shared/components/delete-item-m
 import {IReading, ReadingDay} from '../../../shared/interfaces/reading.interface';
 import {Practice} from '../../../shared/models/practice.model';
 
-import {ApplicationService} from  '../../../shared/services/application.service';
-import {Application} from '../../../shared/interfaces/application.interface';
+import {DirectionService} from  '../../../shared/services/direction.service';
+import {Direction} from '../../../shared/interfaces/direction.interface';
 
 import {ReadingService} from '../../../shared/services/reading.service';
 import {PracticeService} from "../../../shared/services/practice.service";
@@ -29,24 +29,24 @@ export class UpdateReadingsListComponent implements OnInit {
 
   @ViewChild('displayReadingModal') modal: DisplayReadingModalComponent;
   @ViewChild('deleteReadingModal') modalDeleteReading: DeleteItemModalComponent;
-  @ViewChild('deleteApplicationModal') modalDeleteApplication: DeleteItemModalComponent;
-  @ViewChild('updateApplicationModal') modalUpdateApplication: UpdatePracticeFormComponent;
+  @ViewChild('deleteDirectionModal') modalDeleteDirection: DeleteItemModalComponent;
+  @ViewChild('updateDirectionModal') modalUpdateDirection: UpdatePracticeFormComponent;
 
   private allPractices: Practice[];
 
   private singleReading: IReading;
   private singleReadingStdRef: string = '';
-  private singleApplicationTitle: string = '';
-  private application: Application;
+  private singleDirectionTitle: string = '';
+  private direction: Direction;
   private incrementer: number = 0;
 
   private readingIndex: number = null;
-  private applicationIndex: number = null;
-  private isNewApplication: boolean = true;
+  private directionIndex: number = null;
+  private isNewDirection: boolean = true;
 
 
   constructor(private readingService: ReadingService,
-              private applicationService: ApplicationService,
+              private directionService: DirectionService,
               private practiceService: PracticeService) {
   }
 
@@ -95,18 +95,18 @@ export class UpdateReadingsListComponent implements OnInit {
 
   launchNewPracticeModal(readingIndex: number) {
     this.readingIndex = readingIndex;
-    this.applicationIndex = null;
-    this.isNewApplication = true;
+    this.directionIndex = null;
+    this.isNewDirection = true;
     this.incrementer++;
-    this.modalUpdateApplication.openModal();
+    this.modalUpdateDirection.openModal();
   }
 
   launchEditPracticeModal(eventData) {
     this.readingIndex = eventData.readingIndex;
-    this.applicationIndex = eventData.applicationIndex;
-    this.isNewApplication = false;
+    this.directionIndex = eventData.directionIndex;
+    this.isNewDirection = false;
     this.incrementer++;
-    this.modalUpdateApplication.openModal();
+    this.modalUpdateDirection.openModal();
   }
 
   displayReading(i: number) {
@@ -124,9 +124,9 @@ export class UpdateReadingsListComponent implements OnInit {
     this.modalDeleteReading.openModal(reading.id);
   }
 
-  displayDeleteApplicationModal(application: Application) {
-    this.singleApplicationTitle = application.practice.title;
-    this.modalDeleteApplication.openModal(application.id);
+  displayDeleteDirectionModal(direction: Direction) {
+    this.singleDirectionTitle = direction.practice.title;
+    this.modalDeleteDirection.openModal(direction.id);
   }
 
   onDeleteReading(readingId: number) {
@@ -139,13 +139,13 @@ export class UpdateReadingsListComponent implements OnInit {
       );
   }
 
-  onDeleteApplication(applicationId: number) {
-    this.applicationService.deleteApplication(applicationId)
+  onDeleteDirection(directionId: number) {
+    this.directionService.deleteDirection(directionId)
       .subscribe(
         result => {
           this.readingService.announceReadingsRefresh();
         },
-        error => console.log('error on deleting application: ', error)
+        error => console.log('error on deleting direction: ', error)
       );
   }
 

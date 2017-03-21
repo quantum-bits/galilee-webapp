@@ -1,7 +1,7 @@
 import {IPractice} from './practice.interface';
 import {Step} from './step.interface';
 
-export interface Application {
+export interface Direction {
   id: number;
   seq: number;
   steps: Step[];

@@ -30,7 +30,7 @@ import {UpdateReadingsListComponent} from './content-management/update-readings-
 import {UpdateQuestionsListComponent} from './content-management/update-questions-list/update-questions-list.component';
 import {UpdateQuestionFormComponent} from './content-management/update-question-form/update-question-form.component';
 import {UpdatePracticeFormComponent} from './content-management/update-practice-form/update-practice-form.component';
-import {DisplayApplicationStepsComponent} from './content-management/display-application-steps/display-application-steps.component';
+import {DisplayDirectionStepsComponent} from './content-management/display-direction-steps/display-direction-steps.component';
 import {DisplayReadingModalComponent} from './content-management/display-reading-modal/display-reading-modal.component';
 import {
   PassagePickerComponent, VerseRangeComponent,
@@ -79,7 +79,7 @@ const routes: Routes = [
     UpdateQuestionsListComponent,
     UpdateQuestionFormComponent,
     UpdatePracticeFormComponent,
-    DisplayApplicationStepsComponent,
+    DisplayDirectionStepsComponent,
     DisplayReadingModalComponent,
     PassagePickerComponent,
     VerseRangeComponent,

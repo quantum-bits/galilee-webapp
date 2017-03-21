@@ -29,20 +29,20 @@
         <i class="material-icons lr-arrow">edit</i>
         </a>
       </span>
-      <ul *ngIf="reading.applications.length" class="collection">
-        <li *ngFor="let application of reading.applications; let aIndex=index" class="collection-item white">
-          <app-display-application-steps
+      <ul *ngIf="reading.directions.length" class="collection">
+        <li *ngFor="let direction of reading.directions; let aIndex=index" class="collection-item white">
+          <app-display-direction-steps
             [readingIndex] = "rIndex"
-            [applicationIndex] = "aIndex"
-            [application] = "application"
-            (deleteApplication)="displayDeleteApplicationModal($event)"
-            (editApplication)="launchEditPracticeModal($event)">
-          </app-display-application-steps>
+            [directionIndex] = "aIndex"
+            [direction]= "direction"
+            (deleteDirection)="displayDeleteDirectionModal($event)"
+            (editDirection)="launchEditPracticeModal($event)">
+          </app-display-direction-steps>
         </li>
 
       </ul>
 
-      <div *ngIf="!reading.applications.length">
+      <div *ngIf="!reading.directions.length">
         <p></p>
       </div>
 
@@ -61,12 +61,12 @@
 </div>
 
 <update-practice-form
-  #updateApplicationModal
+  #updateDirectionModal
   [incrementer] = "incrementer"
   [readingDay] = "readingsData"
   [readingIndex] = "readingIndex"
-  [applicationIndex] = "applicationIndex"
-  [isNewApplication] = "isNewApplication">
+  [directionIndex] = "directionIndex"
+  [isNewDirection] = "isNewDirection">
 </update-practice-form>
 
 <app-display-reading-modal
@@ -82,8 +82,8 @@
 </app-delete-item-modal>
 
 <app-delete-item-modal
-  #deleteApplicationModal
-  [header]="'Delete Practice: '+singleApplicationTitle"
+  #deleteDirectionModal
+  [header]="'Delete Practice: '+singleDirectionTitle"
   [message]="'Are you sure you want to delete this practice and all of associated steps?  This action is not reversible.'"
-  (deleteItem)="onDeleteApplication($event)">
+  (deleteItem)="onDeleteDirection($event)">
 </app-delete-item-modal>

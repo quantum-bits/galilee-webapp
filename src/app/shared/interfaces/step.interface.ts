@@ -4,6 +4,6 @@ export interface Step {
   id: number;
   description: string;
   seq: number;
-  applicationId?: number;
+  directionId?: number;
   resources?: IResource[];
 }

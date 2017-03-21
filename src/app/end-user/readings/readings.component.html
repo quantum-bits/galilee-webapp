@@ -115,8 +115,9 @@
         [dateString]="dateString"
       >
       </app-practice-list>
+      <!-- TODO: This is a total HACK to reuse the questions component that should go away. -->
       <app-question-list
-        [questions]="readingsData.questions"
+        [questions]="readingsData.directions"
         [dateString]="dateString"
         (openJournal)="openJournal()"
       >

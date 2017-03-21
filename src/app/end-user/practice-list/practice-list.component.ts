@@ -24,7 +24,7 @@ export class PracticeListComponent implements OnInit {
   ngOnInit() {
     console.log(this.reading);
     this.hovered = [];
-    for (let practiceData of this.reading.applications){
+    for (let practiceData of this.reading.directions){
       this.hovered.push(false);
     }
   }
@@ -44,8 +44,8 @@ export class PracticeListComponent implements OnInit {
   }
 
   onSelectPracticeSummary(practiceIndex: number){
-    let modalTitle = this.reading.applications[practiceIndex].practice.title;
-    let modalMessage = this.reading.applications[practiceIndex].practice.summary;
+    let modalTitle = this.reading.directions[practiceIndex].practice.title;
+    let modalMessage = this.reading.directions[practiceIndex].practice.summary;
     this.modal.openModal(modalTitle, modalMessage);
   }
 
