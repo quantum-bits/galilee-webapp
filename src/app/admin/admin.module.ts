@@ -37,6 +37,7 @@ import {
   PickerAnchorDirective
 } from './content-management/passage-picker/passage-picker.component';
 import {BibleInfoService} from "./content-management/bible-info/bible-info.service";
+import { UpdateDailyPracticesListComponent } from './content-management/update-daily-practices-list/update-daily-practices-list.component';
 
 const routes: Routes = [
   {
@@ -83,7 +84,8 @@ const routes: Routes = [
     DisplayReadingModalComponent,
     PassagePickerComponent,
     VerseRangeComponent,
-    PickerAnchorDirective
+    PickerAnchorDirective,
+    UpdateDailyPracticesListComponent
   ],
   exports: [
     EditUserComponent

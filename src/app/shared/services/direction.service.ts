@@ -6,21 +6,36 @@ import {AuthHttp} from "angular2-jwt";
 import {Direction} from "../interfaces/direction.interface";
 
 export const DEFAULT_INFO_URL: string = "https://www.biblegateway.com/resources/scripture-engagement/";
+export enum DirectionType {
+  reading,
+  day
+}
 
 @Injectable()
 export class DirectionService {
   constructor(private authHttp: AuthHttp) {
   }
 
-  createDirection(direction: any, readingId: number, practiceId: number): Observable<Direction> {
-    return this.authHttp
-      .post('/api/directions', {
-        seq: direction.seq,
-        readingId: readingId,
-        practiceId: practiceId,
-        steps: direction.steps
-      })
-      .map(resp => resp.json());
+  createDirection(direction: any, readingOrReadingDayId: number, practiceId: number, directionType: number): Observable<Direction> {
+    if (directionType === DirectionType.reading) {
+      return this.authHttp
+        .post('/api/directions/reading', {
+          seq: direction.seq,
+          readingId: readingOrReadingDayId,
+          practiceId: practiceId,
+          steps: direction.steps
+        })
+        .map(resp => resp.json());
+    } else if (directionType === DirectionType.day) {
+      return this.authHttp
+        .post('/api/directions/day', {
+          seq: direction.seq,
+          readingDayId: readingOrReadingDayId,
+          practiceId: practiceId,
+          steps: direction.steps
+        })
+        .map(resp => resp.json());
+    }
   }
 
   readDirection(directionId: number): Observable<Direction> {

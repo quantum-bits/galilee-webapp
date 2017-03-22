@@ -40,9 +40,15 @@
       </div>
       <div class="row">
         <div class="col s12">
+          <app-update-daily-practices-list
+            [dateString]="dateString"
+            [readingDay]="readingsData">
+          </app-update-daily-practices-list>
+          <!--
           <app-update-questions-list
             [readingDay]="readingsData">
           </app-update-questions-list>
+          -->
         </div>
       </div>
     </div>

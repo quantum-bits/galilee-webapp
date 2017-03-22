@@ -1,0 +1,48 @@
+<div *ngIf="!readingDay && dateString">
+  <ul class="collection with-header">
+    <li class="collection-header"><h5>No daily practices yet for {{dateString | amDateFormat: 'LL'}}</h5></li>
+  </ul>
+</div>
+
+<div *ngIf="readingDay">
+  <ul class="collection with-header">
+    <li class="collection-header"><h5>Daily practices for {{dateString | amDateFormat: 'LL'}}</h5></li>
+    <li *ngFor="let direction of readingDay.directions; let aIndex=index" class="collection-item white">
+      <app-display-direction-steps
+        [readingIndex]="readingIndex"
+        [directionIndex]="aIndex"
+        [direction]="direction"
+        (deleteDirection)="displayDeleteDirectionModal($event)"
+        (editDirection)="launchEditPracticeModal($event)">
+      </app-display-direction-steps>
+    </li>
+    <div *ngIf="!readingDay.directions.length">
+      <p></p>
+    </div>
+
+    <p></p>
+    <span class="right practice-button">
+      <a class="waves-effect waves-light btn secondary-content" (click)="launchNewPracticeModal()">Add Practice</a>
+    </span>
+  </ul>
+</div>
+
+<update-practice-form
+  #updateDirectionModal
+  [directionType] = "directionType"
+  [incrementer] = "incrementer"
+  [readingDay] = "readingDay"
+  [readingIndex] = "readingIndex"
+  [directionIndex] = "directionIndex"
+  [isNewDirection] = "isNewDirection">
+</update-practice-form>
+
+<app-delete-item-modal
+  #deleteDirectionModal
+  [header]="'Delete Practice: '+singleDirectionTitle"
+  [message]="'Are you sure you want to delete this practice and all of its associated steps?  This action is not reversible.'"
+  (deleteItem)="onDeleteDirection($event)">
+</app-delete-item-modal>
+
+
+

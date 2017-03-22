@@ -7,7 +7,7 @@ import {DeleteItemModalComponent} from '../../../shared/components/delete-item-m
 import {IReading, ReadingDay} from '../../../shared/interfaces/reading.interface';
 import {Practice} from '../../../shared/models/practice.model';
 
-import {DirectionService} from  '../../../shared/services/direction.service';
+import {DirectionType, DirectionService} from  '../../../shared/services/direction.service';
 import {Direction} from '../../../shared/interfaces/direction.interface';
 
 import {ReadingService} from '../../../shared/services/reading.service';
@@ -43,7 +43,7 @@ export class UpdateReadingsListComponent implements OnInit {
   private readingIndex: number = null;
   private directionIndex: number = null;
   private isNewDirection: boolean = true;
-
+  private directionType = DirectionType.reading;
 
   constructor(private readingService: ReadingService,
               private directionService: DirectionService,

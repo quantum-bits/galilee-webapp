@@ -15,10 +15,10 @@
               <div class="card">
                 <div class="card-content">
                   <span *ngIf="isNewDirection" class="card-title">
-                    Add New Practice and Steps
+                    Add New {{daily}} Practice and Steps
                   </span>
                   <span *ngIf="!isNewDirection" class="card-title">
-                    Update Practice and/or Steps
+                    Update {{daily}} Practice and/or Steps
                   </span>
                   <div *ngIf="readingStdRef">
                     - {{readingStdRef}} -
