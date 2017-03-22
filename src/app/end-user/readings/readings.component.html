@@ -115,13 +115,13 @@
         [dateString]="dateString"
       >
       </app-practice-list>
-      <!-- TODO: This is a total HACK to reuse the questions component that should go away. -->
-      <app-question-list
-        [questions]="readingsData.directions"
-        [dateString]="dateString"
-        (openJournal)="openJournal()"
-      >
-      </app-question-list>
+
+      <div *ngFor="let direction of readingsData.directions">
+        <app-daily-practice
+          [direction] = "direction"
+        ></app-daily-practice>
+
+      </div>
 
       <div *ngIf="multiGroupPostData && userLoggedIn()">
         <div *ngFor="let groupPostData of multiGroupPostData">

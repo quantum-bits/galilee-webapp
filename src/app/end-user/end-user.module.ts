@@ -39,6 +39,7 @@ import {PostDashboardComponent} from './post-dashboard/post-dashboard.component'
 import {InfoGalileeComponent} from './info-galilee/info-galilee.component';
 import {InfoRCLComponent} from './info-rcl/info-rcl.component';
 import {TagPickerComponent} from './tag-picker/tag-picker.component';
+import { DailyPracticeComponent } from './daily-practice/daily-practice.component';
 
 const routes: Routes = [
   {
@@ -171,7 +172,8 @@ const routes: Routes = [
     PostDashboardComponent,
     InfoGalileeComponent,
     InfoRCLComponent,
-    TagPickerComponent
+    TagPickerComponent,
+    DailyPracticeComponent
   ]
 })
 export class EndUserModule {

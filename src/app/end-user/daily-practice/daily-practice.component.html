@@ -1,0 +1,26 @@
+<!--<div *ngIf="direction">-->
+  <ul class="collection with-header">
+    <li class="collection-header">
+      <h5>
+        {{direction.practice.title}}
+        <i
+          (click)="onSelectPracticeSummary()"
+          class="white-text right material-icons include-pointer"
+        >info_outline</i>
+      </h5>
+
+    </li>
+    <li *ngFor="let step of direction.steps" class="collection-item">
+      <span class="title" [innerHTML]="step.description">
+      </span>
+    </li>
+  </ul>
+<!--</div>-->
+
+
+<simple-modal
+  #dailyPracticeSummary
+  header=""
+  message=""
+>
+</simple-modal>
