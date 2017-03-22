@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
+import {DEFAULT_INFO_URL} from '../../shared/services/direction.service';
+
 @Component({
   selector: 'app-practice-summary',
   templateUrl: './practice-summary.component.html',
@@ -13,12 +15,18 @@ export class PracticeSummaryComponent implements OnInit {
   @Input() practiceIndex: number;
   @Output() onSummaryClosed = new EventEmitter();
 
+  private infoUrl: string = "";
   private turnOffSummary = false;
 
   constructor() { }
 
   ngOnInit() {
     console.log(this.practiceData);
+    if (this.practiceData.practice.infoUrl === "" || this.practiceData.practice.infoUrl === null ) {
+      this.infoUrl = DEFAULT_INFO_URL;
+    } else {
+      this.infoUrl = this.practiceData.practice.infoUrl;
+    }
   }
 
   closeSummary() {

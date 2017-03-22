@@ -5,6 +5,8 @@ import {Observable} from 'rxjs/Rx';
 import {AuthHttp} from "angular2-jwt";
 import {Direction} from "../interfaces/direction.interface";
 
+export const DEFAULT_INFO_URL: string = "https://www.biblegateway.com/resources/scripture-engagement/";
+
 @Injectable()
 export class DirectionService {
   constructor(private authHttp: AuthHttp) {

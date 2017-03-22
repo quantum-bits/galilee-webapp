@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {Router} from '@angular/router';
 
+import {DEFAULT_INFO_URL} from '../../shared/services/direction.service';
+
 @Component({
   selector: 'app-practice-preparation',
   templateUrl: './practice-preparation.component.html',
@@ -14,10 +16,16 @@ export class PracticePreparationComponent implements OnInit {
   @Input() practiceIndex: number;
 
   private stepIndex: number = 0;
+  private infoUrl: string = "";
 
   constructor(private router: Router) { }
 
   ngOnInit() {
+    if (this.practiceData.practice.infoUrl === "" || this.practiceData.practice.infoUrl === null ) {
+      this.infoUrl = DEFAULT_INFO_URL;
+    } else {
+      this.infoUrl = this.practiceData.practice.infoUrl;
+    }
   }
 
   beginPracticeSteps(){
