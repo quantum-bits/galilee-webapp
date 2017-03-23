@@ -40,6 +40,7 @@ import {InfoGalileeComponent} from './info-galilee/info-galilee.component';
 import {InfoRCLComponent} from './info-rcl/info-rcl.component';
 import {TagPickerComponent} from './tag-picker/tag-picker.component';
 import { DailyPracticeComponent } from './daily-practice/daily-practice.component';
+import { DateNavComponent } from './date-nav/date-nav.component';
 
 const routes: Routes = [
   {
@@ -173,7 +174,8 @@ const routes: Routes = [
     InfoGalileeComponent,
     InfoRCLComponent,
     TagPickerComponent,
-    DailyPracticeComponent
+    DailyPracticeComponent,
+    DateNavComponent
   ]
 })
 export class EndUserModule {
