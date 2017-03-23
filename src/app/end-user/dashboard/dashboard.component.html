@@ -9,7 +9,7 @@
             </a>
           </li>
           <li *ngFor="let day of days; let i=index" class="tab">
-            <a (click)="shiftRCLDate(i)"[ngClass]="{ 'active': day.isRCLToday }">{{day.name}}</a>
+            <a (click)="shiftRCLDate(i)" [ngClass]="{ 'active': day.isRCLToday }">{{day.name}}</a>
           </li>
           <li class="tab disabled">
             <a (click)="shiftDays(7)">

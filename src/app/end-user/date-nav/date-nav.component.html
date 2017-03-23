@@ -8,16 +8,19 @@
               <i class="material-icons calendar">navigate_before</i>
             </a>
           </li>
-          <li *ngFor="let day of days; let i=index" class="tab">
+          <li *ngFor="let day of days; let i=index"
+              class="tab"
+              [ngClass]="{ 'disabled': day.disabled }"
+          >
             <a
               (click)="shiftRCLDate(i)"
               [ngClass]="{ 'active': day.isRCLToday }"
             >
-              <div class="grey-text darken-3 center-align tooltipped"
+              <div class="center-align tooltipped"
                    materialize="tooltip"
                    data-position="bottom"
                    data-delay="1000"
-                   [attr.data-tooltip]="day.date | amDateFormat:'LL'">
+                   [attr.data-tooltip]="(day.date | amDateFormat:'LL')+disabledMessage(day.disabled)">
                 {{day.name}}
               </div>
             </a>
