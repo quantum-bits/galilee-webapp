@@ -9,20 +9,14 @@ export interface IReading {
   seq: number;
   stdRef: string;
   text: string;
-  directions?: any;
+  directions: any;
   version: Version;
-}
-
-export interface DailyQuestion {
-  id: number;
-  seq: number;
-  text: string;
 }
 
 export interface ReadingDay {
   id: number;
   date: string;
   name?: string
-  directions?: any;
+  directions: any;
   readings: Array<IReading>;
 }

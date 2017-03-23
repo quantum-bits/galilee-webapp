@@ -8,7 +8,7 @@ import {AuthHttp} from 'angular2-jwt';
 import * as moment from 'moment';
 
 import {Reading} from '../models/reading.model';
-import {ReadingDay, DailyQuestion, IReading} from '../interfaces/reading.interface';
+import {ReadingDay, IReading} from '../interfaces/reading.interface';
 import {CalendarEntries} from '../interfaces/calendar-entries.interface';
 import {Version} from '../interfaces/version.interface';
 

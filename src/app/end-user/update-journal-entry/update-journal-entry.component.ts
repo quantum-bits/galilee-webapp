@@ -18,7 +18,6 @@ export class UpdateJournalEntryComponent implements OnInit {
   private journalEntry: JournalEntry;
   public journalEntryForm: FormGroup; // our model driven form
   private isNewEntry: boolean; // true if this is a new Journal entry; false if updating
-  //private questions: Array<string>;
 
   private tagsReady: boolean = false;
 
@@ -87,12 +86,4 @@ export class UpdateJournalEntryComponent implements OnInit {
     this.router.navigate(['/end-user/journal']);
   }
 
-  /*
-  fetchQuestions(date: string) {
-    console.log('inside fetch questions method', date);
-
-    this.journalService.getDailyQuestions(date)
-      .subscribe(questions => this.questions = questions);
-  }
-  */
 }

@@ -10,7 +10,7 @@ import {DatePickerModule} from 'ng2-datepicker';
 
 import {AuthGuard} from '../authentication/auth.guard';
 
-import {DashboardComponent} from './dashboard/dashboard.component';
+//import {DashboardComponent} from './dashboard/dashboard.component';
 import {EndUserComponent} from './end-user.component';
 import {GroupPostListComponent} from './group-post-list/group-post-list.component';
 import {JournalDashboardComponent} from './journal-dashboard/journal-dashboard.component';
@@ -23,7 +23,6 @@ import {PracticeListComponent} from './practice-list/practice-list.component';
 import {PracticePreparationComponent} from './practice-preparation/practice-preparation.component';
 import {PracticeStepComponent} from './practice-step/practice-step.component';
 import {PracticeSummaryComponent} from './practice-summary/practice-summary.component';
-import {QuestionListComponent} from './question-list/question-list.component';
 import {ReadingItemComponent} from './reading-item';
 import {ReadingPracticeComponent} from './reading-practice';
 import {ReadingResourceComponent} from './reading-resource';
@@ -49,14 +48,16 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: 'readings/today',
         pathMatch: 'full'
       },
+      /*
       {
         path: 'dashboard',
         component: DashboardComponent,
         canActivate: [AuthGuard]
       },
+      */
       {
         // dateString can be 'YYYY-MM-DD' or 'today'
         path: 'readings/:dateString',
@@ -145,7 +146,7 @@ const routes: Routes = [
     SharedModule
   ],
   declarations: [
-    DashboardComponent,
+    //DashboardComponent,
     EndUserComponent,
     GroupPostListComponent,
     JournalDashboardComponent,
@@ -159,7 +160,6 @@ const routes: Routes = [
     PracticePreparationComponent,
     PracticeStepComponent,
     PracticeSummaryComponent,
-    QuestionListComponent,
     ReadingItemComponent,
     ReadingPracticeComponent,
     ReadingResourceComponent,

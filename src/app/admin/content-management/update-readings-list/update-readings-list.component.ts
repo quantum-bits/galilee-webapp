@@ -72,6 +72,7 @@ export class UpdateReadingsListComponent implements OnInit {
       seq: this.readingsData.readings.length + 1,
       stdRef: passageRef.displayRef(),
       text: null,
+      directions: null,
       version: null
     };
     this.readingService.createReading(reading, this.readingsData)

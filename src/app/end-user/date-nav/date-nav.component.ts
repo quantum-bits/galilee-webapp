@@ -8,6 +8,8 @@ import {ReadingService} from '../../shared/services/reading.service';
 import {CalendarEntries} from '../../shared/interfaces/calendar-entries.interface';
 
 
+//moment().startOf('week').subtract(2, 'weeks')
+
 @Component({
   selector: 'app-date-nav',
   templateUrl: './date-nav.component.html',
@@ -95,8 +97,8 @@ export class DateNavComponent implements OnInit, OnChanges {
   shiftRCLDate(dayArrayIndex: number) { // change the RCLDate, but leave the Date Nav as is (i.e., unshifted)
     if (!this.days[dayArrayIndex].disabled) {
       let newRCLDateMoment = this.days[dayArrayIndex].date.clone();
-      let newDateString = '2017-03-31';
-      //let newDateString = newRCLDateMoment.format('YYYY-MM-DD');
+      //let newDateString = '2017-03-31';
+      let newDateString = newRCLDateMoment.format('YYYY-MM-DD');
       this.router.navigate(['/end-user/readings', newDateString]);
     }
   }

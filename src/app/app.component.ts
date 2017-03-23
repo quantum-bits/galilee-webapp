@@ -9,7 +9,6 @@ import {User} from './shared/models/user.model';
 import {ADMIN} from './shared/models/permission.model';
 import {JournalService} from './shared/services/journal.service';
 import {PostService} from './shared/services/post.service';
-import {QuestionService} from "./shared/services/question.service";
 import {ReadingDayService} from "./shared/services/reading-day.service";
 import {DirectionService} from "./shared/services/direction.service";
 
@@ -22,7 +21,6 @@ import {DirectionService} from "./shared/services/direction.service";
     JournalService,
     PostService,
     PracticeService,
-    QuestionService,
     ReadingDayService,
     ReadingService,
     ResourceService,

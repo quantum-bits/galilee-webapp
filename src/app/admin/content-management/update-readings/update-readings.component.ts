@@ -10,7 +10,6 @@ import {ReadingService} from '../../../shared/services/reading.service';
 import {ReadingDayService} from '../../../shared/services/reading-day.service';
 
 import {CalendarEntries} from '../../../shared/interfaces/calendar-entries.interface';
-import {DailyQuestion} from '../../../shared/interfaces/reading.interface';
 
 @Component({
   selector: 'app-update-readings',
@@ -24,7 +23,6 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
   private calendarReadings: CalendarEntries = {};
   private readingsData: ReadingDay = null;
   private dateString: string = null;
-  private questions: Array<DailyQuestion> = [];
 
   private reading: IReading = null;
 
@@ -100,7 +98,7 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
         id: null,
         date: dateString,
         name: '',// for now, create a new ReadingDay with no 'name' field
-        questions: [],
+        directions: [],
         readings: []
       };
       this.readingDayService.createReadingDay(readingDay)
@@ -136,15 +134,11 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
         readings => {
           this.readingsData = readings;
           console.log('READINGS: ', this.readingsData);
-          if ('questions' in this.readingsData) {
-            this.questions = this.readingsData.questions;
-          }
         },
         error => {
           //this.modal.openModal();
           console.log('error: ', error);
           this.readingsData = null;
-          this.questions = null;
           /*
            if 404 error, immediately create a new readingDay object
            in the database, wait for the reply, and then set readingsData to the response;

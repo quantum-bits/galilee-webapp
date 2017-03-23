@@ -66,21 +66,6 @@
               </div>
             </div>
 
-            <!-- Questions -->
-            <!--
-            <div class="row center-align">
-              <div *ngIf="!questions">
-                <!-- use type="button" instead of type="submit", or else the Enter key in a text field can submit the form by accident
-                <button
-                  type="button"
-                  class="waves-effect waves-light btn-flat"
-                  (click)="fetchQuestions(journalEntryData.date)">
-                  Show Questions For This Date
-                </button>
-              </div>
-            </div>
-            -->
-
             <!-- Actions -->
             <div class="card-action">
               <!-- use type="button" instead of type="submit", or else the Enter key in a text field can submit the form by accident -->
@@ -117,15 +102,6 @@
 
         </form>
       </div>
-
-      <!-- no longer associating journal entries with daily questions
-      <div *ngIf="questions" class="col s12 m8 offset-m2 l3">
-        <app-question-list
-          [questions]="questions"
-        >
-        </app-question-list>
-      </div>
-      -->
     </div>
   </div>
 </div>

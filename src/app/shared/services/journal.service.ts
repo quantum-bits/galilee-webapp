@@ -66,17 +66,6 @@ export class JournalService {
       .map(resp => resp.json());
   }
 
-  /**
-   * Get all questions for the given reading day.
-   * @param dateString
-   * @returns {Observable<Array<string>>}
-   */
-  getDailyQuestions(dateString: string): Observable<Array<string>> {
-    return this.http
-      .get(`/api/daily/${dateString}/questions`)
-      .map(resp => resp.json());
-  }
-
   // Service message commands
   announceDeletion(journalEntryID: number) {
     this.journalEntryToBeDeletedSource.next(journalEntryID);

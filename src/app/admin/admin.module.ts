@@ -27,8 +27,6 @@ import {UploadResourceComponent} from './content-management/upload-resource';
 import {ManageReadingComponent} from './content-management/manage-reading/manage-reading.component';
 import {UpdateReadingsComponent} from './content-management/update-readings/update-readings.component';
 import {UpdateReadingsListComponent} from './content-management/update-readings-list/update-readings-list.component';
-import {UpdateQuestionsListComponent} from './content-management/update-questions-list/update-questions-list.component';
-import {UpdateQuestionFormComponent} from './content-management/update-question-form/update-question-form.component';
 import {UpdatePracticeFormComponent} from './content-management/update-practice-form/update-practice-form.component';
 import {DisplayDirectionStepsComponent} from './content-management/display-direction-steps/display-direction-steps.component';
 import {DisplayReadingModalComponent} from './content-management/display-reading-modal/display-reading-modal.component';
@@ -77,8 +75,6 @@ const routes: Routes = [
     ManageReadingComponent,
     UpdateReadingsComponent,
     UpdateReadingsListComponent,
-    UpdateQuestionsListComponent,
-    UpdateQuestionFormComponent,
     UpdatePracticeFormComponent,
     DisplayDirectionStepsComponent,
     DisplayReadingModalComponent,
