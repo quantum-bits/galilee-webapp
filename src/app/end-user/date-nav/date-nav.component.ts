@@ -60,7 +60,7 @@ export class DateNavComponent implements OnInit, OnChanges {
       console.log('date index: ', this.currentDateIndex);
       let tabId = 'date-nav-tab'+this.currentDateIndex;
       console.log('tab ID: ', tabId);
-      //$('ul.tabs').tabs('select_tab', 'date-nav-tab'+this.currentDateIndex);
+      $('ul.tabs').tabs('select_tab', 'date-nav-tab'+this.currentDateIndex);
 
       //[attr.href]="'#tab'+i"
 

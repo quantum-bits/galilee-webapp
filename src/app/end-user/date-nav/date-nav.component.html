@@ -13,7 +13,7 @@
               [ngClass]="{ 'disabled': day.disabled }"
           >
             <a
-              (click)="shiftRCLDate(i)"
+              (click)="$event.preventDefault();shiftRCLDate(i)"
               [ngClass]="{ 'active': day.isRCLToday }"
               [attr.href]="'#date-nav-tab'+i"
             >
