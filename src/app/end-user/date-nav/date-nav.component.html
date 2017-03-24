@@ -15,6 +15,7 @@
             <a
               (click)="shiftRCLDate(i)"
               [ngClass]="{ 'active': day.isRCLToday }"
+              [attr.href]="'#date-nav-tab'+i"
             >
               <div class="center-align tooltipped"
                    materialize="tooltip"
@@ -41,3 +42,6 @@
     </div>
   </div>
 </div>
+
+
+<a class="waves-effect waves-light btn" (click)="onClick()">button</a>
