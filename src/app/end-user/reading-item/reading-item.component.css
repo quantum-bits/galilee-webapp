@@ -1,5 +1,9 @@
-.dropdown-content {
+.reading-dropdown-content {
   min-width: 200px
+}
+
+.version-dropdown-content {
+  min-width: 300px
 }
 
 .material-icons.lr-arrow {

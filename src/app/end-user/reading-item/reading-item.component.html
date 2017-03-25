@@ -96,7 +96,7 @@
 
 
 <!-- Dropdown Structure -->
-<ul id='versionsDropdownMenu' class='dropdown-content'>
+<ul id='versionsDropdownMenu' class='dropdown-content version-dropdown-content'>
   <li *ngFor="let version of selectableVersions">
     <a (click)="updateReadingsNewVersion(version)">
       {{version.title}}
@@ -105,7 +105,7 @@
 </ul>
 
 <!-- Dropdown Structure -->
-<ul id='todaysReadingsDropdownMenu' class='dropdown-content'>
+<ul id='todaysReadingsDropdownMenu' class='dropdown-content reading-dropdown-content'>
   <li *ngFor="let reading of todaysReadings; let i=index">
     <a (click)="goToReading(i)">
       {{reading}}
