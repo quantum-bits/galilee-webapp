@@ -9,6 +9,7 @@ import {TextareaAutoresize} from './directives/textarea-autoresize.directive';
 import {WarningMessageComponent} from './components/warning-message/warning-message.component';
 import {MiniCalendarComponent} from './components/mini-calendar/mini-calendar.component';
 import { DeleteItemModalComponent } from './components/delete-item-modal/delete-item-modal.component';
+import { SpyDirective } from './directives/spy.directive';
 
 
 @NgModule({
@@ -21,11 +22,13 @@ import { DeleteItemModalComponent } from './components/delete-item-modal/delete-
     TextareaAutoresize,
     WarningMessageComponent,
     MiniCalendarComponent,
-    DeleteItemModalComponent
+    DeleteItemModalComponent,
+    SpyDirective
   ],
   exports: [
     InputWakeUp,
     TextareaAutoresize,
+    SpyDirective,
     WarningMessageComponent,
     MiniCalendarComponent,
     DeleteItemModalComponent

@@ -1,9 +1,11 @@
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, OnDestroy, Input } from '@angular/core';
 import {Router} from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
 
 import * as moment from 'moment';
 
 import {ReadingService} from '../../shared/services/reading.service';
+import {DateNavSpyService} from '../../shared/services/date-nav-spy.service';
 
 import {CalendarEntries} from '../../shared/interfaces/calendar-entries.interface';
 
@@ -16,7 +18,7 @@ declare var $: any; // for using jQuery within this angular component
   templateUrl: './date-nav.component.html',
   styleUrls: ['./date-nav.component.css']
 })
-export class DateNavComponent implements OnInit, OnChanges {
+export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() dateString: string = null;
 
@@ -25,56 +27,60 @@ export class DateNavComponent implements OnInit, OnChanges {
   private RCLDate: any = null; // a moment object that keeps track of which date the user is looking at
   private currentDateIndex: number = 0; // used to programmatically "click" the correct tab
 
+  private canShiftRight: boolean = false;
+  private canShiftLeft: boolean = false;
+  private tabCounter: number = 0;
+
+  private subscription: Subscription;
+
   constructor(private router: Router,
-              private readingService: ReadingService) { }
+              private readingService: ReadingService,
+              private dateNavSpyService: DateNavSpyService) {
+    this.subscription = dateNavSpyService.dateNavUpdated$
+      .subscribe(message => {
+        console.log('SPY....received message: ', message);
+        this.updateTabSlider();
+      });
+  }
 
   ngOnInit() {
   }
 
   ngOnChanges(){
-    console.log('XXXXXX inside ngonchanges; calendarReadings: ',this.calendarReadings);
-    console.log('XXXXXX inside ngonchanges; dateString: ',this.dateString);
+    this.setRCLDate(this.dateString);
     if (this.calendarReadings === null) {
       this.readingService.getReadingMetadata()
         .subscribe(
           calendarReadings => {
             console.log(calendarReadings);
             this.calendarReadings = calendarReadings;
-            this.setRCLDate(this.dateString);
-            this.days = this.initializeDateNav();
+            this.initializeDateNav();
           },
           error => {
             console.log('error: ', error);
           }
         );
     } else {
-      this.setRCLDate(this.dateString);
-      //let newDate = this.RCLDate.clone();
-      //newDate.startOf('week');
-      //let weekUnchanged = newDate.isSame(this.days[0].date, 'day');
-      //console.log('week is unchanged: ', weekUnchanged);
-      //if (!weekUnchanged) {
-      this.days = this.initializeDateNav();
-      //}
-      // now programmatically select the appropriate tab
-      console.log('date index: ', this.currentDateIndex);
-      let tabId = 'date-nav-tab'+this.currentDateIndex;
-      console.log('tab ID: ', tabId);
-      $('ul.tabs').tabs('select_tab', 'date-nav-tab'+this.currentDateIndex);
+      this.initializeDateNav();
+      // now programmatically select the appropriate tab (using jQuery); see:
+      // http://materializecss.com/tabs.html,
+      // https://github.com/InfomediaLtd/angular2-materialize/blob/master/app/components/tabs-routing.ts
 
-      //[attr.href]="'#tab'+i"
-
-      //console.log('first day of this week: ', this.days[0].date);
-      //console.log('first day of the week in memory: ', this.days[0].date);
-
-      // ...arg....should only refresh this if we have actually moved
-      // to a new week, otherwise the tab slider doesn't slide over!
-      // ...also, should keep RCLDate updated!!!!
-      //.....
-      // this.days = this.initializeDateNav(this.dateString);
+      //console.log('XXXXXXXXXXX moving tab to: ', this.currentDateIndex);
+      //let tabId = 'date-nav-tab'+this.currentDateIndex;
+      //$('ul.tabs').tabs('select_tab', 'date-nav-tab'+this.currentDateIndex);
     }
   }
 
+  updateTabSlider() {
+    this.tabCounter++;
+    console.log('tabCounter: ', this.tabCounter);
+    if (this.tabCounter === 7) {
+      console.log('XXXXXXXXXXX moving tab to: ', this.currentDateIndex);
+      let tabId = 'date-nav-tab' + this.currentDateIndex;
+      $('ul.tabs').tabs('select_tab', 'date-nav-tab' + this.currentDateIndex);
+    }
+  }
   setRCLDate(dateString: string) {
     if (dateString === 'today') {
       this.RCLDate = moment();
@@ -83,20 +89,46 @@ export class DateNavComponent implements OnInit, OnChanges {
     }
   }
 
-  initializeDateNav() {
-    // some help from the mini-calendar component by Blaine Backman
-    let date = this.RCLDate.clone();
-    date.startOf('week');
-    let days = [];
-    let localDateString: string = "";
-    let containsReadings: boolean;
-    //let date = middleDate.add(-3, 'd');
+  setShiftPermissions() {
+    // assumes this.calendarReadings and this.RCLDate have been set
+    // checks to see if there are any readings in the week to the
+    // left and to the right, and sets permissions accordingly
+    this.canShiftRight = false;
+    this.canShiftLeft = false;
+    let date = this.RCLDate.clone().startOf('week').add(1, 'week');
     for (let i = 0; i < 7; i++) {
-      localDateString = date.format('YYYY-MM-DD');
-      containsReadings = false;
-      if (localDateString in this.calendarReadings) {
-        containsReadings = (this.calendarReadings[localDateString] > 0);
+      if (this.dateContainsReadings(date.format('YYYY-MM-DD'))) {
+        this.canShiftRight = true;
       }
+      console.log(date.format('YYYY-MM-DD'));
+      date.add(1, 'd');
+    }
+    date = this.RCLDate.clone().startOf('week').subtract(1, 'week');
+    for (let i = 0; i < 7; i++) {
+      if (this.dateContainsReadings(date.format('YYYY-MM-DD'))) {
+        this.canShiftLeft = true;
+      }
+      console.log(date.format('YYYY-MM-DD'));
+      date.add(1, 'd');
+    }
+  }
+
+  dateContainsReadings(dateString: string){
+    let containsReadings = false;
+    if (dateString in this.calendarReadings) {
+      containsReadings = (this.calendarReadings[dateString] > 0);
+    }
+    return containsReadings;
+  }
+
+  initializeDateNav() {
+    // some help from the mini-calendar component by Blaine Backman;
+    // this method sets up the days array for the date-nav, and also
+    // sets the index for the current RCL date on the date-nav (this.currentDateIndex)
+    this.tabCounter = 0;
+    let date = this.RCLDate.clone().startOf('week');;
+    let days = [];
+    for (let i = 0; i < 7; i++) {
       if (date.isSame(this.RCLDate, 'day')) {
         this.currentDateIndex = i;
       }
@@ -104,13 +136,13 @@ export class DateNavComponent implements OnInit, OnChanges {
         name: date.format('ddd DD'),
         isRCLToday: date.isSame(this.RCLDate, 'day'),
         date: date,
-        disabled: !containsReadings
+        disabled: !this.dateContainsReadings(date.format('YYYY-MM-DD'))
       });
-      date = date.clone();
-      date.add(1, 'd');
+      date = date.clone().add(1,'d');
     }
     console.log('days: ', days);
-    return days;
+    this.days = days;
+    this.setShiftPermissions();
   }
 
   disabledMessage(disabled: boolean){
@@ -121,8 +153,30 @@ export class DateNavComponent implements OnInit, OnChanges {
     }
   }
 
-  shiftDays(dayShift: number) {
-    //
+  shiftWeek(unitDirection: number) {//unitDirection must be +/- 1
+    let date = this.RCLDate.clone().startOf('week').add(unitDirection, 'week');
+    if (unitDirection === -1) {
+      date.endOf('week');
+    }
+    let index = 0;
+    let nonEmptyReadingDayFound = false;
+    while (Math.abs(index) < 7 && !nonEmptyReadingDayFound) {
+      console.log(index);
+      if (this.dateContainsReadings(date.format('YYYY-MM-DD'))){
+        nonEmptyReadingDayFound = true;
+        console.log('found reading!', this.RCLDate, this.calendarReadings);
+      } else {
+        date.add(unitDirection, 'd');
+      }
+      index = index+unitDirection;
+    }
+    if (nonEmptyReadingDayFound) {
+      let newDateString = date.format('YYYY-MM-DD');
+      this.router.navigate(['/end-user/readings', newDateString]);
+    }
+    // the right and left arrows in the date-nav should only appear
+    // if there is in fact a non-empty reading day to the right or left,
+    // respectively, so supposedly there will always be a non-empty reading day....
   }
 
   shiftRCLDate(dayArrayIndex: number) { // change the RCLDate, but leave the Date Nav as is (i.e., unshifted)
@@ -152,34 +206,18 @@ export class DateNavComponent implements OnInit, OnChanges {
   }
 */
 
+  onClick(){
+    console.log(this.currentDateIndex);
+    console.log(this.RCLDate);
 
-  /**
-   * id="captionInModal{{i}}"
-   type="text"
-   [class.warning-background]="!(resourceCollectionForm.controls.resources.controls[i].controls.caption.valid||!resourceCollectionForm.controls.resources.controls[i].controls.caption.touched)"
-   [class.valid-background]="(resourceCollectionForm.controls.resources.controls[i].controls.caption.valid||!resourceCollectionForm.controls.resources.controls[i].controls.caption.touched)"
-   formControlName="caption">
-   <label
-   *[attr.for]="'captionInModal'+i"
-   */
+    let tabId = 'date-nav-tab'+this.currentDateIndex;
+    $('ul.tabs').tabs('select_tab', 'date-nav-tab'+this.currentDateIndex);
 
 
-  onClick() {
-    // Note: must include the following declaration (above) in component:
-    //          declare var $: any;
-    console.log('tabbing....');
-    //console.log('#tab0' + modalID);
-    //$('ul.tabs').tabs('select_tab', 'date-nav-tab4');
-    $('ul.tabs').tabs('this.selectt_tab', 'date-nav-tab4');
+  }
 
-    /**
-     * maybe could use an id instead and use the Renderer to render a 'click' on the anchor tag
-     * select_tab : function( id ) {
-     *    this.find('a[href="#' + id + '"]').trigger('click');
-     * }
-     */
-    //$('#' + modalID).closeModal();
-    //[attr.href]="'#tab'+(i+1)"
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 

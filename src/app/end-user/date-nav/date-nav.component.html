@@ -3,15 +3,24 @@
     <div *ngIf="days">
       <div class="row">
         <ul class="tabs tabs-fixed-width" materialize="tabs">
-          <li class="tab disabled">
-            <a (click)="shiftDays(-7)">
-              <i class="material-icons calendar">navigate_before</i>
+          <li class="tab disabled nav-arrow">
+            <a *ngIf="canShiftLeft" (click)="shiftWeek(-1)">
+              <i class="material-icons calendar include-pointer">navigate_before</i>
             </a>
           </li>
           <li *ngFor="let day of days; let i=index"
+              appSpy
               class="tab"
               [ngClass]="{ 'disabled': day.disabled }"
           >
+            <!--
+             Note: $event.preventDefault() prevents the tab slider from sliding to the clicked position;
+                   we do this programmatically instead, since we need to be able to do that if the user
+                   clicks on the 'home' button, etc.  Doing it programmatically _and_ allowing the slider
+                   to move when the element is clicked leads to problems; see:
+                   https://github.com/InfomediaLtd/angular2-materialize/blob/master/app/components/tabs-routing.ts
+
+            -->
             <a
               (click)="$event.preventDefault();shiftRCLDate(i)"
               [ngClass]="{ 'active': day.isRCLToday }"
@@ -27,9 +36,9 @@
             </a>
 
           </li>
-          <li class="tab disabled">
-            <a (click)="shiftDays(7)">
-              <i class="material-icons calendar">navigate_next</i>
+          <li class="tab disabled nav-arrow">
+            <a *ngIf="canShiftRight" (click)="shiftWeek(1)">
+              <i class="material-icons calendar include-pointer">navigate_next</i>
             </a>
             <!--
             <a (click)="openDatepicker()">
@@ -42,6 +51,5 @@
     </div>
   </div>
 </div>
-
 
 <a class="waves-effect waves-light btn" (click)="onClick()">button</a>

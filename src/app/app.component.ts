@@ -11,6 +11,8 @@ import {JournalService} from './shared/services/journal.service';
 import {PostService} from './shared/services/post.service';
 import {ReadingDayService} from "./shared/services/reading-day.service";
 import {DirectionService} from "./shared/services/direction.service";
+import {DateNavSpyService} from "./shared/services/date-nav-spy.service";
+
 
 @Component({
   selector: 'app-root',
@@ -24,7 +26,8 @@ import {DirectionService} from "./shared/services/direction.service";
     ReadingDayService,
     ReadingService,
     ResourceService,
-    DirectionService
+    DirectionService,
+    DateNavSpyService
   ]
 })
 export class AppComponent implements OnInit {

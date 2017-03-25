@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 
 import {UserService} from '../user.service';
 
-const DEFAULT_REDIRECT_URL = '/end-user/dashboard';
+const DEFAULT_REDIRECT_URL = '/end-user/readings/today';
 
 @Component({
   selector: 'app-self-update-success',
