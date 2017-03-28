@@ -67,9 +67,8 @@
                               <div class="input-field col s12">
                                 <span>Step {{i + 1}}</span>
                                 <a *ngIf="directionForm.controls.steps.controls.length > 1"
-                                   href="javascript:void(0)"
                                    (click)="removeStep(i)"
-                                   class="grey-text text-darken-2 right">
+                                   class="grey-text text-darken-2 right include-pointer">
                                   <i class="material-icons">close</i>
                                 </a>
                               </div>
@@ -100,8 +99,8 @@
                       </div>
                     </div>
                     <div class="col s12">
-                      <a href="javascript:void(0)" (click)="addStep()"
-                         class="grey-text text-darken-2 right"> Add another step +
+                      <a (click)="addStep()"
+                         class="grey-text text-darken-2 right include-pointer"> Add another step +
                       </a>
                     </div>
 
