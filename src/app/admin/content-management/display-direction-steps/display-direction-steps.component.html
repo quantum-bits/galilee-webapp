@@ -1,30 +1,26 @@
 <a
   *ngIf="showSteps"
-  href="javascript:void(0)"
   (click)="toggleShowSteps()"
-  class="grey-text text-darken-2">
+  class="grey-text text-darken-2 include-pointer">
   <i class="material-icons lr-arrow">remove</i>
   {{direction.practice.title}}
 </a>
 <a
   *ngIf="!showSteps"
-  href="javascript:void(0)"
   (click)="toggleShowSteps()"
-  class="grey-text text-darken-2">
+  class="grey-text text-darken-2 include-pointer">
   <i class="material-icons lr-arrow">add</i>
   {{direction.practice.title}}
 </a>
 <span class="right">
   <a
-    href="javascript:void(0)"
     (click)="displayDeleteModal()"
-    class="grey-text text-darken-2">
+    class="grey-text text-darken-2 include-pointer">
   <i class="material-icons lr-arrow">delete</i>
   </a>
   <a
-    href="javascript:void(0)"
     (click)="displayEditDirectionModal()"
-    class="grey-text text-darken-2">
+    class="grey-text text-darken-2 include-pointer">
   <i class="material-icons lr-arrow">edit</i>
   </a>
 </span>

@@ -10,22 +10,16 @@
     <li *ngFor="let reading of readingsData.readings; let rIndex=index" class="collection-item grey lighten-5">
       <span class="title"> {{reading.stdRef}}</span>
       <span class="right action-icons">
-        <a
-          href="javascript:void(0)"
-          (click)="displayReading(rIndex)"
-          class="grey-text text-darken-2">
+        <a (click)="displayReading(rIndex)"
+          class="grey-text text-darken-2 include-pointer">
         <i class="material-icons lr-arrow">pageview</i>
         </a>
-        <a
-          href="javascript:void(0)"
-          (click)="displayDeleteReadingModal(reading)"
-          class="grey-text text-darken-2">
+        <a (click)="displayDeleteReadingModal(reading)"
+          class="grey-text text-darken-2 include-pointer">
         <i class="material-icons lr-arrow">delete_forever</i>
         </a>
-        <a
-          href="javascript:void(0)"
-          (click)="launchEditReadingModal(reading)"
-          class="grey-text text-darken-2">
+        <a (click)="launchEditReadingModal(reading)"
+          class="grey-text text-darken-2 include-pointer">
         <i class="material-icons lr-arrow">edit</i>
         </a>
       </span>
