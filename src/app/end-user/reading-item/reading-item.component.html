@@ -85,9 +85,9 @@
     </div>
 
     <div *ngIf="includeNavigationButtons()" class="card-action">
-      <a href="javascript:void(0)" *ngIf="showPreviousButton()" (click)="previousReading()"> <i class="material-icons lr-arrow">navigate_before</i> Previous</a>
+      <a class="include-pointer" *ngIf="showPreviousButton()" (click)="previousReading()"> <i class="material-icons lr-arrow">navigate_before</i> Previous</a>
       <a></a> <!-- this is here b/c otherwise the vertical spacing gets messed up by the class="right" statement in the following (if Next is all that shows up) -->
-      <a href="javascript:void(0)" *ngIf="showNextButton()" (click)="nextReading()" class="right">Next <i class="material-icons lr-arrow">navigate_next</i></a>
+      <a class="include-pointer" *ngIf="showNextButton()" (click)="nextReading()" class="right">Next <i class="material-icons lr-arrow">navigate_next</i></a>
     </div>
 
   </div>

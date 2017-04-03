@@ -4,8 +4,8 @@
       <div class="row">
         <ul class="tabs tabs-fixed-width" materialize="tabs">
           <li class="tab disabled nav-arrow">
-            <a *ngIf="canShiftLeft" (click)="shiftWeek(-1)">
-              <i class="material-icons calendar include-pointer">navigate_before</i>
+            <a *ngIf="canShiftLeft" class="include-pointer" (click)="shiftWeek(-1)">
+              <i class="material-icons calendar">navigate_before</i>
             </a>
           </li>
           <li *ngFor="let day of days; let i=index"
@@ -23,6 +23,7 @@
             -->
             <a
               (click)="$event.preventDefault();shiftRCLDate(i)"
+              class="include-pointer"
               [ngClass]="{ 'active': day.isRCLToday }"
               [attr.href]="'#date-nav-tab'+i"
             >
@@ -37,8 +38,8 @@
 
           </li>
           <li class="tab disabled nav-arrow">
-            <a *ngIf="canShiftRight" (click)="shiftWeek(1)">
-              <i class="material-icons calendar include-pointer">navigate_next</i>
+            <a *ngIf="canShiftRight" class="include-pointer" (click)="shiftWeek(1)">
+              <i class="material-icons calendar">navigate_next</i>
             </a>
             <!--
             <a (click)="openDatepicker()">

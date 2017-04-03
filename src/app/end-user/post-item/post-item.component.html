@@ -19,7 +19,7 @@
       a work-around so that the cursor changes to a pointer upon hovering; see:
       http://stackoverflow.com/questions/35639174/passive-link-in-angular-2-a-href-equivalent
       -->
-      <a href="javascript:void(0)" (click)="deleteEntry()">
+      <a class="include-pointer" (click)="deleteEntry()">
         <i class="material-icons grey-text darken-2">delete</i>
       </a>
       <a [routerLink]="['/end-user/post-entry/update', post.id]">
@@ -64,7 +64,7 @@
         </p>
         <div *ngIf="showMoreLess()">
           <br>
-          <a class="grey-text darken-3" (click)="toggleAllowTruncation()">Read More... </a>
+          <a class="grey-text darken-3 include-pointer" (click)="toggleAllowTruncation()">Read More... </a>
         </div>
       </div>
 
@@ -74,7 +74,7 @@
         </p>
         <div *ngIf="showMoreLess()">
           <br>
-          <a class="grey-text darken-3" (click)="toggleAllowTruncation()">Read Less</a>
+          <a class="grey-text darken-3 include-pointer" (click)="toggleAllowTruncation()">Read Less</a>
         </div>
       </div>
 

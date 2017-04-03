@@ -4,15 +4,15 @@
       <div class="row">
         <ul class="tabs tabs-fixed-width" materialize="tabs">
           <li class="tab disabled">
-            <a (click)="shiftDays(-7)">
+            <a class="include-pointer" (click)="shiftDays(-7)">
               <i class="material-icons calendar">navigate_before</i>
             </a>
           </li>
           <li *ngFor="let day of days; let i=index" class="tab">
-            <a (click)="shiftRCLDate(i)" [ngClass]="{ 'active': day.isRCLToday }">{{day.name}}</a>
+            <a class="include-pointer" (click)="shiftRCLDate(i)" [ngClass]="{ 'active': day.isRCLToday }">{{day.name}}</a>
           </li>
           <li class="tab disabled">
-            <a (click)="shiftDays(7)">
+            <a class="include-pointer" (click)="shiftDays(7)">
               <i class="material-icons calendar">navigate_next</i>
             </a>
             <!--
