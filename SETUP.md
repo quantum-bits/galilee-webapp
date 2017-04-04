@@ -35,9 +35,6 @@
 
 7. Setup and start galilee-webapp - run these commands in the galilee-app directory
 	* $ `npm install`
-	* Fix Materialize issue (Need to do this when you update SASS)
-		* $ `sudo gem install sass` (Make sure you have sass installed)
-		* $ `./run-sass.sh`
 	* Run the web-app!
 		* $ `npm start`
 
