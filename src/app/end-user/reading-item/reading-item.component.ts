@@ -109,4 +109,15 @@ export class ReadingItemComponent implements OnInit, OnChanges {
     this.reading.text = this.reading.text.replace(/<h3>/g, "<h4>").replace(/<\/h3>/g, "</h4>");
   }
 
+  currentlySelectedReadingButton(i: number) {
+    if (i == this.currentReadingIndex)
+    {
+      return "btn-large disabled disabled-dropdown";
+    }
+    else
+    {
+      return "btn-large btn-flat dropdown-selected";
+    }
+  }
+
 }

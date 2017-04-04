@@ -15,3 +15,11 @@
   /*padding-top: 0px;*/
   /*margin-top: 0px;*/
 }
+
+.disabled-dropdown {
+    pointer-events:none;
+}
+
+.dropdown-selected:hover {
+  background-color: #bdbdbd
+}
