@@ -1,3 +1,3 @@
 export interface ResourceDetails {
-  public filename: string;
+  filename: string;
 }

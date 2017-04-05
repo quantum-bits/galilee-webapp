@@ -1,3 +1,5 @@
+import {User} from "../models/user.model";
+
 export interface IPost {
   content: string;
   groupId: number;
