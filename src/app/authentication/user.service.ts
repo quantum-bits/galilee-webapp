@@ -160,4 +160,16 @@ export class UserService {
       .map(res => res.json());
   }
 
+  inGroups() {
+    console.log("Users Groups: " + this.currentUser.groups.length);
+    console.log(this.currentUser.groups.length);
+    if (this.currentUser.groups == null || this.currentUser.groups.length == 0){
+      return false;
+    }
+    else {
+      return true;
+    }
+
+  }
+
 }
