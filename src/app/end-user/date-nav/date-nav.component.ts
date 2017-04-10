@@ -143,6 +143,8 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
     console.log('days: ', days);
     this.days = days;
     this.setShiftPermissions();
+
+    //console.log(this.calendarReadings);
   }
 
   disabledMessage(disabled: boolean){
@@ -220,5 +222,8 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  materializeDatePickerParams() {
+    return [{ selectYears: 15 }];
+  }
 
 }
