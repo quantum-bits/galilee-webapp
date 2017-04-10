@@ -16,6 +16,7 @@ export class PracticeSummaryComponent implements OnInit {
   @Output() onSummaryClosed = new EventEmitter();
 
   private infoUrl: string = "";
+  private showInfoUrl: boolean = true;
   private turnOffSummary = false;
 
   constructor() { }
@@ -23,10 +24,14 @@ export class PracticeSummaryComponent implements OnInit {
   ngOnInit() {
     console.log(this.practiceData);
     if (this.practiceData.practice.infoUrl === "" || this.practiceData.practice.infoUrl === null ) {
-      this.infoUrl = DEFAULT_INFO_URL;
+      //this.infoUrl = DEFAULT_INFO_URL;
+      this.showInfoUrl = false;
     } else {
+      this.showInfoUrl = true;
       this.infoUrl = this.practiceData.practice.infoUrl;
     }
+
+    console.log("showInfoUrl: ", this.showInfoUrl);
   }
 
   closeSummary() {

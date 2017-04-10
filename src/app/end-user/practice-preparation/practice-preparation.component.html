@@ -1,7 +1,7 @@
 <div class="card ">
   <div class="card-title-bar">
     <span class="card-title">{{practiceData.practice.title}}
-      <a [attr.href]="infoUrl" target="_blank">
+      <a *ngIf="showInfoUrl" [attr.href]="infoUrl" target="_blank">
             <i
               class="white-text right material-icons "
             >help_outline</i>
