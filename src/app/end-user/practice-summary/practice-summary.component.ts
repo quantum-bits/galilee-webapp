@@ -30,8 +30,6 @@ export class PracticeSummaryComponent implements OnInit {
       this.showInfoUrl = true;
       this.infoUrl = this.practiceData.practice.infoUrl;
     }
-
-    console.log("showInfoUrl: ", this.showInfoUrl);
   }
 
   closeSummary() {
