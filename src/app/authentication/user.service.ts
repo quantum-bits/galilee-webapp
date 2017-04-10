@@ -161,8 +161,6 @@ export class UserService {
   }
 
   inGroups() {
-    console.log("Users Groups: " + this.currentUser.groups.length);
-    console.log(this.currentUser.groups.length);
     if (this.currentUser.groups == null || this.currentUser.groups.length == 0){
       return false;
     }
