@@ -6,6 +6,7 @@
 
 2. Download the secret.conf.json file and put it in the galilee-server source tree
 	* DO NOT COMMIT IT TO GITHUB
+  * This file is located in the quantum-bits Slack channel and you have to place it just inside the galilee-server directory
 
 3. Upgrade/install Node using nvm (https://github.com/creationix/nvm)
 	* $ `curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash`
