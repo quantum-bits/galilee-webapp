@@ -11,6 +11,8 @@ import {ReadingDayService} from '../../../shared/services/reading-day.service';
 
 import {CalendarEntries} from '../../../shared/interfaces/calendar-entries.interface';
 
+import {UpdateReadingDayNameModalComponent} from '../update-reading-day-name-modal/update-reading-day-name-modal.component';
+
 @Component({
   selector: 'app-update-readings',
   templateUrl: './update-readings.component.html',
@@ -19,7 +21,7 @@ import {CalendarEntries} from '../../../shared/interfaces/calendar-entries.inter
 export class UpdateReadingsComponent implements OnInit, OnDestroy {
 
   //@ViewChild('updatePractice') modal: UpdatePracticeFormComponent;
-  @ViewChild('createReadingDay') modal: CreateReadingDayModalComponent;
+  @ViewChild('updateReadingDayModal') updateReadingDayModal: UpdateReadingDayNameModalComponent;
 
   private calendarReadings: CalendarEntries = {};
   private readingsData: ReadingDay = null;
@@ -95,6 +97,7 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
        *    - onCancel reloads '/admin/update-readings', but with no dateString
        *    - onSubmit creates the readingDay and then, upon success, loads '/admin/update-readings' with the dateString for the new readingDay
        */
+      this.updateReadingDayModal.openModal(this.dateString);
       let readingDay: ReadingDay = {
         id: null,
         date: dateString,

@@ -36,7 +36,7 @@ import {
 } from './content-management/passage-picker/passage-picker.component';
 import {BibleInfoService} from "./content-management/bible-info/bible-info.service";
 import { UpdateDailyPracticesListComponent } from './content-management/update-daily-practices-list/update-daily-practices-list.component';
-import { CreateReadingDayModalComponent } from './content-management/create-reading-day-modal/create-reading-day-modal.component';
+import { UpdateReadingDayNameModalComponent } from './content-management/update-reading-day-name-modal/update-reading-day-name-modal.component';
 
 const routes: Routes = [
   {
@@ -83,7 +83,7 @@ const routes: Routes = [
     VerseRangeComponent,
     PickerAnchorDirective,
     UpdateDailyPracticesListComponent,
-    CreateReadingDayModalComponent
+    UpdateReadingDayNameModalComponent
   ],
   exports: [
     EditUserComponent
