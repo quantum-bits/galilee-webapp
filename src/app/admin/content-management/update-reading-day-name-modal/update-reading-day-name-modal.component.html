@@ -1,0 +1,16 @@
+<div class="modal"
+     materialize="modal"
+     [materializeParams]="[{dismissible: false}]"
+     [materializeActions]="modalActions">
+  <div class="modal-content">
+    <h4 class="center">Reading day name for {{date | amDateFormat: 'LL'}}</h4>
+    <div class="input-field col s6">
+      <input [(ngModel)]="name" placeholder="e.g., 'Easter'" id="name" type="text" class="validate">
+      <label for="name">Reading Day Name</label>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a class="waves-effect waves-green btn-flat" (click)="submitModal()">Submit</a>
+    <a class="waves-effect waves-green btn-flat modal-action modal-close">Cancel</a>
+  </div>
+</div>
