@@ -29,6 +29,9 @@
     </div>
     <div  class="col s12 m8 offset-m2 l8">
       <div class="row">
+        <div *ngIf="dateString" class="col s12">
+          <h1>Reading Day Name: </h1>
+        </div>
         <div class="col s12">
           <update-readings-list #readingsList
                                 [dateString]="dateString"

@@ -19,6 +19,7 @@ import {CalendarEntries} from '../../../shared/interfaces/calendar-entries.inter
 export class UpdateReadingsComponent implements OnInit, OnDestroy {
 
   //@ViewChild('updatePractice') modal: UpdatePracticeFormComponent;
+  @ViewChild('createReadingDay') modal: CreateReadingDayModalComponent;
 
   private calendarReadings: CalendarEntries = {};
   private readingsData: ReadingDay = null;
