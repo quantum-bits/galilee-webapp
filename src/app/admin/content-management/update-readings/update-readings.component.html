@@ -29,8 +29,22 @@
     </div>
     <div  class="col s12 m8 offset-m2 l8">
       <div class="row">
-        <div *ngIf="dateString" class="col s12">
-          <h1>Reading Day Name: </h1>
+        <div *ngIf="readingsData">
+          <div class="col s6">
+            <h5>{{readingsData.name}}</h5>
+          </div>
+          <div class="col s6">
+            <a class="waves-effect waves-light btn right btn-space"
+               (click)="editReadingDayName()">
+              <i class="material-icons left">edit</i>
+              <span *ngIf="readingsData.name">
+                Update Name
+              </span>
+              <span *ngIf="!readingsData.name">
+                Add Name
+              </span>
+            </a>
+          </div>
         </div>
         <div class="col s12">
           <update-readings-list #readingsList
@@ -54,5 +68,6 @@
 </div>
 
 <app-update-reading-day-name-modal
+  (readingDayObject)="getReadingDayModalObject($event)"
   #updateReadingDayModal>
 </app-update-reading-day-name-modal>
