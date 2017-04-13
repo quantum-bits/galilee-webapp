@@ -160,4 +160,14 @@ export class UserService {
       .map(res => res.json());
   }
 
+  inGroups() {
+    if (this.currentUser.groups == null || this.currentUser.groups.length == 0){
+      return false;
+    }
+    else {
+      return true;
+    }
+
+  }
+
 }

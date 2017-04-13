@@ -20,7 +20,7 @@ http://materializecss.com/footer.html
               Engage
             </a>
           </li>
-          <li *ngIf="isLoggedIn()">
+          <li *ngIf="isLoggedIn() && inAnyGroups()">
             <a (click)="goToForum()">
               Forum
             </a>
@@ -144,7 +144,7 @@ http://materializecss.com/footer.html
           Engage
         </a>
       </li>
-      <li *ngIf="isLoggedIn()">
+      <li *ngIf="isLoggedIn() && inAnyGroups()">
         <a (click)="goToForum()">
           Forum
         </a>
