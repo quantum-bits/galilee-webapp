@@ -88,7 +88,6 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
   }
 
   getReadingDayModalObject(readingDayObject: any) {
-    console.log(event);
     if (readingDayObject.isCreatingNewDay) {
       this.createNewReadingDay(readingDayObject.name, readingDayObject.date);
     } else {
@@ -99,12 +98,9 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
   }
 
   updateReadingDay(readingDay: ReadingDay) {
-    console.log(readingDay);
     this.readingDayService.updateReadingDay(readingDay)
       .subscribe(
-        result => {
-          console.log("Reading day updated!");
-        },
+        result => { },
         error => {
           console.log("Error updating reading day", error);
         }
