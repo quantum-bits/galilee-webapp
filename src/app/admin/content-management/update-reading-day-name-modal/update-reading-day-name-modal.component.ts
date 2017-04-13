@@ -5,10 +5,11 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   templateUrl: './update-reading-day-name-modal.component.html'
 })
 export class UpdateReadingDayNameModalComponent implements OnInit {
-  @Output() readingDayName = new EventEmitter<string>();
+  @Output() readingDayObject = new EventEmitter<any>();
 
   private date: string;
   private name: string;
+  private isCreatingNewDay: boolean;
 
   modalActions = new EventEmitter();
 
@@ -16,9 +17,10 @@ export class UpdateReadingDayNameModalComponent implements OnInit {
 
   ngOnInit() { }
 
-  openModal(date: string, name: string = "") {
+  openModal(date: string, isCreatingNewDay: boolean = false, name: string = "") {
     this.date = date;
     this.name = name;
+    this.isCreatingNewDay = isCreatingNewDay;
     this.modalActions.emit({action: "modal", params: ['open']});
   }
 
@@ -28,7 +30,9 @@ export class UpdateReadingDayNameModalComponent implements OnInit {
 
   submitModal() {
     this.modalActions.emit({action: "modal", params: ['close']});
-    this.readingDayName.emit(this.name);
+    this.readingDayObject.emit({name: this.name, 
+                                isCreatingNewDay: this.isCreatingNewDay
+                                date: this.date});
   }
 
 }

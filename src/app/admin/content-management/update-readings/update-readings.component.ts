@@ -83,25 +83,39 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
       );
   }
 
-  daySelected(dateString: string) {
-    // do something....
-    console.log('dateString: ', dateString);
-    this.dateString = dateString;
-    if (dateString in this.calendarReadings) {
-      console.log('we have a reading for this day!');
-      this.router.navigate(['/admin/update-readings', this.dateString]);
+  editReadingDayName() {
+    this.updateReadingDayModal.openModal(this.dateString, false, this.readingsData.name);
+  }
+
+  getReadingDayModalObject(readingDayObject: any) {
+    console.log(event);
+    if (readingDayObject.isCreatingNewDay) {
+      this.createNewReadingDay(readingDayObject.name, readingDayObject.date);
     } else {
-      console.log('no readings for this day; creating one....');
-      /** TODO:
-       *    - modal with form to ask for readingDay.name, if appropriate
-       *    - onCancel reloads '/admin/update-readings', but with no dateString
-       *    - onSubmit creates the readingDay and then, upon success, loads '/admin/update-readings' with the dateString for the new readingDay
-       */
-      this.updateReadingDayModal.openModal(this.dateString);
+      this.readingsData.name = readingDayObject.name;
+      this.updateReadingDay(this.readingsData);
+    }
+
+  }
+
+  updateReadingDay(readingDay: ReadingDay) {
+    console.log(readingDay);
+    this.readingDayService.updateReadingDay(readingDay)
+      .subscribe(
+        result => {
+          console.log("Reading day updated!");
+        },
+        error => {
+          console.log("Error updating reading day", error);
+        }
+      )
+  }
+
+  createNewReadingDay(readingDayName: string, dateString: string) {
       let readingDay: ReadingDay = {
         id: null,
         date: dateString,
-        name: '',// for now, create a new ReadingDay with no 'name' field
+        name: readingDayName,
         directions: [],
         readings: []
       };
@@ -129,6 +143,18 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
             console.log('error trying to create new readingDay', error);
           }
         );
+  }
+
+  daySelected(dateString: string) {
+    // do something....
+    console.log('dateString: ', dateString);
+    this.dateString = dateString;
+    if (dateString in this.calendarReadings) {
+      console.log('we have a reading for this day!');
+      this.router.navigate(['/admin/update-readings', this.dateString]);
+    } else {
+      console.log('no readings for this day; creating one....');
+      this.updateReadingDayModal.openModal(this.dateString, true);
     }
   }
 

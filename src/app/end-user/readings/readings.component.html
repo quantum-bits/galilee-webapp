@@ -101,6 +101,9 @@
 <!-- Current reading, possibly with practice types shown -->
 <div class="container row">
   <div *ngIf="initializationComplete ">
+    <div class="center" *ngIf="readingsData">
+      <h5>{{readingsData.name}}</h5>
+    </div>
     <div class="col s12 m10 offset-m1 l7">
       <app-reading-item
         [todaysReadings]="todaysReadings"
