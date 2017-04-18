@@ -17,13 +17,16 @@ export class PracticePreparationComponent implements OnInit {
 
   private stepIndex: number = 0;
   private infoUrl: string = "";
+  private showInfoUrl: boolean = true;
 
   constructor(private router: Router) { }
 
   ngOnInit() {
     if (this.practiceData.practice.infoUrl === "" || this.practiceData.practice.infoUrl === null ) {
-      this.infoUrl = DEFAULT_INFO_URL;
+        //this.infoUrl = DEFAULT_INFO_URL;
+      this.showInfoUrl = false;
     } else {
+      this.showInfoUrl = true;
       this.infoUrl = this.practiceData.practice.infoUrl;
     }
   }

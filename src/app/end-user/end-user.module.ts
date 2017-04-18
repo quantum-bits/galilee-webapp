@@ -51,13 +51,6 @@ const routes: Routes = [
         redirectTo: 'readings/today',
         pathMatch: 'full'
       },
-      /*
-      {
-        path: 'dashboard',
-        component: DashboardComponent,
-        canActivate: [AuthGuard]
-      },
-      */
       {
         // dateString can be 'YYYY-MM-DD' or 'today'
         path: 'readings/:dateString',
