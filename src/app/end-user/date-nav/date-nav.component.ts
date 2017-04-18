@@ -33,6 +33,8 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
 
   private subscription: Subscription;
 
+  private readings: any;
+
   constructor(private router: Router,
               private readingService: ReadingService,
               private dateNavSpyService: DateNavSpyService) {
@@ -43,8 +45,7 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
       });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   ngOnChanges(){
     this.setRCLDate(this.dateString);
@@ -54,6 +55,7 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
           calendarReadings => {
             console.log(calendarReadings);
             this.calendarReadings = calendarReadings;
+
             this.initializeDateNav();
           },
           error => {
@@ -144,7 +146,7 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
     this.days = days;
     this.setShiftPermissions();
 
-    //console.log(this.calendarReadings);
+    this.createReadingsArrayforDatePicker();
   }
 
   disabledMessage(disabled: boolean){
@@ -223,7 +225,25 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   materializeDatePickerParams() {
-    return [{ selectYears: 15 }];
+    return [{ selectYears: true, selectMonths: true, disable: this.readings, onSet: this.setDate }];
+  }
+
+  createReadingsArrayforDatePicker() {
+    if (this.readings == null || this.readings == undefined) {
+      this.readings = [];
+    
+      this.readings.push(true);
+      
+      for (var key in this.calendarReadings) {
+        var pieces = key.split("-");
+        var date = [parseInt(pieces[0]), parseInt(pieces[1]), parseInt(pieces[2])];
+        this.readings.push(date);
+      }
+    }
+  }
+
+  setDate(context) {
+    console.log(context);
   }
 
 }
