@@ -125,6 +125,21 @@ const routes: Routes = [
         //static info page about the rcl
         path: 'info-rcl',
         component: InfoRCLComponent
+      },
+      {
+        //static help page account-creation
+        path: 'help-create-account',
+        component: HelpCreateAccountComponent
+      },
+      {
+        //static help page how-forum
+        path: 'help-how-forum',
+        component: HelpHowForumComponent
+      },
+      {
+        //static help page how-journal
+        path: 'help-how-journal',
+        component: HelpHowJournalComponent
       }
     ]
   }
