@@ -185,6 +185,17 @@ http://materializecss.com/footer.html
         </ul>
       </li>
 
+      <li>
+        <a (click)="toggleHelpDropdown($event)" class="waves-effect">
+          Help
+        </a>
+        <ul *ngIf="showHelpDropdown" class="nav-bar-submenu">
+          <li><a [routerLink]="['/end-user/help-create-account']">Account Creation</a></li>
+          <li><a [routerLink]="['/end-user/help-how-forum']">How to use the forum</a></li>
+          <li><a [routerLink]="['/end-user/help-how-journal']">How to use the journal</a></li>
+        </ul>
+      </li>
+
 
 
     </ul>
