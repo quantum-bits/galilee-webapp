@@ -21,6 +21,7 @@ declare var $: any; // for using jQuery within this angular component
 export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() dateString: string = null;
+  @Input() pickerdate: string = null;
 
   private days: any;
   private calendarReadings: CalendarEntries = null;
@@ -86,8 +87,10 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
   setRCLDate(dateString: string) {
     if (dateString === 'today') {
       this.RCLDate = moment();
+      this.pickerdate = this.dateString;
     } else {
       this.RCLDate = moment(dateString);
+      this.pickerdate = this.dateString;
     }
   }
 
@@ -225,7 +228,7 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   materializeDatePickerParams() {
-    return [{ selectYears: true, selectMonths: true, disable: this.readings, onSet: this.setDate }];
+    return [{ selectYears: true, selectMonths: true, disable: this.readings }];
   }
 
   createReadingsArrayforDatePicker() {
@@ -242,8 +245,11 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  setDate(context) {
-    console.log(context);
+  updateDate(event) {
+    console.log(event);
+    console.log(this.pickerdate);
+    var date = new Date(event);
+    console.log(moment());
   }
 
 }
