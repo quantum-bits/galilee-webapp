@@ -49,7 +49,7 @@
           </li>
           <li class="tab">
             <!--<i class="material-icons prefix">today</i>-->
-            <input materialize="pickadate" type="date" class="datepicker" [materializeParams]="materializeDatePickerParams()" />
+            <input materialize="pickadate" type="date" class="datepicker" [ngModel]="this.pickerdate" (ngModelChange)="updateDate($event)" [materializeParams]="[{ selectYears: true, selectMonths: true, disable: this.readings, format: 'yyyy-mm-dd' }]" />
           </li>
         </ul>
       </div>
