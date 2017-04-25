@@ -42,7 +42,7 @@
               <i class="material-icons calendar">navigate_next</i>
             </a>
           </li>
-          <li class="tab">
+          <li *ngIf="currentUserIsAdmin" class="tab">
             <input materialize materialize="pickadate" type="date" class="datepicker" [ngModel]="this.pickerdate" (ngModelChange)="updateDate($event)" [materializeParams]="[{ disable: this.datepickerReadings, format: 'yyyy-mm-dd', min: this.datepickerMin, max: this.datepickerMax }]" />
           </li>
         </ul>
