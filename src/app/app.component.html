@@ -64,16 +64,6 @@ http://materializecss.com/footer.html
             </a>
           </li>
 
-          <li>
-            <a materialize="dropdown"
-               data-alignment="right"
-               data-beloworigin="true"
-               class='dropdown-button'
-               data-activates='helpDropdownMenu'>
-              <i class="material-icons">help</i>
-            </a>
-          </li>
-
 
           <!-- using [hidden] so that the element still instantiates oninit;
                otherwise the dropdown doesn't work after the user logs in -->
@@ -92,6 +82,15 @@ http://materializecss.com/footer.html
             <a *ngIf="!isLoggedIn()"
                [routerLink]="['/login']">
               <i class="material-icons">account_circle</i>
+            </a>
+          </li>
+          <li>
+            <a materialize="dropdown"
+               data-alignment="right"
+               data-beloworigin="true"
+               class='dropdown-button'
+               data-activates='helpDropdownMenu'>
+              <i class="material-icons">help</i>
             </a>
           </li>
         </ul>
