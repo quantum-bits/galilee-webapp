@@ -41,15 +41,9 @@
             <a *ngIf="canShiftRight" class="include-pointer" (click)="shiftWeek(1)">
               <i class="material-icons calendar">navigate_next</i>
             </a>
-            <!--
-            <a (click)="openDatepicker()">
-              <i class="material-icons calendar">date_range</i>
-            </a>
-            -->
           </li>
           <li class="tab">
-            <!--<i class="material-icons prefix">today</i>-->
-            <input materialize="pickadate" type="date" class="datepicker" [ngModel]="this.pickerdate" (ngModelChange)="updateDate($event)" [materializeParams]="[{ selectYears: true, selectMonths: true, disable: this.readings, format: 'yyyy-mm-dd' }]" />
+            <input materialize materialize="pickadate" type="date" class="datepicker" [ngModel]="this.pickerdate" (ngModelChange)="updateDate($event)" [materializeParams]="[{ disable: this.datepickerReadings, format: 'yyyy-mm-dd', min: this.datepickerMin, max: this.datepickerMax }]" />
           </li>
         </ul>
       </div>
