@@ -34,7 +34,9 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
 
   private subscription: Subscription;
 
-  private readings: any;
+  private datepickerReadings: any;
+  private datepickerMin: any = false;
+  private datepickerMax: any = false;
 
   constructor(private router: Router,
               private readingService: ReadingService,
@@ -87,7 +89,7 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
   setRCLDate(dateString: string) {
     if (dateString === 'today') {
       this.RCLDate = moment();
-      this.pickerdate = this.dateString;
+      this.pickerdate = this.RCLDate.format('YYYY-MM-DD');
     } else {
       this.RCLDate = moment(dateString);
       this.pickerdate = this.dateString;
@@ -145,7 +147,6 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
       });
       date = date.clone().add(1,'d');
     }
-    console.log('days: ', days);
     this.days = days;
     this.setShiftPermissions();
 
@@ -228,28 +229,34 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   materializeDatePickerParams() {
-    return [{ selectYears: true, selectMonths: true, disable: this.readings }];
+    return [{ selectYears: true, selectMonths: true, disable: this.datepickerReadings }];
   }
 
   createReadingsArrayforDatePicker() {
-    if (this.readings == null || this.readings == undefined) {
-      this.readings = [];
+    if (this.datepickerReadings == null || this.datepickerReadings == undefined) {
+      this.datepickerReadings = [];
     
-      this.readings.push(true);
+      this.datepickerReadings.push(true);
       
       for (var key in this.calendarReadings) {
-        var pieces = key.split("-");
-        var date = [parseInt(pieces[0]), parseInt(pieces[1]), parseInt(pieces[2])];
-        this.readings.push(date);
+        if (this.calendarReadings[key] > 0) {
+          var pieces = key.split("-");
+          var date = [parseInt(pieces[0]), parseInt(pieces[1]) - 1, parseInt(pieces[2])];
+          this.datepickerReadings.push(date);
+        }
       }
+
+      this.datepickerMax = this.datepickerReadings[this.datepickerReadings.length - 1];
+      this.datepickerMin = this.datepickerReadings[1];
     }
   }
 
   updateDate(event) {
-    console.log(event);
-    console.log(this.pickerdate);
-    var date = new Date(event);
-    console.log(moment());
+    if (event != this.RCLDate.format('YYYY-MM-DD') && event != "") {
+      this.pickerdate = event;
+      this.RCLDate = moment(event);
+      this.router.navigate(['/end-user/readings', event]);
+    }
   }
 
 }
