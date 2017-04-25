@@ -84,6 +84,15 @@ http://materializecss.com/footer.html
               <i class="material-icons">account_circle</i>
             </a>
           </li>
+          <li>
+            <a materialize="dropdown"
+               data-alignment="right"
+               data-beloworigin="true"
+               class='dropdown-button'
+               data-activates='helpDropdownMenu'>
+              <i class="material-icons">help</i>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
@@ -172,6 +181,17 @@ http://materializecss.com/footer.html
         <ul *ngIf="showResourcesDropdown" class="nav-bar-submenu">
           <li><a [routerLink]="['/end-user/info-galilee']">Galilee</a></li>
           <li><a [routerLink]="['/end-user/info-rcl']">Reading Plan</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a (click)="toggleHelpDropdown($event)" class="waves-effect">
+          Help
+        </a>
+        <ul *ngIf="showHelpDropdown" class="nav-bar-submenu">
+          <li><a [routerLink]="['/end-user/help-create-account']">Account Creation</a></li>
+          <li><a [routerLink]="['/end-user/help-how-forum']">How to use the forum</a></li>
+          <li><a [routerLink]="['/end-user/help-how-journal']">How to use the journal</a></li>
         </ul>
       </li>
 
@@ -275,6 +295,13 @@ http://materializecss.com/footer.html
   <li><a [routerLink]="['/admin/manage-users']">Manage Users</a></li>
   <li class="divider"></li>
   <li><a href="#!">Other...?</a></li>
+</ul>
+
+<!-- Dropdown Structure -->
+<ul id='helpDropdownMenu' class='dropdown-content medium-width'>
+  <li><a [routerLink]="['/end-user/help-create-account']">Account Creation?</a></li>
+  <li><a [routerLink]="['/end-user/help-how-forum']">How to use the forum</a></li>
+  <li><a [routerLink]="['/end-user/help-how-journal']">How to use the journal</a></li>
 </ul>
 
 <!-- Dropdown Structure

@@ -40,6 +40,9 @@ import {InfoRCLComponent} from './info-rcl/info-rcl.component';
 import {TagPickerComponent} from './tag-picker/tag-picker.component';
 import { DailyPracticeComponent } from './daily-practice/daily-practice.component';
 import { DateNavComponent } from './date-nav/date-nav.component';
+import { HelpCreateAccountComponent } from './help-create-account/help-create-account.component';
+import { HelpHowForumComponent } from './help-how-forum/help-how-forum.component';
+import { HelpHowJournalComponent } from './help-how-journal/help-how-journal.component';
 
 const routes: Routes = [
   {
@@ -122,6 +125,21 @@ const routes: Routes = [
         //static info page about the rcl
         path: 'info-rcl',
         component: InfoRCLComponent
+      },
+      {
+        //static help page account-creation
+        path: 'help-create-account',
+        component: HelpCreateAccountComponent
+      },
+      {
+        //static help page how-forum
+        path: 'help-how-forum',
+        component: HelpHowForumComponent
+      },
+      {
+        //static help page how-journal
+        path: 'help-how-journal',
+        component: HelpHowJournalComponent
       }
     ]
   }
@@ -168,7 +186,10 @@ const routes: Routes = [
     InfoRCLComponent,
     TagPickerComponent,
     DailyPracticeComponent,
-    DateNavComponent
+    DateNavComponent,
+    HelpCreateAccountComponent,
+    HelpHowForumComponent,
+    HelpHowJournalComponent
   ]
 })
 export class EndUserModule {
