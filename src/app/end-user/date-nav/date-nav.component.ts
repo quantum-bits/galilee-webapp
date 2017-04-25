@@ -8,6 +8,8 @@ import {ReadingService} from '../../shared/services/reading.service';
 import {DateNavSpyService} from '../../shared/services/date-nav-spy.service';
 
 import {CalendarEntries} from '../../shared/interfaces/calendar-entries.interface';
+import {UserService} from '../../authentication/user.service';
+import {ADMIN} from '../../shared/models/permission.model';
 
 declare var $: any; // for using jQuery within this angular component
 
@@ -37,10 +39,12 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
   private datepickerReadings: any;
   private datepickerMin: any = false;
   private datepickerMax: any = false;
+  private currentUserIsAdmin: boolean;
 
   constructor(private router: Router,
               private readingService: ReadingService,
-              private dateNavSpyService: DateNavSpyService) {
+              private dateNavSpyService: DateNavSpyService,
+              private userService: UserService) {
     this.subscription = dateNavSpyService.dateNavUpdated$
       .subscribe(message => {
         console.log('SPY....received message: ', message);
@@ -48,7 +52,12 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
       });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.userService.watchCurrentUser()
+      .subscribe(user => {
+        this.currentUserIsAdmin = this.userService.can(ADMIN);
+      });
+   }
 
   ngOnChanges(){
     this.setRCLDate(this.dateString);
