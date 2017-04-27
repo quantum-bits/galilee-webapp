@@ -34,6 +34,7 @@ export class ReadingService {
   updateReadingsRefresh$ = this.updateReadingsRefreshSource.asObservable();
 
   constructor(private http: Http, private authHttp: AuthHttp) {
+
   }
 
   returnTemp() {
@@ -64,6 +65,11 @@ export class ReadingService {
     return this.http
       .get('/api/versions')
       .map(resp => resp.json());
+  }
+  getVersionById(id: number): Observable<Version> {
+    return this.http
+      .get(`/api/versions/${id}`)
+      .map(res => res.json());
   }
 
   setCurrentVersion(version: Version) {

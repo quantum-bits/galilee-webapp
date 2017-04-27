@@ -9,6 +9,7 @@ import {SharedModule} from '../shared/shared.module';
 import {AuthGuard} from './auth.guard';
 import {UserService}  from './user.service';
 import {AuthenticationService} from './authentication.service';
+import {MaterializeModule} from "angular2-materialize";
 
 import {LoginComponent} from './login';
 import {SignupComponent} from './signup';
@@ -46,6 +47,7 @@ const routes: Routes = [
     AdminModule,
     CommonModule,
     FormsModule,
+    MaterializeModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
     SharedModule,

@@ -32,6 +32,7 @@ export class ReadingItemComponent implements OnInit, OnChanges {
     console.log('today readings: ', this.todaysReadings);
     console.log(this.includeNavigationBar);
     this.modifyHeaderStyle();
+
   }
 
   ngOnChanges(){

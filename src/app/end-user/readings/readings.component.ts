@@ -54,6 +54,7 @@ export class ReadingsComponent implements OnInit, OnDestroy {
               private userService: UserService,
               private router: Router,
               private route: ActivatedRoute) {
+
     this.subscription = this.readingService.updateReadingsRefresh$.subscribe(
       message => {
         console.log('received instructions to refresh!');
@@ -70,8 +71,29 @@ export class ReadingsComponent implements OnInit, OnDestroy {
   private todaysReadings: string[] = []; // list of human-readable reading descriptions, in the same order as the actual readings
 
   ngOnInit() {
+    if(this.userService.getCurrentUser().preferredVersionId != null){
+      this.readingService.getVersionById(this.userService.getCurrentUser().preferredVersionId)
+        .subscribe(
+          version => {
+            console.log('I SET THE VERSION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+            this.readingService.setCurrentVersion(version);
+            this.setup();
+          },
+          error => {
+            console.log('error retrieving default version');
+            this.setup();
+          }
+
+        );
+    }
+    else{
+      this.setup();
+    }
+  }
+
+  setup(){
     this.route.params.subscribe(params => {
-      console.log('readings -- received route params');
+      console.log('readings -- received route params!');
       this.dateString = params['dateString'];
       if ('readingIndex' in params){
         this.currentReadingIndex = +params['readingIndex'];

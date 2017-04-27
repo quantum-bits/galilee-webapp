@@ -21,7 +21,7 @@ export class User {
   lastName: string;
   joinedOn: string;
   enabled: boolean;
-  preferredVersionID: number;
+  preferredVersionId: number;
   permissions: Array<Permission>;
   groups: Array<Group>;
 
@@ -32,7 +32,7 @@ export class User {
     this.lastName = obj.lastName;
     this.joinedOn = obj.joinedOn;
     this.enabled = obj.enabled;
-    this.preferredVersionID = obj.preferredVersionId;
+    this.preferredVersionId = obj.preferredVersionId;
 
     // TODO: This can probably be simplified.
     this.permissions = [];

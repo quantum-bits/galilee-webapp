@@ -95,21 +95,25 @@
                 <div class="col s6 valign">
                   Default Translation
                 </div>
-                <div class="col s6 valign">
-                  NKJV
-                </div>
-                <!--
+
                 <div class="col s6 valign">
                   <a materialize="dropdown"
-                     class='dropdown-button'
-                     data-activates='preferencesTranslationsDropdownMenu'>
-                    <span class="grey-text">
-                        {{chosenTranslation}}
-                      <i class="material-icons">arrow_drop_down</i>
-                    </span>
+                     class='dropdown-button waves-effect btn-flat'
+                     data-activates='versionDropdownMenu'>
+                      {{chosenVersion}}
+                      <i class="material-icons lr-arrow">arrow_drop_down</i>
                   </a>
+
+                  <!-- Dropdown Structure -->
+                  <ul id='versionDropdownMenu' class='dropdown-content'>
+                    <li *ngFor="let version of availableVersions">
+                      <a (click)="updateDefaultVersion(version)">
+                        {{version.code}}
+                      </a>
+                    </li>
+                  </ul>
                 </div>
-                -->
+
               </div>
             </div>
 
@@ -128,11 +132,3 @@
 
 
 
-<!-- Dropdown Structure -->
-<ul id='preferencesTranslationsDropdownMenu' class='dropdown-content'>
-  <li *ngFor="let translation of translations">
-    <a>
-      {{translation}}
-    </a>
-  </li>
-</ul>
