@@ -236,11 +236,7 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-
-  materializeDatePickerParams() {
-    return [{ selectYears: true, selectMonths: true, disable: this.datepickerReadings }];
-  }
-
+  
   createReadingsArrayforDatePicker() {
     if (this.datepickerReadings == null || this.datepickerReadings == undefined) {
       this.datepickerReadings = [];
