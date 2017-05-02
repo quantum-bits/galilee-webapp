@@ -26,8 +26,9 @@ import {UpdateResourcesComponent} from './content-management/update-resources';
 import {UploadResourceComponent} from './content-management/upload-resource';
 import {ManageReadingComponent} from './content-management/manage-reading/manage-reading.component';
 import {UpdateReadingsComponent} from './content-management/update-readings/update-readings.component';
-import {UpdateReadingsListComponent} from './content-management/update-readings-list/update-readings-list.component';
+import {UpdateReadingsListComponent, UpdatePracticeFormFlyDirective} from './content-management/update-readings-list/update-readings-list.component';
 import {UpdatePracticeFormComponent} from './content-management/update-practice-form/update-practice-form.component';
+import {UpdatePracticeFormFlyComponent} from './content-management/update-practice-form-fly/update-practice-form-fly.component';
 import {DisplayDirectionStepsComponent} from './content-management/display-direction-steps/display-direction-steps.component';
 import {DisplayReadingModalComponent} from './content-management/display-reading-modal/display-reading-modal.component';
 import {
@@ -81,14 +82,17 @@ const routes: Routes = [
     PassagePickerComponent,
     VerseRangeComponent,
     PickerAnchorDirective,
-    UpdateDailyPracticesListComponent
+    UpdateDailyPracticesListComponent,
+    UpdatePracticeFormFlyComponent,
+    UpdatePracticeFormFlyDirective
   ],
   exports: [
     EditUserComponent
   ],
   entryComponents: [
     EditUserComponent,
-    VerseRangeComponent
+    VerseRangeComponent,
+    UpdatePracticeFormFlyComponent
   ],
   imports: [
     CommonModule,

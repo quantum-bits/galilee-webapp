@@ -1,6 +1,8 @@
-import {Component, OnInit, Input, Output, EventEmitter, ViewChild} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, ViewChild, Directive, ViewContainerRef, 
+        ComponentFactory, ComponentFactoryResolver, ComponentRef} from '@angular/core';
 
 import {UpdatePracticeFormComponent} from '../update-practice-form/update-practice-form.component';
+import {UpdatePracticeFormFlyComponent} from '../update-practice-form-fly/update-practice-form-fly.component';
 
 import {DisplayReadingModalComponent} from '../display-reading-modal/display-reading-modal.component';
 import {DeleteItemModalComponent} from '../../../shared/components/delete-item-modal/delete-item-modal.component';
@@ -13,6 +15,14 @@ import {Direction} from '../../../shared/interfaces/direction.interface';
 import {ReadingService} from '../../../shared/services/reading.service';
 import {PracticeService} from "../../../shared/services/practice.service";
 import {PassageRef} from "../passage-picker/passage.model";
+
+@Directive({
+  selector: '[update-practice-form-fly]',
+})
+export class UpdatePracticeFormFlyDirective {
+  constructor(public viewContainerRef: ViewContainerRef) {
+  }
+}
 
 @Component({
   selector: 'update-readings-list',
@@ -31,6 +41,8 @@ export class UpdateReadingsListComponent implements OnInit {
   @ViewChild('deleteReadingModal') modalDeleteReading: DeleteItemModalComponent;
   @ViewChild('deleteDirectionModal') modalDeleteDirection: DeleteItemModalComponent;
   @ViewChild('updateDirectionModal') modalUpdateDirection: UpdatePracticeFormComponent;
+  // Each update practice form component is attached as a sibling of this view child.
+  @ViewChild(UpdatePracticeFormFlyDirective) updatePracticeFormAnchor: UpdatePracticeFormFlyDirective;
 
   private allPractices: Practice[];
 
@@ -45,13 +57,18 @@ export class UpdateReadingsListComponent implements OnInit {
   private isNewDirection: boolean = true;
   private directionType = DirectionType.reading;
 
+  // Container for all practice form components.
+  private updatePracticeFromViewContainerRef: ViewContainerRef = null;
+
   constructor(private readingService: ReadingService,
               private directionService: DirectionService,
-              private practiceService: PracticeService) {
+              private practiceService: PracticeService,
+              private componentFactoryResolver: ComponentFactoryResolver) {
   }
 
   ngOnInit() {
     this.fetchPractices();
+    this.updatePracticeFromViewContainerRef = this.updatePracticeFormAnchor.viewContainerRef;
   }
 
   fetchPractices() {
@@ -107,7 +124,22 @@ export class UpdateReadingsListComponent implements OnInit {
     this.directionIndex = eventData.directionIndex;
     this.isNewDirection = false;
     this.incrementer++;
-    this.modalUpdateDirection.openModal();
+    this.createUpdatePracticeFormComponent();
+    //this.modalUpdateDirection.openModal();
+  }
+
+  createUpdatePracticeFormComponent() {
+    let componentFactory: ComponentFactory<UpdatePracticeFormFlyComponent> =
+      this.componentFactoryResolver.resolveComponentFactory(UpdatePracticeFormFlyComponent);
+
+    let componentRef: ComponentRef<UpdatePracticeFormFlyComponent> =
+      this.updatePracticeFromViewContainerRef.createComponent(componentFactory);
+    
+    componentRef.changeDetectorRef.detectChanges();
+
+    let updatePracticeFormComponent = componentRef.instance;
+
+    updatePracticeFormComponent.openModal();
   }
 
   displayReading(i: number) {
