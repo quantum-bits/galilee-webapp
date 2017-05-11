@@ -9,6 +9,9 @@ describe('InfoGalileeComponent', () => {
   let component: InfoGalileeComponent;
   let fixture: ComponentFixture<InfoGalileeComponent>;
 
+  let de: DebugElement;
+  let el: HTMLElement;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ InfoGalileeComponent ]
@@ -20,9 +23,20 @@ describe('InfoGalileeComponent', () => {
     fixture = TestBed.createComponent(InfoGalileeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
+    de = fixture.debugElement.query(By.css('.info'));
+    el = de.nativeElement;
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should say something about Galilee Project', () => {
+    expect(el.textContent).toContain('Galilee Project');
+  });
+
+  it('should have a link to Scripture Engagement', () => {
+    expect(el.textContent).toContain('Scripture Engagement');
   });
 });
