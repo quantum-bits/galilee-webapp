@@ -106,8 +106,8 @@
 
 <!-- Dropdown Structure -->
 <ul id='todaysReadingsDropdownMenu' class='dropdown-content reading-dropdown-content'>
-  <li *ngFor="let reading of todaysReadings; let i=index">
-    <a (click)="goToReading(i)">
+  <li *ngFor="let reading of todaysReadings; let i=index" [ngStyle]="currentlySelectedReadingStyle(i)">
+    <a [ngStyle]="currentlySelectedReadingStyle(i)" (click)="goToReading(i)">
       {{reading}}
     </a>
   </li>
