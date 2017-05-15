@@ -45,6 +45,7 @@ export class AppComponent implements OnInit {
   private showPracticesDropdown: boolean = false;
   private showResourcesDropdown: boolean = false;
   private showAdminDropdown: boolean = false;
+  private showHelpDropdown: boolean = false;
 
   constructor(private readingService: ReadingService,
               private practiceService: PracticeService,
@@ -128,9 +129,18 @@ export class AppComponent implements OnInit {
     this.showResourcesDropdown = !this.showResourcesDropdown;
   }
 
+toggleHelpDropdown(event){
+    event.stopPropagation();
+    this.showHelpDropdown = !this.showHelpDropdown;
+  }
+
   toggleAdminDropdown(event){
     event.stopPropagation();
     this.showAdminDropdown = !this.showAdminDropdown;
+  }
+
+  inAnyGroups() {
+    return this.userService.inGroups();
   }
 
 }
