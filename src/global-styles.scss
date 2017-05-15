@@ -1,0 +1,80 @@
+@import "src/materialize-src/sass/components/_color.scss";
+
+// ==========================================================================
+// Materialize Components
+// ==========================================================================
+
+// _global.scss
+// ==========================================================================
+
+// Collections
+.collection {
+  &.with-header {
+    .collection-header {
+      background-color: $primary-color; /* KK */ /* $collection-bg-color;*/
+      color: #FFFFFF; /* KK */
+    }
+  }
+}
+
+// _cards.scss
+// ==========================================================================
+
+.card {
+  // Card Sizes
+  &.small, &.medium, &.large {
+    .card-title-bar {/* KK */
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+  }
+
+  // Sticky Action Section
+  &.sticky-action {
+    .card-title-bar { /* KK */
+      z-index: 2;
+    }
+  }
+
+  .card-title-bar { /* KK */
+    position: relative;
+    background-color: $primary-color;
+    color: #FFFFFF;
+    /* border-top: 1px solid rgba(160,160,160,.2); */
+    padding: $card-padding;
+  }
+}
+
+// _dropdown.scss
+// ==========================================================================
+
+.dropdown-content {
+  li {
+    &:hover, &.active, &.selected {
+      color: $dropdown-color;/* KK */
+    }
+
+    & > a, & > span {
+      color: $primary-color;/* KK */
+    }
+  }
+}
+
+// ==========================================================================
+// HTML Style (style.scss)
+// ==========================================================================
+
+nav {
+  // background-color: color("materialize-red", "lighten-2");
+
+  ul li a:hover, ul li.active {
+    background-color: $primary-color-dark;/* KK */ /* color("materialize-red", "lighten-1"); */
+    color: $dropdown-color;/* KK */
+  }
+}
+
+.include-pointer { /* LJ */
+     cursor: pointer !important;
+ }
