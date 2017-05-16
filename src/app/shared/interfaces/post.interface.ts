@@ -13,7 +13,6 @@ export interface IPost {
   response_post_id?: number; //if present, then the current post is a response to another post
   //userId: number;
   // TODO: add name for user so can include that in the post
-
 }
 
 export interface IGroupPostData {

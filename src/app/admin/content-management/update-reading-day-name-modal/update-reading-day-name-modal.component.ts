@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'app-update-reading-day-name-modal',
@@ -13,9 +13,11 @@ export class UpdateReadingDayNameModalComponent implements OnInit {
 
   modalActions = new EventEmitter();
 
-  constructor() { }
+  constructor() {
+  }
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
 
   openModal(date: string, isCreatingNewDay: boolean = false, name: string = "") {
     this.date = date;
@@ -30,9 +32,10 @@ export class UpdateReadingDayNameModalComponent implements OnInit {
 
   submitModal() {
     this.modalActions.emit({action: "modal", params: ['close']});
-    this.readingDayObject.emit({name: this.name, 
-                                isCreatingNewDay: this.isCreatingNewDay
-                                date: this.date});
+    this.readingDayObject.emit({
+      name: this.name,
+      isCreatingNewDay: this.isCreatingNewDay,
+      date: this.date
+    });
   }
-
 }

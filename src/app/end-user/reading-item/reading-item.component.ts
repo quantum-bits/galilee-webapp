@@ -109,4 +109,12 @@ export class ReadingItemComponent implements OnInit, OnChanges {
     this.reading.text = this.reading.text.replace(/<h3>/g, "<h4>").replace(/<\/h3>/g, "</h4>");
   }
 
+  currentlySelectedReadingStyle(i: number) {
+    if (i == this.currentReadingIndex) {
+      return { 'background-color': '#DFDFDF','box-shadow':'none', 'color':'#9F9F9F','cursor':'default' };
+    }
+    else {
+      return null;
+    }
+  }
 }
