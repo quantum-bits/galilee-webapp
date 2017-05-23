@@ -24,11 +24,15 @@ const routes: Routes = [
   {path: '', redirectTo: '/end-user/readings/today', pathMatch: 'full'}
 ];
 
-// TODO: Figure out why this is declared as it is (from the angular2-jwt docs).
+// We use noJwtError so that if there is no token in local storage,
+// we can still make authHttp requests to endpoints that have authentication
+// configured with `mode: try` (e.g., `GET /readings/meta`). Otherwise,
+// a non-authenticated user could not fetch date navigation metadata.
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
     tokenName: JWT_TOKEN_KEY,
-    tokenGetter: (() => localStorage.getItem(JWT_TOKEN_KEY))
+    tokenGetter: (() => localStorage.getItem(JWT_TOKEN_KEY)),
+    noJwtError: true
   }), http, options);
 }
 
@@ -55,7 +59,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   ],
   providers: [
     FormBuilder,
-    { provide: AuthHttp,
+    {
+      provide: AuthHttp,
       useFactory: authHttpServiceFactory,
       deps: [Http, RequestOptions]
     }

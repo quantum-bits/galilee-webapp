@@ -43,7 +43,10 @@
             </a>
           </li>
           <li *ngIf="currentUserIsAdmin" class="tab">
-            <input materialize materialize="pickadate" type="date" class="datepicker" [ngModel]="this.pickerdate" (ngModelChange)="updateDate($event)" [materializeParams]="[{ disable: this.datepickerReadings, format: 'yyyy-mm-dd', min: this.datepickerMin, max: this.datepickerMax }]" />
+            <input materialize materialize="pickadate" type="date" class="datepicker"
+                   [ngModel]="this.pickerdate"
+                   (ngModelChange)="updateDate($event)"
+                   [materializeParams]="[{ disable: this.datepickerReadings, format: 'yyyy-mm-dd', min: this.datepickerMin, max: this.datepickerMax }]" />
           </li>
         </ul>
       </div>
