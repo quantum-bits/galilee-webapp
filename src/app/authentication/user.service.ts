@@ -110,7 +110,7 @@ export class UserService {
   updatePreferredVersion(userId: number, preferredVersionId: number) {
     console.log('updating default version: ', preferredVersionId);
     return this.authHttp
-      .patch(`/api/users/preferredVersionId`, {preferredVersionId: preferredVersionId});
+      .patch(`/api/users/version`, {preferredVersionId: preferredVersionId});
   }
 
 
