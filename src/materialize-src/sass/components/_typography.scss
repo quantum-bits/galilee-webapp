@@ -27,6 +27,7 @@ h1, h2, h3, h4, h5, h6 {
 	line-height: 1.1;
 }
 
+/* KK edits begin */
 .ql-editor strong {
   font-weight: bold;
 }
@@ -34,12 +35,44 @@ h1, h2, h3, h4, h5, h6 {
 .step ul li {
   list-style-type: circle;
   padding-bottom: 10px;
+  margin-left: 2em;
 }
 
 .step ol li {
   list-style-type: decimal;
   padding-bottom: 10px;
+  /*margin-left: 2em;*/
 }
+
+.step strong {
+  font-weight: bold;
+}
+
+.step .ql-indent-1 {
+  /*
+  text-align:start;
+  text-indent:2em;
+  */
+  padding-left: 2em;
+}
+
+.step .ql-indent-2 {
+  /*
+  text-align:start;
+  text-indent:4em;
+  */
+  padding-left: 4em;
+}
+
+.step .ql-indent-3 {
+  /*
+  text-align:start;
+  text-indent:6em;
+  */
+  padding-left: 6em;
+}
+
+/* end of KK edits */
 
 // Header Styles
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a { font-weight: inherit; }
