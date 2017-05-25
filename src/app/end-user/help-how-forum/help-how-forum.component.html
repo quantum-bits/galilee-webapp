@@ -7,14 +7,18 @@
       </div>
       <div class="card-content">
         <p class="info">
-          Welcome to the Forum feature of Galilee.  
-          Research tells us that one of the most powerful means of growing spiritually is to communicate with others about Scripture.  
-          The Forum feature is a tool to communicate with others through Galilee.  
-          Your group might consist of a small group Bible study, a friend or two, a family or a mentor and mentee – whomever you'd like.  
-          On the Forum you can share prayer requests, your reflections from the readings, questions, encouragement, links to other websites – whatever you'd like. 
-          Whatever you write within Forum is only visible to the people you have added to your Forum group.   
-
-          To use the Forum feature, you must create your own personal account on the website.  To add members to your group, please contact the site administrator at <a href="mailto:galilee@taylor.edu">galilee@taylor.edu</a>.
+          Welcome to the Forum feature of Galilee.
+          Research tells us that one of the most powerful means of growing spiritually is to communicate with others about Scripture.
+          The Forum feature is a tool to communicate with others through Galilee.
+          Your group might consist of a small group Bible study, a friend or two, a family or a mentor and mentee – whomever you'd like.
+          On the Forum you can share prayer requests, your reflections from the readings, questions, encouragement, links to other websites – whatever you'd like.
+          Whatever you write within the Forum is only visible to the people you have added to your Forum group.
+          <span *ngIf="!isLoggedIn()">To use the Forum feature, you must <a [routerLink]="['/signup']">create your own personal account</a> on the website.</span>
+          <span *ngIf="isLoggedIn()&&inAnyGroups()">To get started, click on the Forum link at the top of this page.</span>
+          To
+          <span *ngIf="isLoggedIn()&&!inAnyGroups()"> start a group, or </span>
+          <span *ngIf="!isLoggedIn()"> start a group, or </span>
+          add members to your group, please contact the site administrator at <a href="mailto:galilee@taylor.edu">galilee@taylor.edu</a>.
         </p>
       </div>
       <!--

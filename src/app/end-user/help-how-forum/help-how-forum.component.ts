@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import {UserService} from '../../authentication/user.service';
+
 @Component({
   selector: 'app-help-how-forum',
   templateUrl: './help-how-forum.component.html',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HelpHowForumComponent implements OnInit {
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
+  }
+
+  isLoggedIn() {
+    return this.userService.isLoggedIn();
+  }
+
+  getCurrentUser(){
+    return this.userService.getCurrentUser();
+  }
+
+  inAnyGroups() {
+    return this.userService.inGroups();
   }
 
 }

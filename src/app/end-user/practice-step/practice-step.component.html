@@ -9,7 +9,9 @@
       <!--<div class="card-item">-->
       <!--<p><b>{{ reading.description }}</b></p>-->
       <br>
-      <p>{{practiceData.steps[stepIndex].description}} of {{practiceData.steps.length}}</p>
+      <p *ngIf="practiceData.steps.length > 1">Step {{stepIndex+1}} of {{practiceData.steps.length}}</p>
+      <br *ngIf="practiceData.steps.length > 1">
+      <p [innerHTML]="practiceData.steps[stepIndex].description" class="step"></p>
 
       <br>
 

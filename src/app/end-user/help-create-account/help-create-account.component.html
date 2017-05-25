@@ -7,9 +7,9 @@
       </div>
       <div class="card-content">
         <p class="info">
-          We'd like to encourage you to create a personal account on Galilee.  
-          The primary benefits of having a personal account are the ability to give you access to both the Journal and Forum features of the website.  
-          <a [routerLink]="['/signup']">Click here</a> to create an account.
+          We'd like to encourage you to create a personal account on Galilee.
+          The primary benefits of having a personal account are the ability to give you access to both the Journal and Forum features of the website.
+          <span *ngIf="!isLoggedIn()">Click <a [routerLink]="['/signup']">here</a> to create an account.</span>
         </p>
       </div>
       <!--

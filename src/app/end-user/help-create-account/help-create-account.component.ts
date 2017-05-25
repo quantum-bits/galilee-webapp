@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import {UserService} from '../../authentication/user.service';
+
 @Component({
   selector: 'app-help-create-account',
   templateUrl: './help-create-account.component.html',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HelpCreateAccountComponent implements OnInit {
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
+  }
+
+  isLoggedIn() {
+    return this.userService.isLoggedIn();
   }
 
 }
