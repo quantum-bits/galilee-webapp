@@ -33,8 +33,8 @@ export class ReadingService {
   // Observable string stream
   updateReadingsRefresh$ = this.updateReadingsRefreshSource.asObservable();
 
-  constructor(private http: Http, private authHttp: AuthHttp) {
-
+  constructor(private http: Http,
+              private authHttp: AuthHttp) {
   }
 
   returnTemp() {

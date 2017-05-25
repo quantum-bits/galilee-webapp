@@ -72,18 +72,26 @@ export class ReadingsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     let currentUser: User = this.userService.getCurrentUser();
 
+    console.log('inside ngoninit for readings comp; user is: ', currentUser);
+    //console.log('preferred version is: ',currentUser.preferredVersionId);
     if (currentUser) {
       if (currentUser.preferredVersionId != null) {
+        console.log('OK, user has a preferred version; gonna fetch that!');
         this.readingService.getVersionById(currentUser.preferredVersionId)
           .subscribe(
-            version => {
-              console.log(`User preference: set version to ${JSON.stringify(version)}`);
-              this.readingService.setCurrentVersion(version);
-            },
-            error => {
-              console.log('Error retrieving default version');
-            }
-          );
+          version => {
+            console.log(`User preference: set version to ${JSON.stringify(version)}`);
+            this.readingService.setCurrentVersion(version);
+            this.setUpReadings();
+          },
+          error => {
+            console.log('Error retrieving default version');
+            this.setUpReadings();
+          }
+        );
+      } else {
+        console.log('user has no preferred version');
+        this.setUpReadings();
       }
     } else {
       // No current user
@@ -91,12 +99,22 @@ export class ReadingsComponent implements OnInit, OnDestroy {
         .subscribe(version => {
             console.log(`Set default version to ${JSON.stringify(version)}`);
             this.readingService.setCurrentVersion(version);
+            this.setUpReadings();
           },
-          error => console.log("Error retrieving default version"));
+          error => {
+            console.log("Error retrieving default version");
+            this.setUpReadings();
+          }
+        );
     }
 
     // Always
-    this.setUpReadings();
+    // KK: commented this out and put it above so that readings would only
+    //     be fetched *after* version information has been retrieved
+    //     it's a bit clunky to have this.setUpReadings() in five separate
+    //     places (above), but if we put it here at the end, it gets called
+    //     before we have had a chance to set the version.
+    //this.setUpReadings();
   }
 
   setUpReadings() {

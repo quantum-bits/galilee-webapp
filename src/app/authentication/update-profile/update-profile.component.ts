@@ -74,6 +74,9 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
             this.currentUser.preferredVersionId = version.id;
             this.chosenVersion = version.code;
             this.userService.setCurrentUser(this.currentUser);
+            //set current version, and dump stored readings to force a refresh....
+            this.readingService.dumpStoredReadings();
+            this.readingService.setCurrentVersion(version);
           }
         },
         (error) => {

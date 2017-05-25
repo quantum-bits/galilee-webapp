@@ -113,6 +113,14 @@ export class UserService {
       .patch(`/api/users/version`, {preferredVersionId: preferredVersionId});
   }
 
+  getPreferredVersionId(): number {
+    if (this.isLoggedIn()){
+      //return this.currentUser;
+      return this.currentUser.preferredVersionId;
+    } else {
+      return null;
+    }
+  }
 
   signup(email, password, firstName, lastName) {
     return this.http.post('/api/users', {
