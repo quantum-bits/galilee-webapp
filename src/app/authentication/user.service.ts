@@ -107,6 +107,12 @@ export class UserService {
       .patch(`/api/users/password`, {password: password});
   }
 
+  updatePreferredVersion(userId: number, preferredVersionId: number) {
+    console.log('updating default version: ', preferredVersionId);
+    return this.authHttp
+      .patch(`/api/users/version`, {preferredVersionId: preferredVersionId});
+  }
+
 
   signup(email, password, firstName, lastName) {
     return this.http.post('/api/users', {
