@@ -1,6 +1,6 @@
 import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-import { Subscription }   from 'rxjs/Subscription';
+import {Subscription}   from 'rxjs/Subscription';
 
 import {ReadingService} from '../../shared/services/reading.service';
 import {PostService} from '../../shared/services/post.service';
@@ -24,7 +24,7 @@ const MAX_NUMBER_POSTS = 5;
   templateUrl: './readings.component.html',
   styleUrls: ['./readings.component.css'],
   providers: [//ReadingService
-    ]
+  ]
 })
 export class ReadingsComponent implements OnInit, OnDestroy {
 
@@ -54,6 +54,7 @@ export class ReadingsComponent implements OnInit, OnDestroy {
               private userService: UserService,
               private router: Router,
               private route: ActivatedRoute) {
+
     this.subscription = this.readingService.updateReadingsRefresh$.subscribe(
       message => {
         console.log('received instructions to refresh!');
@@ -70,10 +71,30 @@ export class ReadingsComponent implements OnInit, OnDestroy {
   private todaysReadings: string[] = []; // list of human-readable reading descriptions, in the same order as the actual readings
 
   ngOnInit() {
+    if (this.userService.getCurrentUser().preferredVersionId != null) {
+      this.readingService.getVersionById(this.userService.getCurrentUser().preferredVersionId)
+        .subscribe(
+          version => {
+            console.log('version set');
+            this.readingService.setCurrentVersion(version);
+            this.setup();
+          },
+          error => {
+            console.log('error retrieving default version');
+            this.setup();
+          }
+        );
+    }
+    else {
+      this.setup();
+    }
+  }
+
+  setup() {
     this.route.params.subscribe(params => {
-      console.log('readings -- received route params');
+      console.log('readings -- received route params!');
       this.dateString = params['dateString'];
-      if ('readingIndex' in params){
+      if ('readingIndex' in params) {
         this.currentReadingIndex = +params['readingIndex'];
       }
       this.fetchReadings();
@@ -87,7 +108,7 @@ export class ReadingsComponent implements OnInit, OnDestroy {
     });
   }
 
-  fetchReadings(){
+  fetchReadings() {
     this.readingService.fetchSavedReadings(this.dateString)
       .subscribe(
         readings => {
@@ -109,7 +130,7 @@ export class ReadingsComponent implements OnInit, OnDestroy {
       );
   }
 
-  fetchGroupPosts(){
+  fetchGroupPosts() {
     this.postService.getAllUserPosts(this.maxNumberPosts)
       .subscribe(
         userPostData => {
@@ -126,19 +147,19 @@ export class ReadingsComponent implements OnInit, OnDestroy {
       );
   }
 
-  userLoggedIn(){
+  userLoggedIn() {
     return this.userService.isLoggedIn();
   }
 
-  currentReadingExists(){
-    if ((this.currentReadingIndex < 0)||(this.currentReadingIndex >= this.readingsData.readings.length)) {
+  currentReadingExists() {
+    if ((this.currentReadingIndex < 0) || (this.currentReadingIndex >= this.readingsData.readings.length)) {
       return false;
     } else {
       return true;
     }
   }
 
-  initializeReadingInfo(){
+  initializeReadingInfo() {
     console.log('inside initializeReadingInfo');
     this.numberReadings = this.readingsData.readings.length;
     console.log(this.numberReadings);
@@ -147,10 +168,10 @@ export class ReadingsComponent implements OnInit, OnDestroy {
     this.initializationComplete = true;
   }
 
-  updateReadingDescriptionMenu(){
+  updateReadingDescriptionMenu() {
     this.readingDescriptions = [];
     var loopIndex = 0;
-    for (var reading of this.readingsData.readings){
+    for (var reading of this.readingsData.readings) {
       this.readingDescriptions.push(
         {
           'description': this.readingsData.readings[loopIndex].stdRef,
@@ -167,23 +188,23 @@ export class ReadingsComponent implements OnInit, OnDestroy {
   }
 
   // for the secondary side-nav
-  toggleReadingsDropdown(event){
+  toggleReadingsDropdown(event) {
     event.stopPropagation();
     this.showReadingsDropdown = !this.showReadingsDropdown;
   }
 
   // for the secondary side-nav
-  toggleTranslationsDropdown(event){
+  toggleTranslationsDropdown(event) {
     event.stopPropagation();
     this.showTranslationsDropdown = !this.showTranslationsDropdown;
   }
 
-  openJournal(){
+  openJournal() {
     console.log('open the journal!');
     this.router.navigate(['/end-user/journal-entry']);
   }
 
-  getTemp(){
+  getTemp() {
     console.log(this.readingService.returnTemp());
   }
 

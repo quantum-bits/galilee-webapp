@@ -114,7 +114,7 @@ export class EditUserComponent implements OnInit {
       lastName: '',
       joinedOn: null,//this will be assigned by the server-side code later
       enabled: true,
-      preferredVersionID: null,
+      preferredVersionId: null,
       permissions: [],
       groups: []
     });
@@ -349,7 +349,7 @@ export class EditUserComponent implements OnInit {
         firstName: [this.userData.firstName, [<any>Validators.required]],
         lastName: [this.userData.lastName, [<any>Validators.required]],
         enabled: [true, [<any>Validators.required]],
-        preferredVersionID: [this.userData.preferredVersionID],
+        preferredVersionId: [this.userData.preferredVersionId],
         permissions: this.formBuilder.array(
           this.initPermissionArray(this.userData.permissions, this.permissionTypes)),
       });
@@ -359,7 +359,7 @@ export class EditUserComponent implements OnInit {
         firstName: [this.userData.firstName, [<any>Validators.required]],
         lastName: [this.userData.lastName, [<any>Validators.required]],
         enabled: [true, [<any>Validators.required]],
-        preferredVersionID: [this.userData.preferredVersionID],
+        preferredVersionId: [this.userData.preferredVersionId],
         permissions: this.formBuilder.array(
           this.initPermissionArray(this.userData.permissions, this.permissionTypes)),
       });
