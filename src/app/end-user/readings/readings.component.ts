@@ -6,12 +6,11 @@ import {ReadingService} from '../../shared/services/reading.service';
 import {PostService} from '../../shared/services/post.service';
 import {UserService} from '../../authentication/user.service';
 
-import {Reading} from '../../shared/models/reading.model';
 import {ReadingDay} from '../../shared/interfaces/reading.interface';
-//import {Version} from '../../shared/interfaces/version.interface';
 import {GroupPostData} from '../../shared/models/group-post-data.model';
 
 import {SimpleModalComponent} from "./simple-modal.component";
+import {User} from "../../shared/models/user.model";
 
 //TODO: fix BUG -- on secondary side-nav, clicking on a passage goes to the passage,
 //      but does not close the side-nav
@@ -71,26 +70,36 @@ export class ReadingsComponent implements OnInit, OnDestroy {
   private todaysReadings: string[] = []; // list of human-readable reading descriptions, in the same order as the actual readings
 
   ngOnInit() {
-    if (this.userService.getCurrentUser().preferredVersionId != null) {
-      this.readingService.getVersionById(this.userService.getCurrentUser().preferredVersionId)
-        .subscribe(
-          version => {
-            console.log('version set');
+    let currentUser: User = this.userService.getCurrentUser();
+
+    if (currentUser) {
+      if (currentUser.preferredVersionId != null) {
+        this.readingService.getVersionById(currentUser.preferredVersionId)
+          .subscribe(
+            version => {
+              console.log(`User preference: set version to ${JSON.stringify(version)}`);
+              this.readingService.setCurrentVersion(version);
+            },
+            error => {
+              console.log('Error retrieving default version');
+            }
+          );
+      }
+    } else {
+      // No current user
+      this.readingService.getDefaultVersion()
+        .subscribe(version => {
+            console.log(`Set default version to ${JSON.stringify(version)}`);
             this.readingService.setCurrentVersion(version);
-            this.setup();
           },
-          error => {
-            console.log('error retrieving default version');
-            this.setup();
-          }
-        );
+          error => console.log("Error retrieving default version"));
     }
-    else {
-      this.setup();
-    }
+
+    // Always
+    this.setUpReadings();
   }
 
-  setup() {
+  setUpReadings() {
     this.route.params.subscribe(params => {
       console.log('readings -- received route params!');
       this.dateString = params['dateString'];

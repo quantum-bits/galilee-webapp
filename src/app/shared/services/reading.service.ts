@@ -67,6 +67,12 @@ export class ReadingService {
       .map(resp => resp.json());
   }
 
+  getDefaultVersion(): Observable<Version> {
+    return this.http
+      .get('/api/versions/default')
+      .map(res => res.json());
+  }
+
   getVersionById(id: number): Observable<Version> {
     return this.http
       .get(`/api/versions/${id}`)
