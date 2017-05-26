@@ -30,12 +30,15 @@ end of sticky footer declarations
   margin-right: 20px;
 }
 
+.large-width {
+  min-width: 250px;
+}
 .medium-width {
-  min-width: 250px
+  min-width: 150px;
 }
 
 .narrow-width {
-  max-width: 100px
+  max-width: 150px;
 }
 
 .nav-bar-submenu {
@@ -51,9 +54,11 @@ end of sticky footer declarations
   padding-right: 10px;
 }
 
+/*
 .dropdown-content {
-  min-width: 150px
+  min-width: 100px
 }
+*/
 
 .link-underline {
   border-bottom: 1px dotted #fff;
