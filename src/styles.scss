@@ -1,13 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 
-// Variables must be imported first so that they can be used across all other
-// style sheets and so that they take priority over the Materialize variables
+// Variables must be imported first so they can be used across all other
+// style sheets and take priority over the Materialize variables.
 @import "global-variables.scss";
 
-@import "src/materialize-src/sass/ghpages-materialize.scss";
+@import 'src/materialize-src/sass/ghpages-materialize.scss';
 
 // The custom global styles must be imported last so that they 'cascade'
-// over top of the materialize styles and take priority.
+// over the materialize styles and take priority.
 @import "global-styles.scss";
 
-/* this no worky: @import "../src/app/shared/css/materialize2.css";*/
