@@ -9,6 +9,8 @@ import {AuthHttp} from 'angular2-jwt';
 
 import {AuthenticationService} from './authentication.service';
 
+import {ReadingService} from '../shared/services/reading.service';
+
 import {User} from '../shared/models/user.model';
 import {LoginData} from '../shared/interfaces/login-data.interface';
 import {Version} from '../shared/interfaces/version.interface';
@@ -54,6 +56,7 @@ export class UserService {
   redirectUrl: string = "";
 
   constructor(private authenticationService: AuthenticationService,
+              private readingService: ReadingService,
               private authHttp: AuthHttp,
               private router: Router,
               private http: Http) {
@@ -70,6 +73,9 @@ export class UserService {
       .subscribe((user: User) => {
         if (this.authenticationService.isAuthenticated()) {
           this.setCurrentUser(user);
+          // clear the readings data and currentVersionId so the user starts with a fresh set-up
+          this.readingService.dumpStoredReadings();
+          this.readingService.unSetCurrentVersion();
           let redirect = this.authenticationService.redirectUrl || DEFAULT_REDIRECT_URL;
           this.router.navigate([redirect]);
         } else {

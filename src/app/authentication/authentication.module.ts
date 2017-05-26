@@ -9,6 +9,7 @@ import {SharedModule} from '../shared/shared.module';
 import {AuthGuard} from './auth.guard';
 import {UserService}  from './user.service';
 import {AuthenticationService} from './authentication.service';
+import {ReadingService} from '../shared/services/reading.service';
 import {MaterializeModule} from "angular2-materialize";
 
 import {LoginComponent} from './login';
@@ -61,6 +62,6 @@ const routes: Routes = [
   ],
   exports: [
   ],
-  providers: [AuthGuard, AuthenticationService, UserService]
+  providers: [AuthGuard, AuthenticationService]//, UserService]
 })
 export class AuthenticationModule {}

@@ -27,7 +27,8 @@ import {DateNavSpyService} from "./shared/services/date-nav-spy.service";
     ReadingService,
     ResourceService,
     DirectionService,
-    DateNavSpyService
+    DateNavSpyService,
+    UserService
   ]
 })
 export class AppComponent implements OnInit {

@@ -18,7 +18,7 @@ export class SpyDirective implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log('SPY: afterViewInit');
+    //console.log('SPY: afterViewInit');
     this.dateNavSpyService.broadcastDateNavUpdate();
   }
 

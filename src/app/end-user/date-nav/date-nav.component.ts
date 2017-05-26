@@ -47,7 +47,7 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
               private userService: UserService) {
     this.subscription = dateNavSpyService.dateNavUpdated$
       .subscribe(message => {
-        console.log('SPY....received message: ', message);
+        //console.log('SPY....received message: ', message);
         this.updateTabSlider();
       });
   }
@@ -65,7 +65,7 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
       this.readingService.getReadingMetadata()
         .subscribe(
           calendarReadings => {
-            console.log(calendarReadings);
+            //console.log(calendarReadings);
             this.calendarReadings = calendarReadings;
 
             this.initializeDateNav();
@@ -88,9 +88,9 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
 
   updateTabSlider() {
     this.tabCounter++;
-    console.log('tabCounter: ', this.tabCounter);
+    //console.log('tabCounter: ', this.tabCounter);
     if (this.tabCounter === 7) {
-      console.log('XXXXXXXXXXX moving tab to: ', this.currentDateIndex);
+      //console.log('XXXXXXXXXXX moving tab to: ', this.currentDateIndex);
       let tabId = 'date-nav-tab' + this.currentDateIndex;
       $('ul.tabs').tabs('select_tab', 'date-nav-tab' + this.currentDateIndex);
     }
@@ -116,7 +116,7 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
       if (this.dateContainsReadings(date.format('YYYY-MM-DD'))) {
         this.canShiftRight = true;
       }
-      console.log(date.format('YYYY-MM-DD'));
+      //console.log(date.format('YYYY-MM-DD'));
       date.add(1, 'd');
     }
     date = this.RCLDate.clone().startOf('week').subtract(1, 'week');
@@ -124,7 +124,7 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
       if (this.dateContainsReadings(date.format('YYYY-MM-DD'))) {
         this.canShiftLeft = true;
       }
-      console.log(date.format('YYYY-MM-DD'));
+      //console.log(date.format('YYYY-MM-DD'));
       date.add(1, 'd');
     }
   }
@@ -178,10 +178,10 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
     let index = 0;
     let nonEmptyReadingDayFound = false;
     while (Math.abs(index) < 7 && !nonEmptyReadingDayFound) {
-      console.log(index);
+      //console.log(index);
       if (this.dateContainsReadings(date.format('YYYY-MM-DD'))){
         nonEmptyReadingDayFound = true;
-        console.log('found reading!', this.RCLDate, this.calendarReadings);
+        //console.log('found reading!', this.RCLDate, this.calendarReadings);
       } else {
         date.add(unitDirection, 'd');
       }
@@ -236,13 +236,13 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-  
+
   createReadingsArrayforDatePicker() {
     if (this.datepickerReadings == null || this.datepickerReadings == undefined) {
       this.datepickerReadings = [];
-    
+
       this.datepickerReadings.push(true);
-      
+
       for (var key in this.calendarReadings) {
         if (this.calendarReadings[key] > 0) {
           var pieces = key.split("-");
