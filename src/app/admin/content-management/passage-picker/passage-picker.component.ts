@@ -121,10 +121,13 @@ export class PassagePickerComponent implements OnInit {
 
   // Container for all verse range component.
   private verseRangeViewContainerRef: ViewContainerRef = null;
+
   // Factory object that constucts passage references.
   private passageRefFactory: PassageRefFactory = null;
+
   // Are we in add (vs. update) mode?
   private isAddMode = true;
+
   // Contains the reading being updated when in update mode.
   private currentReading: IReading = null;
 
@@ -139,7 +142,7 @@ export class PassagePickerComponent implements OnInit {
   }
 
   // Set up the component to work with a given passage. Sets the passage reference,
-  // clears any exsiting verse range pickers, and constructs a new set.
+  // clears any existing verse range pickers, and constructs a new set.
   private configForPassage(passageRef?: PassageRef) {
     if (!passageRef) {
       // No passageRef supplied in template; create a default one.
