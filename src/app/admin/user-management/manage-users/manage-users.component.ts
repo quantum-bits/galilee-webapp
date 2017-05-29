@@ -25,6 +25,15 @@ import {PermissionFilterType} from '../../../shared/models/permission-filter.mod
 
 import { UserService } from '../../../authentication/user.service';
 
+// WORKING HERE (5/29/17):
+// https://www.npmjs.com/package/angular2-materialize
+// - add a modal to this page; make sure can open it and close it
+// - create a modal-anchor.directive
+// - try to instantiate that modal from here (see if it is now in the page)
+// - then try to launch it
+// - then try to put data in it (edit user component, etc.)
+
+
 // WORKING HERE:
 // - interface for UserAttribute; needs render() attribute (could use moment() for
 //   rendering...?)
@@ -52,10 +61,12 @@ export class ManageUsersComponent implements OnInit {
   // other helpful examples (including sass for styling, async call to server, multiple pagination instances, etc.)
   // using the pagination package: https://github.com/michaelbromley/ng2-pagination
 
-  @ViewChild(DialogAnchorDirective) dialogAnchor: DialogAnchorDirective;
+  //@ViewChild(DialogAnchorDirective) dialogAnchor: DialogAnchorDirective;
 
-  @ViewChild('placeholder', {read: ViewContainerRef}) viewContainerRef;
-  private componentFactory: any;
+  //@ViewChild('placeholder', {read: ViewContainerRef}) viewContainerRef;
+  //private componentFactory: any;
+  //private editUserComponent: any;
+  //private editUserComponentRef: any;
   //componentRef: ComponentRef;
 
   // http://stackoverflow.com/questions/36325212/angular-2-dynamic-tabs-with-user-click-chosen-components/36325468#36325468
@@ -82,7 +93,7 @@ export class ManageUsersComponent implements OnInit {
   public autoHide: boolean = false;//used by pagination component
   public config: PaginationInstance = {//used by pagination component
     id: 'advanced',
-    itemsPerPage: 10,
+    itemsPerPage: 2,
     currentPage: 1
   };
 
@@ -128,8 +139,8 @@ export class ManageUsersComponent implements OnInit {
   constructor(private userService: UserService,
               private componentFactoryResolver: ComponentFactoryResolver) {
               //compiler: Compiler) {
-    this.componentFactory = componentFactoryResolver.resolveComponentFactory(EditUserComponent);
-    console.log(this.componentFactory);
+    //this.componentFactory = componentFactoryResolver.resolveComponentFactory(EditUserComponent);
+    //console.log(this.componentFactory);
   }
 
   ngOnInit() {
@@ -299,31 +310,51 @@ export class ManageUsersComponent implements OnInit {
     console.log(this.filteredUsers);
   }
 
-
   createNewUser() {
-
-
-    let the_dialog = this.editUserAnchor.createDialog(EditUserComponent).instance;
-    //the_dialog.title = "Overridden Title";
-    //the_dialog.message = "I'm an overridden message.";
-
-
-
-    /*
-    this.editUserAnchor
-      .createDialog(EditUserComponent)
-      .then((editUserComponentRef) => {
-          editUserComponentRef.instance.someText = "overwriting the text!";
-        }
-      );
-      */
+    this.editUserAnchor.viewContainer.clear();
+    let componentFactory = this.componentFactoryResolver.resolveComponentFactory(EditUserComponent);
+    this.editUserAnchor.viewContainer.createComponent(componentFactory).instance;
+    //let componentRef = this.editUserAnchor.viewContainer.createComponent(componentFactory);
+    //let editUserComponent = componentRef.instance;
+    //componentRef.instance;
+    //console.log(this.editUserComponent);
   }
 
+  editUser(user: User) {
+    this.editUserAnchor.viewContainer.clear();
+    let componentFactory = this.componentFactoryResolver.resolveComponentFactory(EditUserComponent);
+    let componentRef = this.editUserAnchor.viewContainer.createComponent(componentFactory);
+    componentRef.instance.userData = user;
+    componentRef.instance.updateField = 'name';
+    //let componentRef = this.viewContainerRef.createComponent(this.componentFactory, 0);
+    // FIXME is it safe to fix these after the fact like this?  how do we know it
+    // will get done before OnInit?  Could put it in OnChanges as well, as a back-up;
+    // should probably put in a delay, and see if it will fire up OnChanges that way....
+    //componentRef.instance.userData = user;
+  }
+
+
+  closeNewUserDialog() {
+    this.editUserAnchor.viewContainer.clear();
+    //let index = this.editUserAnchor.viewContainer.indexOf(this.editUserComponentRef.hostView);
+    //this.editUserAnchor.viewContainer.remove(index);
+    //console.log('index: ',index);
+  }
+
+  //delete
+
+
+  /*
   openDialogBox() {
     let the_dialog = this.dialogAnchor.createDialog(DialogComponent).instance;
     the_dialog.title = "Overridden Title";
     the_dialog.message = "I'm an overridden message.";
   }
+  */
+
+  /*
+
+  // the approach below works, but doesn't seem to be the standard way to do this...(?)
 
   addItem(){
     let componentRef = this.viewContainerRef.createComponent(this.componentFactory, 0);
@@ -340,4 +371,5 @@ export class ManageUsersComponent implements OnInit {
     // should probably put in a delay, and see if it will fire up OnChanges that way....
     componentRef.instance.userData = user;
   }
+  */
 }

@@ -22,26 +22,40 @@ import {
 })
 export class EditUserAnchorDirective {
 
-  constructor(private viewContainer: ViewContainerRef,
-              private componentFactoryResolver: ComponentFactoryResolver
+  constructor(public viewContainer: ViewContainerRef//,
+              //private componentFactoryResolver: ComponentFactoryResolver
   ) {
     console.log('inside constructor');
   }
 
+  /*
   createDialog(editUserComponent) {
     this.viewContainer.clear();
 
     let editUserComponentFactory = this.componentFactoryResolver.resolveComponentFactory(editUserComponent);
 
-    let componentCreated = this.viewContainer.createComponent(editUserComponentFactory);
+    let editUserComponentRef = this.viewContainer.createComponent(editUserComponentFactory);
 
+    //editUserComponentRef.instance.close.subscribe(() => {
+    //  editUserComponentRef.destroy();
+    //});
     // TODO - This is causing compile errors [nurk 2016-09-20]
     // componentCreated.instance.close.subscribe(() => {
     //   componentCreated.destroy();
     // });
 
-    return componentCreated;
+    return editUserComponentRef;
   }
+  */
+
+
+  /*
+   verseRangeComponent.deletePicker = () => {
+   let index = this.verseRangeViewContainerRef.indexOf(componentRef.hostView);
+   this.verseRangeViewContainerRef.remove(index);
+   this.passageRef.verseRanges.splice(index, 1);
+   };
+   */
 
 
 /*

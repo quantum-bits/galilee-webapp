@@ -63,9 +63,14 @@ export class EditUserComponent implements OnInit {
     console.log('ADMIN is: ', ADMIN);
     console.log('typeof ADMIN is: ', typeof ADMIN);
 
+    this.currentUserIsAdmin = false;
     // get rid of current user
 
     if (this.userService.isLoggedIn()) {
+      console.log('user can ADMIN: ', this.userService.can(ADMIN));
+      console.log('current user: ', this.userService.getCurrentUser());
+      this.currentUserIsAdmin = this.userService.can(ADMIN);
+      console.log('currentUserIsAdmin: ', this.currentUserIsAdmin);
       //this.userService.can(ADMIN).subscribe(
       //  can => {
       //    console.log('current user has ADMIN permission: ', can);
@@ -75,7 +80,6 @@ export class EditUserComponent implements OnInit {
 
 
     // TODO: check whether currentUser is actually an admin
-    this.currentUserIsAdmin = false;
     console.log('inside ngOnInit of edit-user, here is userData:');
     console.log(this.userData);
 
@@ -220,8 +224,37 @@ export class EditUserComponent implements OnInit {
     );
   }
 
+  adminUpdate(){
+    // need something here for an admin to update someone else....
+
+    /*
+
+    WORKING HERE:
+    - need to check if the user is an admin; if so, don't do a self-update,
+      but do a separate one.  In particular, don't refresh setCurrentUser at the
+      end unless the current user is actually the same as the user being updated!!!
+    - not quite sure what the onClickedExit() and closeModal() methods do, but they may be
+      a way to close a modal, eventually....
+    - need some new api endpoints for patching a user (not as a self-update)
+    - need some new api endpoints for adding permissions on a post/patch
+
+
+
+
+     */
+
+
+
+
+
+
+
+
+  }
+
 
   selfUpdateName(){//only updates name
+    console.log('here is the user id: ', this.userData.id);
     let firstName = this.userForm.value.firstName;
     let lastName = this.userForm.value.lastName;
     this.userService.updateName(this.userData.id, firstName, lastName)
