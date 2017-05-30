@@ -1,16 +1,23 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, EventEmitter } from '@angular/core';
 
 import {
   //Compiler,
   ViewContainerRef, //ComponentRef, ComponentFactory,
-  ComponentFactoryResolver
+  ComponentFactoryResolver,
+  ReflectiveInjector
 } from '@angular/core'
+
+import { Subscription }   from 'rxjs/Subscription';
 
 import {TimeAgoPipe} from 'angular2-moment';
 
 import {EditUserComponent} from '../edit-user';
+import {EditUserModalComponent} from '../edit-user-modal';
 
 import { EditUserAnchorDirective } from '../edit-user-anchor.directive';
+import { EditUserModalAnchorDirective } from '../edit-user-modal-anchor.directive';
+
+import {MaterializeAction} from 'angular2-materialize';
 
 
 import {DialogComponent} from '../../temp/dialog.component';
@@ -55,9 +62,10 @@ declare var $: any; // for using jQuery within this angular component
   templateUrl: './manage-users.component.html',
   styleUrls: ['./manage-users.component.css']
 })
-export class ManageUsersComponent implements OnInit {
+export class ManageUsersComponent implements OnInit, OnDestroy {
 
   @ViewChild(EditUserAnchorDirective) editUserAnchor: EditUserAnchorDirective;
+  @ViewChild(EditUserModalAnchorDirective) editUserModalAnchor: EditUserModalAnchorDirective;
   // other helpful examples (including sass for styling, async call to server, multiple pagination instances, etc.)
   // using the pagination package: https://github.com/michaelbromley/ng2-pagination
 
@@ -73,6 +81,10 @@ export class ManageUsersComponent implements OnInit {
   // http://plnkr.co/edit/3dzkMVXe4AGSRhk11TXG?p=preview
 
 
+  modalActions = new EventEmitter<string|MaterializeAction>();
+  subscription: Subscription;
+
+  private modalComponent: any;
 
   private users: User[]; // will stay the same throughout
   private filteredUsers: User[]; // the list of filtered/sorted users displayed on the page
@@ -138,6 +150,11 @@ export class ManageUsersComponent implements OnInit {
 
   constructor(private userService: UserService,
               private componentFactoryResolver: ComponentFactoryResolver) {
+    this.subscription = this.userService.closeAndCleanUp$.subscribe(
+      message => {
+        console.log('received word from modal...!', message);
+        this.modalCloseAndCleanUp();
+      });
               //compiler: Compiler) {
     //this.componentFactory = componentFactoryResolver.resolveComponentFactory(EditUserComponent);
     //console.log(this.componentFactory);
@@ -341,35 +358,98 @@ export class ManageUsersComponent implements OnInit {
     //console.log('index: ',index);
   }
 
-  //delete
-
-
-  /*
-  openDialogBox() {
-    let the_dialog = this.dialogAnchor.createDialog(DialogComponent).instance;
-    the_dialog.title = "Overridden Title";
-    the_dialog.message = "I'm an overridden message.";
+  openModal() {
+    this.modalActions.emit({action:"modal",params:['open']});
   }
-  */
-
-  /*
-
-  // the approach below works, but doesn't seem to be the standard way to do this...(?)
-
-  addItem(){
-    let componentRef = this.viewContainerRef.createComponent(this.componentFactory, 0);
-
-    // FIXME should do some clean-up on the edit-user component upon exit; see here:
-    // http://stackoverflow.com/questions/36325212/angular-2-dynamic-tabs-with-user-click-chosen-components/36325468#36325468
-
+  closeModal() {
+    this.modalActions.emit({action:"modal",params:['close']});
   }
 
-  editUser(user: User) {
-    let componentRef = this.viewContainerRef.createComponent(this.componentFactory, 0);
+  openNewUserModal() {
+    this.editUserModalAnchor.viewContainer.clear();
+    let componentFactory = this.componentFactoryResolver.resolveComponentFactory(EditUserModalComponent);
+    this.modalComponent = this.editUserModalAnchor.viewContainer.createComponent(componentFactory).instance;
+  }
+
+  openEditUserModal(user: User) {
+    console.log('inside openEditUserModal');
+    this.editUserModalAnchor.viewContainer.clear();
+
+    /*
+
+    NOTE:
+      another approach to passing along the userData would be to use an
+      injector; in this case, the edit-user-component would need to get
+      the information from the injector (inside its constructor)....
+      for injecting inputs, see: http://blog.rangle.io/dynamically-creating-components-with-angular-2/
+      ...it would be something like this:
+      constructor(private injector: Injector) {
+        this.userData = this.injector.get('userData');
+      }
+      ...but then this would presumably gag when trying to instantiate this component
+      without using the injector....
+
+
+    let inputs = {
+      userData: user,
+      updateField: 'name'
+    }
+
+    console.log('inputs: ', inputs);
+
+    // Inputs need to be in the following format to be resolved properly
+    let inputProviders = Object.keys(inputs).map((inputName) => {return {provide: inputName, useValue: inputs[inputName]};});
+    let resolvedInputs = ReflectiveInjector.resolve(inputProviders);
+
+    console.log('inputProviders: ', inputProviders);
+    console.log('resolvedInputs: ', resolvedInputs);
+    // We create an injector out of the data we want to pass down and this components injector
+    let injector = ReflectiveInjector.fromResolvedProviders(resolvedInputs, this.editUserModalAnchor.viewContainer.parentInjector);
+
+    // We create a factory out of the component we want to create
+    let componentFactory = this.componentFactoryResolver.resolveComponentFactory(EditUserModalComponent);
+
+    // We create the component using the factory and the injector
+    let component = componentFactory.create(injector);
+
+    // We insert the component into the dom container
+    this.editUserModalAnchor.viewContainer.insert(component.hostView);
+
+    // Destroy the previously created component
+    //if (this.currentComponent) {
+    //  this.currentComponent.destroy();
+    //}
+
+    //this.currentComponent = component;
+
+    this.modalComponent = component;
+    */
+
+
+    let componentFactory = this.componentFactoryResolver.resolveComponentFactory(EditUserModalComponent);
+    this.modalComponent = this.editUserModalAnchor.viewContainer.createComponent(componentFactory).instance;
+    // fix the @Input() values....
+    this.modalComponent.userData = user;
+    this.modalComponent.updateField = 'name';
+
     // FIXME is it safe to fix these after the fact like this?  how do we know it
-    // will get done before OnInit?  Could put it in OnChanges as well, as a back-up;
-    // should probably put in a delay, and see if it will fire up OnChanges that way....
-    componentRef.instance.userData = user;
+    // will get done before OnInit?
+    // ...I have checked, and the inputs seem to be correctly fixed by the time
+    // ngOnInit runs, but is that guaranteed...?!?
   }
-  */
+
+
+  modalCloseAndCleanUp(){
+    // close the modal and then clear the viewContainer
+    this.modalComponent.closeModal();
+    this.editUserModalAnchor.viewContainer.clear();
+    // now...how to make page refresh...?!?
+  }
+  
+  ngOnDestroy() {
+    // prevent memory leak when component destroyed
+    this.subscription.unsubscribe();
+  }
+
+
 }

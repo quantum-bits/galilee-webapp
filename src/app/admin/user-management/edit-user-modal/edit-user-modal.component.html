@@ -1,0 +1,16 @@
+<!-- Modal Structure -->
+<div id="edit-user-modal1" class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions">
+  <div class="modal-content">
+
+    <app-edit-user
+      [userData] = "userData"
+      [updateField] = "updateField"
+    ></app-edit-user>
+
+
+  </div>
+  <div class="modal-footer">
+    <a class="waves-effect waves-green btn-flat" (click)="cancel()">Cancel</a>
+    <!--<a class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>-->
+  </div>
+</div>

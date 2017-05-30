@@ -59,6 +59,7 @@ export class EditUserComponent implements OnInit {
   ngOnInit() {
 
     console.log('inside edit-user oninit; update field is: ', this.updateField);
+    console.log('...and userData is: ', this.userData);
 
     console.log('ADMIN is: ', ADMIN);
     console.log('typeof ADMIN is: ', typeof ADMIN);
@@ -212,9 +213,11 @@ export class EditUserComponent implements OnInit {
         if (result.ok) {
           console.log('new user created OK!');
           //this.close.emit('event');
-          this.router.navigate(['/signup-success']);
-
-          //  this.closeModal(this.modalID);
+          if (this.currentUserIsAdmin) {
+            this.userService.announceCloseAndCleanUp('hey, new user has been created!!!');
+          } else {
+            this.router.navigate(['/signup-success']);
+          }
         }
       },
       (error) => {

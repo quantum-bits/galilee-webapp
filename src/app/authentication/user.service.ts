@@ -52,6 +52,12 @@ export class UserService {
   private authenticationFailureSource = new Subject<string>();
   authenticationFailure$ = this.authenticationFailureSource.asObservable();
 
+  // Observable used to signal that the create/edit user modal in the
+  // Manage Users page should be closed, and the dynamically-created
+  // component should be cleared
+  private closeAndCleanUpSource = new Subject<string>();
+  closeAndCleanUp$ = this.closeAndCleanUpSource.asObservable();
+
   // Redirect here after updating account information.
   redirectUrl: string = "";
 
@@ -88,6 +94,10 @@ export class UserService {
 
   announceAuthenticationFailure(message){
     this.authenticationFailureSource.next(message);
+  }
+
+  announceCloseAndCleanUp(message){
+    this.closeAndCleanUpSource.next(message);
   }
 
   // TODO: Delete me.

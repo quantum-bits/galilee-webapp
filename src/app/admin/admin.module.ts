@@ -13,10 +13,12 @@ import {FileUploadModule} from 'ng2-file-upload';
 import {QuillModule} from 'ngx-quill'
 
 import {EditUserComponent} from './user-management/edit-user/edit-user.component';
+import {EditUserModalComponent} from './user-management/edit-user-modal/edit-user-modal.component';
 
 import {AdminComponent} from './admin.component';
 import {EditReadingResourcesComponent} from './content-management/edit-reading-resources/edit-reading-resources.component';
 import {EditUserAnchorDirective} from './user-management/edit-user-anchor.directive';
+import {EditUserModalAnchorDirective} from './user-management/edit-user-modal-anchor.directive';
 import {ManageUsersComponent} from './user-management/manage-users/manage-users.component';
 import {UpdatePracticeItemComponent} from './content-management/update-practice-item';
 import {UpdatePracticesComponent} from './content-management/update-practices';
@@ -65,7 +67,9 @@ const routes: Routes = [
     AdminComponent,
     EditReadingResourcesComponent,
     EditUserAnchorDirective,
+    EditUserModalAnchorDirective,
     EditUserComponent,
+    EditUserModalComponent,
     ManageUsersComponent,
     UpdatePracticeItemComponent,
     UpdatePracticesComponent,
@@ -90,6 +94,7 @@ const routes: Routes = [
   ],
   entryComponents: [
     EditUserComponent,
+    EditUserModalComponent,
     VerseRangeComponent
   ],
   imports: [

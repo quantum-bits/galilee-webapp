@@ -3,8 +3,9 @@ import { Directive, ComponentFactoryResolver, ComponentRef
 } from '@angular/core';
 
 import { ViewContainerRef } from '@angular/core';
-import { EditUserComponent } from './edit-user';
+//import { EditUserComponent } from './edit-user';
 
+/*
 import {
   FormBuilder,
   FormGroup,
@@ -12,7 +13,7 @@ import {
   Validators, // used to make a field required
   FormControl
 } from '@angular/forms';
-
+*/
 //import { UserService } from '../../authentication/user.service';
 
 
