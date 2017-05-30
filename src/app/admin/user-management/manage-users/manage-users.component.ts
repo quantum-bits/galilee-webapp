@@ -32,15 +32,6 @@ import {PermissionFilterType} from '../../../shared/models/permission-filter.mod
 
 import { UserService } from '../../../authentication/user.service';
 
-// WORKING HERE (5/29/17):
-// https://www.npmjs.com/package/angular2-materialize
-// - add a modal to this page; make sure can open it and close it
-// - create a modal-anchor.directive
-// - try to instantiate that modal from here (see if it is now in the page)
-// - then try to launch it
-// - then try to put data in it (edit user component, etc.)
-
-
 // WORKING HERE:
 // - interface for UserAttribute; needs render() attribute (could use moment() for
 //   rendering...?)
@@ -49,7 +40,6 @@ import { UserService } from '../../../authentication/user.service';
 // ...or just put a static method on the user class
 
 declare var $: any; // for using jQuery within this angular component
-
 
 /*
  Dynamically injecting components:
@@ -68,14 +58,6 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
   @ViewChild(EditUserModalAnchorDirective) editUserModalAnchor: EditUserModalAnchorDirective;
   // other helpful examples (including sass for styling, async call to server, multiple pagination instances, etc.)
   // using the pagination package: https://github.com/michaelbromley/ng2-pagination
-
-  //@ViewChild(DialogAnchorDirective) dialogAnchor: DialogAnchorDirective;
-
-  //@ViewChild('placeholder', {read: ViewContainerRef}) viewContainerRef;
-  //private componentFactory: any;
-  //private editUserComponent: any;
-  //private editUserComponentRef: any;
-  //componentRef: ComponentRef;
 
   // http://stackoverflow.com/questions/36325212/angular-2-dynamic-tabs-with-user-click-chosen-components/36325468#36325468
   // http://plnkr.co/edit/3dzkMVXe4AGSRhk11TXG?p=preview
@@ -155,9 +137,6 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
         console.log('received word from modal...!', message);
         this.modalCloseAndCleanUp();
       });
-              //compiler: Compiler) {
-    //this.componentFactory = componentFactoryResolver.resolveComponentFactory(EditUserComponent);
-    //console.log(this.componentFactory);
   }
 
   ngOnInit() {
@@ -314,55 +293,9 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
     this.refreshFilteredUsers();
   }
 
-  onModalFinished(modalID: string){
-    // Note: must include the following declaration (above) in component:
-    //          declare var $: any;
-    console.log('about to close the modal....');
-    console.log('#'+modalID);
-    $('#'+modalID).closeModal();
-  }
-
   logUserLists(){
     console.log(this.users);
     console.log(this.filteredUsers);
-  }
-
-  createNewUser() {
-    this.editUserAnchor.viewContainer.clear();
-    let componentFactory = this.componentFactoryResolver.resolveComponentFactory(EditUserComponent);
-    this.editUserAnchor.viewContainer.createComponent(componentFactory).instance;
-    //let componentRef = this.editUserAnchor.viewContainer.createComponent(componentFactory);
-    //let editUserComponent = componentRef.instance;
-    //componentRef.instance;
-    //console.log(this.editUserComponent);
-  }
-
-  editUser(user: User) {
-    this.editUserAnchor.viewContainer.clear();
-    let componentFactory = this.componentFactoryResolver.resolveComponentFactory(EditUserComponent);
-    let componentRef = this.editUserAnchor.viewContainer.createComponent(componentFactory);
-    componentRef.instance.userData = user;
-    componentRef.instance.updateField = 'name';
-    //let componentRef = this.viewContainerRef.createComponent(this.componentFactory, 0);
-    // FIXME is it safe to fix these after the fact like this?  how do we know it
-    // will get done before OnInit?  Could put it in OnChanges as well, as a back-up;
-    // should probably put in a delay, and see if it will fire up OnChanges that way....
-    //componentRef.instance.userData = user;
-  }
-
-
-  closeNewUserDialog() {
-    this.editUserAnchor.viewContainer.clear();
-    //let index = this.editUserAnchor.viewContainer.indexOf(this.editUserComponentRef.hostView);
-    //this.editUserAnchor.viewContainer.remove(index);
-    //console.log('index: ',index);
-  }
-
-  openModal() {
-    this.modalActions.emit({action:"modal",params:['open']});
-  }
-  closeModal() {
-    this.modalActions.emit({action:"modal",params:['close']});
   }
 
   openNewUserModal() {
@@ -445,7 +378,7 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
     this.editUserModalAnchor.viewContainer.clear();
     // now...how to make page refresh...?!?
   }
-  
+
   ngOnDestroy() {
     // prevent memory leak when component destroyed
     this.subscription.unsubscribe();
