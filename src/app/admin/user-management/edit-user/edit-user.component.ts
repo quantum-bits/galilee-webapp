@@ -214,7 +214,8 @@ export class EditUserComponent implements OnInit {
           console.log('new user created OK!');
           //this.close.emit('event');
           if (this.currentUserIsAdmin) {
-            this.userService.announceCloseAndCleanUp('hey, new user has been created!!!');
+            let refreshUsers: boolean = true;
+            this.userService.announceCloseAndCleanUp(refreshUsers);
           } else {
             this.router.navigate(['/signup-success']);
           }
