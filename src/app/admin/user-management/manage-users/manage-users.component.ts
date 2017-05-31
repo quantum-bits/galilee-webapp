@@ -82,12 +82,11 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
   };
 
   //private eventCounter = 0;
-  public maxSize: number = 5;//used by pagination component (max # of pages indicated, including the '...')
-  public directionLinks: boolean = true;//used by pagination component
-  public autoHide: boolean = false;//used by pagination component
+  //public directionLinks: boolean = false;//used by pagination component
+  //public autoHide: boolean = true;//used by pagination component
   public config: PaginationInstance = {//used by pagination component
-    id: 'advanced',
-    itemsPerPage: 2,
+    //id: 'advanced',
+    itemsPerPage: 5,
     currentPage: 1
   };
 
@@ -133,9 +132,9 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
   constructor(private userService: UserService,
               private componentFactoryResolver: ComponentFactoryResolver) {
     this.subscription = this.userService.closeAndCleanUp$.subscribe(
-      message => {
-        console.log('received word from modal...!', message);
-        this.modalCloseAndCleanUp();
+      refreshUsers => {
+        console.log('received word from modal...!  Refresh Users?', refreshUsers);
+        this.modalCloseAndCleanUp(refreshUsers);
       });
   }
 
@@ -154,23 +153,28 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
             }
           );
         }
-        this.userService.getUsers().subscribe(
-          users => {
-            console.log(users);
-
-            this.users = users; // these are actual user objects now, along with associated methods
-            //create a copy of this.users called this.filteredUsers; this is what will be
-            //displayed, etc.
-            this.refreshFilteredUsers();
-            //this.filteredUsers = this.users;
-            // may need to build the filteredUsers list up from scratch...?!?
-            this.filterList();//sorts this.filteredUsers, but not this.users (since they are distinct in memory)
-          },
-          err => console.log("ERROR", err),
-          () => console.log("Users fetched"));
+        this.fetchUsers();
       },
       err => console.log("ERROR", err),
       () => console.log("Permission types fetched"));
+  }
+
+  fetchUsers() {
+    console.log('fetching user data....');
+    this.userService.getUsers().subscribe(
+      users => {
+        console.log('received user data! ', users);
+
+        this.users = users; // these are actual user objects now, along with associated methods
+        //create a copy of this.users called this.filteredUsers; this is what will be
+        //displayed, etc.
+        this.refreshFilteredUsers();
+        //this.filteredUsers = this.users;
+        // may need to build the filteredUsers list up from scratch...?!?
+        this.filterList();//sorts this.filteredUsers, but not this.users (since they are distinct in memory)
+      },
+      err => console.log("ERROR", err),
+      () => console.log("Users fetched"));
   }
 
   onKey(){
@@ -372,10 +376,13 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
   }
 
 
-  modalCloseAndCleanUp(){
+  modalCloseAndCleanUp(refreshUsers: boolean){
     // close the modal and then clear the viewContainer
     this.modalComponent.closeModal();
     this.editUserModalAnchor.viewContainer.clear();
+    if (refreshUsers) {
+      this.fetchUsers();
+    }
     // now...how to make page refresh...?!?
   }
 

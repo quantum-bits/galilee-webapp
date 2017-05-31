@@ -45,7 +45,8 @@ export class EditUserModalComponent implements OnInit, AfterViewInit {
     // could close the modal directly here, but need to both close
     // the modal and delete the component itself, so we let the
     // manage-users component take care of everything....
-    this.userService.announceCloseAndCleanUp('cancelling....!');
+    let refreshUsers: boolean = false;
+    this.userService.announceCloseAndCleanUp(refreshUsers);
   }
 
 }

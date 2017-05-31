@@ -36,7 +36,7 @@
     "ng2-datepicker": "^1.4.8",
     "ng2-dragula": "^1.2.2",
     "ng2-file-upload": "^1.1.4-2",
-    "ng2-pagination": "^2.0.0",
+    "ngx-pagination": "^3.0.0",
     "ngx-quill": "^1.0.0",
     "rxjs": "^5.0.1",
     "ts-helpers": "^1.1.1",

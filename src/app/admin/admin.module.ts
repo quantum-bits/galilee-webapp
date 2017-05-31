@@ -6,7 +6,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MaterializeModule} from "angular2-materialize";
 import {SharedModule} from '../shared/shared.module';
 
-import {Ng2PaginationModule} from 'ng2-pagination';
+import {NgxPaginationModule} from 'ngx-pagination';
 import {MomentModule} from 'angular2-moment';
 import {DragulaModule} from 'ng2-dragula/ng2-dragula';
 import {FileUploadModule} from 'ng2-file-upload';
@@ -104,7 +104,7 @@ const routes: Routes = [
     MaterializeModule,
     ReactiveFormsModule,
     RouterModule,
-    Ng2PaginationModule,
+    NgxPaginationModule,
     MomentModule,
     DragulaModule,
     FileUploadModule,

@@ -55,7 +55,7 @@ export class UserService {
   // Observable used to signal that the create/edit user modal in the
   // Manage Users page should be closed, and the dynamically-created
   // component should be cleared
-  private closeAndCleanUpSource = new Subject<string>();
+  private closeAndCleanUpSource = new Subject<boolean>();
   closeAndCleanUp$ = this.closeAndCleanUpSource.asObservable();
 
   // Redirect here after updating account information.
@@ -96,8 +96,8 @@ export class UserService {
     this.authenticationFailureSource.next(message);
   }
 
-  announceCloseAndCleanUp(message){
-    this.closeAndCleanUpSource.next(message);
+  announceCloseAndCleanUp(refreshUsers: boolean){
+    this.closeAndCleanUpSource.next(refreshUsers);
   }
 
   // TODO: Delete me.
