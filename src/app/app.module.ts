@@ -20,8 +20,10 @@ import {MomentModule} from 'angular2-moment';
 import {Ng2CompleterModule} from "ng2-completer";
 import {NgxPaginationModule} from 'ngx-pagination';
 
+// the following attempts to implement lazy loading of the admin module
 const routes: Routes = [
-  {path: '', redirectTo: '/end-user/readings/today', pathMatch: 'full'}
+  {path: '', redirectTo: '/end-user/readings/today', pathMatch: 'full'},
+  { path: 'admin', loadChildren: 'app/admin/admin.module#AdminModule' }
 ];
 
 // We use noJwtError so that if there is no token in local storage,

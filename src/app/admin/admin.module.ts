@@ -42,7 +42,7 @@ import { UpdateReadingDayNameModalComponent } from './content-management/update-
 
 const routes: Routes = [
   {
-    path: 'admin',
+    path: '',
     component: AdminComponent,
     children: [
       {path: '', redirectTo: 'edit-reading-resources', pathMatch: 'full'},
