@@ -163,13 +163,11 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
     console.log('fetching user data....');
     this.userService.getUsers().subscribe(
       users => {
-        console.log('received user data! ', users);
         this.users = [];
-
         users.forEach(user => {
           this.users.push(new User(user));
         });
-        console.log('user list!', this.users); // these are actual user objects now, along with associated methods
+        // these are actual user objects now, along with associated methods
         //create a copy of this.users called this.filteredUsers; this is what will be
         //displayed, etc.
         this.refreshFilteredUsers();
