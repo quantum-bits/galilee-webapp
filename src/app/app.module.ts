@@ -21,6 +21,9 @@ import {Ng2CompleterModule} from "ng2-completer";
 import {NgxPaginationModule} from 'ngx-pagination';
 
 // the following attempts to implement lazy loading of the admin module
+// TODO: probably need to remove AdminModule from the imports[] list below;
+//       currently that makes the app gag.  This may be because the edit-user
+//       component (inside the AdminModule) is used in various parts of the app; not sure....
 const routes: Routes = [
   {path: '', redirectTo: '/end-user/readings/today', pathMatch: 'full'},
   { path: 'admin', loadChildren: 'app/admin/admin.module#AdminModule' }
