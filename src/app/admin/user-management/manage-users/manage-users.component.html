@@ -85,6 +85,7 @@
               <i class="material-icons arrow">refresh</i>
               Reset Filters
             </button>
+            <button class="btn-flat" (click)="openNewUserModal()">add user</button>
           </div>
 
         </div>
@@ -97,7 +98,7 @@
               <tr>
                 <!-- sortable columns -->
                 <th *ngFor="let column of sortableColumns" data-field="column.value">
-                  <a class="grey-text text-darken-4" (click)="toggleSort(column.value)">{{column.name}}
+                  <a class="grey-text text-darken-4 include-pointer" (click)="toggleSort(column.value)">{{column.name}}
                     <span *ngIf="sortColumn == column.value">
                       <span *ngIf="sortAscending">
                         <i class="material-icons arrow">keyboard_arrow_up</i>
@@ -109,7 +110,7 @@
                   </a>
                 </th>
                 <th data-field="enabled">
-                  <a class="grey-text text-darken-4" (click)="toggleEnabled()">
+                  <a class="grey-text text-darken-4 include-pointer" (click)="toggleEnabled()">
                     <span [ngSwitch]="viewEnabledUsers">
                       <span *ngSwitchCase="userEnabledChoices[0]">Enabled?</span>
                       <span *ngSwitchCase="userEnabledChoices[1]">Enabled (only)</span>
@@ -203,7 +204,5 @@
     </div>
   </div>
 </div>
-
-<button class="btn" (click)="openNewUserModal()">add user</button>
 
 <div appEditUserModalAnchor></div>

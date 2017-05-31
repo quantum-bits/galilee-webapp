@@ -1,4 +1,5 @@
 import {Permission} from './permission.model';
+import {Version} from '../interfaces/version.interface';
 
 export interface Organization {
   id: number;
@@ -15,6 +16,7 @@ export interface Group {
 }
 
 export class User {
+  avatarUrl: string;
   id: number;
   email: string;
   firstName: string;
@@ -24,8 +26,10 @@ export class User {
   preferredVersionId: number;
   permissions: Array<Permission>;
   groups: Array<Group>;
+  version: Version;
 
   constructor(obj){
+    this.avatarUrl = obj.avatarUrl;
     this.id = obj.id;
     this.email = obj.email;
     this.firstName = obj.firstName;
@@ -44,7 +48,7 @@ export class User {
       this.groups.push(group);
     });
 
-
+    this.version = obj.version;
   }
 
   isEnabled() {
