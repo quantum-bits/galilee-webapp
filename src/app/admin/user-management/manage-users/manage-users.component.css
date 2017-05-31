@@ -13,4 +13,13 @@
   display: none;
 }
 
-
+li.active {
+  /*
+    KK: much of this style is taken from the materialize a tag style, which is
+        what the other elements in the list are
+  */
+  font-size: 1.2rem;
+  padding: 0 10px;
+  line-height: 30px;
+  color: rgba(255,255,255,0.7);
+}

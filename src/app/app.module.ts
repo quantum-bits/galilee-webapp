@@ -18,7 +18,7 @@ import {MaterializeModule} from "angular2-materialize";
 import {DatePickerModule} from 'ng2-datepicker';
 import {MomentModule} from 'angular2-moment';
 import {Ng2CompleterModule} from "ng2-completer";
-import {Ng2PaginationModule} from 'ng2-pagination';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 const routes: Routes = [
   {path: '', redirectTo: '/end-user/readings/today', pathMatch: 'full'}
@@ -49,7 +49,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     MaterializeModule,
     MomentModule,
     Ng2CompleterModule,
-    Ng2PaginationModule,
+    NgxPaginationModule,
     ReactiveFormsModule
   ],
   declarations: [

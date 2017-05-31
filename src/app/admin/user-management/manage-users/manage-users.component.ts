@@ -82,12 +82,11 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
   };
 
   //private eventCounter = 0;
-  public maxSize: number = 5;//used by pagination component (max # of pages indicated, including the '...')
-  public directionLinks: boolean = true;//used by pagination component
-  public autoHide: boolean = false;//used by pagination component
+  //public directionLinks: boolean = false;//used by pagination component
+  //public autoHide: boolean = true;//used by pagination component
   public config: PaginationInstance = {//used by pagination component
-    id: 'advanced',
-    itemsPerPage: 2,
+    //id: 'advanced',
+    itemsPerPage: 5,
     currentPage: 1
   };
 
