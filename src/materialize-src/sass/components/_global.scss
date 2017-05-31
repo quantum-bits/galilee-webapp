@@ -358,7 +358,7 @@ footer.page-footer {
   padding-top: 20px;
   background-color: $footer-bg-color;
 
-  .footer-copyright {
+  .footer-copyright { /* KK edit */
     overflow: hidden;
     min-height: 50px; //changed to min height to fix mobile rendering issue where the footer was being cut off
     //line-height: 50px; //commented out becauase it caused spacing issues in the footer when it wrapped around
@@ -366,6 +366,11 @@ footer.page-footer {
     color: rgba(255,255,255,.8);
     background-color: rgba(51,51,51,.08);
     @extend .light;
+    /* KK: the following centers the div within the div vertically */
+    /* see: https://stackoverflow.com/questions/6490252/vertically-centering-a-div-inside-another-div */
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 
