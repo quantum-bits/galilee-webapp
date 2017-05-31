@@ -93,22 +93,32 @@ export class EditUserComponent implements OnInit {
   }
 
   initializeForm() {
-    this.userService.getPermissionTypes().subscribe(
-      permissions => {
-        this.permissionTypes = [];
-        for (let permission of permissions) {
-          this.permissionTypes.push(new Permission(permission));
-        };
-        console.log('types of permissions: ', this.permissionTypes);
+    if (this.currentUserIsAdmin) {
+      this.userService.getPermissionTypes().subscribe(
+        permissions => {
+          this.permissionTypes = [];
+          for (let permission of permissions) {
+            this.permissionTypes.push(new Permission(permission));
+          }
+          ;
+          console.log('types of permissions: ', this.permissionTypes);
 
-        if (this.isNewUser) {
-          this.createEmptyUserData(); // fills userData with initial values
-          console.log(this.userData);
-        }
-        this.createUserForm();
-      },
-      err => console.log("ERROR", err),
-      () => console.log("Permission types fetched"));
+          if (this.isNewUser) {
+            this.createEmptyUserData(); // fills userData with initial values
+            console.log(this.userData);
+          }
+          this.createUserForm();
+        },
+        err => console.log("ERROR", err),
+        () => console.log("Permission types fetched"));
+    } else {
+      this.permissionTypes = [];
+      if (this.isNewUser) {
+        this.createEmptyUserData(); // fills userData with initial values
+        console.log(this.userData);
+      }
+      this.createUserForm();
+    }
   }
 
   createEmptyUserData() {
@@ -126,7 +136,8 @@ export class EditUserComponent implements OnInit {
   }
 
   /*
-    this method builds the 'permissions' part of the form;
+    this method builds the 'permissions' part of the form; note that permissionTypes is set to []
+    unless the currentUser is an ADMIN;
     Note: the entries in the userPermissions array are those which are 'enabled' for the user;
           the permissionArray form that is returned by the method contains all of the permissionTypes,
           with an additional property, enabled, which is a boolean
