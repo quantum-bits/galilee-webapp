@@ -196,13 +196,18 @@ export class UserService {
       // gets called and the user is not logged in; the == (as opposed to ===)
       // should catch both null and undefined
       return false;
+    } else {
+      return this.currentUser.inGroups();
     }
+
+    /*
     else if (this.currentUser.groups == null || this.currentUser.groups.length == 0){
       return false;
     }
     else {
       return true;
     }
+    */
 
   }
 

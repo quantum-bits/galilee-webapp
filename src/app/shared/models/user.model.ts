@@ -51,7 +51,8 @@ export class User {
     this.version = obj.version;
   }
 
-  isEnabled() {
+  public isEnabled() {
+    console.log('checking isEnabled()!');
     return this.enabled;
   }
 
@@ -66,6 +67,11 @@ export class User {
 
   fullName(){
     return `${this.firstName} ${this.lastName}`;
+  }
+
+  inGroups(){
+    console.log('checking inGroups()!');
+    return !(this.groups == null || this.groups.length == 0);
   }
 
   static compare(element1: User, element2: User, fieldName: string, sortAscending: boolean){

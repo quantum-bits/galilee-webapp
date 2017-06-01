@@ -111,11 +111,12 @@
                 </th>
                 <th data-field="enabled">
                   <a class="grey-text text-darken-4 include-pointer" (click)="toggleEnabled()">
-                    <span [ngSwitch]="viewEnabledUsers">
-                      <span *ngSwitchCase="userEnabledChoices[0]">Enabled?</span>
-                      <span *ngSwitchCase="userEnabledChoices[1]">Enabled (only)</span>
-                      <span *ngSwitchCase="userEnabledChoices[2]">Not Enabled</span>
-                    </span>
+                    {{displayEnabled.getCustomText()}}
+                  </a>
+                </th>
+                <th data-field="inGroup">
+                  <a class="grey-text text-darken-4 include-pointer" (click)="toggleInGroups()">
+                    {{displayInGroups.getCustomText()}}
                   </a>
                 </th>
                 <th data-field="edit">Edit</th>
@@ -132,7 +133,12 @@
                     </span>
                   </td>
                   <td>
-                    <span *ngIf="user.enabled">
+                    <span *ngIf="user.isEnabled()">
+                      <i class="material-icons">check_circle</i>
+                    </span>
+                  </td>
+                  <td>
+                    <span *ngIf="user.inGroups()">
                       <i class="material-icons">check_circle</i>
                     </span>
                   </td>

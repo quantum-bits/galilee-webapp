@@ -47,6 +47,71 @@ declare var $: any; // for using jQuery within this angular component
   - https://github.com/angular/angular/issues/10735
  */
 
+export enum StatusOptions {
+  ALL = 0, // show all users, regardless of the property in question
+  ONLY, // show only users that have the property in question
+  ONLYNOT // show only the users who do not have the property in question
+}
+
+export class UserDisplayProperty {
+
+  displayStatus: number; //status of displayfor this property
+  functionName: string; //name of method to check to see whether the User does in fact have this property
+  customText: string[]; //custom text to show for 'all', 'only' and 'only not' cases, respectively
+
+  constructor(functionName: string,
+              customText: string[]){
+    this.displayStatus = StatusOptions.ALL;
+    this.functionName = functionName;
+    this.customText = customText;
+  }
+
+  incrementDisplayStatus(){
+    switch(this.displayStatus) {
+      case StatusOptions.ALL: {
+        this.displayStatus = StatusOptions.ONLY;
+        break;
+      }
+      case StatusOptions.ONLY: {
+        this.displayStatus = StatusOptions.ONLYNOT;
+        break;
+      }
+      case StatusOptions.ONLYNOT: {
+        this.displayStatus = StatusOptions.ALL;
+        break;
+      }
+      default: {
+        this.displayStatus = StatusOptions.ALL;
+      }
+    }
+  }
+
+  getDisplayStatus() {
+    return this.displayStatus;
+  }
+
+  getCustomText() {
+    return this.customText[this.displayStatus];
+  }
+
+  // see: https://stackoverflow.com/questions/29822773/passing-class-method-as-parameter-in-typescript
+  userHasProperty(user: User) {
+    if (user[this.functionName] && user[this.functionName] instanceof Function) {
+      return user[this.functionName]();
+    } else {
+      throw new Error("Function '" + this.functionName + "' is not a valid function");
+    }
+  }
+
+  displayUser(user: User) {
+    return (this.displayStatus === StatusOptions.ALL) ||
+      ((this.displayStatus === StatusOptions.ONLY) && (this.userHasProperty(user))) ||
+      ((this.displayStatus === StatusOptions.ONLYNOT) && (!this.userHasProperty(user)));
+  }
+
+}
+
+
 @Component({
   selector: 'app-manage-users',
   templateUrl: './manage-users.component.html',
@@ -70,8 +135,9 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
 
   private users: User[]; // will stay the same throughout
   private filteredUsers: User[]; // the list of filtered/sorted users displayed on the page
-  private userEnabledChoices = ['all', 'onlyEnabled', 'onlyNonenabled'];
-  private viewEnabledUsers = this.userEnabledChoices[0]; // used to filter users that are/are not enabled
+
+  private displayEnabled = new UserDisplayProperty('isEnabled', ['Enabled?', 'Enabled (only)', 'Not Enabled']);
+  private displayInGroups = new UserDisplayProperty('inGroups', ['Group(s)?', 'Groups (only)', 'No Group']);
 
   private permissionFilters: PermissionFilter[]; // used to filter the list of users by permissions
 
@@ -80,6 +146,7 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
     cannot: PermissionFilterType.cannot,
     either: PermissionFilterType.either
   };
+
 
   //private eventCounter = 0;
   //public directionLinks: boolean = false;//used by pagination component
@@ -167,6 +234,17 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
         users.forEach(user => {
           this.users.push(new User(user));
         });
+
+        console.log('user is enabled: ',this.displayEnabled.userHasProperty(this.users[0]));
+        console.log('user is in groups: ',this.displayInGroups.userHasProperty(this.users[0]));
+
+
+
+        //private displayInGroups = new UserDisplayProperty(0, 'inGroups');
+
+
+
+
         // these are actual user objects now, along with associated methods
         //create a copy of this.users called this.filteredUsers; this is what will be
         //displayed, etc.
@@ -203,14 +281,11 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
     } else {
       this.refreshFilteredUsers();
     }
-    // apply 'user enabled' filter, as appropriate....
-    if (this.viewEnabledUsers !== this.userEnabledChoices[0]){// not 'all'
-      if (this.viewEnabledUsers === this.userEnabledChoices[1]){// 'onlyEnabled'
-        this.filteredUsers = this.filteredUsers.filter(user => user.isEnabled());
-      } else { // 'onlyNonenabled'
-        this.filteredUsers = this.filteredUsers.filter(user => !user.isEnabled());
-      }
-    }
+    // apply 'user enabled' and 'user in group(s)' filter, as appropriate....
+
+    this.filteredUsers = this.filteredUsers.filter(user => this.displayEnabled.displayUser(user));
+    this.filteredUsers = this.filteredUsers.filter(user => this.displayInGroups.displayUser(user));
+
     // apply permission filters, as appropriate....
     for (let permissionFilter of this.permissionFilters) {
       if (permissionFilter.filter !== PermissionFilterType.either){// not 'either'
@@ -257,10 +332,12 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
   }
 
   toggleEnabled() {
-    var index = this.userEnabledChoices.indexOf(this.viewEnabledUsers);
-    index++;
-    if (index == this.userEnabledChoices.length) {index = 0};
-    this.viewEnabledUsers = this.userEnabledChoices[index];
+    this.displayEnabled.incrementDisplayStatus();
+    this.filterList();
+  }
+
+  toggleInGroups() {
+    this.displayInGroups.incrementDisplayStatus();
     this.filterList();
   }
 
