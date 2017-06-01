@@ -1,27 +1,27 @@
 // Bible data retrieved directly from the Bible Gateway 'translations' endpoint.
-// To update, simply prefix the data from BG with `module.exports =`.
+// To update, simply prefix the data from BG with the `export` as shown.
 
-module.exports = {
-  "data": [
+export const bgBibleData = {
+  'data': [
     {
-      "attribution": {
-        "translation": "NKJV",
-        "translation_name": "New King James Version",
-        "copy_date": " Copyright ©  1982",
-        "copy_owner": "<a href=\"http://nelsonbibles.com/\">Thomas Nelson</a>",
-        "version_info": "<p>Commissioned in 1975 by Thomas Nelson Publishers, 130 respected Bible scholars, church leaders, and lay Christians worked for seven years to create a completely new, modern translation of Scripture, yet one that would retain the purity and stylistic beauty of the original King James. With unyielding faithfulness to the original Greek, Hebrew, and Aramaic texts, the translation applies the most recent research in archaeology, linguistics, and textual studies.</p>",
-        "copy_short": "Scripture taken from the New King James Version®. Copyright © 1982 by Thomas Nelson. Used by permission. All rights reserved.",
-        "copy_long": "<body>\n<p>The text from the New King James Version® (NKJV®) may be quoted in any form  (written, visual, electronic or audio), up to and inclusive of 500 verses or  less without written permission, providing the verses quoted do not amount to a  complete book of the Bible, nor do verses quoted account for 25% or more of the  total text of the work in which they are quoted, and the verses are not being  quoted in a commentary or other biblical reference work.<br>\n <p> For churches requesting to use a small selection of material  for church bulletins, sermons or classroom use that falls within our “gratis  use” guidelines, formal written permission is not necessary. Churches may use  stand-alone quotations/scriptures in sermons, bulletins, newsletters, or  projected in a worship setting without asking written permission provided the  translation is correctly cited.<br>\n  This permission is contingent upon an appropriate copyright  acknowledgment as follows:<br>\n <blockquote> Scripture taken from the New King  James Version®. Copyright ©  1982 by Thomas Nelson. Used by permission. All rights reserved.<br></blockquote>\n <p>  For requests not covered by the above guidelines, write to HarperCollins  Christian Publishing, Attention: Permissions Department, P.O. Box 141000,  Nashville, TN 37214 or go to <a href=\"http://www.harpercollinschristian.com/permissions/\">http://www.harpercollinschristian.com/permissions/</a>\n</body>",
-        "lanugage_iso": "en",
-        "lanugage_display": "English",
-        "last_modified": "2015-05-11 00:01:00",
-        "downloadable_until": "2000-01-01 00:00:00"
+      'attribution': {
+        'translation': 'NKJV',
+        'translation_name': 'New King James Version',
+        'copy_date': ' Copyright ©  1982',
+        'copy_owner': '<a href="http://nelsonbibles.com/">Thomas Nelson</a>',
+        'version_info': '<p>Commissioned in 1975 by Thomas Nelson Publishers, 130 respected Bible scholars, church leaders, and lay Christians worked for seven years to create a completely new, modern translation of Scripture, yet one that would retain the purity and stylistic beauty of the original King James. With unyielding faithfulness to the original Greek, Hebrew, and Aramaic texts, the translation applies the most recent research in archaeology, linguistics, and textual studies.</p>',
+        'copy_short': 'Scripture taken from the New King James Version®. Copyright © 1982 by Thomas Nelson. Used by permission. All rights reserved.',
+        'copy_long': '<body>\n<p>The text from the New King James Version® (NKJV®) may be quoted in any form  (written, visual, electronic or audio), up to and inclusive of 500 verses or  less without written permission, providing the verses quoted do not amount to a  complete book of the Bible, nor do verses quoted account for 25% or more of the  total text of the work in which they are quoted, and the verses are not being  quoted in a commentary or other biblical reference work.<br>\n <p> For churches requesting to use a small selection of material  for church bulletins, sermons or classroom use that falls within our “gratis  use” guidelines, formal written permission is not necessary. Churches may use  stand-alone quotations/scriptures in sermons, bulletins, newsletters, or  projected in a worship setting without asking written permission provided the  translation is correctly cited.<br>\n  This permission is contingent upon an appropriate copyright  acknowledgment as follows:<br>\n <blockquote> Scripture taken from the New King  James Version®. Copyright ©  1982 by Thomas Nelson. Used by permission. All rights reserved.<br></blockquote>\n <p>  For requests not covered by the above guidelines, write to HarperCollins  Christian Publishing, Attention: Permissions Department, P.O. Box 141000,  Nashville, TN 37214 or go to <a href="http://www.harpercollinschristian.com/permissions/">http://www.harpercollinschristian.com/permissions/</a>\n</body>',
+        'lanugage_iso': 'en',
+        'lanugage_display': 'English',
+        'last_modified': '2015-05-11 00:01:00',
+        'downloadable_until': '2000-01-01 00:00:00'
       },
-      "books": [
+      'books': [
         {
-          "display": "Genesis",
-          "chapters": 50,
-          "verses": [
+          'display': 'Genesis',
+          'chapters': 50,
+          'verses': [
             31,
             25,
             24,
@@ -73,14 +73,14 @@ module.exports = {
             33,
             26
           ],
-          "order": 1,
-          "testament": "OT",
-          "osis": "Gen"
+          'order': 1,
+          'testament': 'OT',
+          'osis': 'Gen'
         },
         {
-          "display": "Exodus",
-          "chapters": 40,
-          "verses": [
+          'display': 'Exodus',
+          'chapters': 40,
+          'verses': [
             22,
             25,
             22,
@@ -122,14 +122,14 @@ module.exports = {
             43,
             38
           ],
-          "order": 2,
-          "testament": "OT",
-          "osis": "Exod"
+          'order': 2,
+          'testament': 'OT',
+          'osis': 'Exod'
         },
         {
-          "display": "Leviticus",
-          "chapters": 27,
-          "verses": [
+          'display': 'Leviticus',
+          'chapters': 27,
+          'verses': [
             17,
             16,
             17,
@@ -158,14 +158,14 @@ module.exports = {
             46,
             34
           ],
-          "order": 3,
-          "testament": "OT",
-          "osis": "Lev"
+          'order': 3,
+          'testament': 'OT',
+          'osis': 'Lev'
         },
         {
-          "display": "Numbers",
-          "chapters": 36,
-          "verses": [
+          'display': 'Numbers',
+          'chapters': 36,
+          'verses': [
             54,
             34,
             51,
@@ -203,14 +203,14 @@ module.exports = {
             34,
             13
           ],
-          "order": 4,
-          "testament": "OT",
-          "osis": "Num"
+          'order': 4,
+          'testament': 'OT',
+          'osis': 'Num'
         },
         {
-          "display": "Deuteronomy",
-          "chapters": 34,
-          "verses": [
+          'display': 'Deuteronomy',
+          'chapters': 34,
+          'verses': [
             46,
             37,
             29,
@@ -246,14 +246,14 @@ module.exports = {
             29,
             12
           ],
-          "order": 5,
-          "testament": "OT",
-          "osis": "Deut"
+          'order': 5,
+          'testament': 'OT',
+          'osis': 'Deut'
         },
         {
-          "display": "Joshua",
-          "chapters": 24,
-          "verses": [
+          'display': 'Joshua',
+          'chapters': 24,
+          'verses': [
             18,
             24,
             17,
@@ -279,14 +279,14 @@ module.exports = {
             16,
             33
           ],
-          "order": 6,
-          "testament": "OT",
-          "osis": "Josh"
+          'order': 6,
+          'testament': 'OT',
+          'osis': 'Josh'
         },
         {
-          "display": "Judges",
-          "chapters": 21,
-          "verses": [
+          'display': 'Judges',
+          'chapters': 21,
+          'verses': [
             36,
             23,
             31,
@@ -309,27 +309,27 @@ module.exports = {
             48,
             25
           ],
-          "order": 7,
-          "testament": "OT",
-          "osis": "Judg"
+          'order': 7,
+          'testament': 'OT',
+          'osis': 'Judg'
         },
         {
-          "display": "Ruth",
-          "chapters": 4,
-          "verses": [
+          'display': 'Ruth',
+          'chapters': 4,
+          'verses': [
             22,
             23,
             18,
             22
           ],
-          "order": 8,
-          "testament": "OT",
-          "osis": "Ruth"
+          'order': 8,
+          'testament': 'OT',
+          'osis': 'Ruth'
         },
         {
-          "display": "1 Samuel",
-          "chapters": 31,
-          "verses": [
+          'display': '1 Samuel',
+          'chapters': 31,
+          'verses': [
             28,
             36,
             21,
@@ -362,14 +362,14 @@ module.exports = {
             31,
             13
           ],
-          "order": 9,
-          "testament": "OT",
-          "osis": "1Sam"
+          'order': 9,
+          'testament': 'OT',
+          'osis': '1Sam'
         },
         {
-          "display": "2 Samuel",
-          "chapters": 24,
-          "verses": [
+          'display': '2 Samuel',
+          'chapters': 24,
+          'verses': [
             27,
             32,
             39,
@@ -395,14 +395,14 @@ module.exports = {
             39,
             25
           ],
-          "order": 10,
-          "testament": "OT",
-          "osis": "2Sam"
+          'order': 10,
+          'testament': 'OT',
+          'osis': '2Sam'
         },
         {
-          "display": "1 Kings",
-          "chapters": 22,
-          "verses": [
+          'display': '1 Kings',
+          'chapters': 22,
+          'verses': [
             53,
             46,
             28,
@@ -426,14 +426,14 @@ module.exports = {
             29,
             53
           ],
-          "order": 11,
-          "testament": "OT",
-          "osis": "1Kgs"
+          'order': 11,
+          'testament': 'OT',
+          'osis': '1Kgs'
         },
         {
-          "display": "2 Kings",
-          "chapters": 25,
-          "verses": [
+          'display': '2 Kings',
+          'chapters': 25,
+          'verses': [
             18,
             25,
             27,
@@ -460,14 +460,14 @@ module.exports = {
             20,
             30
           ],
-          "order": 12,
-          "testament": "OT",
-          "osis": "2Kgs"
+          'order': 12,
+          'testament': 'OT',
+          'osis': '2Kgs'
         },
         {
-          "display": "1 Chronicles",
-          "chapters": 29,
-          "verses": [
+          'display': '1 Chronicles',
+          'chapters': 29,
+          'verses': [
             54,
             55,
             24,
@@ -498,14 +498,14 @@ module.exports = {
             21,
             30
           ],
-          "order": 13,
-          "testament": "OT",
-          "osis": "1Chr"
+          'order': 13,
+          'testament': 'OT',
+          'osis': '1Chr'
         },
         {
-          "display": "2 Chronicles",
-          "chapters": 36,
-          "verses": [
+          'display': '2 Chronicles',
+          'chapters': 36,
+          'verses': [
             17,
             18,
             17,
@@ -543,14 +543,14 @@ module.exports = {
             27,
             23
           ],
-          "order": 14,
-          "testament": "OT",
-          "osis": "2Chr"
+          'order': 14,
+          'testament': 'OT',
+          'osis': '2Chr'
         },
         {
-          "display": "Ezra",
-          "chapters": 10,
-          "verses": [
+          'display': 'Ezra',
+          'chapters': 10,
+          'verses': [
             11,
             70,
             13,
@@ -562,14 +562,14 @@ module.exports = {
             15,
             44
           ],
-          "order": 15,
-          "testament": "OT",
-          "osis": "Ezra"
+          'order': 15,
+          'testament': 'OT',
+          'osis': 'Ezra'
         },
         {
-          "display": "Nehemiah",
-          "chapters": 13,
-          "verses": [
+          'display': 'Nehemiah',
+          'chapters': 13,
+          'verses': [
             11,
             20,
             32,
@@ -584,14 +584,14 @@ module.exports = {
             47,
             31
           ],
-          "order": 16,
-          "testament": "OT",
-          "osis": "Neh"
+          'order': 16,
+          'testament': 'OT',
+          'osis': 'Neh'
         },
         {
-          "display": "Esther",
-          "chapters": 10,
-          "verses": [
+          'display': 'Esther',
+          'chapters': 10,
+          'verses': [
             22,
             23,
             15,
@@ -603,14 +603,14 @@ module.exports = {
             32,
             3
           ],
-          "order": 17,
-          "testament": "OT",
-          "osis": "Esth"
+          'order': 17,
+          'testament': 'OT',
+          'osis': 'Esth'
         },
         {
-          "display": "Job",
-          "chapters": 42,
-          "verses": [
+          'display': 'Job',
+          'chapters': 42,
+          'verses': [
             22,
             13,
             26,
@@ -654,14 +654,14 @@ module.exports = {
             34,
             17
           ],
-          "order": 18,
-          "testament": "OT",
-          "osis": "Job"
+          'order': 18,
+          'testament': 'OT',
+          'osis': 'Job'
         },
         {
-          "display": "Psalm",
-          "chapters": 150,
-          "verses": [
+          'display': 'Psalm',
+          'chapters': 150,
+          'verses': [
             6,
             12,
             8,
@@ -813,14 +813,14 @@ module.exports = {
             9,
             6
           ],
-          "order": 19,
-          "testament": "OT",
-          "osis": "Ps"
+          'order': 19,
+          'testament': 'OT',
+          'osis': 'Ps'
         },
         {
-          "display": "Proverbs",
-          "chapters": 31,
-          "verses": [
+          'display': 'Proverbs',
+          'chapters': 31,
+          'verses': [
             33,
             22,
             35,
@@ -853,14 +853,14 @@ module.exports = {
             33,
             31
           ],
-          "order": 20,
-          "testament": "OT",
-          "osis": "Prov"
+          'order': 20,
+          'testament': 'OT',
+          'osis': 'Prov'
         },
         {
-          "display": "Ecclesiastes",
-          "chapters": 12,
-          "verses": [
+          'display': 'Ecclesiastes',
+          'chapters': 12,
+          'verses': [
             18,
             26,
             22,
@@ -874,14 +874,14 @@ module.exports = {
             10,
             14
           ],
-          "order": 21,
-          "testament": "OT",
-          "osis": "Eccl"
+          'order': 21,
+          'testament': 'OT',
+          'osis': 'Eccl'
         },
         {
-          "display": "Song of Solomon",
-          "chapters": 8,
-          "verses": [
+          'display': 'Song of Solomon',
+          'chapters': 8,
+          'verses': [
             17,
             17,
             11,
@@ -891,14 +891,14 @@ module.exports = {
             13,
             14
           ],
-          "order": 22,
-          "testament": "OT",
-          "osis": "Song"
+          'order': 22,
+          'testament': 'OT',
+          'osis': 'Song'
         },
         {
-          "display": "Isaiah",
-          "chapters": 66,
-          "verses": [
+          'display': 'Isaiah',
+          'chapters': 66,
+          'verses': [
             31,
             22,
             26,
@@ -966,14 +966,14 @@ module.exports = {
             25,
             24
           ],
-          "order": 23,
-          "testament": "OT",
-          "osis": "Isa"
+          'order': 23,
+          'testament': 'OT',
+          'osis': 'Isa'
         },
         {
-          "display": "Jeremiah",
-          "chapters": 52,
-          "verses": [
+          'display': 'Jeremiah',
+          'chapters': 52,
+          'verses': [
             19,
             37,
             25,
@@ -1027,28 +1027,28 @@ module.exports = {
             64,
             34
           ],
-          "order": 24,
-          "testament": "OT",
-          "osis": "Jer"
+          'order': 24,
+          'testament': 'OT',
+          'osis': 'Jer'
         },
         {
-          "display": "Lamentations",
-          "chapters": 5,
-          "verses": [
+          'display': 'Lamentations',
+          'chapters': 5,
+          'verses': [
             22,
             22,
             66,
             22,
             22
           ],
-          "order": 25,
-          "testament": "OT",
-          "osis": "Lam"
+          'order': 25,
+          'testament': 'OT',
+          'osis': 'Lam'
         },
         {
-          "display": "Ezekiel",
-          "chapters": 48,
-          "verses": [
+          'display': 'Ezekiel',
+          'chapters': 48,
+          'verses': [
             28,
             10,
             27,
@@ -1098,14 +1098,14 @@ module.exports = {
             23,
             35
           ],
-          "order": 26,
-          "testament": "OT",
-          "osis": "Ezek"
+          'order': 26,
+          'testament': 'OT',
+          'osis': 'Ezek'
         },
         {
-          "display": "Daniel",
-          "chapters": 12,
-          "verses": [
+          'display': 'Daniel',
+          'chapters': 12,
+          'verses': [
             21,
             49,
             30,
@@ -1119,14 +1119,14 @@ module.exports = {
             45,
             13
           ],
-          "order": 27,
-          "testament": "OT",
-          "osis": "Dan"
+          'order': 27,
+          'testament': 'OT',
+          'osis': 'Dan'
         },
         {
-          "display": "Hosea",
-          "chapters": 14,
-          "verses": [
+          'display': 'Hosea',
+          'chapters': 14,
+          'verses': [
             11,
             23,
             5,
@@ -1142,26 +1142,26 @@ module.exports = {
             16,
             9
           ],
-          "order": 28,
-          "testament": "OT",
-          "osis": "Hos"
+          'order': 28,
+          'testament': 'OT',
+          'osis': 'Hos'
         },
         {
-          "display": "Joel",
-          "chapters": 3,
-          "verses": [
+          'display': 'Joel',
+          'chapters': 3,
+          'verses': [
             20,
             32,
             21
           ],
-          "order": 29,
-          "testament": "OT",
-          "osis": "Joel"
+          'order': 29,
+          'testament': 'OT',
+          'osis': 'Joel'
         },
         {
-          "display": "Amos",
-          "chapters": 9,
-          "verses": [
+          'display': 'Amos',
+          'chapters': 9,
+          'verses': [
             15,
             16,
             15,
@@ -1172,37 +1172,37 @@ module.exports = {
             14,
             15
           ],
-          "order": 30,
-          "testament": "OT",
-          "osis": "Amos"
+          'order': 30,
+          'testament': 'OT',
+          'osis': 'Amos'
         },
         {
-          "display": "Obadiah",
-          "chapters": 1,
-          "verses": [
+          'display': 'Obadiah',
+          'chapters': 1,
+          'verses': [
             21
           ],
-          "order": 31,
-          "testament": "OT",
-          "osis": "Obad"
+          'order': 31,
+          'testament': 'OT',
+          'osis': 'Obad'
         },
         {
-          "display": "Jonah",
-          "chapters": 4,
-          "verses": [
+          'display': 'Jonah',
+          'chapters': 4,
+          'verses': [
             17,
             10,
             10,
             11
           ],
-          "order": 32,
-          "testament": "OT",
-          "osis": "Jonah"
+          'order': 32,
+          'testament': 'OT',
+          'osis': 'Jonah'
         },
         {
-          "display": "Micah",
-          "chapters": 7,
-          "verses": [
+          'display': 'Micah',
+          'chapters': 7,
+          'verses': [
             16,
             13,
             12,
@@ -1211,61 +1211,61 @@ module.exports = {
             16,
             20
           ],
-          "order": 33,
-          "testament": "OT",
-          "osis": "Mic"
+          'order': 33,
+          'testament': 'OT',
+          'osis': 'Mic'
         },
         {
-          "display": "Nahum",
-          "chapters": 3,
-          "verses": [
+          'display': 'Nahum',
+          'chapters': 3,
+          'verses': [
             15,
             13,
             19
           ],
-          "order": 34,
-          "testament": "OT",
-          "osis": "Nah"
+          'order': 34,
+          'testament': 'OT',
+          'osis': 'Nah'
         },
         {
-          "display": "Habakkuk",
-          "chapters": 3,
-          "verses": [
+          'display': 'Habakkuk',
+          'chapters': 3,
+          'verses': [
             17,
             20,
             19
           ],
-          "order": 35,
-          "testament": "OT",
-          "osis": "Hab"
+          'order': 35,
+          'testament': 'OT',
+          'osis': 'Hab'
         },
         {
-          "display": "Zephaniah",
-          "chapters": 3,
-          "verses": [
+          'display': 'Zephaniah',
+          'chapters': 3,
+          'verses': [
             18,
             15,
             20
           ],
-          "order": 36,
-          "testament": "OT",
-          "osis": "Zeph"
+          'order': 36,
+          'testament': 'OT',
+          'osis': 'Zeph'
         },
         {
-          "display": "Haggai",
-          "chapters": 2,
-          "verses": [
+          'display': 'Haggai',
+          'chapters': 2,
+          'verses': [
             15,
             23
           ],
-          "order": 37,
-          "testament": "OT",
-          "osis": "Hag"
+          'order': 37,
+          'testament': 'OT',
+          'osis': 'Hag'
         },
         {
-          "display": "Zechariah",
-          "chapters": 14,
-          "verses": [
+          'display': 'Zechariah',
+          'chapters': 14,
+          'verses': [
             21,
             13,
             10,
@@ -1281,27 +1281,27 @@ module.exports = {
             9,
             21
           ],
-          "order": 38,
-          "testament": "OT",
-          "osis": "Zech"
+          'order': 38,
+          'testament': 'OT',
+          'osis': 'Zech'
         },
         {
-          "display": "Malachi",
-          "chapters": 4,
-          "verses": [
+          'display': 'Malachi',
+          'chapters': 4,
+          'verses': [
             14,
             17,
             18,
             6
           ],
-          "order": 39,
-          "testament": "OT",
-          "osis": "Mal"
+          'order': 39,
+          'testament': 'OT',
+          'osis': 'Mal'
         },
         {
-          "display": "Matthew",
-          "chapters": 28,
-          "verses": [
+          'display': 'Matthew',
+          'chapters': 28,
+          'verses': [
             25,
             23,
             17,
@@ -1331,14 +1331,14 @@ module.exports = {
             66,
             20
           ],
-          "order": 40,
-          "testament": "NT",
-          "osis": "Matt"
+          'order': 40,
+          'testament': 'NT',
+          'osis': 'Matt'
         },
         {
-          "display": "Mark",
-          "chapters": 16,
-          "verses": [
+          'display': 'Mark',
+          'chapters': 16,
+          'verses': [
             45,
             28,
             35,
@@ -1356,14 +1356,14 @@ module.exports = {
             47,
             20
           ],
-          "order": 41,
-          "testament": "NT",
-          "osis": "Mark"
+          'order': 41,
+          'testament': 'NT',
+          'osis': 'Mark'
         },
         {
-          "display": "Luke",
-          "chapters": 24,
-          "verses": [
+          'display': 'Luke',
+          'chapters': 24,
+          'verses': [
             80,
             52,
             38,
@@ -1389,14 +1389,14 @@ module.exports = {
             56,
             53
           ],
-          "order": 42,
-          "testament": "NT",
-          "osis": "Luke"
+          'order': 42,
+          'testament': 'NT',
+          'osis': 'Luke'
         },
         {
-          "display": "John",
-          "chapters": 21,
-          "verses": [
+          'display': 'John',
+          'chapters': 21,
+          'verses': [
             51,
             25,
             36,
@@ -1419,14 +1419,14 @@ module.exports = {
             31,
             25
           ],
-          "order": 43,
-          "testament": "NT",
-          "osis": "John"
+          'order': 43,
+          'testament': 'NT',
+          'osis': 'John'
         },
         {
-          "display": "Acts",
-          "chapters": 28,
-          "verses": [
+          'display': 'Acts',
+          'chapters': 28,
+          'verses': [
             26,
             47,
             26,
@@ -1456,14 +1456,14 @@ module.exports = {
             44,
             31
           ],
-          "order": 44,
-          "testament": "NT",
-          "osis": "Acts"
+          'order': 44,
+          'testament': 'NT',
+          'osis': 'Acts'
         },
         {
-          "display": "Romans",
-          "chapters": 16,
-          "verses": [
+          'display': 'Romans',
+          'chapters': 16,
+          'verses': [
             32,
             29,
             31,
@@ -1481,14 +1481,14 @@ module.exports = {
             33,
             27
           ],
-          "order": 45,
-          "testament": "NT",
-          "osis": "Rom"
+          'order': 45,
+          'testament': 'NT',
+          'osis': 'Rom'
         },
         {
-          "display": "1 Corinthians",
-          "chapters": 16,
-          "verses": [
+          'display': '1 Corinthians',
+          'chapters': 16,
+          'verses': [
             31,
             16,
             23,
@@ -1506,14 +1506,14 @@ module.exports = {
             58,
             24
           ],
-          "order": 46,
-          "testament": "NT",
-          "osis": "1Cor"
+          'order': 46,
+          'testament': 'NT',
+          'osis': '1Cor'
         },
         {
-          "display": "2 Corinthians",
-          "chapters": 13,
-          "verses": [
+          'display': '2 Corinthians',
+          'chapters': 13,
+          'verses': [
             24,
             17,
             18,
@@ -1528,14 +1528,14 @@ module.exports = {
             21,
             14
           ],
-          "order": 47,
-          "testament": "NT",
-          "osis": "2Cor"
+          'order': 47,
+          'testament': 'NT',
+          'osis': '2Cor'
         },
         {
-          "display": "Galatians",
-          "chapters": 6,
-          "verses": [
+          'display': 'Galatians',
+          'chapters': 6,
+          'verses': [
             24,
             21,
             29,
@@ -1543,14 +1543,14 @@ module.exports = {
             26,
             18
           ],
-          "order": 48,
-          "testament": "NT",
-          "osis": "Gal"
+          'order': 48,
+          'testament': 'NT',
+          'osis': 'Gal'
         },
         {
-          "display": "Ephesians",
-          "chapters": 6,
-          "verses": [
+          'display': 'Ephesians',
+          'chapters': 6,
+          'verses': [
             23,
             22,
             21,
@@ -1558,66 +1558,66 @@ module.exports = {
             33,
             24
           ],
-          "order": 49,
-          "testament": "NT",
-          "osis": "Eph"
+          'order': 49,
+          'testament': 'NT',
+          'osis': 'Eph'
         },
         {
-          "display": "Philippians",
-          "chapters": 4,
-          "verses": [
+          'display': 'Philippians',
+          'chapters': 4,
+          'verses': [
             30,
             30,
             21,
             23
           ],
-          "order": 50,
-          "testament": "NT",
-          "osis": "Phil"
+          'order': 50,
+          'testament': 'NT',
+          'osis': 'Phil'
         },
         {
-          "display": "Colossians",
-          "chapters": 4,
-          "verses": [
+          'display': 'Colossians',
+          'chapters': 4,
+          'verses': [
             29,
             23,
             25,
             18
           ],
-          "order": 51,
-          "testament": "NT",
-          "osis": "Col"
+          'order': 51,
+          'testament': 'NT',
+          'osis': 'Col'
         },
         {
-          "display": "1 Thessalonians",
-          "chapters": 5,
-          "verses": [
+          'display': '1 Thessalonians',
+          'chapters': 5,
+          'verses': [
             10,
             20,
             13,
             18,
             28
           ],
-          "order": 52,
-          "testament": "NT",
-          "osis": "1Thess"
+          'order': 52,
+          'testament': 'NT',
+          'osis': '1Thess'
         },
         {
-          "display": "2 Thessalonians",
-          "chapters": 3,
-          "verses": [
+          'display': '2 Thessalonians',
+          'chapters': 3,
+          'verses': [
             12,
             17,
             18
           ],
-          "order": 53,
-          "testament": "NT",
-          "osis": "2Thess"
+          'order': 53,
+          'testament': 'NT',
+          'osis': '2Thess'
         },
         {
-          "display": "1 Timothy",
-          "chapters": 6,
-          "verses": [
+          'display': '1 Timothy',
+          'chapters': 6,
+          'verses': [
             20,
             15,
             16,
@@ -1625,49 +1625,49 @@ module.exports = {
             25,
             21
           ],
-          "order": 54,
-          "testament": "NT",
-          "osis": "1Tim"
+          'order': 54,
+          'testament': 'NT',
+          'osis': '1Tim'
         },
         {
-          "display": "2 Timothy",
-          "chapters": 4,
-          "verses": [
+          'display': '2 Timothy',
+          'chapters': 4,
+          'verses': [
             18,
             26,
             17,
             22
           ],
-          "order": 55,
-          "testament": "NT",
-          "osis": "2Tim"
+          'order': 55,
+          'testament': 'NT',
+          'osis': '2Tim'
         },
         {
-          "display": "Titus",
-          "chapters": 3,
-          "verses": [
+          'display': 'Titus',
+          'chapters': 3,
+          'verses': [
             16,
             15,
             15
           ],
-          "order": 56,
-          "testament": "NT",
-          "osis": "Titus"
+          'order': 56,
+          'testament': 'NT',
+          'osis': 'Titus'
         },
         {
-          "display": "Philemon",
-          "chapters": 1,
-          "verses": [
+          'display': 'Philemon',
+          'chapters': 1,
+          'verses': [
             25
           ],
-          "order": 57,
-          "testament": "NT",
-          "osis": "Phlm"
+          'order': 57,
+          'testament': 'NT',
+          'osis': 'Phlm'
         },
         {
-          "display": "Hebrews",
-          "chapters": 13,
-          "verses": [
+          'display': 'Hebrews',
+          'chapters': 13,
+          'verses': [
             14,
             18,
             19,
@@ -1682,98 +1682,98 @@ module.exports = {
             29,
             25
           ],
-          "order": 58,
-          "testament": "NT",
-          "osis": "Heb"
+          'order': 58,
+          'testament': 'NT',
+          'osis': 'Heb'
         },
         {
-          "display": "James",
-          "chapters": 5,
-          "verses": [
+          'display': 'James',
+          'chapters': 5,
+          'verses': [
             27,
             26,
             18,
             17,
             20
           ],
-          "order": 59,
-          "testament": "NT",
-          "osis": "Jas"
+          'order': 59,
+          'testament': 'NT',
+          'osis': 'Jas'
         },
         {
-          "display": "1 Peter",
-          "chapters": 5,
-          "verses": [
+          'display': '1 Peter',
+          'chapters': 5,
+          'verses': [
             25,
             25,
             22,
             19,
             14
           ],
-          "order": 60,
-          "testament": "NT",
-          "osis": "1Pet"
+          'order': 60,
+          'testament': 'NT',
+          'osis': '1Pet'
         },
         {
-          "display": "2 Peter",
-          "chapters": 3,
-          "verses": [
+          'display': '2 Peter',
+          'chapters': 3,
+          'verses': [
             21,
             22,
             18
           ],
-          "order": 61,
-          "testament": "NT",
-          "osis": "2Pet"
+          'order': 61,
+          'testament': 'NT',
+          'osis': '2Pet'
         },
         {
-          "display": "1 John",
-          "chapters": 5,
-          "verses": [
+          'display': '1 John',
+          'chapters': 5,
+          'verses': [
             10,
             29,
             24,
             21,
             21
           ],
-          "order": 62,
-          "testament": "NT",
-          "osis": "1John"
+          'order': 62,
+          'testament': 'NT',
+          'osis': '1John'
         },
         {
-          "display": "2 John",
-          "chapters": 1,
-          "verses": [
+          'display': '2 John',
+          'chapters': 1,
+          'verses': [
             13
           ],
-          "order": 63,
-          "testament": "NT",
-          "osis": "2John"
+          'order': 63,
+          'testament': 'NT',
+          'osis': '2John'
         },
         {
-          "display": "3 John",
-          "chapters": 1,
-          "verses": [
+          'display': '3 John',
+          'chapters': 1,
+          'verses': [
             14
           ],
-          "order": 64,
-          "testament": "NT",
-          "osis": "3John"
+          'order': 64,
+          'testament': 'NT',
+          'osis': '3John'
         },
         {
-          "display": "Jude",
-          "chapters": 1,
-          "verses": [
+          'display': 'Jude',
+          'chapters': 1,
+          'verses': [
             25
           ],
-          "order": 65,
-          "testament": "NT",
-          "osis": "Jude"
+          'order': 65,
+          'testament': 'NT',
+          'osis': 'Jude'
         },
         {
-          "display": "Revelation",
-          "chapters": 22,
-          "verses": [
+          'display': 'Revelation',
+          'chapters': 22,
+          'verses': [
             20,
             29,
             22,
@@ -1797,9 +1797,9 @@ module.exports = {
             27,
             21
           ],
-          "order": 66,
-          "testament": "NT",
-          "osis": "Rev"
+          'order': 66,
+          'testament': 'NT',
+          'osis': 'Rev'
         }
       ]
     }
