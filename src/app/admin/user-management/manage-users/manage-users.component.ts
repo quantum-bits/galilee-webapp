@@ -90,6 +90,10 @@ export class UserDisplayProperty {
     return this.displayStatus;
   }
 
+  resetDisplayStatus() {
+    this.displayStatus = StatusOptions.ALL;
+  }
+
   getCustomText() {
     return this.customText[this.displayStatus];
   }
@@ -234,17 +238,6 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
         users.forEach(user => {
           this.users.push(new User(user));
         });
-
-        console.log('user is enabled: ',this.displayEnabled.userHasProperty(this.users[0]));
-        console.log('user is in groups: ',this.displayInGroups.userHasProperty(this.users[0]));
-
-
-
-        //private displayInGroups = new UserDisplayProperty(0, 'inGroups');
-
-
-
-
         // these are actual user objects now, along with associated methods
         //create a copy of this.users called this.filteredUsers; this is what will be
         //displayed, etc.
@@ -373,6 +366,10 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
     for (let i in this.permissionFilters) {
       this.permissionFilters[i].filter = PermissionFilterType.either;
     }
+
+    this.displayEnabled.resetDisplayStatus();
+    this.displayInGroups.resetDisplayStatus();
+    
     this.refreshFilteredUsers();
   }
 
