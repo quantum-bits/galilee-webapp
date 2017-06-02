@@ -24,7 +24,7 @@ import {DialogComponent} from '../../temp/dialog.component';
 import {DialogAnchorDirective} from '../../temp/dialoganchor.directive';
 
 
-import {User} from '../../../shared/models/user.model';
+import {User, Group} from '../../../shared/models/user.model';
 import {Permission} from '../../../shared/models/permission.model';
 import {PaginationInstance} from '../../../shared/interfaces/pagination-instance.interface';
 import {PermissionFilter} from '../../../shared/models/permission-filter.model';
@@ -115,6 +115,20 @@ export class DisplayProperty {
     return (this.displayStatus === StatusOptions.ALL) ||
       ((this.displayStatus === StatusOptions.ONLY) && (this.userHasProperty(user))) ||
       ((this.displayStatus === StatusOptions.ONLYNOT) && (!this.userHasProperty(user)));
+  }
+
+  groupHasProperty(group: Group) {
+    if (group[this.functionName] && group[this.functionName] instanceof Function) {
+      return group[this.functionName]();
+    } else {
+      throw new Error("Function '" + this.functionName + "' is not a valid function");
+    }
+  }
+
+  displayGroup(group: Group) {
+    return (this.displayStatus === StatusOptions.ALL) ||
+      ((this.displayStatus === StatusOptions.ONLY) && (this.groupHasProperty(group))) ||
+      ((this.displayStatus === StatusOptions.ONLYNOT) && (!this.groupHasProperty(group)));
   }
 
 }

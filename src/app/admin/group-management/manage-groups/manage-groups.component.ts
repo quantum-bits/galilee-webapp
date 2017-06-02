@@ -11,8 +11,6 @@ import {StatusOptions, DisplayProperty} from '../../user-management/manage-users
 To Do:
  - add group
  - edit group
- - reset filters
- - group enabled filter (need to add new methods on DisplayProperty class)
  */
 
 
@@ -108,7 +106,7 @@ export class ManageGroupsComponent implements OnInit {
         console.log(this.groups);
 
         this.refreshFilteredGroups();
-
+        this.filterList();
 
         //this.fetchUsers();
       },
@@ -141,9 +139,10 @@ export class ManageGroupsComponent implements OnInit {
     } else {
       this.refreshFilteredGroups();
     }
-    // apply 'user enabled' and 'user in group(s)' filter, as appropriate....
+    // apply 'group enabled' filter, as appropriate....
 
-    //this.filteredUsers = this.filteredUsers.filter(user => this.displayEnabled.displayUser(user));
+
+    this.filteredGroups = this.filteredGroups.filter(group => this.displayEnabled.displayGroup(group));
 
     this.sortList();
     this.config.currentPage = 1;// need to set the current page to 1, in case the page we are on suddenly doesn't exist anymore....
@@ -211,6 +210,7 @@ export class ManageGroupsComponent implements OnInit {
   selectEnabledFilter(newVal) {
     console.log('newVal is: ', newVal);
     this.displayEnabled.setDisplayStatus(newVal);
+    this.filterList();
   }
 
   toggleSort(heading: string) {
@@ -235,7 +235,17 @@ export class ManageGroupsComponent implements OnInit {
   }
 
   resetFilters() {
-    //
+    this.config.currentPage = 1;
+
+    this.sortColumn = this.sortableColumns[0].value; // used for deciding which column to sort by;
+    this.sortAscending = true;
+
+    this.filterBy = this.filterSelectOptionsDropdown[0].value; //used for deciding which column to use for textual filtering
+    this.filter = '';
+
+    this.displayEnabled.resetDisplayStatus();
+
+    this.refreshFilteredGroups();
   }
 
   openNewGroupModal() {
