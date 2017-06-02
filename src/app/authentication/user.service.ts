@@ -37,6 +37,7 @@ import {Permission} from '../shared/models/permission.model';
  https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/subjects/replaysubject.md
  */
 
+
 const DEFAULT_REDIRECT_URL = '/end-user/readings/today';
 const CURRENT_USER_KEY = 'current-user';
 
@@ -199,16 +200,6 @@ export class UserService {
     } else {
       return this.currentUser.inGroups();
     }
-
-    /*
-    else if (this.currentUser.groups == null || this.currentUser.groups.length == 0){
-      return false;
-    }
-    else {
-      return true;
-    }
-    */
-
   }
 
 }

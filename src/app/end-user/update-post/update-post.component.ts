@@ -5,7 +5,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 import {IPost} from '../../shared/interfaces/post.interface';
 import {UserService} from '../../authentication/user.service';
-import {User, Group} from '../../shared/models/user.model';
+import {User, IGroup} from '../../shared/models/user.model';
 
 import {PostService} from '../../shared/services/post.service';
 import {JournalEntry} from '../../shared/models/journal-entry.model';
@@ -31,7 +31,7 @@ export class UpdatePostComponent implements OnInit {
 
   private isNewPost: boolean = true; // true if this is a new post; false if updating
   private currentUser: User;
-  private group: Group = null;
+  private group: IGroup = null;
 
   constructor( private userService: UserService,
                private postService: PostService,

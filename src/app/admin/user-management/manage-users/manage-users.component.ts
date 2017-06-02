@@ -53,7 +53,7 @@ export enum StatusOptions {
   ONLYNOT // show only the users who do not have the property in question
 }
 
-export class UserDisplayProperty {
+export class DisplayProperty {
 
   displayStatus: number; //status of displayfor this property
   functionName: string; //name of method to check to see whether the User does in fact have this property
@@ -92,6 +92,10 @@ export class UserDisplayProperty {
 
   resetDisplayStatus() {
     this.displayStatus = StatusOptions.ALL;
+  }
+
+  setDisplayStatus(option: number) {
+    this.displayStatus = option;//option must be one of StatusOptions.ALL, etc.
   }
 
   getCustomText() {
@@ -140,8 +144,8 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
   private users: User[]; // will stay the same throughout
   private filteredUsers: User[]; // the list of filtered/sorted users displayed on the page
 
-  private displayEnabled = new UserDisplayProperty('isEnabled', ['Enabled?', 'Enabled (only)', 'Not Enabled']);
-  private displayInGroups = new UserDisplayProperty('inGroups', ['Group(s)?', 'Groups (only)', 'No Group']);
+  private displayEnabled = new DisplayProperty('isEnabled', ['Enabled?', 'Enabled (only)', 'Not Enabled']);
+  private displayInGroups = new DisplayProperty('inGroups', ['Group(s)?', 'Groups (only)', 'No Group']);
 
   private permissionFilters: PermissionFilter[]; // used to filter the list of users by permissions
 
@@ -369,7 +373,7 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
 
     this.displayEnabled.resetDisplayStatus();
     this.displayInGroups.resetDisplayStatus();
-    
+
     this.refreshFilteredUsers();
   }
 

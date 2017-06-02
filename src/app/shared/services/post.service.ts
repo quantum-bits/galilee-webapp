@@ -6,7 +6,7 @@ import {Subject}    from 'rxjs/Subject';
 import {UserPostData, IPost} from '../interfaces/post.interface';
 import {AuthHttp} from "angular2-jwt";
 import {UserService} from "../../authentication/user.service";
-import {Group} from "../models/user.model";
+import {IGroup} from "../models/user.model";
 
 //TODO: QUESTION -- can we 'load more' the same way we do for
 //                  journal entries?  What if other group members have
@@ -73,7 +73,7 @@ export class PostService {
     this.postToBeDeletedSource.next(postID);
   }
 
-  createPost(post: IPost, group: Group): Observable<IPost> {
+  createPost(post: IPost, group: IGroup): Observable<IPost> {
     console.log('CREATING POST');
     console.log(post.title);
     console.log(post.content);

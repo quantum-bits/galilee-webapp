@@ -39,6 +39,7 @@ import {
 import {BibleInfoService} from "./content-management/bible-info/bible-info.service";
 import { UpdateDailyPracticesListComponent } from './content-management/update-daily-practices-list/update-daily-practices-list.component';
 import { UpdateReadingDayNameModalComponent } from './content-management/update-reading-day-name-modal/update-reading-day-name-modal.component';
+import { ManageGroupsComponent } from './group-management/manage-groups/manage-groups.component';
 
 const routes: Routes = [
   {
@@ -48,6 +49,7 @@ const routes: Routes = [
       {path: '', redirectTo: 'edit-reading-resources', pathMatch: 'full'},
       {path: 'edit-reading-resources', component: EditReadingResourcesComponent},
       {path: 'manage-users', component: ManageUsersComponent},
+      {path: 'manage-groups', component: ManageGroupsComponent},
       {
         path: 'update-readings',
         component: UpdateReadingsComponent
@@ -87,7 +89,8 @@ const routes: Routes = [
     VerseRangeComponent,
     PickerAnchorDirective,
     UpdateDailyPracticesListComponent,
-    UpdateReadingDayNameModalComponent
+    UpdateReadingDayNameModalComponent,
+    ManageGroupsComponent
   ],
   exports: [
     EditUserComponent

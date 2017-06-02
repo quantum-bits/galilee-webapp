@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {ReadingService} from './shared/services/reading.service';
 import {PracticeService} from './shared/services/practice.service';
 import {ResourceService} from './shared/services/resource.service';
+import {GroupService} from './shared/services/group.service';
 import {UserService} from './authentication/user.service';
 import {User} from './shared/models/user.model';
 import {ADMIN} from './shared/models/permission.model';
@@ -28,7 +29,8 @@ import {DateNavSpyService} from "./shared/services/date-nav-spy.service";
     ResourceService,
     DirectionService,
     DateNavSpyService,
-    UserService
+    UserService,
+    GroupService
   ]
 })
 export class AppComponent implements OnInit {
@@ -53,7 +55,8 @@ export class AppComponent implements OnInit {
               private journalService: JournalService,
               private userService: UserService,
               private router: Router,
-              private postService: PostService) {
+              private postService: PostService,
+              private groupService: GroupService) {
   }
 
   ngOnInit() {
