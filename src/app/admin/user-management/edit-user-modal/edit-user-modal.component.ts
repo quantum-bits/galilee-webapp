@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 
 import {MaterializeAction} from 'angular2-materialize';
 
@@ -11,7 +11,7 @@ import { UserService } from '../../../authentication/user.service';
   templateUrl: './edit-user-modal.component.html',
   styleUrls: ['./edit-user-modal.component.scss']
 })
-export class EditUserModalComponent implements OnInit, AfterViewInit {
+export class EditUserModalComponent implements OnInit {
 
   modalActions = new EventEmitter<string|MaterializeAction>();
 
@@ -26,14 +26,9 @@ export class EditUserModalComponent implements OnInit, AfterViewInit {
     console.log('updateField is: ', this.updateField);
   }
 
-  ngAfterViewInit(){
-    console.log('got to afterview init');
-    console.log('userData is: ', this.userData);
-    console.log('updateField is: ', this.updateField);
-    this.openModal();
-  }
-
   openModal() {
+    // note that we open the modal programmatically upon initialization
+    // (from within the template); see: https://github.com/InfomediaLtd/angular2-materialize/issues/209
     this.modalActions.emit({action:"modal",params:['open']});
   }
 

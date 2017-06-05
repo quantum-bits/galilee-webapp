@@ -1,5 +1,6 @@
 <!-- Modal Structure -->
-<div id="edit-user-modal1" class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions">
+<!-- https://github.com/InfomediaLtd/angular2-materialize/issues/209 -->
+<div id="edit-user-modal1" class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions" (init)="this.openModal()">
   <div class="modal-content">
 
     <app-edit-user
