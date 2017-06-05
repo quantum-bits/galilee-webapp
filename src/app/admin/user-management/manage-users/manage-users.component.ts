@@ -53,20 +53,25 @@ export enum StatusOptions {
   ONLYNOT // show only the users who do not have the property in question
 }
 
-export class DisplayProperty {
+export class DisplayFilter {
+  // this class is used to set various discrete filters, which can
+  // be applied to users or groups; examples include: "is admin", "is enabled", "is in group(s)", etc.
+  displayStatus: number; // status of display for this property (StatusOptions.ALL, etc.)
+  functionName: string; // name of method to check to see whether the User does in fact have this property
+  title: string;
+  functionArg?: string; // optional argument for the function functionName (useful for the user.can(permissionId) case)
 
-  displayStatus: number; //status of display for this property
-  functionName: string; //name of method to check to see whether the User does in fact have this property
-  customText: string[]; //custom text to show for 'all', 'only' and 'only not' cases, respectively
-
-  constructor(functionName: string,
-              customText: string[]){
+  constructor(functionName: string, title, functionArg?: string){
     this.displayStatus = StatusOptions.ALL;
     this.functionName = functionName;
-    this.customText = customText;
+    this.title = title;
+    if (functionArg) {
+      this.functionArg = functionArg;
+    }
   }
 
   incrementDisplayStatus(){
+    // not currently being used
     switch(this.displayStatus) {
       case StatusOptions.ALL: {
         this.displayStatus = StatusOptions.ONLY;
@@ -86,6 +91,10 @@ export class DisplayProperty {
     }
   }
 
+  getTitle(){
+    return this.title;
+  }
+
   getDisplayStatus() {
     return this.displayStatus;
   }
@@ -98,14 +107,14 @@ export class DisplayProperty {
     this.displayStatus = option;//option must be one of StatusOptions.ALL, etc.
   }
 
-  getCustomText() {
-    return this.customText[this.displayStatus];
-  }
-
   // see: https://stackoverflow.com/questions/29822773/passing-class-method-as-parameter-in-typescript
   userHasProperty(user: User) {
     if (user[this.functionName] && user[this.functionName] instanceof Function) {
-      return user[this.functionName]();
+      if (this.functionArg) {
+        return user[this.functionName](this.functionArg);
+      } else {
+        return user[this.functionName]();
+      }
     } else {
       throw new Error("Function '" + this.functionName + "' is not a valid function");
     }
@@ -164,17 +173,12 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
   private users: User[]; // will stay the same throughout
   private filteredUsers: User[]; // the list of filtered/sorted users displayed on the page
 
-  private displayEnabled = new DisplayProperty('isEnabled', ['Enabled?', 'Enabled (only)', 'Not Enabled']);
-  private displayInGroups = new DisplayProperty('inGroups', ['Group(s)?', 'Groups (only)', 'No Group']);
-
-  private permissionFilters: PermissionFilter[]; // used to filter the list of users by permissions
-
-  private permissionFilterType = { // this doesn't feel quite right, but otherwise can't access it in the template
-    can: PermissionFilterType.can,
-    cannot: PermissionFilterType.cannot,
-    either: PermissionFilterType.either
+  private displayFilters: DisplayFilter[];
+  private displayFilterType = { // this doesn't feel quite right, but otherwise can't access it in the template
+    ALL: StatusOptions.ALL,
+    ONLY: StatusOptions.ONLY,
+    ONLYNOT: StatusOptions.ONLYNOT
   };
-
 
   //private eventCounter = 0;
   //public directionLinks: boolean = false;//used by pagination component
@@ -236,18 +240,12 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.userService.getPermissionTypes().subscribe(
       permissions => {
-        //this.permissionTypes = permissions;
-        this.permissionFilters = [];
+        this.displayFilters = [];
+        this.displayFilters.push(new DisplayFilter('isEnabled', 'Enabled'));
+        this.displayFilters.push(new DisplayFilter('inGroups', 'In Group(s)'));
 
-        for (let i in permissions) {
-          this.permissionFilters.push(
-            {
-              id: permissions[i].id,
-              title: permissions[i].title,
-              filter: PermissionFilterType.either
-            }
-          );
-        }
+        permissions.forEach(permission =>
+          this.displayFilters.push(new DisplayFilter('can', permission.title, permission.id)));
         this.fetchUsers();
       },
       err => console.log("ERROR", err),
@@ -298,23 +296,21 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
     } else {
       this.refreshFilteredUsers();
     }
-    // apply 'user enabled' and 'user in group(s)' filter, as appropriate....
+    // apply discrete filters, as appropriate....
+    this.filteredUsers = this.filteredUsers.filter(user => this.checkAllFilters(user));
 
-    this.filteredUsers = this.filteredUsers.filter(user => this.displayEnabled.displayUser(user));
-    this.filteredUsers = this.filteredUsers.filter(user => this.displayInGroups.displayUser(user));
-
-    // apply permission filters, as appropriate....
-    for (let permissionFilter of this.permissionFilters) {
-      if (permissionFilter.filter !== PermissionFilterType.either){// not 'either'
-        if (permissionFilter.filter === PermissionFilterType.can){// 'only those with the permission'
-          this.filteredUsers = this.filteredUsers.filter(user => user.can(permissionFilter.id));
-        } else { // 'onlyNonenabled'
-          this.filteredUsers = this.filteredUsers.filter(user => !user.can(permissionFilter.id));
-        }
-      }
-    }
     this.sortList();
     this.config.currentPage = 1;// need to set the current page to 1, in case the page we are on suddenly doesn't exist anymore....
+  }
+
+  checkAllFilters(user: User){
+    let returnVal: boolean = true;
+    this.displayFilters.forEach(displayFilter => {
+      if (!displayFilter.displayUser(user)) {
+        returnVal = false;
+      }
+    });
+    return returnVal;
   }
 
   sortList() {
@@ -348,27 +344,8 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggleEnabled() {
-    this.displayEnabled.incrementDisplayStatus();
-    this.filterList();
-  }
-
-  toggleInGroups() {
-    this.displayInGroups.incrementDisplayStatus();
-    this.filterList();
-  }
-
-  //
-  selectPermissionFilter(permissionFilter, permissionFilterTypeValue){
-    var index;
-    for (let i in this.permissionFilters) {
-      if (this.permissionFilters[i].id === permissionFilter.id) {
-        index = i;
-      }
-    }
-    if (index !== undefined) {
-      this.permissionFilters[index].filter = permissionFilterTypeValue;
-    }
+  setDisplayFilter(i: number, newVal: number) {
+    this.displayFilters[i].setDisplayStatus(newVal);
     this.filterList();
   }
 
@@ -387,12 +364,8 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
     this.filterBy = this.filterSelectOptionsDropdown[0].value; //used for deciding which column to use for textual filtering
     this.filter = '';
 
-    for (let i in this.permissionFilters) {
-      this.permissionFilters[i].filter = PermissionFilterType.either;
-    }
-
-    this.displayEnabled.resetDisplayStatus();
-    this.displayInGroups.resetDisplayStatus();
+    // reset discrete filters
+    this.displayFilters.forEach(displayFilter => displayFilter.resetDisplayStatus());
 
     this.refreshFilteredUsers();
   }

@@ -36,45 +36,64 @@
                 <table class="centered striped">
                   <thead>
                   <tr>
-                    <th data-field="permissionType"> Permission</th>
-                    <th data-field="permission-can"> can </th>
-                    <th data-field="permission-cannot"> cannot </th>
+                    <th data-field="permissionType"> Permission/Status</th>
+                    <th data-field="permission-can"> yes </th>
+                    <th data-field="permission-cannot"> no </th>
                     <th data-field="permission-either"> either </th>
                   </tr>
                   </thead>
                   <tbody>
-                  <tr *ngFor="let permissionFilter of permissionFilters; let i=index">
-                    <td>{{permissionFilter.title}}</td>
+
+                  <tr *ngFor="let displayFilter of displayFilters; let i=index">
+                    <td>{{displayFilter.title}}</td>
                     <td>
                       <input type="radio"
-                             name="permissionFilter{{permissionFilter.id}}"
-                             id="permissionFilter_{{i}}_1"
+                             name="displayFilterName_{{i}}"
+                             id="displayFilter_{{i}}_1"
                              class="with-gap"
-                             (click)="selectPermissionFilter(permissionFilter, permissionFilterType.can)"
-                             [checked] = "permissionFilters[i].filter === permissionFilterType.can">
-                      <label [attr.for]="'permissionFilter_' + i+'_1'"></label>
+                             (click)="setDisplayFilter(i, displayFilterType.ONLY)"
+                             [checked] = "displayFilter.getDisplayStatus() === displayFilterType.ONLY">
+                      <label [attr.for]="'displayFilter_' + i+'_1'"></label>
                     </td>
                     <td>
                       <input type="radio"
-                             name="permissionFilter{{permissionFilter.id}}"
-                             id="permissionFilter_{{i}}_2"
+                             name="displayFilterName_{{i}}"
+                             id="displayFilter_{{i}}_2"
                              class="with-gap"
-                             (click)="selectPermissionFilter(permissionFilter, permissionFilterType.cannot)"
-                             [checked] = "permissionFilters[i].filter === permissionFilterType.cannot">
-                      <label [attr.for]="'permissionFilter_' + i+'_2'"></label>
+                             (click)="setDisplayFilter(i, displayFilterType.ONLYNOT)"
+                             [checked] = "displayFilter.getDisplayStatus() === displayFilterType.ONLYNOT">
+                      <label [attr.for]="'displayFilter_' + i+'_2'"></label>
                     </td>
                     <td>
                       <input type="radio"
-                             name="permissionFilter{{permissionFilter.id}}"
-                             id="permissionFilter_{{i}}_3"
+                             name="displayFilterName_{{i}}"
+                             id="displayFilter_{{i}}_3"
                              class="with-gap"
-                             (click)="selectPermissionFilter(permissionFilter, permissionFilterType.either)"
-                             [checked] = "permissionFilters[i].filter === permissionFilterType.either">
-                      <label [attr.for]="'permissionFilter_' + i+'_3'"></label>
+                             (click)="setDisplayFilter(i, displayFilterType.ALL)"
+                             [checked] = "displayFilter.getDisplayStatus() === displayFilterType.ALL">
+                      <label [attr.for]="'displayFilter_' + i+'_3'"></label>
                     </td>
                   </tr>
                   </tbody>
                 </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               </div>
 
             </div>
@@ -110,13 +129,13 @@
                   </a>
                 </th>
                 <th data-field="enabled">
-                  <a class="grey-text text-darken-4 include-pointer" (click)="toggleEnabled()">
-                    {{displayEnabled.getCustomText()}}
+                  <a class="grey-text text-darken-4">
+                    Enabled?
                   </a>
                 </th>
                 <th data-field="inGroup">
-                  <a class="grey-text text-darken-4 include-pointer" (click)="toggleInGroups()">
-                    {{displayInGroups.getCustomText()}}
+                  <a class="grey-text text-darken-4">
+                    In Group(s)?
                   </a>
                 </th>
                 <th data-field="edit">Edit</th>

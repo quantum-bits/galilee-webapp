@@ -5,7 +5,7 @@ import {PaginationInstance} from '../../../shared/interfaces/pagination-instance
 import { GroupService } from '../../../shared/services/group.service';
 
 import {Group} from '../../../shared/models/user.model';
-import {StatusOptions, DisplayProperty} from '../../user-management/manage-users';
+import {StatusOptions, DisplayFilter} from '../../user-management/manage-users';
 
 /*
 To Do:
@@ -85,7 +85,7 @@ export class ManageGroupsComponent implements OnInit {
   private filterBy = this.filterSelectOptionsDropdown[0].value; //used for deciding which property to use for textual filtering
   public filter: string = '';//bound to textual input in template that is used for filtering the list of groups by name, etc.
 
-  private displayEnabled = new DisplayProperty('isEnabled', ['Enabled?', 'Enabled (only)', 'Not Enabled']);
+  private displayEnabled = new DisplayFilter('isEnabled', 'Enabled');
 
   constructor(private groupService: GroupService) { }
 
