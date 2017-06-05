@@ -55,7 +55,7 @@ export enum StatusOptions {
 
 export class DisplayProperty {
 
-  displayStatus: number; //status of displayfor this property
+  displayStatus: number; //status of display for this property
   functionName: string; //name of method to check to see whether the User does in fact have this property
   customText: string[]; //custom text to show for 'all', 'only' and 'only not' cases, respectively
 
@@ -112,6 +112,9 @@ export class DisplayProperty {
   }
 
   displayUser(user: User) {
+    // decide whether or not to display the user in question; answer
+    // depends on this.displayStatus, and whether or not the user has
+    // the property in question
     return (this.displayStatus === StatusOptions.ALL) ||
       ((this.displayStatus === StatusOptions.ONLY) && (this.userHasProperty(user))) ||
       ((this.displayStatus === StatusOptions.ONLYNOT) && (!this.userHasProperty(user)));
@@ -126,6 +129,9 @@ export class DisplayProperty {
   }
 
   displayGroup(group: Group) {
+    // decide whether or not to display the group in question; answer
+    // depends on this.displayStatus, and whether or not the group has
+    // the property in question
     return (this.displayStatus === StatusOptions.ALL) ||
       ((this.displayStatus === StatusOptions.ONLY) && (this.groupHasProperty(group))) ||
       ((this.displayStatus === StatusOptions.ONLYNOT) && (!this.groupHasProperty(group)));
@@ -467,6 +473,14 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
     // will get done before OnInit?
     // ...I have checked, and the inputs seem to be correctly fixed by the time
     // ngOnInit runs, but is that guaranteed...?!?
+    /*
+    TN:
+     One thought is that because JS is single threaded, the code
+     that constructs an object will run to completion before
+     Angular will get control again. It’s in Angular’s main
+     loop that lifecycle hooks will get called, but that won’t
+     happen until your code is done running.
+     */
   }
 
 
@@ -477,7 +491,6 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
     if (refreshUsers) {
       this.fetchUsers();
     }
-    // now...how to make page refresh...?!?
   }
 
   ngOnDestroy() {
