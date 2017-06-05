@@ -7,6 +7,21 @@
 
 $card-link-color: color("light-blue", "darken-1") !default; /* KK */
 
+$primary-color: color("indigo", "base") !default;
+$primary-color-light: color("indigo", "lighten-4") !default;
+$primary-color-dark: color("indigo", "darken-2") !default;
+
+$secondary-color: color("cyan", "base") !default;
+$success-color: color("green", "base") !default;
+$error-color: color("red", "base") !default;
+$link-color: color("light-blue", "darken-1") !default;
+
+
+// need to overwrite the $roboto-font-path variable, or else the sass-loader
+// package can't find the fonts (there is an issue with the base path
+// that it is starting with and the base path assumed in _variables.scss).
+$roboto-font-path: "materialize-src/fonts/roboto/" !default;
+
 // ==========================================================================
 // Custom Variables
 // ==========================================================================

@@ -4,7 +4,7 @@
 // style sheets and take priority over the Materialize variables.
 @import "global-variables.scss";
 
-@import 'src/materialize-src/sass/ghpages-materialize.scss';
+@import 'src/materialize-src/sass/materialize.scss';
 
 // The custom global styles must be imported last so that they 'cascade'
 // over the materialize styles and take priority.
