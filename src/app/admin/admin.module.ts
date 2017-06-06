@@ -42,6 +42,7 @@ import { UpdateReadingDayNameModalComponent } from './content-management/update-
 import { ManageGroupsComponent } from './group-management/manage-groups/manage-groups.component';
 import { EditGroupModalAnchorDirective } from './group-management/edit-group-modal-anchor.directive';
 import { EditGroupModalComponent } from './group-management/edit-group-modal/edit-group-modal.component';
+import { EditGroupComponent } from './group-management/edit-group/edit-group.component';
 
 const routes: Routes = [
   {
@@ -94,7 +95,8 @@ const routes: Routes = [
     UpdateReadingDayNameModalComponent,
     ManageGroupsComponent,
     EditGroupModalAnchorDirective,
-    EditGroupModalComponent
+    EditGroupModalComponent,
+    EditGroupComponent
   ],
   exports: [
     EditUserComponent

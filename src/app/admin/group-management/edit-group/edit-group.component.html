@@ -1,0 +1,75 @@
+<div *ngIf="groupForm">
+
+  <div class="container">
+
+    <form [formGroup]="groupForm" novalidate (ngSubmit)="onSubmit()">
+
+      <div class="row">
+        <div class="col s12 ">
+          <div class="card">
+            <div class="card-content">
+              <span *ngIf="isNewGroup" class="card-title">
+                Create Group
+              </span>
+              <span *ngIf="!isNewGroup" class="card-title">
+                Update Group Information
+              </span>
+
+              <div class="row">
+                <div class="input-field col s10 offset-s1">
+                  <label for="name">Group Name</label>
+                  <input
+                    [input-wake-up]="'name'"
+                    [class.warning-background]="groupForm.controls.name.errors && groupForm.controls.name.touched"
+                    id="name"
+                    type="text"
+                    formControlName="name">
+                </div>
+
+                <div *ngIf="groupForm.controls.name.errors && groupForm.controls.name.touched">
+                  <small class="warning">
+                    This field is required.
+                  </small>
+                </div>
+              </div>
+
+              <div *ngIf="haveOrganizations" class="row">
+                <div class="input-field col s10 offset-s1">
+                  <select
+                    id = "organizationId"
+                    materialize="material_select"
+                    [materializeSelectOptions]="selectOptions"
+                    formControlName="organizationId"
+                  >
+                    <option *ngIf="isNewGroup" value="" disabled selected>Choose an organization</option>
+                    <option *ngFor="let organization of organizations"
+                            [value]="organization.id"
+                    >{{organization.name}}</option>
+                  </select>
+                  <label for="organizationId">Organization</label>
+
+                  <div *ngIf="groupForm.controls.organizationId.errors && groupForm.controls.organizationId.touched">
+                    <small class="warning">
+                      This field is required.
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="card-action">
+                <button
+                  class="waves-effect waves-light btn"
+                  type="submit"
+                  [class.disabled]="!groupForm.valid"
+                  [disabled]="!groupForm.valid">Submit
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>

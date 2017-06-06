@@ -22,6 +22,23 @@ To Do:
  - edit group
  */
 
+export class GroupWithDiv extends Group {
+  private divOpen: boolean = false;
+
+  constructor (obj) {
+    super (obj);
+  }
+
+  divIsOpen() {
+    return this.divOpen;
+  }
+
+  toggleDiv() {
+    this.divOpen = !this.divOpen;
+  }
+
+}
+
 
 @Component({
   selector: 'app-manage-groups',
@@ -38,8 +55,8 @@ export class ManageGroupsComponent implements OnInit, OnDestroy {
   private modalComponent: any;
 
 
-  private groups: Group[]; // will stay the same throughout
-  private filteredGroups: Group[]; // the list of filtered/sorted users displayed on the page
+  private groups: GroupWithDiv[]; // will stay the same throughout
+  private filteredGroups: GroupWithDiv[]; // the list of filtered/sorted users displayed on the page
 
   public config: PaginationInstance = {//used by pagination component
     //id: 'advanced',
@@ -105,7 +122,13 @@ export class ManageGroupsComponent implements OnInit, OnDestroy {
   private displayEnabled = new DisplayFilter('isEnabled', 'Enabled');
 
   constructor(private groupService: GroupService,
-              private componentFactoryResolver: ComponentFactoryResolver) { }
+              private componentFactoryResolver: ComponentFactoryResolver) {
+    this.subscription = this.groupService.closeAndCleanUp$.subscribe(
+      refreshGroups => {
+        console.log('received word from modal...!  Refresh Groups?', refreshGroups);
+        this.modalCloseAndCleanUp(refreshGroups);
+      });
+  }
 
   ngOnInit() {
     this.fetchGroups();
@@ -118,7 +141,8 @@ export class ManageGroupsComponent implements OnInit, OnDestroy {
         console.log('groups: ', groups)
         this.groups = [];
         groups.forEach(group => {
-          this.groups.push(new Group(group));
+          //this.groups.push(new Group(group));
+          this.groups.push(new GroupWithDiv(group));
         });
 
         console.log(this.groups);
@@ -249,7 +273,7 @@ export class ManageGroupsComponent implements OnInit, OnDestroy {
 
   toggleDiv(i: number) {
     console.log('i = ', i);
-    this.filteredGroups[i].divOpen = ! this.filteredGroups[i].divOpen;
+    this.filteredGroups[i].toggleDiv();
   }
 
   resetFilters() {
@@ -283,7 +307,14 @@ export class ManageGroupsComponent implements OnInit, OnDestroy {
   }
 
 
-
+  modalCloseAndCleanUp(refreshGroups: boolean){
+    // close the modal and then clear the viewContainer
+    this.modalComponent.closeModal();
+    this.editGroupModalAnchor.viewContainer.clear();
+    if (refreshGroups) {
+      this.fetchGroups();
+    }
+  }
 
   ngOnDestroy() {
     // prevent memory leak when component destroyed

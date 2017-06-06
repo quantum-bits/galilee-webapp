@@ -132,13 +132,13 @@
                     </span>
                     <span *ngIf="column.value === 'name'">
                       <a
-                        *ngIf="!group.divOpen"
+                        *ngIf="!group.divIsOpen()"
                         (click)="toggleDiv(i)"
                         class="grey-text text-darken-4 include-pointer">
                         <i class="material-icons lr-arrow">add</i>
                           {{ group[column.value] }}
                         </a>
-                      <span *ngIf="group.divOpen">
+                      <span *ngIf="group.divIsOpen()">
                         <a
                           (click)="toggleDiv(i)"
                           class="grey-text text-darken-4 include-pointer">

@@ -35,7 +35,6 @@ export class Group implements IGroup {
   createdAt: string;
   enabled: boolean;
   members: Array<AbbreviatedUser>;
-  divOpen: boolean = false; //convenience property used in the manage-groups page
 
   constructor (obj) {
     this.id = obj.id;

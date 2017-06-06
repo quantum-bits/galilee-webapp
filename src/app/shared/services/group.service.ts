@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 
 import {Observable} from 'rxjs/Rx';
+import {Subject} from 'rxjs';
 
-import { IGroup } from '../models/user.model';
+
+import { IGroup, Organization } from '../models/user.model';
+
 
 // MOCK
 const GROUPS: IGroup[] = [
@@ -73,9 +76,34 @@ const GROUPS: IGroup[] = [
   }
 ];
 
+// MOCK
+const ORGANIZATIONS: Organization[] = [
+  {
+    id: 1,
+    name: 'Taylor University',
+    created_at: '2015-02-19 17:52:03.894191-05',
+    updated_at: '2015-02-19 17:52:03.894191-05'
+  },
+  {
+    id: 2,
+    name: 'Anderson University',
+    created_at: '2015-01-19 17:52:03.894191-05',
+    updated_at: '2015-01-19 17:52:03.894191-05'
+  },
+  {
+    id: 3,
+    name: 'Indiana Wesleyan University',
+    created_at: '2015-01-19 17:52:03.894191-05',
+    updated_at: '2015-01-19 17:52:03.894191-05'
+  }
+];
+
 
 @Injectable()
 export class GroupService {
+
+  private closeAndCleanUpSource = new Subject<boolean>();
+  closeAndCleanUp$ = this.closeAndCleanUpSource.asObservable();
 
   constructor() { }
 
@@ -83,6 +111,18 @@ export class GroupService {
     let promise = Promise.resolve(GROUPS);
     return Observable.fromPromise(promise);
   }
+
+  getOrganizations() {
+    let promise = Promise.resolve(ORGANIZATIONS);
+    return Observable.fromPromise(promise);
+  }
+
+  announceCloseAndCleanUp(refreshGroups: boolean){
+    this.closeAndCleanUpSource.next(refreshGroups);
+  }
+
+
+
 
 
 }

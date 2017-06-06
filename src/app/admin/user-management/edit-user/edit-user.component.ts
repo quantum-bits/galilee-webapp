@@ -35,7 +35,7 @@ export class EditUserComponent implements OnInit {
   @Input() userData: User; // only pass in if updating a current user; otherwise undefined
   @Input() updateField: string;// only pass in if updating a current user; can be 'name', 'email' or 'password'
 
-  close = new EventEmitter();
+  //close = new EventEmitter();
 
   onFinished = new EventEmitter<string>();
 
@@ -414,9 +414,11 @@ export class EditUserComponent implements OnInit {
     }
   }
 
-
+  /*
+  I think this is not being used....
   onClickedExit() {
     this.close.emit('event');
   }
+  */
 
 }
