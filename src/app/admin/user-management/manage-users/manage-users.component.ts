@@ -2,9 +2,9 @@ import { Component, OnInit, OnDestroy, ViewChild, EventEmitter } from '@angular/
 
 import {
   //Compiler,
-  ViewContainerRef, //ComponentRef, ComponentFactory,
+  //ViewContainerRef, //ComponentRef, ComponentFactory,
   ComponentFactoryResolver,
-  ReflectiveInjector
+  //ReflectiveInjector
 } from '@angular/core'
 
 import { Subscription }   from 'rxjs/Subscription';
@@ -14,21 +14,15 @@ import {TimeAgoPipe} from 'angular2-moment';
 import {EditUserComponent} from '../edit-user';
 import {EditUserModalComponent} from '../edit-user-modal';
 
-import { EditUserAnchorDirective } from '../edit-user-anchor.directive';
 import { EditUserModalAnchorDirective } from '../edit-user-modal-anchor.directive';
 
 import {MaterializeAction} from 'angular2-materialize';
 
-
-import {DialogComponent} from '../../temp/dialog.component';
-import {DialogAnchorDirective} from '../../temp/dialoganchor.directive';
-
-
 import {User, Group} from '../../../shared/models/user.model';
 import {Permission} from '../../../shared/models/permission.model';
 import {PaginationInstance} from '../../../shared/interfaces/pagination-instance.interface';
-import {PermissionFilter} from '../../../shared/models/permission-filter.model';
-import {PermissionFilterType} from '../../../shared/models/permission-filter.model';
+//import {PermissionFilter} from '../../../shared/models/permission-filter.model';
+//import {PermissionFilterType} from '../../../shared/models/permission-filter.model';
 
 import { UserService } from '../../../authentication/user.service';
 
@@ -156,7 +150,6 @@ export class DisplayFilter {
 })
 export class ManageUsersComponent implements OnInit, OnDestroy {
 
-  @ViewChild(EditUserAnchorDirective) editUserAnchor: EditUserAnchorDirective;
   @ViewChild(EditUserModalAnchorDirective) editUserModalAnchor: EditUserModalAnchorDirective;
   // other helpful examples (including sass for styling, async call to server, multiple pagination instances, etc.)
   // using the pagination package: https://github.com/michaelbromley/ng2-pagination
@@ -368,11 +361,6 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
     this.displayFilters.forEach(displayFilter => displayFilter.resetDisplayStatus());
 
     this.refreshFilteredUsers();
-  }
-
-  logUserLists(){
-    console.log(this.users);
-    console.log(this.filteredUsers);
   }
 
   openNewUserModal() {

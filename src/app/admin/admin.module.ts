@@ -40,6 +40,8 @@ import {BibleInfoService} from "./content-management/bible-info/bible-info.servi
 import { UpdateDailyPracticesListComponent } from './content-management/update-daily-practices-list/update-daily-practices-list.component';
 import { UpdateReadingDayNameModalComponent } from './content-management/update-reading-day-name-modal/update-reading-day-name-modal.component';
 import { ManageGroupsComponent } from './group-management/manage-groups/manage-groups.component';
+import { EditGroupModalAnchorDirective } from './group-management/edit-group-modal-anchor.directive';
+import { EditGroupModalComponent } from './group-management/edit-group-modal/edit-group-modal.component';
 
 const routes: Routes = [
   {
@@ -90,7 +92,9 @@ const routes: Routes = [
     PickerAnchorDirective,
     UpdateDailyPracticesListComponent,
     UpdateReadingDayNameModalComponent,
-    ManageGroupsComponent
+    ManageGroupsComponent,
+    EditGroupModalAnchorDirective,
+    EditGroupModalComponent
   ],
   exports: [
     EditUserComponent
@@ -98,6 +102,7 @@ const routes: Routes = [
   entryComponents: [
     EditUserComponent,
     EditUserModalComponent,
+    EditGroupModalComponent,
     VerseRangeComponent
   ],
   imports: [

@@ -1,11 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, EventEmitter, ComponentFactoryResolver } from '@angular/core';
 
 import {PaginationInstance} from '../../../shared/interfaces/pagination-instance.interface';
 
 import { GroupService } from '../../../shared/services/group.service';
 
+import {EditGroupModalComponent} from '../edit-group-modal';
+
+import { EditGroupModalAnchorDirective } from '../edit-group-modal-anchor.directive';
+
 import {Group} from '../../../shared/models/user.model';
 import {StatusOptions, DisplayFilter} from '../../user-management/manage-users';
+
+import {MaterializeAction} from 'angular2-materialize';
+
+import { Subscription }   from 'rxjs/Subscription';
+
 
 /*
 To Do:
@@ -19,7 +28,15 @@ To Do:
   templateUrl: './manage-groups.component.html',
   styleUrls: ['./manage-groups.component.scss']
 })
-export class ManageGroupsComponent implements OnInit {
+export class ManageGroupsComponent implements OnInit, OnDestroy {
+
+  @ViewChild(EditGroupModalAnchorDirective) editGroupModalAnchor: EditGroupModalAnchorDirective;
+
+  modalActions = new EventEmitter<string|MaterializeAction>();
+  subscription: Subscription;
+
+  private modalComponent: any;
+
 
   private groups: Group[]; // will stay the same throughout
   private filteredGroups: Group[]; // the list of filtered/sorted users displayed on the page
@@ -87,7 +104,8 @@ export class ManageGroupsComponent implements OnInit {
 
   private displayEnabled = new DisplayFilter('isEnabled', 'Enabled');
 
-  constructor(private groupService: GroupService) { }
+  constructor(private groupService: GroupService,
+              private componentFactoryResolver: ComponentFactoryResolver) { }
 
   ngOnInit() {
     this.fetchGroups();
@@ -249,7 +267,9 @@ export class ManageGroupsComponent implements OnInit {
   }
 
   openNewGroupModal() {
-    //
+    this.editGroupModalAnchor.viewContainer.clear();
+    let componentFactory = this.componentFactoryResolver.resolveComponentFactory(EditGroupModalComponent);
+    this.modalComponent = this.editGroupModalAnchor.viewContainer.createComponent(componentFactory).instance;
   }
 
   openEditGroupModal(group) {
@@ -261,5 +281,15 @@ export class ManageGroupsComponent implements OnInit {
     console.log('page number: ', number);
     this.config.currentPage = number;
   }
+
+
+
+
+  ngOnDestroy() {
+    // prevent memory leak when component destroyed
+    this.subscription.unsubscribe();
+  }
+
+
 
 }
