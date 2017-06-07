@@ -1,0 +1,33 @@
+.hovered {
+  background-color: #9fa8da;
+  border-radius: 4px;
+  margin: 2px;
+}
+
+.highlighted {
+  background-color: #00bcd4;
+  border-radius: 4px;
+  margin: 2px;
+  color: white;
+}
+
+.hovered-highlighted {
+  background-color: #26c6da;
+  border-radius: 4px;
+  margin: 2px;
+  color: white;
+}
+
+.not-hovered-highlighted {
+  margin: 2px;
+}
+
+.email {
+  padding-left: 15px;
+  padding-bottom: 3px;
+}
+
+.user-name {
+  padding-left: 5px;
+  padding-top: 3px;
+}

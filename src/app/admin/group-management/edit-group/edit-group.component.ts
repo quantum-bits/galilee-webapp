@@ -8,9 +8,13 @@ import {
   FormControl
 } from '@angular/forms';
 
+import {UserSelectComponent} from '../user-select/user-select.component';
 
+
+import { UserService } from '../../../authentication/user.service';
 import { GroupService } from '../../../shared/services/group.service';
-import {Group, Organization} from '../../../shared/models/user.model';
+
+import {User, Group, Organization} from '../../../shared/models/user.model';
 
 @Component({
   selector: 'app-edit-group',
@@ -28,12 +32,20 @@ export class EditGroupComponent implements OnInit {
   private organizations: Organization[] = [];
   private haveOrganizations: boolean = false;
 
+  private users: User[];
+
+  private haveUsers: boolean = false;
+
+  private selectedUsers: User[] = [];
+
   constructor(private formBuilder: FormBuilder,
-              private groupService: GroupService) { }
+              private groupService: GroupService,
+              private userService: UserService) { }
 
   ngOnInit() {
 
     this.fetchOrganizations();
+    this.fetchUsers();
 
     if (this.groupData === undefined){
       this.isNewGroup = true;
@@ -56,6 +68,24 @@ export class EditGroupComponent implements OnInit {
         });
         this.haveOrganizations = true;
       })
+  }
+
+  fetchUsers() {
+    console.log('fetching user data....');
+    this.userService.getUsers().subscribe(
+      users => {
+        this.users = [];
+        users.forEach(user => {
+          this.users.push(new User(user));
+        });
+        // these are actual user objects now, along with associated methods
+        //create a copy of this.users called this.filteredUsers; this is what will be
+        //displayed, etc.
+        this.haveUsers = true;
+        console.log(this.users);
+      },
+      err => console.log("ERROR", err),
+      () => console.log("Users fetched"));
   }
 
   initializeForm() {
@@ -106,6 +136,11 @@ export class EditGroupComponent implements OnInit {
 
     });
 
+  }
+
+  onSelectionChange(users: User[]) {
+    this.selectedUsers = users;
+    console.log(this.selectedUsers);
   }
 
   onSubmit() {

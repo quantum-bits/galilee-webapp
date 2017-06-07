@@ -1,0 +1,18 @@
+<div [class.highlighted]="isHighlighted"
+     [class.hovered]="isHovered"
+     [class.hovered-highlighted]="isHovered&&isHighlighted"
+     [class.not-hovered-highlighted]="!(isHovered&&isHighlighted)"
+     (mouseover)="setHover()"
+     (mouseleave)="setUnhover()"
+     (dblclick)="selectUser()"
+     (click)="toggleHighlightUser()"
+>
+
+<!-- WORKING HERE!!!!!!!!!!!!!!!!!!  need to deal with above....-->
+<!-- https://juristr.com/blog/2016/01/learning-ng2-dynamic-styles/#the-good-old-ngclass -->
+<span class="user-name">
+  <strong>{{user.firstName}} {{user.lastName}}</strong>
+</span>
+<br>
+<span class="email">{{user.email}}</span>
+</div>

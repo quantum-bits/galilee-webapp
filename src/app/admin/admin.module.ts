@@ -43,6 +43,8 @@ import { ManageGroupsComponent } from './group-management/manage-groups/manage-g
 import { EditGroupModalAnchorDirective } from './group-management/edit-group-modal-anchor.directive';
 import { EditGroupModalComponent } from './group-management/edit-group-modal/edit-group-modal.component';
 import { EditGroupComponent } from './group-management/edit-group/edit-group.component';
+import { UserEntryComponent } from './group-management/user-entry/user-entry.component';
+import { UserSelectComponent } from './group-management/user-select/user-select.component';
 
 const routes: Routes = [
   {
@@ -96,7 +98,9 @@ const routes: Routes = [
     ManageGroupsComponent,
     EditGroupModalAnchorDirective,
     EditGroupModalComponent,
-    EditGroupComponent
+    EditGroupComponent,
+    UserEntryComponent,
+    UserSelectComponent
   ],
   exports: [
     EditUserComponent

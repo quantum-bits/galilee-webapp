@@ -1,0 +1,34 @@
+.user-box {
+  height: 200px;
+  overflow: scroll;
+
+  border-radius: 10px;
+  background: #e8eaf6;
+  padding: 10px 10px 10px 10px;
+}
+
+.arrow-container {
+  margin-top: 70px;
+}
+
+.arrow-ready {
+  background: #00bcd4;
+  color: white;
+  border-radius: 2px;
+}
+
+.arrow-disabled {
+  background: #dfdfdf;
+  color: #9f9f9f;
+  border-radius: 2px;
+}
+
+.arrow-hovered {
+  background: #4dd0e1;
+  color: white;
+  border-radius: 2px;
+}
+
+.chosen-users-title {
+  padding-top: 60px;
+}

@@ -1,0 +1,102 @@
+
+<div materialize class="row">
+  <div class="col s12 card-title">
+    Choose Group Members:
+  </div>
+</div>
+<div class="row">
+  <div class="input-field col s5">
+    <input
+      id="name-filter"
+      type="text"
+      class="input"
+      [(ngModel)]="filter"
+      (keyup)="onKey()">
+    <!-- apparently not required: [ngModelOptions]="{standalone: true}" -->
+  <label for="name-filter">Filter Names/Email Addresses</label>
+  </div>
+  <div class="col s6 offset-s1 center-align chosen-users-title">
+    <strong>Chosen Group Members</strong>
+  </div>
+</div>
+<div class="row">
+  <div class="col s5 ">
+    <div class="user-box">
+      <div *ngFor="let user of filteredUsers; let i = index">
+
+        <!--<div [class.hovered]="isHovered(i)" (mouseover)="changeStyle(i)"">-->
+
+        <!-- WORKING HERE!!!!!!!!!!!!!!!!!!  need to deal with above....-->
+        <!-- https://juristr.com/blog/2016/01/learning-ng2-dynamic-styles/#the-good-old-ngclass -->
+
+        <!--<strong>{{user.firstName}} {{user.lastName}}</strong>
+          <br>
+          <span class="email">{{user.email}}</span>
+        </div>-->
+
+        <app-user-entry
+          [user] = "user"
+          (onSelected)="onUserSelected($event)"
+          (onHighlighted)="onUnselectedUserHighlighted($event)"
+          (onUnhighlighted)="onUnselectedUserUnhighlighted($event)"
+        ></app-user-entry>
+
+      </div>
+
+
+    </div>
+
+
+
+  </div>
+
+  <div class="col s1 ">
+    <div
+      class="arrow-container center-align">
+      <i
+        class="material-icons"
+        [class.arrow-ready]="usersHighlightedToSelect()"
+        [class.z-depth-1]="usersHighlightedToSelect()"
+        [class.arrow-disabled]="!usersHighlightedToSelect()"
+        [class.arrow-hovered]="usersHighlightedToSelect()&&rightArrowHovered"
+        [class.z-depth-2]="usersHighlightedToSelect()&&rightArrowHovered"
+        (mouseover)="setRightArrowHover()"
+        (mouseleave)="setRightArrowUnhover()"
+        (click)="onRightArrowClick()">arrow_forward</i>
+    </div>
+    <div class="center-align">
+      <i
+        class="material-icons"
+        [class.arrow-ready]="usersHighlightedToUnselect()"
+        [class.z-depth-1]="usersHighlightedToUnselect()"
+        [class.arrow-disabled]="!usersHighlightedToUnselect()"
+        [class.arrow-hovered]="usersHighlightedToUnselect()&&leftArrowHovered"
+        [class.z-depth-2]="usersHighlightedToUnselect()&&leftArrowHovered"
+        (mouseover)="setLeftArrowHover()"
+        (mouseleave)="setLeftArrowUnhover()"
+        (click)="onLeftArrowClick()">arrow_back</i>
+    </div>
+  </div>
+
+
+  <div class="col s6 ">
+    <div class="user-box">
+      <div *ngFor="let user of selectedUsers">
+        <app-user-entry
+          [user] = "user"
+          (onSelected)="onUserUnselected($event)"
+          (onHighlighted)="onSelectedUserHighlighted($event)"
+          (onUnhighlighted)="onSelectedUserUnhighlighted($event)"
+        ></app-user-entry>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="input-field col s6 offset-s6 center-align">
+    <strong># Selected:</strong> {{selectedUsers.length}}
+  </div>
+</div>

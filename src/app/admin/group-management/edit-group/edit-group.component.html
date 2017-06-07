@@ -1,12 +1,12 @@
 <div *ngIf="groupForm">
 
-  <div class="container">
+  <!--<div class="container">-->
 
     <form [formGroup]="groupForm" novalidate (ngSubmit)="onSubmit()">
 
       <div class="row">
         <div class="col s12 ">
-          <div class="card">
+          <div class="card card-wide">
             <div class="card-content">
               <span *ngIf="isNewGroup" class="card-title">
                 Create Group
@@ -17,19 +17,19 @@
 
               <div class="row">
                 <div class="input-field col s10 offset-s1">
-                  <label for="name">Group Name</label>
                   <input
                     [input-wake-up]="'name'"
                     [class.warning-background]="groupForm.controls.name.errors && groupForm.controls.name.touched"
                     id="name"
                     type="text"
                     formControlName="name">
-                </div>
+                  <label for="name">Group Name</label>
 
-                <div *ngIf="groupForm.controls.name.errors && groupForm.controls.name.touched">
-                  <small class="warning">
-                    This field is required.
-                  </small>
+                  <div *ngIf="groupForm.controls.name.errors && groupForm.controls.name.touched">
+                    <small class="warning">
+                      This field is required.
+                    </small>
+                  </div>
                 </div>
               </div>
 
@@ -56,6 +56,11 @@
                 </div>
               </div>
 
+              <app-user-select
+                [users]="users"
+                (onSelectionChange)="onSelectionChange($event)"
+                >
+              </app-user-select>
 
               <div class="card-action">
                 <button
@@ -71,5 +76,5 @@
       </div>
     </form>
 
-  </div>
+  <!--</div>-->
 </div>
