@@ -213,6 +213,8 @@ export class EditUserComponent implements OnInit {
   }
 
   postNewUser(){
+    // TODO: add 'enabled' as well...(?); maybe that only needs to
+    //       get added below, in the adminUpdate() method
     this.userService.signup(
       this.userForm.value.email,
       this.userForm.value.passwords.password,
@@ -240,7 +242,10 @@ export class EditUserComponent implements OnInit {
   }
 
   adminUpdate(){
+    // TODO: add 'enabled' as well
     // need something here for an admin to update someone else....
+
+    //TODO: add 'enabled' as well....
 
     /*
 
@@ -396,7 +401,7 @@ export class EditUserComponent implements OnInit {
         }, {validator: this.areEqual}),
         firstName: [this.userData.firstName, [<any>Validators.required]],
         lastName: [this.userData.lastName, [<any>Validators.required]],
-        enabled: [true, [<any>Validators.required]],
+        enabled: [this.userData.enabled, [<any>Validators.required]],
         preferredVersionId: [this.userData.preferredVersionId],
         permissions: this.formBuilder.array(
           this.initPermissionArray(this.userData.permissions, this.permissionTypes)),
@@ -406,7 +411,7 @@ export class EditUserComponent implements OnInit {
         email: [this.userData.email, Validators.compose([<any>Validators.required, this.emailValidator])],
         firstName: [this.userData.firstName, [<any>Validators.required]],
         lastName: [this.userData.lastName, [<any>Validators.required]],
-        enabled: [true, [<any>Validators.required]],
+        enabled: [this.userData.enabled, [<any>Validators.required]],
         preferredVersionId: [this.userData.preferredVersionId],
         permissions: this.formBuilder.array(
           this.initPermissionArray(this.userData.permissions, this.permissionTypes)),

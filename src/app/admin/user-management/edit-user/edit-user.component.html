@@ -120,6 +120,19 @@
 
               </div>
 
+              <div *ngIf="currentUserIsAdmin" class="row">
+                <div class="col s12">
+                  <p>
+                    <input
+                      type="checkbox"
+                      class="filled-in"
+                      id="enabledId"
+                      formControlName="enabled"/>
+                    <label [attr.for]="'enabledId'">User Enabled</label>
+                  </p>
+                </div>
+              </div>
+
               <!-- Permission Checkboxes -->
 
               <div *ngIf="currentUserIsAdmin">

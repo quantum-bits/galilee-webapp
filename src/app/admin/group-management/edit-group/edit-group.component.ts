@@ -131,6 +131,7 @@ export class EditGroupComponent implements OnInit {
     this.groupForm = this.formBuilder.group({
       name: [this.groupData.name, [<any>Validators.required]],
       organizationId: [this.groupData.organization.id, [<any>Validators.required]],
+      enabled: [this.groupData.enabled]
     });
 
   }
