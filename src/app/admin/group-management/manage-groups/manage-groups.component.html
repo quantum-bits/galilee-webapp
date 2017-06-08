@@ -8,12 +8,13 @@
         <div class = "card col s10 offset-s1">
           <div class = "card-content">
             <div class="row">
-              <div class="col s4">
+              <div class="col s6">
                 <div class="row">
                   <div class="input-field col s12">
                     <select #selectedOption
                             materialize="material_select"
-                            [materializeSelectOptions]="filterSelectOptionsDropdown" (change)="onSelect(selectedOption.value)">
+                            [materializeSelectOptions]="filterSelectOptionsDropdown"
+                            (change)="onSelect(selectedOption.value)">
                       <option *ngFor="let option of filterSelectOptionsDropdown"
                               [value]="option.value">{{option.name}}</option>
                     </select>
@@ -33,7 +34,7 @@
               </div>
 
 
-              <div class="col s7 offset-s1">
+              <div class="col s6 ">
                 <table class="centered striped">
                   <thead>
                   <tr>

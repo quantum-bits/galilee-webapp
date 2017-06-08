@@ -14,10 +14,6 @@
   cursor: pointer;
 }
 
-[dialogAnchor] {
-  display: none;
-}
-
 li.active {
   /*
     KK: much of this style is taken from the materialize a tag style, which is
@@ -32,3 +28,4 @@ li.active {
 .group-members {
   padding-left: 30px;
 }
+
