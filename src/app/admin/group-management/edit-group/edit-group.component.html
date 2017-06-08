@@ -57,7 +57,8 @@
               </div>
 
               <app-user-select
-                [users]="users"
+                [allUsers]="allUsers"
+                [selectedUsers]="selectedUsers"
                 (onSelectionChange)="onSelectionChange($event)"
                 >
               </app-user-select>

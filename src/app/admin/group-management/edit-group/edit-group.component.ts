@@ -32,26 +32,29 @@ export class EditGroupComponent implements OnInit {
   private organizations: Organization[] = [];
   private haveOrganizations: boolean = false;
 
-  private users: User[];
+  private allUsers: User[];
 
   private haveUsers: boolean = false;
 
   private selectedUsers: User[] = [];
+  private initialMemberIds: number[] = [];
 
   constructor(private formBuilder: FormBuilder,
               private groupService: GroupService,
               private userService: UserService) { }
 
   ngOnInit() {
-
-    this.fetchOrganizations();
-    this.fetchUsers();
-
     if (this.groupData === undefined){
       this.isNewGroup = true;
     } else {
       this.isNewGroup = false;
+      this.groupData.members.forEach(user => this.initialMemberIds.push(user.id));
     }
+
+    console.log('initialMemberIds: ', this.initialMemberIds);
+    this.fetchOrganizations();
+    this.fetchUsers();
+
     this.initializeForm();
     this.createGroupForm();
 
@@ -72,21 +75,32 @@ export class EditGroupComponent implements OnInit {
 
   fetchUsers() {
     console.log('fetching user data....');
+    // TODO: when the list of users gets large, may want to only fetch
+    //       select users (maybe based on the search filter in the form)
     this.userService.getUsers().subscribe(
       users => {
-        this.users = [];
+        this.allUsers = [];
         users.forEach(user => {
-          this.users.push(new User(user));
+          this.allUsers.push(new User(user));
+          if (!this.isNewGroup) {
+            // TODO: when the list of users gets larger, may want to retrieve
+            //       the data for the users in groupData.members directly from the server
+            for (let id of this.initialMemberIds) {
+              if (id === user.id) {
+                this.selectedUsers.push(new User(user));
+              }
+            }
+          }
         });
-        // these are actual user objects now, along with associated methods
-        //create a copy of this.users called this.filteredUsers; this is what will be
-        //displayed, etc.
+        // these are actual user objects, along with associated methods
         this.haveUsers = true;
-        console.log(this.users);
+        console.log(this.allUsers);
+        console.log(this.selectedUsers);
       },
       err => console.log("ERROR", err),
       () => console.log("Users fetched"));
   }
+
 
   initializeForm() {
 
@@ -117,23 +131,6 @@ export class EditGroupComponent implements OnInit {
     this.groupForm = this.formBuilder.group({
       name: [this.groupData.name, [<any>Validators.required]],
       organizationId: [this.groupData.organization.id, [<any>Validators.required]],
-
-
-      /*
-      email: [this.userData.email, Validators.compose([<any>Validators.required, this.emailValidator])],
-      passwords: this.formBuilder.group({
-        password: ['', Validators.compose([<any>Validators.required, this.passwordValidator, this.passwordWhitespaceValidator])],
-        password2: ['', Validators.compose([<any>Validators.required, this.passwordValidator, this.passwordWhitespaceValidator])]
-      }, {validator: this.areEqual}),
-      firstName: [this.userData.firstName, [<any>Validators.required]],
-      lastName: [this.userData.lastName, [<any>Validators.required]],
-      enabled: [true, [<any>Validators.required]],
-      preferredVersionId: [this.userData.preferredVersionId],
-      permissions: this.formBuilder.array(
-        this.initPermissionArray(this.userData.permissions, this.permissionTypes)),
-
-    */
-
     });
 
   }
@@ -144,7 +141,8 @@ export class EditGroupComponent implements OnInit {
   }
 
   onSubmit() {
-    //
+    // pull data out of the form and out of this.selectedUsers;
+    // should double-check that no user appears twice by accident
   }
 
 

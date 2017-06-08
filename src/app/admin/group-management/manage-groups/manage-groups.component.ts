@@ -297,7 +297,10 @@ export class ManageGroupsComponent implements OnInit, OnDestroy {
   }
 
   openEditGroupModal(group) {
-    //
+    this.editGroupModalAnchor.viewContainer.clear();
+    let componentFactory = this.componentFactoryResolver.resolveComponentFactory(EditGroupModalComponent);
+    this.modalComponent = this.editGroupModalAnchor.viewContainer.createComponent(componentFactory).instance;
+    this.modalComponent.groupData = group;
   }
 
   onPageChange(number: number) {

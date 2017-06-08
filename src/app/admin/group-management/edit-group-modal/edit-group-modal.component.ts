@@ -20,6 +20,7 @@ export class EditGroupModalComponent implements OnInit {
   constructor(private groupService: GroupService) { }
 
   ngOnInit() {
+    console.log('inside EditGroupModalComponent; groupData: ', this.groupData);
   }
 
   openModal() {

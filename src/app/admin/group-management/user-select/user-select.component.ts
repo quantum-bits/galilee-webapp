@@ -13,12 +13,12 @@ import {User} from '../../../shared/models/user.model';
 })
 export class UserSelectComponent implements OnInit {
 
-  @Input() users: User[];
+  @Input() allUsers: User[];
+  @Input() selectedUsers: User[] = [];
   @Output() onSelectionChange = new EventEmitter<User[]>();
 
   private filteredUsers: User[];
   private unselectedUsers: User[];
-  private selectedUsers: User[] = [];
 
   private haveUsers: boolean = false;
 
@@ -37,12 +37,13 @@ export class UserSelectComponent implements OnInit {
   }
 
   ngOnChanges() {
-    console.log('users? ', this.users);
-    if (this.users && !this.haveUsers) {
+    console.log('all users? ', this.allUsers);
+    console.log('selected users? ', this.selectedUsers);
+    if (this.allUsers && !this.haveUsers) {
       this.haveUsers = true;//make sure we don't accidentally refresh the list part way through....
-      this.unselectedUsers = this.users;
+      this.unselectedUsers = this.allUsers;
       this.refreshFilteredUsers();
-      this.filterList();//sorts this.filteredUsers, but not this.users (since they are distinct in memory)
+      this.filterList();//sorts this.filteredUsers, but not this.allUsers (since they are distinct in memory)
     }
   }
 
@@ -52,7 +53,7 @@ export class UserSelectComponent implements OnInit {
   }
 
   refreshFilteredUsers(){
-    // makes a copy of this.filteredUsers that is distinct from this.users
+    // makes a copy of this.filteredUsers that is distinct from this.allUsers
     this.filteredUsers = this.unselectedUsers.filter(user => true);
   }
 
@@ -67,7 +68,7 @@ export class UserSelectComponent implements OnInit {
 
   addUserToSelected(userId: number) {
     let selectedUser: User = null;
-    this.users.forEach(user => {
+    this.allUsers.forEach(user => {
       if (user.id === userId) {
         selectedUser = user;
       }
@@ -79,7 +80,7 @@ export class UserSelectComponent implements OnInit {
 
   addUserToUnselected(userId: number) {
     let unselectedUser: User = null;
-    this.users.forEach(user => {
+    this.allUsers.forEach(user => {
       if (user.id === userId) {
         unselectedUser = user;
       }
@@ -97,9 +98,6 @@ export class UserSelectComponent implements OnInit {
     }
     return user.id === userId;
   }
-
-
-  //this.users.filter(item => -1 < item[this.filterBy].toLowerCase().indexOf(this.filter.toLowerCase()));
 
   filterList() {
     if (this.filter !== '') {
