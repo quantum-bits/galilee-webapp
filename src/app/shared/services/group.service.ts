@@ -105,6 +105,9 @@ export class GroupService {
   private closeAndCleanUpSource = new Subject<boolean>();
   closeAndCleanUp$ = this.closeAndCleanUpSource.asObservable();
 
+  private closeAndCleanUpOrganizationsSource = new Subject<boolean>();
+  closeAndCleanUpOrganizations$ = this.closeAndCleanUpOrganizationsSource.asObservable();
+
   constructor() { }
 
   getGroups() {
@@ -121,6 +124,9 @@ export class GroupService {
     this.closeAndCleanUpSource.next(refreshGroups);
   }
 
+  announceCloseAndCleanUpOrganizations(refreshOrganizations: boolean){
+    this.closeAndCleanUpOrganizationsSource.next(refreshOrganizations);
+  }
 
 
 

@@ -15,13 +15,6 @@ import {MaterializeAction} from 'angular2-materialize';
 
 import { Subscription }   from 'rxjs/Subscription';
 
-
-/*
-To Do:
- - add group
- - edit group
- */
-
 export class GroupWithDiv extends Group {
   private divOpen: boolean = false;
 

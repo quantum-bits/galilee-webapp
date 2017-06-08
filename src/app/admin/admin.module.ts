@@ -45,6 +45,8 @@ import { EditGroupModalComponent } from './group-management/edit-group-modal/edi
 import { EditGroupComponent } from './group-management/edit-group/edit-group.component';
 import { UserEntryComponent } from './group-management/user-entry/user-entry.component';
 import { UserSelectComponent } from './group-management/user-select/user-select.component';
+import { ManageOrganizationsComponent } from './organization-management/manage-organizations/manage-organizations.component';
+import { EditOrganizationModalAnchorDirective } from './organization-management/edit-organization-modal-anchor.directive';
 
 const routes: Routes = [
   {
@@ -55,6 +57,7 @@ const routes: Routes = [
       {path: 'edit-reading-resources', component: EditReadingResourcesComponent},
       {path: 'manage-users', component: ManageUsersComponent},
       {path: 'manage-groups', component: ManageGroupsComponent},
+      {path: 'manage-organizations', component: ManageOrganizationsComponent},
       {
         path: 'update-readings',
         component: UpdateReadingsComponent
@@ -100,7 +103,9 @@ const routes: Routes = [
     EditGroupModalComponent,
     EditGroupComponent,
     UserEntryComponent,
-    UserSelectComponent
+    UserSelectComponent,
+    ManageOrganizationsComponent,
+    EditOrganizationModalAnchorDirective
   ],
   exports: [
     EditUserComponent
