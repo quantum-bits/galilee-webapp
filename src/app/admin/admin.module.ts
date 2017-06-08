@@ -47,6 +47,8 @@ import { UserEntryComponent } from './group-management/user-entry/user-entry.com
 import { UserSelectComponent } from './group-management/user-select/user-select.component';
 import { ManageOrganizationsComponent } from './organization-management/manage-organizations/manage-organizations.component';
 import { EditOrganizationModalAnchorDirective } from './organization-management/edit-organization-modal-anchor.directive';
+import { EditOrganizationModalComponent } from './organization-management/edit-organization-modal/edit-organization-modal.component';
+import { EditOrganizationComponent } from './organization-management/edit-organization/edit-organization.component';
 
 const routes: Routes = [
   {
@@ -105,7 +107,9 @@ const routes: Routes = [
     UserEntryComponent,
     UserSelectComponent,
     ManageOrganizationsComponent,
-    EditOrganizationModalAnchorDirective
+    EditOrganizationModalAnchorDirective,
+    EditOrganizationModalComponent,
+    EditOrganizationComponent
   ],
   exports: [
     EditUserComponent
@@ -114,6 +118,7 @@ const routes: Routes = [
     EditUserComponent,
     EditUserModalComponent,
     EditGroupModalComponent,
+    EditOrganizationModalComponent,
     VerseRangeComponent
   ],
   imports: [

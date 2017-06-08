@@ -1,11 +1,11 @@
 <!-- Modal Structure -->
 <!-- https://github.com/InfomediaLtd/angular2-materialize/issues/209 -->
-<div id="edit-group-modal1" class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions" (init)="this.openModal()">
+<div id="edit-organization-modal2" class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions" (init)="this.openModal()">
   <div class="modal-content">
 
-    <app-edit-group
-      [groupData] = "groupData"
-    ></app-edit-group>
+    <app-edit-organization
+      [organizationData] = "organizationData"
+    ></app-edit-organization>
 
 
   </div>

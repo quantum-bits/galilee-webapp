@@ -4,6 +4,8 @@ import {PaginationInstance} from '../../../shared/interfaces/pagination-instance
 
 import { GroupService } from '../../../shared/services/group.service';
 
+import {EditOrganizationModalComponent} from '../edit-organization-modal';
+
 import { EditOrganizationModalAnchorDirective } from '../edit-organization-modal-anchor.directive';
 import {Organization} from '../../../shared/models/user.model';
 
@@ -138,14 +140,14 @@ export class ManageOrganizationsComponent implements OnInit, OnDestroy {
       }
     }
   }
-
-
-
+  
   openNewOrganizationModal() {
-    //
+    this.editOrganizationModalAnchor.viewContainer.clear();
+    let componentFactory = this.componentFactoryResolver.resolveComponentFactory(EditOrganizationModalComponent);
+    this.modalComponent = this.editOrganizationModalAnchor.viewContainer.createComponent(componentFactory).instance;
   }
 
-  openEditGroupModal(organization: Organization) {
+  openEditOrganizationModal(organization: Organization) {
     //
   }
 

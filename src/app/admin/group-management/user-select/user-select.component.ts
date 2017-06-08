@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import {UserEntryComponent} from '../user-entry/user-entry.component';
-import {SelectedUserComponent} from '../selected-user/selected-user.component';
 
 import {User} from '../../../shared/models/user.model';
 

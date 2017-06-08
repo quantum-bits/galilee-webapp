@@ -3,7 +3,7 @@ import { Component, OnInit, Input, EventEmitter } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
-  FormArray,
+  //FormArray,
   Validators, // used to make a field required
   FormControl
 } from '@angular/forms';
@@ -23,7 +23,7 @@ import {User, Group, Organization} from '../../../shared/models/user.model';
 })
 export class EditGroupComponent implements OnInit {
 
-  @Input() groupData: Group; // only pass in if updating a current user; otherwise undefined
+  @Input() groupData: Group; // only pass in if updating a current group; otherwise undefined
 
   onFinished = new EventEmitter<string>();
   private isNewGroup: boolean = true;
