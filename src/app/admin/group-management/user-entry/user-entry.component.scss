@@ -2,6 +2,7 @@
   background-color: #9fa8da;
   border-radius: 4px;
   margin: 2px;
+  cursor: pointer !important;
 }
 
 .highlighted {
@@ -9,17 +10,20 @@
   border-radius: 4px;
   margin: 2px;
   color: white;
+  cursor: pointer !important;
 }
 
 .hovered-highlighted {
-  background-color: #26c6da;
+  background-color: #4dd0e1;
   border-radius: 4px;
   margin: 2px;
   color: white;
+  cursor: pointer !important;
 }
 
 .not-hovered-highlighted {
   margin: 2px;
+  cursor: pointer !important;
 }
 
 .email {
