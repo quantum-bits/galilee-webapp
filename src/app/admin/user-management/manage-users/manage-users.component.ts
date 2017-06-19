@@ -178,18 +178,18 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
   //public autoHide: boolean = true;//used by pagination component
   public config: PaginationInstance = {//used by pagination component
     //id: 'advanced',
-    itemsPerPage: 5,
+    itemsPerPage: 25,
     currentPage: 1
   };
 
   private sortableColumns = [
     {
-      value: 'lastName',
-      name: 'Last Name'
-    },
-    {
       value: 'firstName',
       name: 'First Name'
+    },
+    {
+      value: 'lastName',
+      name: 'Last Name'
     },
     {
       value: 'email',

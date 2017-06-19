@@ -1,231 +1,227 @@
-<div materialize class="container">
-  <div class="card">
-    <div class="card-content">
-      <div class="card-title">
-        Manage Users
+<div materialize class="row">
+  <div class="col s3 manage-users-sidebar">
+
+    <div class="row">
+
+      <h5 class="col s12">
+        Text Filter
+      </h5>
+
+      <div class="input-field col s12">
+        <select #selectedOption
+                materialize="material_select"
+                [materializeSelectOptions]="filterSelectOptionsDropdown" (change)="onSelect(selectedOption.value)">
+          <option *ngFor="let option of filterSelectOptionsDropdown"
+                  [value]="option.value">{{option.name}}</option>
+        </select>
+        <label>Filter By</label>
       </div>
-      <div class="row">
-        <div class = "card col s10 offset-s1">
-          <div class = "card-content">
-            <div class="row">
-              <div class="col s4">
-                <div class="row">
-                  <div class="input-field col s12">
-                    <select #selectedOption
-                            materialize="material_select"
-                            [materializeSelectOptions]="filterSelectOptionsDropdown" (change)="onSelect(selectedOption.value)">
-                      <option *ngFor="let option of filterSelectOptionsDropdown"
-                              [value]="option.value">{{option.name}}</option>
-                    </select>
-                    <label>Filter By</label>
-                  </div>
 
-                  <div class="input-field col s12">
-                    <label for="filter">Filter</label>
-                    <input
-                      id="filter"
-                      type="text"
-                      class="input"
-                      [(ngModel)]="filter"
-                      (keyup)="onKey()">
-                  </div>
-                </div>
-              </div>
+      <div class="input-field col s12">
+        <label for="filter">Filter</label>
+        <input
+          id="filter"
+          type="text"
+          class="input"
+          [(ngModel)]="filter"
+          (keyup)="onKey()">
+      </div>
 
-              <div class="col s7 offset-s1">
-                <table class="centered striped">
-                  <thead>
-                  <tr>
-                    <th data-field="permissionType"> Permission/Status</th>
-                    <th data-field="permission-can"> yes </th>
-                    <th data-field="permission-cannot"> no </th>
-                    <th data-field="permission-either"> either </th>
-                  </tr>
-                  </thead>
-                  <tbody>
+      <h5 class="col s12">
+        Attribute Filters
+      </h5>
 
-                  <tr *ngFor="let displayFilter of displayFilters; let i=index">
-                    <td>{{displayFilter.title}}</td>
-                    <td>
-                      <input type="radio"
-                             name="displayFilterName_{{i}}"
-                             id="displayFilter_{{i}}_1"
-                             class="with-gap"
-                             (click)="setDisplayFilter(i, displayFilterType.ONLY)"
-                             [checked] = "displayFilter.getDisplayStatus() === displayFilterType.ONLY">
-                      <label [attr.for]="'displayFilter_' + i+'_1'"></label>
-                    </td>
-                    <td>
-                      <input type="radio"
-                             name="displayFilterName_{{i}}"
-                             id="displayFilter_{{i}}_2"
-                             class="with-gap"
-                             (click)="setDisplayFilter(i, displayFilterType.ONLYNOT)"
-                             [checked] = "displayFilter.getDisplayStatus() === displayFilterType.ONLYNOT">
-                      <label [attr.for]="'displayFilter_' + i+'_2'"></label>
-                    </td>
-                    <td>
-                      <input type="radio"
-                             name="displayFilterName_{{i}}"
-                             id="displayFilter_{{i}}_3"
-                             class="with-gap"
-                             (click)="setDisplayFilter(i, displayFilterType.ALL)"
-                             [checked] = "displayFilter.getDisplayStatus() === displayFilterType.ALL">
-                      <label [attr.for]="'displayFilter_' + i+'_3'"></label>
-                    </td>
-                  </tr>
-                  </tbody>
-                </table>
+      <div class="col s12">
+        <table class="centered striped">
+          <thead>
+          <tr>
+            <th data-field="permissionType"> Attribute</th>
+            <th data-field="permission-can"> yes </th>
+            <th data-field="permission-cannot"> no </th>
+            <th data-field="permission-either"> either </th>
+          </tr>
+          </thead>
+          <tbody>
 
+          <tr *ngFor="let displayFilter of displayFilters; let i=index">
+            <td>{{displayFilter.title}}</td>
+            <td>
+              <input type="radio"
+                     name="displayFilterName_{{i}}"
+                     id="displayFilter_{{i}}_1"
+                     class="with-gap"
+                     (click)="setDisplayFilter(i, displayFilterType.ONLY)"
+                     [checked] = "displayFilter.getDisplayStatus() === displayFilterType.ONLY">
+              <label [attr.for]="'displayFilter_' + i+'_1'"></label>
+            </td>
+            <td>
+              <input type="radio"
+                     name="displayFilterName_{{i}}"
+                     id="displayFilter_{{i}}_2"
+                     class="with-gap"
+                     (click)="setDisplayFilter(i, displayFilterType.ONLYNOT)"
+                     [checked] = "displayFilter.getDisplayStatus() === displayFilterType.ONLYNOT">
+              <label [attr.for]="'displayFilter_' + i+'_2'"></label>
+            </td>
+            <td>
+              <input type="radio"
+                     name="displayFilterName_{{i}}"
+                     id="displayFilter_{{i}}_3"
+                     class="with-gap"
+                     (click)="setDisplayFilter(i, displayFilterType.ALL)"
+                     [checked] = "displayFilter.getDisplayStatus() === displayFilterType.ALL">
+              <label [attr.for]="'displayFilter_' + i+'_3'"></label>
+            </td>
+          </tr>
+          </tbody>
+        </table>
 
+      </div>
 
+    </div>
+    <div class="row">
+      <div class="col s12 center-align">
+        <button class="waves-effect waves-light btn" (click)="resetFilters()">
+          <i class="material-icons arrow">refresh</i>
+          Reset Filters
+        </button>
+      </div>
+    </div>
+  </div>
 
-
-
-
+  <div class="col s9 manage-users-content">
+    <div class="card">
+      <div class="card-content">
+        <div class="row">
 
 
-
-
-
-
-
-
-
-
-
-              </div>
-
-            </div>
-
+          <div class="card-title col s9">
+            Manage Users
           </div>
-          <div class="card-action">
-            <button class="btn-flat" (click)="resetFilters()">
-              <i class="material-icons arrow">refresh</i>
-              Reset Filters
-            </button>
-            <button class="btn-flat" (click)="openNewUserModal()">add user</button>
+          <div class="col s3 right-align">
+            <button class="waves-effect waves-light btn" (click)="openNewUserModal()">add user</button>
           </div>
 
-        </div>
-      </div>
-      <span class="row">
 
-        <div class="col s12">
-          <table class="striped">
-            <thead>
-              <tr>
-                <!-- sortable columns -->
-                <th *ngFor="let column of sortableColumns" data-field="column.value">
-                  <a class="grey-text text-darken-4 include-pointer" (click)="toggleSort(column.value)">{{column.name}}
-                    <span *ngIf="sortColumn == column.value">
-                      <span *ngIf="sortAscending">
-                        <i class="material-icons arrow">keyboard_arrow_up</i>
+          <div class="col s12">
+            <table class="striped">
+              <thead>
+                <tr>
+                  <!-- sortable columns -->
+                  <th *ngFor="let column of sortableColumns" data-field="column.value">
+                    <a class="grey-text text-darken-4 include-pointer" (click)="toggleSort(column.value)">{{column.name}}
+                      <span *ngIf="sortColumn == column.value">
+                        <span *ngIf="sortAscending">
+                          <i class="material-icons arrow">keyboard_arrow_up</i>
+                        </span>
+                        <span *ngIf="!sortAscending">
+                          <i class="material-icons arrow">keyboard_arrow_down</i>
+                        </span>
                       </span>
-                      <span *ngIf="!sortAscending">
-                        <i class="material-icons arrow">keyboard_arrow_down</i>
-                      </span>
-                    </span>
-                  </a>
-                </th>
-                <th data-field="enabled">
-                  <a class="grey-text text-darken-4">
-                    Enabled?
-                  </a>
-                </th>
-                <th data-field="inGroup">
-                  <a class="grey-text text-darken-4">
-                    In Group(s)?
-                  </a>
-                </th>
-                <th data-field="edit">Edit</th>
-              </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let user of filteredUsers | paginate: config">
-                  <td *ngFor="let column of sortableColumns">
-                    <span *ngIf="column.value === 'joinedOn'">
-                        {{ user[column.value] | amTimeAgo }}
-                    </span>
-                    <span *ngIf="column.value !== 'joinedOn'">
-                        {{ user[column.value] }}
-                    </span>
-                  </td>
-                  <td>
-                    <span *ngIf="user.isEnabled()">
-                      <i class="material-icons">check_circle</i>
-                    </span>
-                  </td>
-                  <td>
-                    <span *ngIf="user.inGroups()">
-                      <i class="material-icons">check_circle</i>
-                    </span>
-                  </td>
-                  <td>
-                    <a class="include-pointer" (click)="openEditUserModal(user)">
-                      <i class="material-icons">edit</i>
                     </a>
-                  </td>
+                  </th>
+                  <th data-field="enabled">
+                    <a class="grey-text text-darken-4">
+                      Enabled?
+                    </a>
+                  </th>
+                  <th data-field="inGroup">
+                    <a class="grey-text text-darken-4">
+                      In Group(s)?
+                    </a>
+                  </th>
+                  <th data-field="edit">Edit</th>
                 </tr>
-            </tbody>
-          </table>
-          <div class="center">
-            <pagination-template
-              #p="paginationApi"
-              maxSize="9"
-              (pageChange)="config.currentPage = $event">
-                <div class="custom-pagination">
-                <ul class="pagination">
-                  <li class="disabled" *ngIf="p.isFirstPage()">
-                    <a>
-                      <i class="material-icons">chevron_left</i>
-                    </a>
-                  </li>
-                  <li class="waves-effect" *ngIf="!p.isFirstPage()">
-                    <a (click)="p.previous()">
-                      <i class="material-icons">chevron_left</i>
-                    </a>
-                  </li>
-                  <span *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
-                    <li *ngIf="p.getCurrent() !== page.value" class="waves-effect">
-                      <a (click)="p.setCurrent(page.value)">
-                          <span>{{ page.label }}</span>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let user of filteredUsers | paginate: config">
+                    <td *ngFor="let column of sortableColumns">
+                      <span *ngIf="column.value === 'joinedOn'">
+                          {{ user[column.value] | amTimeAgo }}
+                      </span>
+                      <span *ngIf="column.value !== 'joinedOn'">
+                          {{ user[column.value] }}
+                      </span>
+                    </td>
+                    <td>
+                      <span *ngIf="user.isEnabled()">
+                        <i class="material-icons">check_circle</i>
+                      </span>
+                    </td>
+                    <td>
+                      <span *ngIf="user.inGroups()">
+                        <i class="material-icons">check_circle</i>
+                      </span>
+                    </td>
+                    <td>
+                      <a class="include-pointer" (click)="openEditUserModal(user)">
+                        <i class="material-icons">edit</i>
+                      </a>
+                    </td>
+                  </tr>
+              </tbody>
+            </table>
+            <div class="center">
+              <pagination-template
+                #p="paginationApi"
+                maxSize="9"
+                (pageChange)="config.currentPage = $event">
+                  <div class="custom-pagination">
+                  <ul class="pagination">
+                    <li class="disabled" *ngIf="p.isFirstPage()">
+                      <a>
+                        <i class="material-icons">chevron_left</i>
                       </a>
                     </li>
-                    <li *ngIf="p.getCurrent() === page.value" class="active">
-                          <span>{{ page.label }}</span>
+                    <li class="waves-effect" *ngIf="!p.isFirstPage()">
+                      <a (click)="p.previous()">
+                        <i class="material-icons">chevron_left</i>
+                      </a>
                     </li>
-                  </span>
-                  <li class="disabled" *ngIf="p.isLastPage()">
-                    <a>
-                      <i class="material-icons">chevron_right</i>
-                    </a>
-                  </li>
-                  <li class="waves-effect" *ngIf="!p.isLastPage()">
-                    <a (click)="p.next()">
-                      <i class="material-icons">chevron_right</i>
-                    </a>
-                  </li>
-                </ul>
-                </div>
-              </pagination-template>
+                    <span *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
+                      <li *ngIf="p.getCurrent() !== page.value" class="waves-effect">
+                        <a (click)="p.setCurrent(page.value)">
+                            <span>{{ page.label }}</span>
+                        </a>
+                      </li>
+                      <li *ngIf="p.getCurrent() === page.value" class="active">
+                            <span>{{ page.label }}</span>
+                      </li>
+                    </span>
+                    <li class="disabled" *ngIf="p.isLastPage()">
+                      <a>
+                        <i class="material-icons">chevron_right</i>
+                      </a>
+                    </li>
+                    <li class="waves-effect" *ngIf="!p.isLastPage()">
+                      <a (click)="p.next()">
+                        <i class="material-icons">chevron_right</i>
+                      </a>
+                    </li>
+                  </ul>
+                  </div>
+                </pagination-template>
+
+            </div>
 
           </div>
 
-
-
-
-
-          <div *ngIf = "filteredUsers">
-            <div [ngSwitch]="filteredUsers.length" class="center">
-              <div *ngSwitchCase="1">{{filteredUsers.length}} record found</div>
-              <div *ngSwitchCase="0">No records found</div>
-              <div *ngSwitchDefault>{{filteredUsers.length}} records found</div>
+          <div class="col s12">
+            <div *ngIf = "filteredUsers">
+              <div [ngSwitch]="filteredUsers.length" class="center">
+                <div *ngSwitchCase="1">{{filteredUsers.length}} record found</div>
+                <div *ngSwitchCase="0">No records found</div>
+                <div *ngSwitchDefault>{{filteredUsers.length}} records found</div>
+              </div>
             </div>
           </div>
 
+          <div class="col s12 right-align">
+            <button class="waves-effect waves-light btn" (click)="openNewUserModal()">add user</button>
+          </div>
+
         </div>
-      </span>
+      </div>
     </div>
   </div>
 </div>
