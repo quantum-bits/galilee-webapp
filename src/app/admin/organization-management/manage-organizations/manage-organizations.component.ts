@@ -140,7 +140,7 @@ export class ManageOrganizationsComponent implements OnInit, OnDestroy {
       }
     }
   }
-  
+
   openNewOrganizationModal() {
     this.editOrganizationModalAnchor.viewContainer.clear();
     let componentFactory = this.componentFactoryResolver.resolveComponentFactory(EditOrganizationModalComponent);
@@ -148,9 +148,11 @@ export class ManageOrganizationsComponent implements OnInit, OnDestroy {
   }
 
   openEditOrganizationModal(organization: Organization) {
-    //
+    this.editOrganizationModalAnchor.viewContainer.clear();
+    let componentFactory = this.componentFactoryResolver.resolveComponentFactory(EditOrganizationModalComponent);
+    this.modalComponent = this.editOrganizationModalAnchor.viewContainer.createComponent(componentFactory).instance;
+    this.modalComponent.organizationData = organization;
   }
-
 
   ngOnDestroy() {
     // prevent memory leak when component destroyed

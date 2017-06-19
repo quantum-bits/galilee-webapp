@@ -1,3 +1,52 @@
-<p>
-  edit-organization works!
-</p>
+<div *ngIf="organizationForm">
+
+  <!--<div class="container">-->
+
+  <form [formGroup]="organizationForm" novalidate (ngSubmit)="onSubmit()">
+
+    <div class="row">
+      <div class="col s12 ">
+        <div class="card card-wide">
+          <div class="card-content">
+              <span *ngIf="isNewOrganization" class="card-title">
+                Create Organization
+              </span>
+            <span *ngIf="!isNewOrganization" class="card-title">
+                Update Organization Information
+              </span>
+
+            <div class="row">
+              <div class="input-field col s10 offset-s1">
+                <input
+                  [input-wake-up]="'name'"
+                  [class.warning-background]="organizationForm.controls.name.errors && organizationForm.controls.name.touched"
+                  id="name"
+                  type="text"
+                  formControlName="name">
+                <label for="name">Organization Name</label>
+
+                <div *ngIf="organizationForm.controls.name.errors && organizationForm.controls.name.touched">
+                  <small class="warning">
+                    This field is required.
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-action">
+              <button
+                class="waves-effect waves-light btn"
+                type="submit"
+                [class.disabled]="!organizationForm.valid"
+                [disabled]="!organizationForm.valid">Submit
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!--</div>-->
+</div>
