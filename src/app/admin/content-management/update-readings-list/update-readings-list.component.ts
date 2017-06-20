@@ -1,4 +1,5 @@
 import {Component, OnInit, Input, Output, EventEmitter, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
 
 import {UpdatePracticeFormComponent} from '../update-practice-form/update-practice-form.component';
 
@@ -25,7 +26,7 @@ export class UpdateReadingsListComponent implements OnInit {
   @Input() readingsData: ReadingDay;
   @Output() launchAddPracticeForm = new EventEmitter<number>();
 
-  @Output() editReading: EventEmitter<IReading> = new EventEmitter<IReading>();
+  //@Output() editReading: EventEmitter<IReading> = new EventEmitter<IReading>();
 
   @ViewChild('displayReadingModal') modal: DisplayReadingModalComponent;
   @ViewChild('deleteReadingModal') modalDeleteReading: DeleteItemModalComponent;
@@ -47,7 +48,8 @@ export class UpdateReadingsListComponent implements OnInit {
 
   constructor(private readingService: ReadingService,
               private directionService: DirectionService,
-              private practiceService: PracticeService) {
+              private practiceService: PracticeService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -116,8 +118,14 @@ export class UpdateReadingsListComponent implements OnInit {
     this.modal.openModal();
   }
 
+  /*
   launchEditReadingModal(reading: IReading) {
     this.editReading.emit(reading);
+  }
+  */
+
+  editReading(readingIndex: number) {
+    this.router.navigate(['/admin/update-readings', this.dateString, readingIndex]);
   }
 
   displayDeleteReadingModal(reading: IReading) {
@@ -151,7 +159,7 @@ export class UpdateReadingsListComponent implements OnInit {
   }
 
   navigateToAddReadingPage() {
-    console.log('navigateToAddReadingPage()');
+    this.router.navigate(['/admin/update-readings', this.dateString, this.readingsData.readings.length]);
   }
 
 }

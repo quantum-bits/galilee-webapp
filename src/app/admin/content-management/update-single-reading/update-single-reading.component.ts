@@ -41,10 +41,10 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy {
 
   private editReadingComponent: any;
 
-  private subCancelReading: Subscription;
-  private subAddReading: Subscription;
-  private subUpdateReading: Subscription;
-  private subReadingReady: Subscription;
+  private subCancelReading: Subscription = null;
+  private subAddReading: Subscription = null;
+  private subUpdateReading: Subscription = null;
+  private subReadingReady: Subscription = null;
 
 
   constructor(private readingService: ReadingService,
@@ -158,13 +158,18 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy {
     this.editReadingModeOn = false;
   }
 
-  ngOnDestroy(){
-    // unsubscribe from subscriptions to prevent memory leaks....
-    this.subCancelReading.unsubscribe();
-    this.subAddReading.unsubscribe();
-    this.subUpdateReading.unsubscribe();
-    this.subReadingReady.unsubscribe();
+  unsubscribeSubscription(subscription: Subscription) {
+    if (subscription !== null) {
+      subscription.unsubscribe();
+    }
   }
 
+  ngOnDestroy(){
+    // unsubscribe from subscriptions to prevent memory leaks....
+    this.unsubscribeSubscription(this.subCancelReading);
+    this.unsubscribeSubscription(this.subAddReading);
+    this.unsubscribeSubscription(this.subUpdateReading);
+    this.unsubscribeSubscription(this.subReadingReady);
+  }
 
 }
