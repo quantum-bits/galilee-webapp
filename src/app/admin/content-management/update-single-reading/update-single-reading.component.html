@@ -1,0 +1,27 @@
+<div class="container">
+  <ul class="collection with-header">
+    <li class="collection-header">
+      <h5>Add Reading to {{dateString | amDateFormat: 'LL'}}</h5>
+    </li>
+    <li class="collection-item">
+
+
+        <div passage-picker-anchor>
+        </div>
+
+      <!--
+        <passage-picker #passagePicker
+                        (passageAdded)="addReading($event)"
+                        (passageUpdated)="updateReading($event)">
+        </passage-picker>
+        -->
+
+      <div *ngIf="!editReadingModeOn && reading">
+        <span class="title"> {{reading.stdRef}}</span>
+        <a class="waves-effect waves-light btn" (click)="openEditReadingForm(reading)">Edit Passage</a>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<a class="waves-effect waves-light btn" (click)="openEditReadingForm()">button</a>

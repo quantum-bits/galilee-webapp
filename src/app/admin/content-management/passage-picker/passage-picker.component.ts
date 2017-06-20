@@ -2,6 +2,10 @@ import {
   Component, Input, OnInit, ComponentRef, ComponentFactory, ViewContainerRef,
   ComponentFactoryResolver, ViewChild, Directive, Output, EventEmitter
 } from '@angular/core';
+
+import {Observable} from 'rxjs/Rx';
+import {Subject}    from 'rxjs/Subject';
+
 import {BibleInfoService, BibleBook} from '../bible-info/bible-info.service';
 import {PassageRef, VerseRange, PassageRefFactory} from "./passage.model";
 import {IReading} from "../../../shared/interfaces/reading.interface";
@@ -115,9 +119,26 @@ export class PassagePickerComponent implements OnInit {
   // Bound in template if we are to edit an existing passage reference.
   @Input() passageRef: PassageRef = null;
 
+  // TODO: remove the following two @Output()'s, since we are currently using a Subject/Observable approach
   // Emit information when passage is added or updated.
   @Output() passageAdded: EventEmitter<PassageRef> = new EventEmitter();
   @Output() passageUpdated: EventEmitter<IReading> = new EventEmitter();
+
+  // Note: could subscribe directly to the above event emitters in
+  // other components (seems to work at the moment), but that is considered
+  // bad practice, since there is no guarantee that event emitters will
+  // continue to be Observables; see: https://stackoverflow.com/questions/36076700/what-is-the-proper-use-of-an-eventemitter
+
+  private readyForPassageSource = new Subject();
+  private cancelEditingSource = new Subject();
+  private passageAddedSource = new Subject();
+  private passageUpdatedSource = new Subject();
+
+  readyForPassage$ = this.readyForPassageSource.asObservable();
+  cancelEditing$ = this.cancelEditingSource.asObservable();
+  passageAdded$ = this.passageAddedSource.asObservable();
+  passageUpdated$ = this.passageUpdatedSource.asObservable();
+
 
   // Container for all verse range component.
   private verseRangeViewContainerRef: ViewContainerRef = null;
@@ -136,9 +157,11 @@ export class PassagePickerComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('inside oninit for passage-picker');
     this.passageRefFactory = new PassageRefFactory(this.bibleInfo);
     this.verseRangeViewContainerRef = this.pickerAnchor.viewContainerRef;
     this.configForPassage(this.passageRef);
+    this.readyForPassageSource.next();
   }
 
   // Set up the component to work with a given passage. Sets the passage reference,
@@ -155,6 +178,7 @@ export class PassagePickerComponent implements OnInit {
 
   // Enter "update" mode for a given reading.
   editReadingPassage(reading: IReading) {
+    console.log('passagereffactory: ', this.passageRefFactory);
     this.currentReading = reading;
     this.isAddMode = false;
     this.configForPassage(this.passageRefFactory.fromOsisRefs(reading.osisRef));
@@ -170,12 +194,14 @@ export class PassagePickerComponent implements OnInit {
   private onAddOrUpdate() {
     if (this.isAddMode) {
       // Add a new passage.
-      this.passageAdded.emit(this.passageRef);
+      this.passageAdded.emit(this.passageRef); //TODO: possibly remove this in the future, since we are probably not going to use the @Output()
+      this.passageAddedSource.next(this.passageRef);
     } else {
       // Update an existing passage.
       this.currentReading.osisRef = this.passageRef.osisRef();
       this.currentReading.stdRef = this.passageRef.displayRef();
-      this.passageUpdated.emit(this.currentReading);
+      this.passageUpdated.emit(this.currentReading); //TODO: possibly remove this in the future, since we are probably not going to use the @Output()
+      this.passageUpdatedSource.next(this.currentReading);
       this.isAddMode = true;
     }
     // After emitting event, configure for the default passage.
@@ -186,6 +212,7 @@ export class PassagePickerComponent implements OnInit {
   private onCancel() {
     this.isAddMode = true;
     this.configForPassage(null);
+    this.cancelEditingSource.next();
   }
 
   // Append a verse range component for the given VerseRange object.

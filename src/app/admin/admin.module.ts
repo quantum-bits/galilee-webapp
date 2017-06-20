@@ -49,6 +49,7 @@ import { ManageOrganizationsComponent } from './organization-management/manage-o
 import { EditOrganizationModalAnchorDirective } from './organization-management/edit-organization-modal-anchor.directive';
 import { EditOrganizationModalComponent } from './organization-management/edit-organization-modal/edit-organization-modal.component';
 import { EditOrganizationComponent } from './organization-management/edit-organization/edit-organization.component';
+import { PassagePickerAnchorDirective, UpdateSingleReadingComponent } from './content-management/update-single-reading/update-single-reading.component';
 
 const routes: Routes = [
   {
@@ -67,6 +68,10 @@ const routes: Routes = [
       { // go directly to the specified date
         path: 'update-readings/:dateString',
         component: UpdateReadingsComponent
+      },
+      { // add/edit reading and practices for one specific reading
+        path: 'update-readings/:dateString/:readingIndex',
+        component: UpdateSingleReadingComponent
       },
       {path: 'manage-readings', component: ManageReadingComponent}
     ]
@@ -109,7 +114,9 @@ const routes: Routes = [
     ManageOrganizationsComponent,
     EditOrganizationModalAnchorDirective,
     EditOrganizationModalComponent,
-    EditOrganizationComponent
+    EditOrganizationComponent,
+    UpdateSingleReadingComponent,
+    PassagePickerAnchorDirective
   ],
   exports: [
     EditUserComponent
@@ -119,7 +126,8 @@ const routes: Routes = [
     EditUserModalComponent,
     EditGroupModalComponent,
     EditOrganizationModalComponent,
-    VerseRangeComponent
+    VerseRangeComponent,
+    PassagePickerComponent
   ],
   imports: [
     CommonModule,

@@ -1,12 +1,9 @@
-<div *ngIf="!readingsData && dateString">
-  <ul class="collection with-header">
-    <li class="collection-header"><h5>No readings yet for {{dateString | amDateFormat: 'LL'}}</h5></li>
-  </ul>
-</div>
-
 <div *ngIf="readingsData">
   <ul class="collection with-header">
     <li class="collection-header"><h5>Readings for {{dateString | amDateFormat: 'LL'}}</h5></li>
+    <li *ngIf="readingsData.readings.length == 0" class="collection-item white">
+      No readings yet for {{dateString | amDateFormat: 'LL'}}.
+    </li>
     <li *ngFor="let reading of readingsData.readings; let rIndex=index" class="collection-item grey lighten-5">
       <span class="title"> {{reading.stdRef}}</span>
       <span class="right action-icons">
@@ -46,6 +43,20 @@
       </p>
 
     </li>
+
+
+    <div *ngIf="!readingsData.readings.length">
+      <p></p>
+    </div>
+
+    <p></p>
+    <span class="right reading-button">
+      <a class="waves-effect waves-light btn secondary-content" (click)="navigateToAddReadingPage()">Add Reading</a>
+    </span>
+
+
+
+
   </ul>
 </div>
 

@@ -1,12 +1,9 @@
-<div *ngIf="!readingDay && dateString">
-  <ul class="collection with-header">
-    <li class="collection-header"><h5>No daily practices yet for {{dateString | amDateFormat: 'LL'}}</h5></li>
-  </ul>
-</div>
-
 <div *ngIf="readingDay">
   <ul class="collection with-header">
     <li class="collection-header"><h5>Daily practices for {{dateString | amDateFormat: 'LL'}}</h5></li>
+    <li *ngIf="readingDay.directions.length == 0" class="collection-item white">
+      No daily practices yet for {{dateString | amDateFormat: 'LL'}}.
+    </li>
     <li *ngFor="let direction of readingDay.directions; let aIndex=index" class="collection-item white">
       <app-display-direction-steps
         [readingIndex]="readingIndex"

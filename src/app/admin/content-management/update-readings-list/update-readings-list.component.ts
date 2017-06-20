@@ -150,4 +150,8 @@ export class UpdateReadingsListComponent implements OnInit {
       );
   }
 
+  navigateToAddReadingPage() {
+    console.log('navigateToAddReadingPage()');
+  }
+
 }
