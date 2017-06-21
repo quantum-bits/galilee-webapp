@@ -1,34 +1,41 @@
-<a
-  *ngIf="showSteps"
-  (click)="toggleShowSteps()"
-  class="grey-text text-darken-2 include-pointer">
-  <i class="material-icons lr-arrow">remove</i>
-  {{direction.practice.title}}
-</a>
-<a
-  *ngIf="!showSteps"
-  (click)="toggleShowSteps()"
-  class="grey-text text-darken-2 include-pointer">
-  <i class="material-icons lr-arrow">add</i>
-  {{direction.practice.title}}
-</a>
-<span class="right">
+<div *ngIf="!editModeOn">
   <a
-    (click)="displayDeleteModal()"
+    *ngIf="showSteps"
+    (click)="toggleShowSteps()"
     class="grey-text text-darken-2 include-pointer">
-  <i class="material-icons lr-arrow">delete</i>
+    <i class="material-icons lr-arrow">remove</i>
+    {{direction.practice.title}}
   </a>
   <a
-    (click)="displayEditDirectionModal()"
+    *ngIf="!showSteps"
+    (click)="toggleShowSteps()"
     class="grey-text text-darken-2 include-pointer">
-  <i class="material-icons lr-arrow">edit</i>
+    <i class="material-icons lr-arrow">add</i>
+    {{direction.practice.title}}
   </a>
-</span>
-<div *ngIf="showSteps">
-  <div *ngFor="let step of direction.steps" class="step">
-    <span>Step {{step.seq}}:
-      <p [innerHTML]="step.description"></p>
-    </span>
+  <span *ngIf="editable" class="right">
+    <a
+      (click)="displayDeleteModal()"
+      class="grey-text text-darken-2 include-pointer">
+    <i class="material-icons lr-arrow">delete</i>
+    </a>
+    <a
+      (click)="openForm()"
+      class="grey-text text-darken-2 include-pointer">
+    <i class="material-icons lr-arrow">edit</i>
+    </a>
+  </span>
+  <div *ngIf="showSteps">
+    <div *ngFor="let step of direction.steps" class="step">
+      <span>Step {{step.seq}}:
+        <p [innerHTML]="step.description"></p>
+      </span>
+    </div>
   </div>
 </div>
 
+<div update-direction-anchor></div>
+
+<!--
+<a class="waves-effect waves-light btn" (click)="openForm()">button</a>
+-->

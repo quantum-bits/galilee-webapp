@@ -30,7 +30,10 @@ import {ManageReadingComponent} from './content-management/manage-reading/manage
 import {UpdateReadingsComponent} from './content-management/update-readings/update-readings.component';
 import {UpdateReadingsListComponent} from './content-management/update-readings-list/update-readings-list.component';
 import {UpdatePracticeFormComponent} from './content-management/update-practice-form/update-practice-form.component';
-import {DisplayDirectionStepsComponent} from './content-management/display-direction-steps/display-direction-steps.component';
+import {
+  UpdateDirectionAnchorDirective,
+  DisplayDirectionStepsComponent
+} from './content-management/display-direction-steps/display-direction-steps.component';
 import {DisplayReadingModalComponent} from './content-management/display-reading-modal/display-reading-modal.component';
 import {
   PassagePickerComponent, VerseRangeComponent,
@@ -50,6 +53,7 @@ import { EditOrganizationModalAnchorDirective } from './organization-management/
 import { EditOrganizationModalComponent } from './organization-management/edit-organization-modal/edit-organization-modal.component';
 import { EditOrganizationComponent } from './organization-management/edit-organization/edit-organization.component';
 import { PassagePickerAnchorDirective, UpdateSingleReadingComponent } from './content-management/update-single-reading/update-single-reading.component';
+import { UpdateDirectionFormComponent } from './content-management/update-direction-form/update-direction-form.component';
 
 const routes: Routes = [
   {
@@ -99,6 +103,7 @@ const routes: Routes = [
     UpdateReadingsListComponent,
     UpdatePracticeFormComponent,
     DisplayDirectionStepsComponent,
+    UpdateDirectionAnchorDirective,
     DisplayReadingModalComponent,
     PassagePickerComponent,
     VerseRangeComponent,
@@ -116,7 +121,8 @@ const routes: Routes = [
     EditOrganizationModalComponent,
     EditOrganizationComponent,
     UpdateSingleReadingComponent,
-    PassagePickerAnchorDirective
+    PassagePickerAnchorDirective,
+    UpdateDirectionFormComponent
   ],
   exports: [
     EditUserComponent
@@ -127,7 +133,8 @@ const routes: Routes = [
     EditGroupModalComponent,
     EditOrganizationModalComponent,
     VerseRangeComponent,
-    PassagePickerComponent
+    PassagePickerComponent,
+    UpdateDirectionFormComponent
   ],
   imports: [
     CommonModule,

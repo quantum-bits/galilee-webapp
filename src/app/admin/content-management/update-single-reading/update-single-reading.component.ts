@@ -10,6 +10,8 @@ import {PassagePickerComponent} from '../passage-picker/passage-picker.component
 
 import {IReading, ReadingDay} from '../../../shared/interfaces/reading.interface';
 
+import {DirectionType} from '../../../shared/services/direction.service';
+
 
 @Directive({
   selector: '[passage-picker-anchor]',
@@ -41,17 +43,20 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy {
 
   private editReadingComponent: any;
 
+  private directionType: number;
+  private usedPracticeIds: number[] = []; // ids of the practices that are currently in use for this reading
+
   private subCancelReading: Subscription = null;
   private subAddReading: Subscription = null;
   private subUpdateReading: Subscription = null;
   private subReadingReady: Subscription = null;
-
 
   constructor(private readingService: ReadingService,
               private route: ActivatedRoute,
               private componentFactoryResolver: ComponentFactoryResolver) {}
 
   ngOnInit() {
+    this.directionType = DirectionType.reading;
     this.passagePickerViewContainerRef = this.passagePickerAnchor.viewContainerRef;
     this.route.params.subscribe(params => {
       console.log('update-single-reading -- received route params');
@@ -73,6 +78,13 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy {
             // the reading in question exists already
             this.reading = this.readingsData.readings[this.readingIndex];
             this.editReadingModeOn = false;
+            this.reading.directions.forEach(direction =>
+              {
+                this.usedPracticeIds.push(direction.practice.id);
+              }
+            );
+            console.log('used Practice IDs: ', this.usedPracticeIds);
+
           } else {
             this.editReadingModeOn =  true;
             this.openNewReadingForm();
@@ -157,6 +169,18 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy {
     this.passagePickerViewContainerRef.clear();
     this.editReadingModeOn = false;
   }
+
+  displayDeleteDirectionModal(event) {
+    //
+  }
+
+  launchEditPracticeModal(event) {
+    //
+  }
+
+
+
+
 
   unsubscribeSubscription(subscription: Subscription) {
     if (subscription !== null) {

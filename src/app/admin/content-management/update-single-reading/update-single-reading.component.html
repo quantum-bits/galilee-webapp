@@ -18,10 +18,32 @@
 
       <div *ngIf="!editReadingModeOn && reading">
         <span class="title"> {{reading.stdRef}}</span>
-        <a class="waves-effect waves-light btn" (click)="openEditReadingForm(reading)">Edit Passage</a>
+        <span class="right">
+          <a
+            (click)="openEditReadingForm(reading)"
+            class="grey-text text-darken-2 include-pointer">
+            <i class="material-icons lr-arrow">edit</i>
+          </a>
+        </span>
       </div>
     </li>
+
+
+    <div *ngIf="reading">
+      <li *ngFor="let direction of reading.directions; let aIndex=index" class="collection-item white">
+        <app-display-direction-steps
+          [editable]="'true'"
+          [directionType] = "directionType"
+          [parentId] = "reading.id"
+          [usedPracticeIds] = "usedPracticeIds"
+          [readingIndex] = "readingIndex"
+          [directionIndex] = "aIndex"
+          [direction]= "direction"
+          (deleteDirection)="displayDeleteDirectionModal($event)"
+          (editDirection)="launchEditPracticeModal($event)">
+        </app-display-direction-steps>
+      </li>
+    </div>
+
   </ul>
 </div>
-
-<a class="waves-effect waves-light btn" (click)="openEditReadingForm()">button</a>
