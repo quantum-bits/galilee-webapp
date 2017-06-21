@@ -85,16 +85,25 @@ export class DisplayDirectionStepsComponent implements OnInit {
     this.showSteps = !this.showSteps;
   }
 
-  openForm() {
+  openAddNewDirectionForm() {
     this.editModeOn = true;
     this.updateDirectionViewContainerRef.clear();
     let componentFactory = this.componentFactoryResolver.resolveComponentFactory(UpdateDirectionFormComponent);
     this.updateDirectionComponent = this.updateDirectionViewContainerRef.createComponent(componentFactory).instance;
 
+    this.updateDirectionComponent.directionType = this.directionType;
+    this.updateDirectionComponent.parentId = this.parentId;
+    this.updateDirectionComponent.usedPracticeIds = this.usedPracticeIds;
+
     this.subCancelEditing = this.updateDirectionComponent.cancelEditing$.subscribe(() => {
       this.editDirectionCloseAndCleanUp();
     });
 
+  }
+
+  openEditDirectionForm(){
+    this.openAddNewDirectionForm();
+    this.updateDirectionComponent.direction = this.direction;
   }
 
 
@@ -103,7 +112,7 @@ export class DisplayDirectionStepsComponent implements OnInit {
     this.editModeOn = false;
   }
 
-
+  // TODO: delete(?)
   displayEditDirectionModal(){
     console.log('edit!');
     this.editDirection.emit({
@@ -112,9 +121,27 @@ export class DisplayDirectionStepsComponent implements OnInit {
     });
   }
 
+  // TODO: delete(?)
   displayDeleteModal(){
     console.log('inside display direction component; about to emit delete');
     this.deleteDirection.emit(this.direction);
   }
+
+
+
+  unsubscribeSubscription(subscription: Subscription) {
+    if (subscription !== null) {
+      subscription.unsubscribe();
+    }
+  }
+
+  ngOnDestroy(){
+    // unsubscribe from subscriptions to prevent memory leaks....
+    this.unsubscribeSubscription(this.subCancelEditing);
+  }
+
+
+
+
 
 }
