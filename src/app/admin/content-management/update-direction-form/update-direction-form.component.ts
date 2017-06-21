@@ -23,7 +23,7 @@ import {IPractice} from '../../../shared/interfaces/practice.interface';
 })
 export class UpdateDirectionFormComponent implements OnInit {
 
-  @Input() direction: Direction = null;
+  @Input() directionFormData: Direction = null;
   @Input() directionType: number; // DirectionType.day or DirectionType.reading
   @Input() parentId: number; // readingDayId or readingId, as appropriate
   @Input() usedPracticeIds: number[]; // ids of the practices that are currently in use for this reading or readingDay
@@ -40,7 +40,7 @@ export class UpdateDirectionFormComponent implements OnInit {
 
   public directionForm: FormGroup; // our model driven form
 
-  private directionFormData: Direction;
+  //private directionFormData: Direction;
   private availablePractices: IPractice[] = [];
   private havePracticeTypes: boolean = false;
   private allPractices: IPractice[] = [];
@@ -71,8 +71,8 @@ export class UpdateDirectionFormComponent implements OnInit {
               private directionService: DirectionService) { }
 
   ngOnInit() {
-    console.log('direction: ', this.direction);
-    this.isNewDirection = (this.direction === null);
+    console.log('direction: ', this.directionFormData);
+    this.isNewDirection = (this.directionFormData === null);
     console.log('is new direction: ', this.isNewDirection);
 
 
@@ -108,8 +108,6 @@ export class UpdateDirectionFormComponent implements OnInit {
           seq: null
         }]
       }
-    } else {
-      this.directionFormData = this.direction;
     }
 
     this.directionForm = this.formBuilder.group({
@@ -143,7 +141,7 @@ export class UpdateDirectionFormComponent implements OnInit {
           // now, if we are updating a direction (as opposed to adding a new one),
           // add in that particular practice as well....
           if (!this.isNewDirection) {
-            this.availablePractices.unshift(this.direction.practice);
+            this.availablePractices.unshift(this.directionFormData.practice);
           }
           this.havePracticeTypes = true;
           console.log('available practices: ', this.availablePractices);
@@ -190,14 +188,55 @@ export class UpdateDirectionFormComponent implements OnInit {
     control.at(i).setValue({description: event.html});
   }
 
-  onSubmit() {
-    //
+  onSubmit(){
+    let practiceId = +this.directionForm.value.practiceId;
+    let direction = {seq: +this.directionFormData.seq};
+    let stepData = [];
+    let counter = 0;
+    for (let step of this.directionForm.value.steps){
+      counter++;
+      stepData.push({
+        seq: counter,
+        description: step.description,
+      });
+    }
+    direction['steps']=stepData;
+
+    console.log('direction: ', direction);
+
+    /**
+     * If !this.isNewDirection, need to delete the existing direction and then create a new one
+     */
+    if (this.isNewDirection) {
+      this.directionService.createDirection(direction, this.parentId, practiceId, this.directionType)
+        .subscribe(
+          result => {
+            console.log('success!  result: ', result);
+            //this.readingService.announceReadingsRefresh();
+            //this.closeModal();
+          },
+          error => console.log('error! ', error)
+        );
+    } else {// if this is an update, need to delete the existing direction first....
+      let directionId = this.directionFormData.id;
+      this.directionService.deleteDirection(directionId)
+        .subscribe(
+          result => {
+            console.log('successfully deleted existing direction: ', result);
+            this.directionService.createDirection(direction, this.parentId, practiceId, this.directionType)
+              .subscribe(
+                result => {
+                  console.log('success!  result: ', result);
+                  //this.readingService.announceReadingsRefresh();
+                  //this.closeModal();
+                },
+                error => console.log('error! ', error)
+              );
+          },
+          error => console.log('could not delete direction: ', error)
+        );
+    }
   }
-
-
-
-
-
 
 
   onCancel() {

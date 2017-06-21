@@ -103,7 +103,7 @@ export class DisplayDirectionStepsComponent implements OnInit {
 
   openEditDirectionForm(){
     this.openAddNewDirectionForm();
-    this.updateDirectionComponent.direction = this.direction;
+    this.updateDirectionComponent.directionFormData = this.direction;
   }
 
 
