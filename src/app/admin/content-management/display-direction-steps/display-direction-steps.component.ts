@@ -55,11 +55,13 @@ export class DisplayDirectionStepsComponent implements OnInit {
   @Input() directionType: number; // DirectionType.day or DirectionType.reading
   @Input() parentId: number; // readingDayId or readingId, as appropriate
   @Input() usedPracticeIds: number[]; // ids of the practices that are currently in use for this reading or readingDay
-
+  @Output() onEditModeEnabled = new EventEmitter();
+  @Output() onEditModeDisabled = new EventEmitter();
+  @Input() directionIndex: number;
 
   // probably delete the following, eventually....
   @Input() readingIndex: number;
-  @Input() directionIndex: number;
+
   @Output() deleteDirection = new EventEmitter<Direction>();
   @Output() editDirection = new EventEmitter();
 
@@ -87,6 +89,7 @@ export class DisplayDirectionStepsComponent implements OnInit {
 
   openAddNewDirectionForm() {
     this.editModeOn = true;
+    this.onEditModeEnabled.emit(this.directionIndex);
     this.updateDirectionViewContainerRef.clear();
     let componentFactory = this.componentFactoryResolver.resolveComponentFactory(UpdateDirectionFormComponent);
     this.updateDirectionComponent = this.updateDirectionViewContainerRef.createComponent(componentFactory).instance;
@@ -97,6 +100,7 @@ export class DisplayDirectionStepsComponent implements OnInit {
 
     this.subCancelEditing = this.updateDirectionComponent.cancelEditing$.subscribe(() => {
       this.editDirectionCloseAndCleanUp();
+      this.onEditModeDisabled.emit();
     });
 
   }

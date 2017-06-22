@@ -9,32 +9,49 @@
 {{passageRef.displayRef()}}
 </h5>
 
-    <div class="row">
-      <select #book class="col s9 browser-default"
-              materialize="material_select"
-              [materializeSelectOptions]="selectOptions"
-              [value]="passageRef.bibleBook.osisName"
-              (change)="onBook(book.value)">
-        <option *ngFor="let bibleBook of bibleInfo.bibleBooks"
-                [value]="bibleBook.osisName">{{bibleBook.displayName}}
-        </option>
-      </select>
+<div class="row">
+  <select #book class="col s9 browser-default"
+          materialize="material_select"
+          [materializeSelectOptions]="selectOptions"
+          [value]="passageRef.bibleBook.osisName"
+          (change)="onBook(book.value)">
+    <option *ngFor="let bibleBook of bibleInfo.bibleBooks"
+            [value]="bibleBook.osisName">{{bibleBook.displayName}}
+    </option>
+  </select>
 
-      <a class="btn col action-icons right" (click)="addNewVerseRange()">
-        <i class="material-icons">add_box</i>
-      </a>
-    </div>
-    <div picker-anchor></div>
+  <a class="btn col action-icons right" (click)="addNewVerseRange()">
+    <i class="material-icons">add_box</i>
+  </a>
+</div>
+<div picker-anchor></div>
 
-    <div class="row">
-      <div class="col s12 center-align btn-space">
-        <p>{{passageRef.displayRef()}}</p>
-        <a class="btn waves-effect waves-light"
-           (click)="onAddOrUpdate()">{{isAddMode ? 'Add' : 'Update '}}</a>
-        <a *ngIf="!isAddMode" class="btn waves-effect waves-light"
-           (click)="onCancel()">Cancel</a>
-      </div>
-    </div>
+<!--
+<div class="row">
+  <div class="col s12 left-align">
+    <a (click)="onAddOrUpdate(nextStep.addPractice)"
+       class="grey-text text-darken-2 right include-pointer"> + Add Practice
+    </a>
+  </div>
+</div>
+-->
+<div class="row">
+  <div class="col s3 left-align">
+    <a class="btn waves-effect waves-light"
+       (click)="onCancel()">Cancel</a>
+  </div>
+  <div class="col s9 right-align">
+    <!--<p>{{passageRef.displayRef()}}</p>-->
+    <a class="btn waves-effect waves-light"
+       (click)="onAddOrUpdate(nextStep.save)">{{ isAddMode ? 'Save' : 'Update'}}</a>
+    <a *ngIf="allowAddAnother" class="btn waves-effect waves-light"
+       (click)="onAddOrUpdate(nextStep.addAnother)">{{ isAddMode ? 'Save' : 'Update'}} & Add Another</a>
+    <!--
+    <a class="btn waves-effect waves-light"
+       (click)="onAddOrUpdate(nextStep.finish)">Finish</a>
+       -->
+  </div>
+</div>
 <!--
   </li>
 </ul>

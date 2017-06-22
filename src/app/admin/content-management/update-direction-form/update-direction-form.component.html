@@ -121,25 +121,25 @@
 
       </div>
 
-      <div class="divider"></div>
 
       <div class="row form-actions">
         <div class="col s12">
 
-      <button
-        class="waves-effect waves-light btn"
-        type="submit"
-        [class.disabled]="!directionForm.valid"
-        [disabled]="!directionForm.valid"
-      >Submit
-      </button>
+          <button
+            (click)="onCancel()"
+            class="waves-effect waves-light btn"
+            type="button"
+          >Cancel
+          </button>
 
-      <button
-        (click)="onCancel()"
-        class="waves-effect waves-light btn right"
-        type="button"
-      >Cancel
-      </button>
+          <button
+            class="waves-effect waves-light btn right"
+            type="submit"
+            [class.disabled]="!directionForm.valid"
+            [disabled]="!directionForm.valid"
+          >Submit
+          </button>
+
 
           </div>
         </div>

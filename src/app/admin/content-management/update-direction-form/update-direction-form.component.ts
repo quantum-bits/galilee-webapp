@@ -10,7 +10,7 @@ import {Subject}    from 'rxjs/Subject';
 import {Direction} from '../../../shared/interfaces/direction.interface';
 import {DirectionFormData} from '../../../shared/interfaces/direction-form-data.interface';
 import {DirectionType, DirectionService} from '../../../shared/services/direction.service';
-//import {ReadingService} from '../../../shared/services/reading.service';
+import {ReadingService} from '../../../shared/services/reading.service';
 
 import {PracticeService} from "../../../shared/services/practice.service";
 
@@ -68,6 +68,7 @@ export class UpdateDirectionFormComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private practiceService: PracticeService,
+              private readingService: ReadingService,
               private directionService: DirectionService) { }
 
   ngOnInit() {
@@ -212,7 +213,7 @@ export class UpdateDirectionFormComponent implements OnInit {
         .subscribe(
           result => {
             console.log('success!  result: ', result);
-            //this.readingService.announceReadingsRefresh();
+            this.readingService.announceReadingsRefresh();
             //this.closeModal();
           },
           error => console.log('error! ', error)
@@ -227,7 +228,7 @@ export class UpdateDirectionFormComponent implements OnInit {
               .subscribe(
                 result => {
                   console.log('success!  result: ', result);
-                  //this.readingService.announceReadingsRefresh();
+                  this.readingService.announceReadingsRefresh();
                   //this.closeModal();
                 },
                 error => console.log('error! ', error)

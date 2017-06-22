@@ -10,7 +10,26 @@ import {BibleInfoService, BibleBook} from '../bible-info/bible-info.service';
 import {PassageRef, VerseRange, PassageRefFactory} from "./passage.model";
 import {IReading} from "../../../shared/interfaces/reading.interface";
 
+
 import * as _ from "lodash";
+
+
+// used for deciding what to do after adding a reading
+export enum NextStep {
+  save,
+  addAnother,
+  finish
+}
+
+export interface AddReadingData {
+  passageRef: PassageRef;
+  nextStep: number;
+}
+
+export interface UpdateReadingData {
+  reading: IReading;
+  nextStep: number;
+}
 
 @Directive({
   selector: '[picker-anchor]',
@@ -118,6 +137,7 @@ export class PassagePickerComponent implements OnInit {
 
   // Bound in template if we are to edit an existing passage reference.
   @Input() passageRef: PassageRef = null;
+  @Input() allowAddAnother: boolean = true; // if set to false, the 'add another' button will not show
 
   // TODO: remove the following two @Output()'s, since we are currently using a Subject/Observable approach
   // Emit information when passage is added or updated.
@@ -131,13 +151,15 @@ export class PassagePickerComponent implements OnInit {
 
   private readyForPassageSource = new Subject();
   private cancelEditingSource = new Subject();
-  private passageAddedSource = new Subject();
-  private passageUpdatedSource = new Subject();
+  private passageAddedSource = new Subject<AddReadingData>();
+  private passageUpdatedSource = new Subject<UpdateReadingData>();
 
   readyForPassage$ = this.readyForPassageSource.asObservable();
   cancelEditing$ = this.cancelEditingSource.asObservable();
   passageAdded$ = this.passageAddedSource.asObservable();
   passageUpdated$ = this.passageUpdatedSource.asObservable();
+
+  private nextStep = NextStep;
 
 
   // Container for all verse range component.
@@ -191,21 +213,48 @@ export class PassagePickerComponent implements OnInit {
   }
 
   // Respond to the add/update button.
-  private onAddOrUpdate() {
+  private onAddOrUpdate(nextStep?: number) {
+    /*
+    TODO: change this to simply onUpdate(); remove the event emitters
+     */
     if (this.isAddMode) {
       // Add a new passage.
       this.passageAdded.emit(this.passageRef); //TODO: possibly remove this in the future, since we are probably not going to use the @Output()
-      this.passageAddedSource.next(this.passageRef);
+      let addReadingData: AddReadingData = {
+        passageRef: this.passageRef,
+        nextStep: nextStep
+      };
+      this.passageAddedSource.next(addReadingData);
     } else {
       // Update an existing passage.
       this.currentReading.osisRef = this.passageRef.osisRef();
       this.currentReading.stdRef = this.passageRef.displayRef();
       this.passageUpdated.emit(this.currentReading); //TODO: possibly remove this in the future, since we are probably not going to use the @Output()
-      this.passageUpdatedSource.next(this.currentReading);
+      let updateReadingData: UpdateReadingData = {
+        reading: this.currentReading,
+        nextStep: nextStep
+      };
+
+      this.passageUpdatedSource.next(updateReadingData);
       this.isAddMode = true;
     }
     // After emitting event, configure for the default passage.
-    this.configForPassage(null);
+    //this.configForPassage(null);
+  }
+
+  // Respond to the finish button (which only shows up in Add mode)
+  private onFinish() {
+    let addReadingData: AddReadingData = {
+      passageRef: this.passageRef,
+      nextStep: NextStep.finish
+    };
+    this.passageAddedSource.next(addReadingData);
+  }
+
+  // Respond to the add another button (which only shows up in Add mode)
+
+  private onAddAnother() {
+    //this.passageAddedSource.next(this.passageRef);
   }
 
   // Respond to the cancel button.

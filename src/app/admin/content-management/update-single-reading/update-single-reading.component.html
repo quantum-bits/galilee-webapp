@@ -18,7 +18,7 @@
 
       <h5 *ngIf="!editReadingModeOn && reading">
         <span class="title"> {{reading.stdRef}}</span>
-        <span class="right">
+        <span *ngIf="!editPracticeModeOn" class="right">
           <a
             (click)="openEditReadingForm(reading)"
             class="grey-text text-darken-2 include-pointer">
@@ -32,18 +32,45 @@
     <div *ngIf="reading">
       <li *ngFor="let direction of reading.directions; let aIndex=index" class="collection-item white">
         <app-display-direction-steps
-          [editable]="'true'"
+          [editable]="editingEnabled[aIndex]"
           [directionType] = "directionType"
           [parentId] = "reading.id"
           [usedPracticeIds] = "usedPracticeIds"
-          [readingIndex] = "readingIndex"
+          (onEditModeEnabled)="onPracticedEdited($event)"
+          (onEditModeDisabled)="onPracticedEditingCancelled()"
           [directionIndex] = "aIndex"
+          [readingIndex] = "readingIndex"
           [direction]= "direction"
           (deleteDirection)="displayDeleteDirectionModal($event)"
           (editDirection)="launchEditPracticeModal($event)">
         </app-display-direction-steps>
       </li>
+
+      <div *ngIf="canAddPractice()">
+        <li class="collection-item">
+          <span class="right reading-button">
+            <a class="waves-effect waves-light btn secondary-content">Add Practice</a>
+          </span>
+        </li>
+      </div>
     </div>
 
+
+
   </ul>
+
+
+
+  <div class="row">
+    <div class="col s12 back-link">
+      <a class="grey-text text-darken-2"
+         [routerLink]="['/admin/update-readings', dateString]">
+        <i class="material-icons lr-arrow">navigate_before</i>
+        Back to Manage Readings
+      </a>
+    </div>
+  </div>
+
 </div>
+
+

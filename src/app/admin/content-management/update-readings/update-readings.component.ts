@@ -155,6 +155,7 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
   }
 
   fetchReadings(dateString: string) {
+    this.readingService.dumpStoredReadings();
     this.readingService.fetchSavedReadings(dateString)
       .subscribe(
         readings => {
