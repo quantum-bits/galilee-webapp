@@ -27,9 +27,12 @@ export class UpdateDirectionFormComponent implements OnInit {
   @Input() directionType: number; // DirectionType.day or DirectionType.reading
   @Input() parentId: number; // readingDayId or readingId, as appropriate
   @Input() usedPracticeIds: number[]; // ids of the practices that are currently in use for this reading or readingDay
+  @Input() maxDirectionSeq: number = null; // when creating a new direction, this is set to the max seq value of the other directions for this reading
 
   private cancelEditingSource = new Subject();
+  private saveSource = new Subject();
   cancelEditing$ = this.cancelEditingSource.asObservable();
+  save$ = this.saveSource.asObservable();
 
   private isNewDirection: boolean;
 
@@ -90,12 +93,11 @@ export class UpdateDirectionFormComponent implements OnInit {
   }
 
   initializeForm() {
-    let directionSeq: number = null;
     let lengthArray: number = null;
     if (this.isNewDirection) {
       this.directionFormData = {
         id: null, //for a new direction
-        seq: directionSeq,
+        seq: this.maxDirectionSeq + 1,
         practice: {
           id: null,
           title: '',
@@ -213,6 +215,7 @@ export class UpdateDirectionFormComponent implements OnInit {
         .subscribe(
           result => {
             console.log('success!  result: ', result);
+            this.saveSource.next();//let the parent component know
             this.readingService.announceReadingsRefresh();
             //this.closeModal();
           },
@@ -228,6 +231,7 @@ export class UpdateDirectionFormComponent implements OnInit {
               .subscribe(
                 result => {
                   console.log('success!  result: ', result);
+                  this.saveSource.next();//let the parent component know
                   this.readingService.announceReadingsRefresh();
                   //this.closeModal();
                 },

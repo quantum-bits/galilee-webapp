@@ -42,6 +42,7 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy {
   private editReadingModeOn: boolean = false; // true if the reading is being edited
   private editPracticeModeOn: boolean = false; // true if any practice is being edited
   private editingEnabled: boolean[]; //true or false for each 'direction'
+  private addNewPracticeModeOn: boolean = false;
 
   private isNewReading: boolean; // true if this is a new reading, false if the reading already exists
 
@@ -49,6 +50,7 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy {
 
   private directionType: number;
   private usedPracticeIds: number[] = []; // ids of the practices that are currently in use for this reading
+  private maxDirectionSeq: number = 0; // used to find the max value of the current direction 'sequence' values; this is used when adding a new direction
 
   private subCancelReading: Subscription = null;
   private subAddReading: Subscription = null;
@@ -94,10 +96,14 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy {
             this.editReadingModeOn = false;
             this.editPracticeModeOn = false;
             this.editingEnabled = [];
+            this.maxDirectionSeq = 0;
             this.reading.directions.forEach(direction =>
               {
                 this.usedPracticeIds.push(direction.practice.id);
                 this.editingEnabled.push(true);
+                if (direction.seq > this.maxDirectionSeq) {
+                  this.maxDirectionSeq = direction.seq;
+                }
               }
             );
             console.log('used Practice IDs: ', this.usedPracticeIds);
@@ -279,9 +285,19 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy {
     //
   }
 
-  // if a reading or any of the practices is being edited
+  // if a reading or any of the practices is being edited, then the 'add practice' button is hidden
   canAddPractice() {
-    return (!this.editPracticeModeOn)&&(!this.editReadingModeOn);
+    return (!this.editPracticeModeOn)&&(!this.editReadingModeOn)&&(!this.addNewPracticeModeOn);
+  }
+
+  onAddNewPractice() {
+    this.addNewPracticeModeOn = true;
+    this.setEditingEnabledAllPractices(false);
+  }
+
+  onCancelAddPractice() {
+    this.addNewPracticeModeOn = false;
+    this.setEditingEnabledAllPractices(true);
   }
 
 
