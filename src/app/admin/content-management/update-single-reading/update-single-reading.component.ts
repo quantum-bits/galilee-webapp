@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ViewContainerRef, Directive, ComponentFactoryResolver } from '@angular/core';
+import { Component, OnInit, OnDestroy, OnChanges, ViewChild, ViewContainerRef, Directive, ComponentFactoryResolver } from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 
 import { Subscription }   from 'rxjs/Subscription';
@@ -6,6 +6,9 @@ import { Subscription }   from 'rxjs/Subscription';
 import {ReadingService} from '../../../shared/services/reading.service';
 
 import {PassageRef} from '../passage-picker/passage.model';
+
+import {DisplayReadingModalComponent} from '../display-reading-modal/display-reading-modal.component';
+import {DeleteItemModalComponent} from '../../../shared/components/delete-item-modal/delete-item-modal.component';
 import {NextStep, AddReadingData, UpdateReadingData} from '../passage-picker/passage-picker.component';
 import {PassagePickerComponent} from '../passage-picker/passage-picker.component';
 
@@ -28,10 +31,12 @@ export class PassagePickerAnchorDirective {
   templateUrl: './update-single-reading.component.html',
   styleUrls: ['./update-single-reading.component.scss']
 })
-export class UpdateSingleReadingComponent implements OnInit, OnDestroy {
+export class UpdateSingleReadingComponent implements OnInit, OnDestroy, OnChanges {
 
   //@ViewChild('passagePicker') passagePicker: PassagePickerComponent;
   @ViewChild(PassagePickerAnchorDirective) passagePickerAnchor: PassagePickerAnchorDirective;
+  @ViewChild('displaySingleReadingModal') modal: DisplayReadingModalComponent;
+  @ViewChild('deleteSingleReadingModal') modalDeleteReading: DeleteItemModalComponent;
 
   private passagePickerViewContainerRef: ViewContainerRef = null;
 
@@ -43,6 +48,8 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy {
   private editPracticeModeOn: boolean = false; // true if any practice is being edited
   private editingEnabled: boolean[]; //true or false for each 'direction'
   private addNewPracticeModeOn: boolean = false;
+
+  private singleReadingStdRef: string = ''; // used in 'delete reading' modal
 
   private isNewReading: boolean; // true if this is a new reading, false if the reading already exists
 
@@ -70,7 +77,7 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.directionType = DirectionType.reading;
+    console.log('inside update-single-reading oninit....');
     this.passagePickerViewContainerRef = this.passagePickerAnchor.viewContainerRef;
     this.route.params.subscribe(params => {
       console.log('update-single-reading -- received route params');
@@ -78,8 +85,17 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy {
       this.readingIndex = +params['readingIndex'];
       console.log(typeof this.readingIndex);
       console.log('reading index: ', this.readingIndex);
+
+      this.directionType = DirectionType.reading;
+
+
+
       this.fetchReadings(this.dateString);
     });
+  }
+
+  ngOnChanges() {
+    console.log('inside update-single-reading onchanges....');
   }
 
   fetchReadings(dateString: string) {
@@ -110,6 +126,7 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy {
 
           } else {
             this.isNewReading = true;
+            this.reading = null;
             this.editReadingModeOn =  true;
             this.openNewReadingForm();
           }
@@ -147,7 +164,7 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy {
 
           switch (addReadingData.nextStep) {
             case NextStep.finish: {
-              this.router.navigate(['/admin/update-readings', this.dateString]);
+              this.navigateMainReadingsPage();
               break;
             }
             case NextStep.addAnother: {
@@ -183,7 +200,7 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy {
 
           switch (updateReadingData.nextStep) {
             case NextStep.finish: {
-              this.router.navigate(['/admin/update-readings', this.dateString]);
+              this.navigateMainReadingsPage();
               break;
             }
             case NextStep.addAnother: {
@@ -221,7 +238,7 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy {
     });
     this.subCancelReading = this.editReadingComponent.cancelEditing$.subscribe(() => {
       if (this.isNewReading) {
-        this.router.navigate(['/admin/update-readings', this.dateString]);
+        this.navigateMainReadingsPage();
       } else {
         this.editReadingCloseAndCleanUp();
       }
@@ -244,6 +261,11 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy {
       this.editReadingComponent.editReadingPassage(reading);
     });
   }
+
+  navigateMainReadingsPage() {
+    this.router.navigate(['/admin/update-readings', this.dateString]);
+  }
+
 
   setEditingEnabledAllPractices(enabled: boolean) {
     this.editingEnabled = [];
@@ -277,18 +299,15 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy {
     this.setEditingEnabledAllPractices(true);
   }
 
-  displayDeleteDirectionModal(event) {
-    //
-  }
-
-  launchEditPracticeModal(event) {
-    //
-  }
-
   // if a reading or any of the practices is being edited, then the 'add practice' button is hidden
   canAddPractice() {
     return (!this.editPracticeModeOn)&&(!this.editReadingModeOn)&&(!this.addNewPracticeModeOn);
   }
+
+  addNewReading() {
+    this.router.navigate(['/admin/update-readings', this.dateString, this.readingsData.readings.length]);
+  }
+
 
   onAddNewPractice() {
     this.addNewPracticeModeOn = true;
@@ -301,14 +320,46 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy {
   }
 
 
+  displayReading() {
+    console.log('display reading....');
+    this.modal.openModal();
+  }
 
+  displayDeleteReadingModal() {
+    this.singleReadingStdRef = this.reading.stdRef;
+    this.modalDeleteReading.openModal(this.reading.id);
+  }
 
+  onDeleteReading(readingId: number) {
+    // it's a bit unnecessary to be passing the readingId around
+    // in this case, but 'DeleteItem' modal component assumes that
+    // it will be receiving (and then passing back) an id
+    this.readingService.deleteReading(readingId)
+      .subscribe(
+        result => {
+          console.log('item deleted!');
+          this.navigateMainReadingsPage();
+          //this.readingService.announceReadingsRefresh();
+        },
+        error => console.log('error on deleting reading: ', error)
+      );
+  }
+
+  /*
+  displayDeleteDirectionModal(direction: Direction) {
+    this.singleDirectionTitle = direction.practice.title;
+    this.modalDeleteDirection.openModal(direction.id);
+  }
+*/
 
   unsubscribeSubscription(subscription: Subscription) {
     if (subscription !== null) {
       subscription.unsubscribe();
     }
   }
+
+
+
 
   ngOnDestroy(){
     // unsubscribe from subscriptions to prevent memory leaks....

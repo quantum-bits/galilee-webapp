@@ -289,4 +289,8 @@ export class PassagePickerComponent implements OnInit {
     this.appendVerseRange(newRange);
   }
 
+  private lengthVerseRanges() {
+    return this.passageRef.verseRanges.length;
+  }
+
 }

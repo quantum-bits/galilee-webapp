@@ -6,7 +6,9 @@ import {DeleteItemModalComponent} from '../../../shared/components/delete-item-m
 
 import {IPractice} from '../../../shared/interfaces/practice.interface';
 import {Direction} from '../../../shared/interfaces/direction.interface';
-import {DirectionType} from '../../../shared/services/direction.service';
+import {DirectionType, DirectionService} from '../../../shared/services/direction.service';
+
+import {ReadingService} from '../../../shared/services/reading.service';
 
 import {UpdateDirectionFormComponent} from '../update-direction-form';
 
@@ -48,6 +50,7 @@ export class DisplayDirectionStepsComponent implements OnInit {
    */
 
   @ViewChild(UpdateDirectionAnchorDirective) updateDirectionAnchor: UpdateDirectionAnchorDirective;
+  @ViewChild('deleteSingleDirectionModal') modalDeleteDirection: DeleteItemModalComponent;
 
   @Input() editable: boolean; //whether this direction is editable or not
   //@Input() editModeOn: boolean; //whether this direction is currently being edited or not
@@ -76,7 +79,11 @@ export class DisplayDirectionStepsComponent implements OnInit {
 
   private showSteps: boolean = false;
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
+  private singleDirectionTitle: string = ''; // used in 'delete direction' modal
+
+  constructor(private componentFactoryResolver: ComponentFactoryResolver,
+              private directionService: DirectionService,
+              private readingService: ReadingService) { }
 
   ngOnInit() {
     this.updateDirectionViewContainerRef = this.updateDirectionAnchor.viewContainerRef;
@@ -118,25 +125,25 @@ export class DisplayDirectionStepsComponent implements OnInit {
     this.updateDirectionComponent.directionFormData = this.direction;
   }
 
-
   editDirectionCloseAndCleanUp(){
     this.updateDirectionViewContainerRef.clear();
     this.editModeOn = false;
   }
 
-  // TODO: delete(?)
-  displayEditDirectionModal(){
-    console.log('edit!');
-    this.editDirection.emit({
-      directionIndex: this.directionIndex,
-      readingIndex: this.readingIndex
-    });
+  displayDeleteDirectionModal() {
+    this.singleDirectionTitle = this.direction.practice.title;
+    this.modalDeleteDirection.openModal(this.direction.id);
   }
 
-  // TODO: delete(?)
-  displayDeleteModal(){
-    console.log('inside display direction component; about to emit delete');
-    this.deleteDirection.emit(this.direction);
+  onDeleteDirection() {
+    this.directionService.deleteDirection(this.direction.id)
+      .subscribe(
+        result => {
+          console.log('direction deleted! id: ', this.direction);
+          this.readingService.announceReadingsRefresh();
+        },
+        error => console.log('error on deleting direction: ', error)
+      );
   }
 
 

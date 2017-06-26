@@ -125,10 +125,6 @@ export class UpdateDirectionFormComponent implements OnInit {
 
   }
 
-
-
-
-
   determineAvailablePractices(){
     this.havePracticeTypes = false;//this prevents the component from populating the practices drop-down menu before it's ready to go
     this.practiceService.readAllPractices()
