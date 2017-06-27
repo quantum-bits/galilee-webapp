@@ -17,7 +17,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
 
   private availableVersions: Version[];
   private chosenVersion: string = "MSG";
-  private currentUser: User = null;
+  currentUser: User = null;
 
   constructor(
     private userService: UserService,

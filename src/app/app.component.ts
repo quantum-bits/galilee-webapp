@@ -36,8 +36,8 @@ import {DateNavSpyService} from "./shared/services/date-nav-spy.service";
 export class AppComponent implements OnInit {
   title = 'app works!';
 
-  private currentUser: User = null;
-  private currentUserIsAdmin: boolean = false;
+  currentUser: User = null;
+  currentUserIsAdmin: boolean = false;
 
   // date: Date;
   // readings: Reading[] = [];
@@ -46,9 +46,9 @@ export class AppComponent implements OnInit {
   // currentUser: User;
 
   private showPracticesDropdown: boolean = false;
-  private showResourcesDropdown: boolean = false;
-  private showAdminDropdown: boolean = false;
-  private showHelpDropdown: boolean = false;
+  showResourcesDropdown: boolean = false;
+  showAdminDropdown: boolean = false;
+  showHelpDropdown: boolean = false;
 
   constructor(private readingService: ReadingService,
               private practiceService: PracticeService,

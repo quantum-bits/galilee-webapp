@@ -23,7 +23,8 @@ export class MiniCalendarComponent implements OnInit {
   @Input() selected;
   @Input() calendarJournalEntries: CalendarEntries = {};
   @Output() changeSelected = new EventEmitter();
-  month;
+  weeks = [];
+  month = null;
 
   ngOnInit() {
     console.log("SELECTED", this.selected);

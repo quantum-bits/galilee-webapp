@@ -15,7 +15,7 @@ export class EditGroupModalComponent implements OnInit {
 
   modalActions = new EventEmitter<string|MaterializeAction>();
 
-  private groupData: any;
+  groupData: any;
 
   constructor(private groupService: GroupService) { }
 

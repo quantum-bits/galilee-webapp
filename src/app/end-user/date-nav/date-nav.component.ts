@@ -25,7 +25,7 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
   @Input() dateString: string = null;
   @Input() pickerdate: string = null;
 
-  private days: any;
+  days: any;
   private calendarReadings: CalendarEntries = null;
   private RCLDate: any = null; // a moment object that keeps track of which date the user is looking at
   private currentDateIndex: number = 0; // used to programmatically "click" the correct tab

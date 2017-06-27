@@ -16,19 +16,19 @@ export class UserSelectComponent implements OnInit {
   @Input() selectedUsers: User[] = [];
   @Output() onSelectionChange = new EventEmitter<User[]>();
 
-  private filteredUsers: User[];
+  filteredUsers: User[];
   private unselectedUsers: User[];
 
   private haveUsers: boolean = false;
 
-  private filter: string = '';
+  filter: string = '';
 
   //private selectedIds: number[] = [];
   private highlightedNotSelectedIds: number[] = [];
   private highlightedSelectedIds: number[] = [];
 
-  private rightArrowHovered: boolean = false;
-  private leftArrowHovered: boolean = false;
+  rightArrowHovered: boolean = false;
+  leftArrowHovered: boolean = false;
 
   constructor() { }
 

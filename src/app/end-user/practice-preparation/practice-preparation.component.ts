@@ -17,7 +17,7 @@ export class PracticePreparationComponent implements OnInit {
 
   private stepIndex: number = 0;
   private infoUrl: string = "";
-  private showInfoUrl: boolean = true;
+  showInfoUrl: boolean = true;
 
   constructor(private router: Router) { }
 

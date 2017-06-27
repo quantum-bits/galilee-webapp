@@ -24,13 +24,13 @@ export class UpdateDailyPracticesListComponent implements OnInit {
   @ViewChild('deleteDirectionModal') modalDeleteDirection: DeleteItemModalComponent;
   @ViewChild('updateDirectionModal') modalUpdateDirection: UpdatePracticeFormComponent;
 
-  private incrementer: number = 0;
+  incrementer: number = 0;
 
-  private readingIndex: number = null;
-  private directionIndex: number = null;
-  private isNewDirection: boolean = true;
-  private singleDirectionTitle: string = "";
-  private directionType = DirectionType.day;
+  readingIndex: number = null;
+  directionIndex: number = null;
+  isNewDirection: boolean = true;
+  singleDirectionTitle: string = "";
+  directionType = DirectionType.day;
 
   constructor(private readingService: ReadingService,
               private directionService: DirectionService) { }

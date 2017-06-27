@@ -9,7 +9,6 @@ import {AuthConfig, AuthHttp} from 'angular2-jwt';
 import {AdminModule} from './admin/admin.module';
 import {AppComponent} from './app.component';
 import {AuthenticationModule} from './authentication/authentication.module';
-import {DialogComponent} from './admin/temp/dialog.component';
 import {EndUserModule} from './end-user/end-user.module';
 import {SelfUpdateComponent} from './authentication/self-update';
 import {JWT_TOKEN_KEY} from './shared/constants';
@@ -59,7 +58,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   ],
   declarations: [
     AppComponent,
-    DialogComponent,
     SelfUpdateComponent
   ],
   providers: [
@@ -70,7 +68,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
       deps: [Http, RequestOptions]
     }
   ],
-  entryComponents: [AppComponent, DialogComponent],// not sure if EditUserComponent needs to be here....
+  entryComponents: [AppComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

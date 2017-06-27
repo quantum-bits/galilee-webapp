@@ -3,13 +3,13 @@ import {
   ComponentFactoryResolver, ViewChild, Directive, Output, EventEmitter
 } from '@angular/core';
 import {BibleInfoService, BibleBook} from '../bible-info/bible-info.service';
-import {PassageRef, VerseRange, PassageRefFactory} from "./passage.model";
-import {IReading} from "../../../shared/interfaces/reading.interface";
+import {PassageRef, VerseRange, PassageRefFactory} from './passage.model';
+import {IReading} from '../../../shared/interfaces/reading.interface';
 
-import * as _ from "lodash";
+import * as _ from 'lodash';
 
 @Directive({
-  selector: '[picker-anchor]',
+  selector: '[picker-anchor]'
 })
 export class PickerAnchorDirective {
   constructor(public viewContainerRef: ViewContainerRef) {
@@ -31,10 +31,10 @@ export class VerseRangeComponent implements OnInit {
   public deletePicker = null;
 
   // Arrays of values used by the select controls.
-  private fromChapters: Array<number> = [];
-  private fromVerses: Array<number> = [];
-  private toChapters: Array<number> = [];
-  private toVerses: Array<number> = [];
+  fromChapters: Array<number> = [];
+  fromVerses: Array<number> = [];
+  toChapters: Array<number> = [];
+  toVerses: Array<number> = [];
 
   ngOnInit() {
     this.updateDropdowns();
@@ -126,12 +126,12 @@ export class PassagePickerComponent implements OnInit {
   private passageRefFactory: PassageRefFactory = null;
 
   // Are we in add (vs. update) mode?
-  private isAddMode = true;
+  isAddMode = true;
 
   // Contains the reading being updated when in update mode.
   private currentReading: IReading = null;
 
-  constructor(private bibleInfo: BibleInfoService,
+  constructor(public bibleInfo: BibleInfoService,
               private componentFactoryResolver: ComponentFactoryResolver) {
   }
 
@@ -167,7 +167,7 @@ export class PassagePickerComponent implements OnInit {
   }
 
   // Respond to the add/update button.
-  private onAddOrUpdate() {
+  onAddOrUpdate() {
     if (this.isAddMode) {
       // Add a new passage.
       this.passageAdded.emit(this.passageRef);
@@ -183,13 +183,13 @@ export class PassagePickerComponent implements OnInit {
   }
 
   // Respond to the cancel button.
-  private onCancel() {
+  onCancel() {
     this.isAddMode = true;
     this.configForPassage(null);
   }
 
   // Append a verse range component for the given VerseRange object.
-  private appendVerseRange(verseRange: VerseRange) {
+  appendVerseRange(verseRange: VerseRange) {
     let componentFactory: ComponentFactory<VerseRangeComponent> =
       this.componentFactoryResolver.resolveComponentFactory(VerseRangeComponent);
 
@@ -207,7 +207,7 @@ export class PassagePickerComponent implements OnInit {
   }
 
   // Insert a new verse range component.
-  private addNewVerseRange() {
+  addNewVerseRange() {
     const newRange = new VerseRange();
     this.passageRef.appendRange(newRange);
     this.appendVerseRange(newRange);

@@ -12,7 +12,7 @@ import {User} from '../../shared/models/user.model';
 })
 export class SelfUpdateComponent implements OnInit {
 
-  private currentUser: User;
+  currentUser: User;
   private updateField: string = null;
 
   constructor(private router: Router,

@@ -6,12 +6,11 @@
     <div class="row">
       <select #book class="col s9 browser-default"
               materialize="material_select"
-              [materializeSelectOptions]="selectOptions"
+              [materializeSelectOptions]="bibleInfo.bibleBooks"
               [value]="passageRef.bibleBook.osisName"
               (change)="onBook(book.value)">
         <option *ngFor="let bibleBook of bibleInfo.bibleBooks"
-                [value]="bibleBook.osisName">{{bibleBook.displayName}}
-        </option>
+                [value]="bibleBook.osisName">{{bibleBook.displayName}}</option>
       </select>
 
       <a class="btn col action-icons right" (click)="addNewVerseRange()">

@@ -15,8 +15,8 @@ export class UserEntryComponent implements OnInit {
   @Output() onHighlighted = new EventEmitter<number>();
   @Output() onUnhighlighted = new EventEmitter<number>();
 
-  private isHovered: boolean = false;
-  private isHighlighted: boolean = false;
+  isHovered: boolean = false;
+  isHighlighted: boolean = false;
 
   constructor() { }
 

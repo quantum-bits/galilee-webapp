@@ -25,7 +25,7 @@ export class UpdatePracticeItemComponent implements OnInit, OnDestroy {
 
   @Input() practice;
 
-  private editModeOn = false;
+  editModeOn = false;
   private divOpen = false;
 
   practiceUpdateForm: FormGroup;

@@ -23,13 +23,13 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
   //@ViewChild('updatePractice') modal: UpdatePracticeFormComponent;
   @ViewChild('updateReadingDayModal') updateReadingDayModal: UpdateReadingDayNameModalComponent;
 
-  private calendarReadings: CalendarEntries = {};
-  private readingsData: ReadingDay = null;
-  private dateString: string = null;
+  calendarReadings: CalendarEntries = {};
+  readingsData: ReadingDay = null;
+  dateString: string = null;
 
   private reading: IReading = null;
 
-  private dateStringCalendarInit = moment(new Date()).format('YYYY-MM-DD');
+  dateStringCalendarInit = moment(new Date()).format('YYYY-MM-DD');
 
   subscription: Subscription;
 

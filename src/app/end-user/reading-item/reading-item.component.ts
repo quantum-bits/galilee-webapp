@@ -20,7 +20,7 @@ export class ReadingItemComponent implements OnInit, OnChanges {
   @Input() todaysReadings: string[] = [];
 
   //private versions: Version[] = [];
-  private selectableVersions: Version[] = [];
+  selectableVersions: Version[] = [];
   //private hideContent: boolean;//hide the content of the reading if on a mobile device
 
   constructor(private router: Router,

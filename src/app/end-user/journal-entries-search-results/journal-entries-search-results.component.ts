@@ -20,7 +20,7 @@ export class JournalEntriesSearchResultsComponent implements OnInit {
 
   @ViewChild('deleteEntryModal') modal: DeleteItemModalComponent;
 
-  private journalEntries: Array<JournalEntry> = [];
+  journalEntries: Array<JournalEntry> = [];
   private journalMetadata: JournalMetadata = {
     totalEntries: 0,
     mostUsedTags: [],

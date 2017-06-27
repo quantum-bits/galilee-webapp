@@ -26,7 +26,6 @@ import {UpdateResourceCollectionComponent} from './content-management/update-res
 import {UpdateResourceItemComponent} from './content-management/update-resource-item';
 import {UpdateResourcesComponent} from './content-management/update-resources';
 import {UploadResourceComponent} from './content-management/upload-resource';
-import {ManageReadingComponent} from './content-management/manage-reading/manage-reading.component';
 import {UpdateReadingsComponent} from './content-management/update-readings/update-readings.component';
 import {UpdateReadingsListComponent} from './content-management/update-readings-list/update-readings-list.component';
 import {UpdatePracticeFormComponent} from './content-management/update-practice-form/update-practice-form.component';
@@ -67,12 +66,10 @@ const routes: Routes = [
       { // go directly to the specified date
         path: 'update-readings/:dateString',
         component: UpdateReadingsComponent
-      },
-      {path: 'manage-readings', component: ManageReadingComponent}
+      }
     ]
   },
 ];
-
 
 @NgModule({
   declarations: [
@@ -89,7 +86,6 @@ const routes: Routes = [
     UpdateResourceItemComponent,
     UpdateResourcesComponent,
     UploadResourceComponent,
-    ManageReadingComponent,
     UpdateReadingsComponent,
     UpdateReadingsListComponent,
     UpdatePracticeFormComponent,

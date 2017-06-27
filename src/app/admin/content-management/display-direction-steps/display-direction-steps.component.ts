@@ -17,7 +17,7 @@ export class DisplayDirectionStepsComponent implements OnInit {
   @Output() editDirection = new EventEmitter();
 
   private directionTitle: string = '';
-  private showSteps: boolean = false;
+  showSteps: boolean = false;
 
   constructor() { }
 

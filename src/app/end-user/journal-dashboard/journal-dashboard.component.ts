@@ -23,7 +23,7 @@ export class JournalDashboardComponent implements OnInit, OnDestroy {
 
   @ViewChild('deleteJournalEntryModal') modal: DeleteItemModalComponent;
 
-  private journalEntries: Array<JournalEntry> = [];
+  journalEntries: Array<JournalEntry> = [];
   private journalMetadata: JournalMetadata = {
     totalEntries: 0,
     mostUsedTags: [],

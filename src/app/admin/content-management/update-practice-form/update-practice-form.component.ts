@@ -1,11 +1,10 @@
 import { Component, OnInit, OnChanges, Input, EventEmitter } from '@angular/core';
 import {Router} from '@angular/router';
-import {FormArray, FormControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 
-import {IReading, ReadingDay} from '../../../shared/interfaces/reading.interface';
+import {ReadingDay} from '../../../shared/interfaces/reading.interface';
 
 import {Direction} from '../../../shared/interfaces/direction.interface';
-import {DirectionFormData} from '../../../shared/interfaces/direction-form-data.interface';
 import {DirectionType, DirectionService} from '../../../shared/services/direction.service';
 import {ReadingService} from '../../../shared/services/reading.service';
 
@@ -33,14 +32,13 @@ export class UpdatePracticeFormComponent implements OnInit, OnChanges {
    * https://scotch.io/tutorials/how-to-build-nested-model-driven-forms-in-angular-2
    */
 
-    //TODO: could probably get rid of the DirectionFormData interface
+  //TODO: could probably get rid of the DirectionFormData interface
 
   public directionForm: FormGroup; // our model driven form
 
   private directionFormData: Direction;
   private availablePractices: IPractice[] = [];
   private havePracticeTypes: boolean = false;
-  private allPractices: IPractice[] = [];
   private haveReadingDay: boolean = false;
   private readingStdRef: string = null;
 
