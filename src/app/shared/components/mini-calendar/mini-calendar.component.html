@@ -12,7 +12,7 @@
         <div class="mini-calendar-component">
           <div class="week" *ngFor="let week of weeks">
             <span class="day"
-                  [ngClass]="{ 'today': day.isToday, 'different-month': !day.isCurrentMonth, 'selected': isInWeek(day) }"
+                  [ngClass]="{ 'today': day.isToday, 'different-month': !day.isCurrentMonth, 'selected': isInWeek(day), 'selectedDay': isDay(day) }"
                   (click)="select(day)" *ngFor="let day of week.days">
               <div>{{day.numb}}</div>
               <!-- this no worky maybe try the icon alert or something from materialize css -->

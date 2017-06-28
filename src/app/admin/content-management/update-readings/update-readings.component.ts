@@ -82,6 +82,13 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
       );
   }
 
+  calendarInit() {
+    if (this.dateString !== null) {
+      return this.dateString;
+    } else {
+      return this.dateStringCalendarInit;
+    }
+  }
   editReadingDayName() {
     this.updateReadingDayModal.openModal(this.dateString, false, this.readingsData.name);
   }

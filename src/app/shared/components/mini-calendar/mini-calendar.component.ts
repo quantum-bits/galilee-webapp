@@ -26,7 +26,22 @@ export class MiniCalendarComponent implements OnInit {
   month;
 
   ngOnInit() {
+    /*
     console.log("SELECTED", this.selected);
+    console.log("ENTRIES", this.calendarJournalEntries);
+    this.month = moment(this.selected).clone();
+    console.log(this.month.format("MMM YYYY"));
+
+    let start = moment(this.selected).clone();
+    start.date(1);
+    this._removeTime(start.day(0));
+
+    this._buildMonth(this, start, this.month);
+    */
+  }
+
+  ngOnChanges() {
+    console.log("SELECTED", this.selected, typeof this.selected);
     console.log("ENTRIES", this.calendarJournalEntries);
     this.month = moment(this.selected).clone();
     console.log(this.month.format("MMM YYYY"));
@@ -38,25 +53,29 @@ export class MiniCalendarComponent implements OnInit {
     this._buildMonth(this, start, this.month);
   }
 
+
+
   public select(day) {
     this.selected = day.date.format('YYYY-MM-DD');
     this.changeSelected.emit(this.selected);
   };
 
+
+  public isDay(day) {
+    return moment(this.selected).isSame(day.date);
+  }
+
   public isInWeek(day) {
-    if (this.selected && this.selected.isSame) {
-      if (this.showWeek) {
-        let tempMoment = this.selected.clone();
-        tempMoment.isoWeekday(0);
-        let otherTempMoment = this.selected.clone();
-        otherTempMoment.isoWeekday(7);
-        otherTempMoment.isAfter(day.date);
-        return tempMoment.isSame(day.date) || (tempMoment.isBefore(day.date) && otherTempMoment.isAfter(day.date));
-      } else {
-        return this.selected.isSame(day.date);
-      }
+    if (this.showWeek) {
+      let tempMoment = moment(this.selected).clone();
+      tempMoment.isoWeekday(0);
+      let otherTempMoment = moment(this.selected).clone();
+      otherTempMoment.isoWeekday(7);
+      otherTempMoment.isAfter(day.date);
+      return tempMoment.isSame(day.date) || (tempMoment.isBefore(day.date) && otherTempMoment.isAfter(day.date));
+    } else {
+      return moment(this.selected).isSame(day.date);
     }
-    return false;
   };
 
   public next() {
