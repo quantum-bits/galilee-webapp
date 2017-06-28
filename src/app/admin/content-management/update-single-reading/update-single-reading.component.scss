@@ -15,3 +15,16 @@
 .action-icons {
   /*padding-right: 20px;*/
 }
+
+
+.enable-overflow {
+  overflow: visible;
+  /*
+  so select menu is visible outside of collection; otherwise can be cut off
+  https://github.com/Dogfalo/materialize/issues/1385
+  NOTE: the 'overflow: visible' property needs to be set in the correct
+        bounding div for this to work...!  in this case, the actual dropdown
+        menu is in a different component altogether (it is in update-direction-form)
+  */
+}
+

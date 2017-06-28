@@ -55,7 +55,7 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, OnChange
 
   private editReadingComponent: any;
 
-  private directionType: number;
+  private directionTypeElement: number;
   private usedPracticeIds: number[] = []; // ids of the practices that are currently in use for this reading
   private maxDirectionSeq: number = 0; // used to find the max value of the current direction 'sequence' values; this is used when adding a new direction
 
@@ -86,7 +86,7 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, OnChange
       console.log(typeof this.readingIndex);
       console.log('reading index: ', this.readingIndex);
 
-      this.directionType = DirectionType.reading;
+      this.directionTypeElement = DirectionType.reading;
 
 
 
@@ -100,6 +100,7 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, OnChange
 
   fetchReadings(dateString: string) {
     this.readingService.dumpStoredReadings();
+    this.usedPracticeIds = [];
     this.readingService.fetchSavedReadings(dateString)
       .subscribe(
         readings => {
@@ -123,7 +124,6 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, OnChange
               }
             );
             console.log('used Practice IDs: ', this.usedPracticeIds);
-
           } else {
             this.isNewReading = true;
             this.reading = null;
@@ -344,13 +344,6 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, OnChange
         error => console.log('error on deleting reading: ', error)
       );
   }
-
-  /*
-  displayDeleteDirectionModal(direction: Direction) {
-    this.singleDirectionTitle = direction.practice.title;
-    this.modalDeleteDirection.openModal(direction.id);
-  }
-*/
 
   unsubscribeSubscription(subscription: Subscription) {
     if (subscription !== null) {

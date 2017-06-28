@@ -1,26 +1,54 @@
 <div *ngIf="readingDay">
-  <ul class="collection with-header">
+  <ul
+    class="collection with-header"
+    [class.enable-overflow] = "editPracticeModeOn || addNewPracticeModeOn">
     <li class="collection-header"><h5>Daily practices for {{dateString | amDateFormat: 'LL'}}</h5></li>
     <li *ngIf="readingDay.directions.length == 0" class="collection-item white">
       No daily practices yet for {{dateString | amDateFormat: 'LL'}}.
     </li>
     <li *ngFor="let direction of readingDay.directions; let aIndex=index" class="collection-item white">
+
       <app-display-direction-steps
-        [readingIndex]="readingIndex"
-        [directionIndex]="aIndex"
-        [direction]="direction"
-        (deleteDirection)="displayDeleteDirectionModal($event)"
-        (editDirection)="launchEditPracticeModal($event)">
+        [editable]="editingEnabled[aIndex]"
+        [directionTypeElement] = "directionTypeElement"
+        [parentId] = "readingDay.id"
+        [usedPracticeIds] = "usedPracticeIds"
+        (onEditModeEnabled)="onPracticedEdited($event)"
+        (onEditModeDisabled)="onPracticedEditingCancelled()"
+        [directionIndex] = "aIndex"
+        [direction]= "direction">
       </app-display-direction-steps>
+
     </li>
     <div *ngIf="!readingDay.directions.length">
       <p></p>
     </div>
 
-    <p></p>
-    <span class="right practice-button">
-      <a class="waves-effect waves-light btn secondary-content" (click)="launchNewPracticeModal()">Add Practice</a>
-    </span>
+    <div *ngIf="canAddPractice()">
+      <li class="collection-item">
+            <span class="right practice-button">
+              <a class="waves-effect waves-light btn secondary-content" (click)="onAddNewPractice()">Add Practice</a>
+            </span>
+      </li>
+    </div>
+
+    <div *ngIf="addNewPracticeModeOn">
+      <li class="collection-item white">
+        <app-display-direction-steps
+          [editable]="true"
+          [directionTypeElement] = "directionTypeElement"
+          [parentId] = "readingDay.id"
+          [usedPracticeIds] = "usedPracticeIds"
+          (onEditModeDisabled)="onCancelAddPractice()"
+          [editModeOn] = "true"
+          [maxDirectionSeq] = "maxDirectionSeq">
+        </app-display-direction-steps>
+      </li>
+    </div>
+
+
+
+
   </ul>
 </div>
 

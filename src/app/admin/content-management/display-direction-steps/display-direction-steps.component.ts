@@ -52,23 +52,23 @@ export class DisplayDirectionStepsComponent implements OnInit {
   @ViewChild(UpdateDirectionAnchorDirective) updateDirectionAnchor: UpdateDirectionAnchorDirective;
   @ViewChild('deleteSingleDirectionModal') modalDeleteDirection: DeleteItemModalComponent;
 
-  @Input() editable: boolean; //whether this direction is editable or not
+  @Input() editable: boolean = false; //whether this direction is editable or not
   //@Input() editModeOn: boolean; //whether this direction is currently being edited or not
   @Input() direction: Direction = null; // if this.direction stays null (i.e., is not set in the parent template), then we are creating a new direction
-  @Input() directionType: number; // DirectionType.day or DirectionType.reading
-  @Input() parentId: number; // readingDayId or readingId, as appropriate
-  @Input() usedPracticeIds: number[]; // ids of the practices that are currently in use for this reading or readingDay
+  @Input() directionTypeElement: number = null; // DirectionType.day or DirectionType.reading; only used in the editable case
+  @Input() parentId: number = null; // readingDayId or readingId, as appropriate; only used in the editable case
+  @Input() usedPracticeIds: number[] = []; // ids of the practices that are currently in use for this reading or readingDay; only used in the editable case
   @Output() onEditModeEnabled = new EventEmitter();
   @Output() onEditModeDisabled = new EventEmitter();
-  @Input() directionIndex: number;
+  @Input() directionIndex: number = null; //only used in the editable case
   @Input() editModeOn: boolean = false; // can be overridden in the parent's template
   @Input() maxDirectionSeq: number = null; // when creating a new direction, this is set to the max val of the sequence #s for the other directions for this reading
 
   // probably delete the following, eventually....
-  @Input() readingIndex: number;
+  //@Input() readingIndex: number;
 
-  @Output() deleteDirection = new EventEmitter<Direction>();
-  @Output() editDirection = new EventEmitter();
+  //@Output() deleteDirection = new EventEmitter<Direction>();
+  //@Output() editDirection = new EventEmitter();
 
   private updateDirectionViewContainerRef: ViewContainerRef = null;
 
@@ -87,7 +87,6 @@ export class DisplayDirectionStepsComponent implements OnInit {
 
   ngOnInit() {
     this.updateDirectionViewContainerRef = this.updateDirectionAnchor.viewContainerRef;
-    console.log('inside display direction onInit....; usedPracticeIds: ', this.usedPracticeIds);
     if (this.direction === null) {
       // adding a new direction
       this.openAddNewDirectionForm();
@@ -105,7 +104,7 @@ export class DisplayDirectionStepsComponent implements OnInit {
     let componentFactory = this.componentFactoryResolver.resolveComponentFactory(UpdateDirectionFormComponent);
     this.updateDirectionComponent = this.updateDirectionViewContainerRef.createComponent(componentFactory).instance;
 
-    this.updateDirectionComponent.directionType = this.directionType;
+    this.updateDirectionComponent.directionTypeElement = this.directionTypeElement;
     this.updateDirectionComponent.parentId = this.parentId;
     this.updateDirectionComponent.usedPracticeIds = this.usedPracticeIds;
     this.updateDirectionComponent.maxDirectionSeq = this.maxDirectionSeq;

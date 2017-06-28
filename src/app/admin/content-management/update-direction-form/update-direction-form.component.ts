@@ -24,7 +24,7 @@ import {IPractice} from '../../../shared/interfaces/practice.interface';
 export class UpdateDirectionFormComponent implements OnInit {
 
   @Input() directionFormData: Direction = null;
-  @Input() directionType: number; // DirectionType.day or DirectionType.reading
+  @Input() directionTypeElement: number; // DirectionType.day or DirectionType.reading
   @Input() parentId: number; // readingDayId or readingId, as appropriate
   @Input() usedPracticeIds: number[]; // ids of the practices that are currently in use for this reading or readingDay
   @Input() maxDirectionSeq: number = null; // when creating a new direction, this is set to the max seq value of the other directions for this reading
@@ -80,7 +80,7 @@ export class UpdateDirectionFormComponent implements OnInit {
     console.log('is new direction: ', this.isNewDirection);
 
 
-    if (this.directionType === DirectionType.day) {
+    if (this.directionTypeElement === DirectionType.day) {
       this.daily = "Daily";
     } else {
       this.daily = "";
@@ -207,7 +207,7 @@ export class UpdateDirectionFormComponent implements OnInit {
      * If !this.isNewDirection, need to delete the existing direction and then create a new one
      */
     if (this.isNewDirection) {
-      this.directionService.createDirection(direction, this.parentId, practiceId, this.directionType)
+      this.directionService.createDirection(direction, this.parentId, practiceId, this.directionTypeElement)
         .subscribe(
           result => {
             console.log('success!  result: ', result);
@@ -223,7 +223,7 @@ export class UpdateDirectionFormComponent implements OnInit {
         .subscribe(
           result => {
             console.log('successfully deleted existing direction: ', result);
-            this.directionService.createDirection(direction, this.parentId, practiceId, this.directionType)
+            this.directionService.createDirection(direction, this.parentId, practiceId, this.directionTypeElement)
               .subscribe(
                 result => {
                   console.log('success!  result: ', result);

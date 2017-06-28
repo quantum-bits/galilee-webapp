@@ -1,7 +1,16 @@
-.collection {
+.direction-form {
+  //overflow-y: scroll;
+  /*
+  this is so that the practices drop-down doesn't get cut off if the
+  drop-down happens to be very long (at least this way, you can scroll
+  down in the form itself to get to the bottom of the drop down);
+  not currently using this approach; setting overflow: visible
+  in parent div instead
+  */
+}
+
+.enable-overflow {
   overflow: visible;
-  /* so select menu is visible outside of collection; otherwise can be cut off */
-  /* https://github.com/Dogfalo/materialize/issues/1385 */
 }
 
 .warning-background {

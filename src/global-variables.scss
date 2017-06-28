@@ -16,7 +16,6 @@ $success-color: color("green", "base") !default;
 $error-color: color("red", "base") !default;
 $link-color: color("light-blue", "darken-1") !default;
 
-
 // need to overwrite the $roboto-font-path variable, or else the sass-loader
 // package can't find the fonts (there is an issue with the base path
 // that it is starting with and the base path assumed in _variables.scss).

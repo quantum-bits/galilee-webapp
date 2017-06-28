@@ -23,11 +23,8 @@
       <ul *ngIf="reading.directions.length" class="collection">
         <li *ngFor="let direction of reading.directions; let aIndex=index" class="collection-item white">
           <app-display-direction-steps
-            [readingIndex] = "rIndex"
-            [directionIndex] = "aIndex"
-            [direction]= "direction"
-            (deleteDirection)="displayDeleteDirectionModal($event)"
-            (editDirection)="launchEditPracticeModal($event)">
+            [editable]="false"
+            [direction]= "direction">
           </app-display-direction-steps>
         </li>
 
@@ -58,16 +55,6 @@
 
   </ul>
 </div>
-
-<update-practice-form
-  #updateDirectionModal
-  [directionType] = "directionType"
-  [incrementer] = "incrementer"
-  [readingDay] = "readingsData"
-  [readingIndex] = "readingIndex"
-  [directionIndex] = "directionIndex"
-  [isNewDirection] = "isNewDirection">
-</update-practice-form>
 
 <app-display-reading-modal
   #displayReadingModal

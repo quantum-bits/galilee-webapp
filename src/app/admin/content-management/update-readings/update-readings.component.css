@@ -1,3 +1,8 @@
 .btn-space {
   margin-top: 10px;
 }
+
+.wide-container {
+  width: 90%;
+  margin-left: 5%;
+}

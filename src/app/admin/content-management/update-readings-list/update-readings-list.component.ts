@@ -24,7 +24,6 @@ export class UpdateReadingsListComponent implements OnInit {
 
   @Input() dateString: string;
   @Input() readingsData: ReadingDay;
-  @Output() launchAddPracticeForm = new EventEmitter<number>();
 
   //@Output() editReading: EventEmitter<IReading> = new EventEmitter<IReading>();
 
@@ -44,7 +43,7 @@ export class UpdateReadingsListComponent implements OnInit {
   private readingIndex: number = null;
   private directionIndex: number = null;
   private isNewDirection: boolean = true;
-  private directionType = DirectionType.reading;
+  private directionType = DirectionType;
 
   constructor(private readingService: ReadingService,
               private directionService: DirectionService,

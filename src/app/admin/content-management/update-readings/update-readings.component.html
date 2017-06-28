@@ -1,6 +1,7 @@
-<div class="container">
+<div class="wide-container">
   <div class="row">
     <div class="col s12 m8 offset-m2 l4">
+
       <div class="row">
         <div class="col s12">
           <app-mini-calendar
@@ -18,7 +19,7 @@
         </div>
       </div>
     </div>
-    <div *ngIf="!dateString" class="col s12 m8 offset-m2 l8">
+    <div *ngIf="!dateString" class="col s12 m10 offset-m1 l8">
       <div class="row">
         <div class="col s12">
           <div class="card">
@@ -29,7 +30,7 @@
         </div>
       </div>
     </div>
-    <div  class="col s12 m8 offset-m2 l8">
+    <div  class="col s12 m10 offset-m1 l8">
       <div class="row">
         <div *ngIf="readingsData">
           <div class="col s6">
@@ -51,17 +52,18 @@
         <div class="col s12">
           <update-readings-list #readingsList
                                 [dateString]="dateString"
-                                [readingsData]="readingsData"
-                                (launchAddPracticeForm)="onLaunchAddPracticeForm($event)">
+                                [readingsData]="readingsData">
           </update-readings-list>
         </div>
       </div>
       <div class="row">
         <div class="col s12">
-          <app-update-daily-practices-list
-            [dateString]="dateString"
-            [readingDay]="readingsData">
-          </app-update-daily-practices-list>
+          <div *ngIf="readingsData">
+            <app-update-daily-practices-list
+              [dateString]="dateString"
+              [readingDay]="readingsData">
+            </app-update-daily-practices-list>
+          </div>
         </div>
       </div>
     </div>
