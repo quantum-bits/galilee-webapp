@@ -1,8 +1,6 @@
 import {Component, OnInit, Input, Output, EventEmitter, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {UpdatePracticeFormComponent} from '../update-practice-form/update-practice-form.component';
-
 import {DisplayReadingModalComponent} from '../display-reading-modal/display-reading-modal.component';
 import {DeleteItemModalComponent} from '../../../shared/components/delete-item-modal/delete-item-modal.component';
 import {IReading, ReadingDay} from '../../../shared/interfaces/reading.interface';
@@ -29,8 +27,6 @@ export class UpdateReadingsListComponent implements OnInit {
 
   @ViewChild('displayReadingModal') modal: DisplayReadingModalComponent;
   @ViewChild('deleteReadingModal') modalDeleteReading: DeleteItemModalComponent;
-  @ViewChild('deleteDirectionModal') modalDeleteDirection: DeleteItemModalComponent;
-  @ViewChild('updateDirectionModal') modalUpdateDirection: UpdatePracticeFormComponent;
 
   private allPractices: Practice[];
 
@@ -95,33 +91,11 @@ export class UpdateReadingsListComponent implements OnInit {
         err => console.error('Failed to update passage', err));
   }
 
-  launchNewPracticeModal(readingIndex: number) {
-    this.readingIndex = readingIndex;
-    this.directionIndex = null;
-    this.isNewDirection = true;
-    this.incrementer++;
-    this.modalUpdateDirection.openModal();
-  }
-
-  launchEditPracticeModal(eventData) {
-    this.readingIndex = eventData.readingIndex;
-    this.directionIndex = eventData.directionIndex;
-    this.isNewDirection = false;
-    this.incrementer++;
-    this.modalUpdateDirection.openModal();
-  }
-
   displayReading(i: number) {
     console.log('display reading....', i);
     this.singleReading = this.readingsData.readings[i];
     this.modal.openModal();
   }
-
-  /*
-  launchEditReadingModal(reading: IReading) {
-    this.editReading.emit(reading);
-  }
-  */
 
   editReading(readingIndex: number) {
     this.router.navigate(['/admin/update-readings', this.dateString, readingIndex]);
@@ -130,11 +104,6 @@ export class UpdateReadingsListComponent implements OnInit {
   displayDeleteReadingModal(reading: IReading) {
     this.singleReadingStdRef = reading.stdRef;
     this.modalDeleteReading.openModal(reading.id);
-  }
-
-  displayDeleteDirectionModal(direction: Direction) {
-    this.singleDirectionTitle = direction.practice.title;
-    this.modalDeleteDirection.openModal(direction.id);
   }
 
   onDeleteReading(readingId: number) {

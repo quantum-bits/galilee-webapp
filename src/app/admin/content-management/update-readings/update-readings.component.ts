@@ -20,7 +20,6 @@ import {UpdateReadingDayNameModalComponent} from '../update-reading-day-name-mod
 })
 export class UpdateReadingsComponent implements OnInit, OnDestroy {
 
-  //@ViewChild('updatePractice') modal: UpdatePracticeFormComponent;
   @ViewChild('updateReadingDayModal') updateReadingDayModal: UpdateReadingDayNameModalComponent;
 
   private calendarReadings: CalendarEntries = {};

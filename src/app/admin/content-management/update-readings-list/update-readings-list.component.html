@@ -67,10 +67,3 @@
   [message]="'Are you sure you want to delete this reading and all of its associated practices and steps?  This action is not reversible.'"
   (deleteItem)="onDeleteReading($event)">
 </app-delete-item-modal>
-
-<app-delete-item-modal
-  #deleteDirectionModal
-  [header]="'Delete Practice: '+singleDirectionTitle"
-  [message]="'Are you sure you want to delete this practice and all of its associated steps?  This action is not reversible.'"
-  (deleteItem)="onDeleteDirection($event)">
-</app-delete-item-modal>

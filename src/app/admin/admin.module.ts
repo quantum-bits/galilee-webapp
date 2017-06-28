@@ -29,7 +29,6 @@ import {UploadResourceComponent} from './content-management/upload-resource';
 import {ManageReadingComponent} from './content-management/manage-reading/manage-reading.component';
 import {UpdateReadingsComponent} from './content-management/update-readings/update-readings.component';
 import {UpdateReadingsListComponent} from './content-management/update-readings-list/update-readings-list.component';
-import {UpdatePracticeFormComponent} from './content-management/update-practice-form/update-practice-form.component';
 import {
   UpdateDirectionAnchorDirective,
   DisplayDirectionStepsComponent
@@ -101,7 +100,6 @@ const routes: Routes = [
     ManageReadingComponent,
     UpdateReadingsComponent,
     UpdateReadingsListComponent,
-    UpdatePracticeFormComponent,
     DisplayDirectionStepsComponent,
     UpdateDirectionAnchorDirective,
     DisplayReadingModalComponent,

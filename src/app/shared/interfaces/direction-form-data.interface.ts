@@ -1,6 +1,6 @@
 /**
  * this interface specifies the format for data returned from the
- * update-practice-form (which returns newly-created or updated 'direction' data),
+ * update-direction-form (which returns newly-created or updated 'direction' data),
  * prior to being sent to the server;
  *
  * note: the 'id' property of Step is not serving any purpose here, since the server
