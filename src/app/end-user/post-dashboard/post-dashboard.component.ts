@@ -26,7 +26,7 @@ export class PostDashboardComponent implements OnInit, OnDestroy {
   @ViewChild('deletePostModal') modal: DeleteItemModalComponent;
 
   //private journalEntriesData: JournalEntries; not currently being used
-  private multiGroupPostData: GroupPostData[];
+  multiGroupPostData: GroupPostData[];
 
   private startIndex: number = 0;
   private maxNumberPosts: number = DEFAULT_NUMBER_ENTRIES;

@@ -24,13 +24,12 @@ export class UpdateResourcesComponent implements OnInit {
   @Input() changeTracker;
   @ViewChild('myModalResourcePicker') input: ElementRef;
 
-  private initialResourceCollection: ResourceCollection = {
+  initialResourceCollection: ResourceCollection = {
     id: 0, // this will eventually need to be managed by the server-side code
     title: '',
     description: '',
     resources: []
   }
-
 
   resourceTypes = [];
   resourceDropDown = [];

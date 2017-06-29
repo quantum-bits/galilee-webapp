@@ -15,8 +15,8 @@ export class EditUserModalComponent implements OnInit {
 
   modalActions = new EventEmitter<string|MaterializeAction>();
 
-  private userData: any;
-  private updateField: any;
+  userData: any;
+  updateField: any;
 
   constructor(private userService: UserService) { }
 

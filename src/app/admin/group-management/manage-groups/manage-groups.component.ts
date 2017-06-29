@@ -49,7 +49,7 @@ export class ManageGroupsComponent implements OnInit, OnDestroy {
 
 
   private groups: GroupWithDiv[]; // will stay the same throughout
-  private filteredGroups: GroupWithDiv[]; // the list of filtered/sorted users displayed on the page
+  filteredGroups: GroupWithDiv[]; // the list of filtered/sorted users displayed on the page
 
   public config: PaginationInstance = {//used by pagination component
     //id: 'advanced',
@@ -57,7 +57,7 @@ export class ManageGroupsComponent implements OnInit, OnDestroy {
     currentPage: 1
   };
 
-  private sortableColumns = [
+  sortableColumns = [
     {
       value: 'name',
       name: 'Group Name'
@@ -76,7 +76,7 @@ export class ManageGroupsComponent implements OnInit, OnDestroy {
     }
   ];
 
-  private filterSelectOptionsDropdown = [
+  filterSelectOptionsDropdown = [
     {
       value: 'name',
       name: 'Group Name'
@@ -99,7 +99,7 @@ export class ManageGroupsComponent implements OnInit, OnDestroy {
     },
   ];
 
-  private enabledFilterType = { // this doesn't feel quite right, but otherwise can't access it in the template
+  enabledFilterType = { // this doesn't feel quite right, but otherwise can't access it in the template
     ALL: StatusOptions.ALL,
     ONLY: StatusOptions.ONLY,
     ONLYNOT: StatusOptions.ONLYNOT
@@ -112,7 +112,7 @@ export class ManageGroupsComponent implements OnInit, OnDestroy {
   private filterBy = this.filterSelectOptionsDropdown[0].value; //used for deciding which property to use for textual filtering
   public filter: string = '';//bound to textual input in template that is used for filtering the list of groups by name, etc.
 
-  private displayEnabled = new DisplayFilter('isEnabled', 'Enabled');
+  displayEnabled = new DisplayFilter('isEnabled', 'Enabled');
 
   constructor(private groupService: GroupService,
               private componentFactoryResolver: ComponentFactoryResolver) {

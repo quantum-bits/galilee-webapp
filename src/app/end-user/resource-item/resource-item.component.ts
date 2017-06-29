@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import {Resource} from '../../shared/models/resource.model';
 
 
 @Component({
@@ -11,6 +12,7 @@ export class ResourceItemComponent implements OnInit {
 
   // WORKING HERE: need to refactor the resource stuff a bit; 'image' (etc.) should be a type or something....
 
+  @Input() resource: Resource;
 
   @Input() reading: any;
   @Input() resourceCollection: any;

@@ -145,7 +145,8 @@
 
       <!-- copyrights and captions for individual files -->
       <div formArrayName="resources">
-        <div *ngFor="let resource of resourceCollectionForm.controls.resources.controls; let i=index" class="col s6">
+        <!-- TODO (Nurk) The iterated object might be completely wrong; had to change it to get AoT compile to work -->
+        <div *ngFor="let resource of resourceCollectionForm.controls; let i=index" class="col s6">
           <!-- Angular assigns array index as group name by default 0, 1, 2, ... -->
           <div [formGroupName]="i">
             <!--caption-->

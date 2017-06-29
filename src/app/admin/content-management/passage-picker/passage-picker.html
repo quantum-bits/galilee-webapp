@@ -3,22 +3,20 @@
     <h5>{{isAddMode ? 'Add Reading' : 'Update Reading'}}</h5>
   </li>
   <li class="collection-item">
-  -->
+    -->
 
 <h5>
 {{passageRef.displayRef()}}
-</h5>
-
-<div class="row">
-  <select #book class="col s9 browser-default"
-          materialize="material_select"
-          [materializeSelectOptions]="selectOptions"
-          [value]="passageRef.bibleBook.osisName"
-          (change)="onBook(book.value)">
-    <option *ngFor="let bibleBook of bibleInfo.bibleBooks"
-            [value]="bibleBook.osisName">{{bibleBook.displayName}}
-    </option>
-  </select>
+</h5><div class="row">
+      <select #book class="col s9 browser-default"
+              materialize="material_select"
+              [materializeSelectOptions]="bibleInfo.bibleBooks"
+              [value]="passageRef.bibleBook.osisName"
+              (change)="onBook(book.value)">
+        <option *ngFor="let bibleBook of bibleInfo.bibleBooks"
+                [value]="bibleBook.osisName">{{bibleBook.displayName}}
+        </option>
+      </select>
 
   <a class="btn col action-icons right" (click)="addNewVerseRange()">
     <i class="material-icons">add_box</i>

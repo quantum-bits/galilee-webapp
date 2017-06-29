@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   //      https://scotch.io/tutorials/using-angular-2s-model-driven-forms-with-formgroup-and-formcontrol
 
   public loginForm: FormGroup;
-  private signinServerError: string;
+  signinServerError: string;
   private authenticationFailureSubscription: Subscription;
 
   constructor(private userService: UserService,

@@ -164,9 +164,9 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
   private modalComponent: any;
 
   private users: User[]; // will stay the same throughout
-  private filteredUsers: User[]; // the list of filtered/sorted users displayed on the page
+  filteredUsers: User[]; // the list of filtered/sorted users displayed on the page
 
-  private displayFilters: DisplayFilter[];
+  displayFilters: DisplayFilter[];
   private displayFilterType = { // this doesn't feel quite right, but otherwise can't access it in the template
     ALL: StatusOptions.ALL,
     ONLY: StatusOptions.ONLY,
@@ -182,7 +182,7 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
     currentPage: 1
   };
 
-  private sortableColumns = [
+  sortableColumns = [
     {
       value: 'firstName',
       name: 'First Name'
@@ -200,7 +200,7 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
       name: 'Joined'
     }
   ];
-  private filterSelectOptionsDropdown = [
+  filterSelectOptionsDropdown = [
     {
       value: 'lastName',
       name: 'Last Name'

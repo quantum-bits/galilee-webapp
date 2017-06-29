@@ -62,11 +62,11 @@ export class ReadingsComponent implements OnInit, OnDestroy {
   }
 
   private multiGroupPostData: GroupPostData[];
-  private dateString: string;
-  private readingDescriptions: Array<any> = [];//this will hold the reading descriptions for the passages other than the one that is currently being shown
+  dateString: string;
+  readingDescriptions: Array<any> = [];//this will hold the reading descriptions for the passages other than the one that is currently being shown
   private numberReadings: number;
   private currentReadingIndex: number = 0; // the index # of the reading that is currently being displayed
-  private initializationComplete = false;
+  initializationComplete = false;
   private todaysReadings: string[] = []; // list of human-readable reading descriptions, in the same order as the actual readings
 
   ngOnInit() {

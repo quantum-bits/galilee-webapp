@@ -12,7 +12,7 @@ export class TagPickerComponent implements OnInit {
   @Input() allTags: Array<Tag> = [];
   @Output() onUpdate: EventEmitter<Array<Tag>> = new EventEmitter();
 
-  private deselectedTags: Array<Tag> = [];
+  deselectedTags: Array<Tag> = [];
 
   ngOnInit() {
     // Put any tag that isn't in selectedTags into deselectedTags.

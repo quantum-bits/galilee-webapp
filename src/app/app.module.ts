@@ -68,7 +68,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
       deps: [Http, RequestOptions]
     }
   ],
-  entryComponents: [AppComponent],// not sure if EditUserComponent needs to be here....
+  entryComponents: [AppComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

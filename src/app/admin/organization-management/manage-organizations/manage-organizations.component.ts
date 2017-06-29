@@ -29,7 +29,7 @@ export class ManageOrganizationsComponent implements OnInit, OnDestroy {
   private modalComponent: any;
 
   private organizations: Organization[]; // will stay the same throughout
-  private filteredOrganizations: Organization[]; // the list of filtered/sorted organizations displayed on the page
+  filteredOrganizations: Organization[]; // the list of filtered/sorted organizations displayed on the page
 
   public config: PaginationInstance = {//used by pagination component
     //id: 'advanced',
@@ -37,7 +37,7 @@ export class ManageOrganizationsComponent implements OnInit, OnDestroy {
     currentPage: 1
   };
 
-  private sortableColumns = [
+  sortableColumns = [
     {
       value: 'name',
       name: 'Organization Name'

@@ -10,7 +10,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import {MomentModule} from 'angular2-moment';
 import {DragulaModule} from 'ng2-dragula/ng2-dragula';
 import {FileUploadModule} from 'ng2-file-upload';
-import {QuillModule} from 'ngx-quill'
+import {QuillModule} from 'ngx-quill';
 
 import {EditUserComponent} from './user-management/edit-user/edit-user.component';
 import {EditUserModalComponent} from './user-management/edit-user-modal/edit-user-modal.component';
@@ -26,7 +26,6 @@ import {UpdateResourceCollectionComponent} from './content-management/update-res
 import {UpdateResourceItemComponent} from './content-management/update-resource-item';
 import {UpdateResourcesComponent} from './content-management/update-resources';
 import {UploadResourceComponent} from './content-management/upload-resource';
-import {ManageReadingComponent} from './content-management/manage-reading/manage-reading.component';
 import {UpdateReadingsComponent} from './content-management/update-readings/update-readings.component';
 import {UpdateReadingsListComponent} from './content-management/update-readings-list/update-readings-list.component';
 import {
@@ -75,12 +74,10 @@ const routes: Routes = [
       { // add/edit reading and practices for one specific reading
         path: 'update-readings/:dateString/:readingIndex',
         component: UpdateSingleReadingComponent
-      },
-      {path: 'manage-readings', component: ManageReadingComponent}
+      }
     ]
   },
 ];
-
 
 @NgModule({
   declarations: [
@@ -97,7 +94,6 @@ const routes: Routes = [
     UpdateResourceItemComponent,
     UpdateResourcesComponent,
     UploadResourceComponent,
-    ManageReadingComponent,
     UpdateReadingsComponent,
     UpdateReadingsListComponent,
     DisplayDirectionStepsComponent,

@@ -7,8 +7,8 @@ import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 export class UpdateReadingDayNameModalComponent implements OnInit {
   @Output() readingDayObject = new EventEmitter<any>();
 
-  private date: string;
-  private name: string;
+  date: string;
+  name: string;
   private isCreatingNewDay: boolean;
 
   modalActions = new EventEmitter();

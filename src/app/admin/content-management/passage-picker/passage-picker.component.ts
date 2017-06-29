@@ -32,7 +32,7 @@ export interface UpdateReadingData {
 }
 
 @Directive({
-  selector: '[picker-anchor]',
+  selector: '[picker-anchor]'
 })
 export class PickerAnchorDirective {
   constructor(public viewContainerRef: ViewContainerRef) {
@@ -67,10 +67,10 @@ export class VerseRangeComponent implements OnInit {
   public deletePicker = null;
 
   // Arrays of values used by the select controls.
-  private fromChapters: Array<number> = [];
-  private fromVerses: Array<number> = [];
-  private toChapters: Array<number> = [];
-  private toVerses: Array<number> = [];
+  fromChapters: Array<number> = [];
+  fromVerses: Array<number> = [];
+  toChapters: Array<number> = [];
+  toVerses: Array<number> = [];
 
   constructor(private passageCommunicationService: PassageCommunicationService) {
   }
@@ -191,14 +191,14 @@ export class PassagePickerComponent implements OnInit, OnDestroy {
   private passageRefFactory: PassageRefFactory = null;
 
   // Are we in add (vs. update) mode?
-  private isAddMode = true;
+  isAddMode = true;
 
   // Contains the reading being updated when in update mode.
   private currentReading: IReading = null;
 
   private subPassageEdited: Subscription = null;
 
-  constructor(private bibleInfo: BibleInfoService,
+  constructor(public bibleInfo: BibleInfoService,
               private componentFactoryResolver: ComponentFactoryResolver,
               private passageCommunicationService: PassageCommunicationService) {
     this.subPassageEdited = this.passageCommunicationService.passageEdited$.subscribe(
@@ -247,7 +247,7 @@ export class PassagePickerComponent implements OnInit, OnDestroy {
   }
 
   // Respond to the add/update button.
-  private onAddOrUpdate(nextStep?: number) {
+  onAddOrUpdate(nextStep?: number) {
     /*
     TODO: change this to simply onUpdate(); remove the event emitters
      */
@@ -292,14 +292,14 @@ export class PassagePickerComponent implements OnInit, OnDestroy {
   }
 
   // Respond to the cancel button.
-  private onCancel() {
+  onCancel() {
     this.isAddMode = true;
     this.configForPassage(null);
     this.cancelEditingSource.next();
   }
 
   // Append a verse range component for the given VerseRange object.
-  private appendVerseRange(verseRange: VerseRange) {
+  appendVerseRange(verseRange: VerseRange) {
     let componentFactory: ComponentFactory<VerseRangeComponent> =
       this.componentFactoryResolver.resolveComponentFactory(VerseRangeComponent);
 
@@ -317,7 +317,7 @@ export class PassagePickerComponent implements OnInit, OnDestroy {
   }
 
   // Insert a new verse range component.
-  private addNewVerseRange() {
+  addNewVerseRange() {
     const newRange = new VerseRange();
     this.passageRef.appendRange(newRange);
     this.appendVerseRange(newRange);

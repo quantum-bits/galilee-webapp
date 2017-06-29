@@ -7,6 +7,7 @@ import {Direction} from '../../../shared/interfaces/direction.interface';
 
 import {DirectionType, DirectionService} from  '../../../shared/services/direction.service';
 import {ReadingService} from '../../../shared/services/reading.service';
+import {UpdatePracticeFormComponent} from '../update-practice-form/update-practice-form.component';
 
 
 @Component({
@@ -17,15 +18,18 @@ import {ReadingService} from '../../../shared/services/reading.service';
 export class UpdateDailyPracticesListComponent implements OnInit, OnChanges {
 
   @Input() readingDay: ReadingDay = null;
-  @Input() dateString: string;
+  @Input() dateString: string = "";
 
   @ViewChild('deleteDirectionModal') modalDeleteDirection: DeleteItemModalComponent;
+  @ViewChild('updateDirectionModal') modalUpdateDirection: UpdatePracticeFormComponent;
 
-  private readingIndex: number = null;
-  private directionIndex: number = null;
-  private isNewDirection: boolean = true;
-  private singleDirectionTitle: string = "";
-  private directionTypeElement = DirectionType.day;
+  incrementer: number = 0;
+
+  readingIndex: number = null;
+  directionIndex: number = null;
+  isNewDirection: boolean = true;
+  singleDirectionTitle: string = "";
+  directionType = DirectionType.day;
 
   private usedPracticeIds: number[] = []; // ids of the practices that are currently in use for this reading
   private maxDirectionSeq: number = 0; // used to find the max value of the current direction 'sequence' values; this is used when adding a new direction

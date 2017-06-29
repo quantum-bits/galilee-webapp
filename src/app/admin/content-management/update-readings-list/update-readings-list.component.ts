@@ -20,8 +20,9 @@ import {PassageRef} from "../passage-picker/passage.model";
 })
 export class UpdateReadingsListComponent implements OnInit {
 
-  @Input() dateString: string;
-  @Input() readingsData: ReadingDay;
+  @Input() dateString: string = "";
+  @Input() readingsData: ReadingDay = null;
+  @Output() launchAddPracticeForm = new EventEmitter<number>();
 
   //@Output() editReading: EventEmitter<IReading> = new EventEmitter<IReading>();
 
@@ -30,11 +31,11 @@ export class UpdateReadingsListComponent implements OnInit {
 
   private allPractices: Practice[];
 
-  private singleReading: IReading;
-  private singleReadingStdRef: string = '';
-  private singleDirectionTitle: string = '';
-  private direction: Direction;
-  private incrementer: number = 0;
+  singleReading: IReading;
+  singleReadingStdRef: string = '';
+  singleDirectionTitle: string = '';
+  direction: Direction;
+  incrementer: number = 0;
 
   private readingIndex: number = null;
   private directionIndex: number = null;
