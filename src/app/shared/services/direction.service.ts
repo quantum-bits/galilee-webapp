@@ -16,8 +16,8 @@ export class DirectionService {
   constructor(private authHttp: AuthHttp) {
   }
 
-  createDirection(direction: any, readingOrReadingDayId: number, practiceId: number, directionType: number): Observable<Direction> {
-    if (directionType === DirectionType.reading) {
+  createDirection(direction: any, readingOrReadingDayId: number, practiceId: number, directionTypeElement: number): Observable<Direction> {
+    if (directionTypeElement === DirectionType.reading) {
       return this.authHttp
         .post('/api/directions/reading', {
           seq: direction.seq,
@@ -26,7 +26,7 @@ export class DirectionService {
           steps: direction.steps
         })
         .map(resp => resp.json());
-    } else if (directionType === DirectionType.day) {
+    } else if (directionTypeElement === DirectionType.day) {
       return this.authHttp
         .post('/api/directions/day', {
           seq: direction.seq,

@@ -15,11 +15,19 @@
               <td *ngIf="rIndex == readingIndex && editReadingModeOn" class="current-passage">{{editedReadingStdRef}}</td>
               <td *ngIf="rIndex == readingIndex && !editReadingModeOn" class="current-passage">{{passage.stdRef}}</td>
               <td *ngIf="rIndex != readingIndex">{{passage.stdRef}}</td>
-              <td [class.current-passage]="rIndex == readingIndex">{{passage.directions.length}}</td>
+              <td [class.current-passage]="rIndex == readingIndex">
+                <div
+                  [class.zero-practices]="passage.directions.length == 0"
+                  [class.zero-practices-editing]="passage.directions.length == 0 && addNewPracticeModeOn && rIndex == readingIndex">
+                  {{passage.directions.length}}
+                </div>
+              </td>
             </tr>
             <tr *ngIf="isNewReading">
               <td class="current-passage">{{editedReadingStdRef}}</td>
-              <td class="current-passage">0</td>
+              <td class="current-passage">
+                <div class="zero-practices">0</div>
+              </td>
             </tr>
             </tbody>
           </table>

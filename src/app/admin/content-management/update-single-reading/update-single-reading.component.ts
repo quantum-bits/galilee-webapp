@@ -95,6 +95,11 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
   }
 
   ngAfterViewChecked() {
+    // TODO: come back and look at this; it seems like when the subscription to the observable
+    //       gets resolved, there should be a change detection event that would trigger
+    //       a new check of the page.  At the moment, that doesn't seem to be happening, and so
+    //       we have to use the work-around below.  It could be that this is an actual error
+    //       in angular, and will be fixed in the future.
     //console.log('inside update-single-reading: AfterViewChecked! isNewReading? ', this.isNewReading);
     //console.log('recent passage update? ', this.recentPassageUpdate);
     // the following is a work-around, because I was getting an 'expression changed after view checked' error;

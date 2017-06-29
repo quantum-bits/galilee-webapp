@@ -28,26 +28,6 @@ export class UpdateDirectionAnchorDirective {
 })
 export class DisplayDirectionStepsComponent implements OnInit {
 
-  /*
-  WORKING HERE.....
-
-  - maybe have a new EditDirectionStepsComponent, that can get
-    launched on the fly from within this component; that component
-    will contain the form for editing the direction and steps
-  - Question(s):
-    1. How will each Direction know which other directions have already
-       been used?  Maybe that can be worked out up one level and be passed down.
-    2. The direction needs to know if it is a DirectionType.reading or a DirectionType.day
-    3. Need to know readingDayId or readingId, as appropriate
-
-  NEXT:
-  - include anchor directive for new form
-  - create form on the fly...!
-
-
-
-
-   */
 
   @ViewChild(UpdateDirectionAnchorDirective) updateDirectionAnchor: UpdateDirectionAnchorDirective;
   @ViewChild('deleteSingleDirectionModal') modalDeleteDirection: DeleteItemModalComponent;
