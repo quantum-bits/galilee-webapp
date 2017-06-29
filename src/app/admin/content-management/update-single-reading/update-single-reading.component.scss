@@ -36,3 +36,21 @@
   width: 90%;
   margin-left: 5%;
 }
+
+.zero-practices {
+  /* https://stackoverflow.com/questions/14338639/equal-margin-on-both-sides-of-element-in-responsive-layout */
+  margin: 0 auto;
+  line-height: 30px;
+  width: 40px;
+  background-color: #ffcdd2;
+  border-radius: 4px;
+  text-align: center;
+  height: 30px;
+}
+
+.zero-practices-editing {
+  @extend .zero-practices;
+  background-color: #80deea;
+
+}
+

@@ -1,9 +1,3 @@
-<div *ngIf="readingDay !== null && dateString !== ''">
-  <ul class="collection with-header">
-    <li class="collection-header"><h5>No daily practices yet for {{dateString | amDateFormat: 'LL'}}</h5></li>
-  </ul>
-</div>
-
 <div *ngIf="readingDay">
   <ul
     class="collection with-header"

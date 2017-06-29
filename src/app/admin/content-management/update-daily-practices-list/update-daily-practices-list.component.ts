@@ -20,13 +20,11 @@ export class UpdateDailyPracticesListComponent implements OnInit, OnChanges {
 
   @ViewChild('deleteDirectionModal') modalDeleteDirection: DeleteItemModalComponent;
 
-  incrementer: number = 0;
-
-  readingIndex: number = null;
-  directionIndex: number = null;
-  isNewDirection: boolean = true;
+  //readingIndex: number = null;
+  //directionIndex: number = null;
+  //isNewDirection: boolean = true;
   singleDirectionTitle: string = "";
-  directionType = DirectionType.day;
+  directionTypeElement = DirectionType.day;
 
   private usedPracticeIds: number[] = []; // ids of the practices that are currently in use for this reading
   private maxDirectionSeq: number = 0; // used to find the max value of the current direction 'sequence' values; this is used when adding a new direction
@@ -46,6 +44,8 @@ export class UpdateDailyPracticesListComponent implements OnInit, OnChanges {
   }
 
   initializePractices(){
+    this.editPracticeModeOn = false;
+    this.addNewPracticeModeOn = false;
     this.editingEnabled = [];
     this.usedPracticeIds = [];
     this.maxDirectionSeq = 0;
