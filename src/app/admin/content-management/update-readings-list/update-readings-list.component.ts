@@ -13,6 +13,7 @@ import {Direction} from '../../../shared/interfaces/direction.interface';
 import {ReadingService} from '../../../shared/services/reading.service';
 import {PracticeService} from "../../../shared/services/practice.service";
 import {PassageRef} from "../passage-picker/passage.model";
+import {noUndefined} from '@angular/compiler/src/util';
 
 @Component({
   selector: 'update-readings-list',
@@ -21,8 +22,8 @@ import {PassageRef} from "../passage-picker/passage.model";
 })
 export class UpdateReadingsListComponent implements OnInit {
 
-  @Input() dateString: string;
-  @Input() readingsData: ReadingDay;
+  @Input() dateString: string = "";
+  @Input() readingsData: ReadingDay = null;
   @Output() launchAddPracticeForm = new EventEmitter<number>();
 
   @Output() editReading: EventEmitter<IReading> = new EventEmitter<IReading>();

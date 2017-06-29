@@ -1,4 +1,4 @@
-<div *ngIf="!readingsData && dateString">
+<div *ngIf="readingsData !== null && dateString !== ''">
   <ul class="collection with-header">
     <li class="collection-header"><h5>No readings yet for {{dateString | amDateFormat: 'LL'}}</h5></li>
   </ul>

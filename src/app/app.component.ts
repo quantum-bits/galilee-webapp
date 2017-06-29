@@ -10,9 +10,9 @@ import {User} from './shared/models/user.model';
 import {ADMIN} from './shared/models/permission.model';
 import {JournalService} from './shared/services/journal.service';
 import {PostService} from './shared/services/post.service';
-import {ReadingDayService} from "./shared/services/reading-day.service";
-import {DirectionService} from "./shared/services/direction.service";
-import {DateNavSpyService} from "./shared/services/date-nav-spy.service";
+import {ReadingDayService} from './shared/services/reading-day.service';
+import {DirectionService} from './shared/services/direction.service';
+import {DateNavSpyService} from './shared/services/date-nav-spy.service';
 
 
 @Component({
@@ -111,34 +111,34 @@ export class AppComponent implements OnInit {
     this.router.navigate(['/end-user/readings/today']);
   }
 
-  goToJournal(){
+  goToJournal() {
     this.router.navigate(['/end-user/journal']);
   }
 
-  goToForum(){
+  goToForum() {
     this.router.navigate(['/end-user/post']);
   }
 
-  goHome(){
+  goHome() {
     this.router.navigate(['/end-user']);
   }
 
-  togglePracticesDropdown(event){
+  togglePracticesDropdown(event) {
     event.stopPropagation();
     this.showPracticesDropdown = !this.showPracticesDropdown;
   }
 
-  toggleResourcesDropdown(event){
+  toggleResourcesDropdown(event) {
     event.stopPropagation();
     this.showResourcesDropdown = !this.showResourcesDropdown;
   }
 
-toggleHelpDropdown(event){
+  toggleHelpDropdown(event) {
     event.stopPropagation();
     this.showHelpDropdown = !this.showHelpDropdown;
   }
 
-  toggleAdminDropdown(event){
+  toggleAdminDropdown(event) {
     event.stopPropagation();
     this.showAdminDropdown = !this.showAdminDropdown;
   }

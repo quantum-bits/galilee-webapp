@@ -10,7 +10,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import {MomentModule} from 'angular2-moment';
 import {DragulaModule} from 'ng2-dragula/ng2-dragula';
 import {FileUploadModule} from 'ng2-file-upload';
-import {QuillModule} from 'ngx-quill'
+import {QuillModule} from 'ngx-quill';
 
 import {EditUserComponent} from './user-management/edit-user/edit-user.component';
 import {EditUserModalComponent} from './user-management/edit-user-modal/edit-user-modal.component';

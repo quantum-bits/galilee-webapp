@@ -19,7 +19,7 @@ import {ReadingService} from '../../../shared/services/reading.service';
 export class UpdateDailyPracticesListComponent implements OnInit {
 
   @Input() readingDay: ReadingDay = null;
-  @Input() dateString: string;
+  @Input() dateString: string = "";
 
   @ViewChild('deleteDirectionModal') modalDeleteDirection: DeleteItemModalComponent;
   @ViewChild('updateDirectionModal') modalUpdateDirection: UpdatePracticeFormComponent;
