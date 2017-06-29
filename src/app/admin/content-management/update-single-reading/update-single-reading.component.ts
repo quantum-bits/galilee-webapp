@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, OnChanges, ViewChild, ViewContainerRef, Directive, ComponentFactoryResolver } from '@angular/core';
+import { Component, OnInit, OnDestroy, OnChanges, AfterViewChecked, ViewChild, ViewContainerRef, Directive, ComponentFactoryResolver, ChangeDetectorRef } from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 
 import { Subscription }   from 'rxjs/Subscription';
@@ -24,14 +24,12 @@ export class PassagePickerAnchorDirective {
   }
 }
 
-
-
 @Component({
   selector: 'app-update-single-reading',
   templateUrl: './update-single-reading.component.html',
   styleUrls: ['./update-single-reading.component.scss']
 })
-export class UpdateSingleReadingComponent implements OnInit, OnDestroy, OnChanges {
+export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   //@ViewChild('passagePicker') passagePicker: PassagePickerComponent;
   @ViewChild(PassagePickerAnchorDirective) passagePickerAnchor: PassagePickerAnchorDirective;
@@ -49,9 +47,12 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, OnChange
   private editingEnabled: boolean[]; //true or false for each 'direction'
   private addNewPracticeModeOn: boolean = false;
 
-  private singleReadingStdRef: string = ''; // used in 'delete reading' modal
+  private singleReadingStdRef: string = null; // used in 'delete reading' modal
+  private editedReadingStdRef: string = null; // the standard reference string for the reading that is currently being edited, if such is the case
+  private editedReadingStdRefTemp: string = null; // used within afterViewChecked as a work-around
+  private recentPassageUpdate: boolean = false; // used within afterViewChecked as a work-around
 
-  private isNewReading: boolean; // true if this is a new reading, false if the reading already exists
+  private isNewReading: boolean = false; // true if this is a new reading, false if the reading already exists
 
   private editReadingComponent: any;
 
@@ -62,13 +63,16 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, OnChange
   private subCancelReading: Subscription = null;
   private subAddReading: Subscription = null;
   private subUpdateReading: Subscription = null;
+  private subReadingEdited: Subscription = null;
   private subReadingReady: Subscription = null;
   private subReadingsRefreshed: Subscription = null;
+
 
   constructor(private readingService: ReadingService,
               private route: ActivatedRoute,
               private router: Router,
-              private componentFactoryResolver: ComponentFactoryResolver) {
+              private componentFactoryResolver: ComponentFactoryResolver,
+              private cdRef:ChangeDetectorRef) {
     this.subReadingsRefreshed = this.readingService.updateReadingsRefresh$.subscribe(
       message => {
         console.log('received instructions to refresh!');
@@ -79,28 +83,54 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, OnChange
   ngOnInit() {
     console.log('inside update-single-reading oninit....');
     this.passagePickerViewContainerRef = this.passagePickerAnchor.viewContainerRef;
+    this.directionTypeElement = DirectionType.reading;
     this.route.params.subscribe(params => {
       console.log('update-single-reading -- received route params');
       this.dateString = params['dateString'];
       this.readingIndex = +params['readingIndex'];
       console.log(typeof this.readingIndex);
       console.log('reading index: ', this.readingIndex);
-
-      this.directionTypeElement = DirectionType.reading;
-
-
-
       this.fetchReadings(this.dateString);
     });
   }
 
-  ngOnChanges() {
-    console.log('inside update-single-reading onchanges....');
+  ngAfterViewChecked() {
+    //console.log('inside update-single-reading: AfterViewChecked! isNewReading? ', this.isNewReading);
+    //console.log('recent passage update? ', this.recentPassageUpdate);
+    // the following is a work-around, because I was getting an 'expression changed after view checked' error;
+    // see: https://stackoverflow.com/questions/39787038/how-to-manage-angular2-expression-has-changed-after-it-was-checked-exception-w
+    // apparently the problem was that page was checked, and then the
+    // subscription resolved from the passage-picker (with the updated string for
+    // the passage); the change was made, and then (in dev mode, apparently) angular did one
+    // final check and found the value to have been changed.  This triggered the error.  The
+    // following appears to trigger a _new_ round of change detection and gets around the error.
+    if (this.recentPassageUpdate) {
+      this.editedReadingStdRef = this.editedReadingStdRefTemp;
+      this.editedReadingStdRefTemp = null;
+      this.recentPassageUpdate = false;
+    }
+    this.cdRef.detectChanges();
+  }
+
+  // set up the default configuration for the page; some of these
+  // properties will be subsequently changed, depending on the situation
+  configState() {
+    this.isNewReading = false;
+    this.editReadingModeOn = false;
+    this.editPracticeModeOn = false;
+    this.addNewPracticeModeOn = false;
+    this.editingEnabled = [];
+    this.singleReadingStdRef = null;
+    this.editedReadingStdRef = null;
+    this.readingsData = null;
+    this.reading = null;
+    this.usedPracticeIds = [];
+    this.recentPassageUpdate = false;
   }
 
   fetchReadings(dateString: string) {
     this.readingService.dumpStoredReadings();
-    this.usedPracticeIds = [];
+    this.configState();
     this.readingService.fetchSavedReadings(dateString)
       .subscribe(
         readings => {
@@ -111,6 +141,7 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, OnChange
             this.isNewReading = false;
             this.reading = this.readingsData.readings[this.readingIndex];
             this.editReadingModeOn = false;
+            this.editedReadingStdRef = '';
             this.editPracticeModeOn = false;
             this.editingEnabled = [];
             this.maxDirectionSeq = 0;
@@ -228,6 +259,14 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, OnChange
     this.passagePickerViewContainerRef.clear();
     let componentFactory = this.componentFactoryResolver.resolveComponentFactory(PassagePickerComponent);
     this.editReadingComponent = this.passagePickerViewContainerRef.createComponent(componentFactory).instance;
+
+    this.subReadingEdited = this.editReadingComponent.passageEdited$.subscribe(updatedStdRef => {
+      //this.editedReadingStdRef = updatedStdRef;
+      this.editedReadingStdRefTemp = updatedStdRef;
+      console.log('update! std ref: ', updatedStdRef);
+      this.recentPassageUpdate = true;
+    });
+
     // presumably only need one or the other of the following two
     // subscriptions, but OK....
     this.subAddReading = this.editReadingComponent.passageAdded$.subscribe(addReadingData => {
@@ -260,16 +299,24 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, OnChange
     this.subReadingReady = this.editReadingComponent.readyForPassage$.subscribe(() => {
       this.editReadingComponent.editReadingPassage(reading);
     });
+
+
+
+
   }
 
   navigateMainReadingsPage() {
     this.router.navigate(['/admin/update-readings', this.dateString]);
   }
 
+  navigateToPassage(arrayIndex: number) {
+    this.editReadingCloseAndCleanUp();
+    this.router.navigate(['/admin/update-readings', this.dateString, arrayIndex]);
+  }
 
   setEditingEnabledAllPractices(enabled: boolean) {
     this.editingEnabled = [];
-    if(this.reading.directions) {
+    if(this.reading && this.reading.directions) {
       this.reading.directions.forEach(direction => {
           this.editingEnabled.push(enabled);
         }
@@ -354,13 +401,14 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, OnChange
 
 
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     // unsubscribe from subscriptions to prevent memory leaks....
     this.unsubscribeSubscription(this.subCancelReading);
     this.unsubscribeSubscription(this.subAddReading);
     this.unsubscribeSubscription(this.subUpdateReading);
     this.unsubscribeSubscription(this.subReadingReady);
     this.unsubscribeSubscription(this.subReadingsRefreshed);
+    this.unsubscribeSubscription(this.subReadingEdited);
   }
 
 }

@@ -30,8 +30,12 @@ export class ReadingService {
   // time to refetch data
   private updateReadingsRefreshSource = new Subject();
 
+  private passageEditedSource = new Subject();
+
   // Observable string stream
   updateReadingsRefresh$ = this.updateReadingsRefreshSource.asObservable();
+
+  passageEdited$ = this.passageEditedSource.asObservable();
 
   constructor(private http: Http,
               private authHttp: AuthHttp) {
@@ -150,6 +154,10 @@ export class ReadingService {
   announceReadingsRefresh() {
     this.dumpStoredReadings();
     this.updateReadingsRefreshSource.next('time to refresh data');
+  }
+
+  announcePassageEdited() {
+    this.passageEditedSource.next();
   }
 
   setRCLDate(date: Date) {

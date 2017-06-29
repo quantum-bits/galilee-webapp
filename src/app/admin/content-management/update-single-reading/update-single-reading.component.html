@@ -1,46 +1,56 @@
-<div class="row">
-  <div class="col s12 m3 offset-m1">
-    <div *ngIf="readingsData" class="card">
-      <div class="card-content">
-        <span class="card-title">Summary</span>
-        <div class="row">
-          <div *ngFor="let passage of readingsData.readings; let rIndex=index">
-            <div class="col s9">
-              <span *ngIf="rIndex != readingIndex"> {{passage.stdRef}} </span>
-              <strong *ngIf="rIndex == readingIndex"> {{reading.stdRef}} </strong>
-            </div>
-            <div class="col s3">
-              <span *ngIf="rIndex != readingIndex"> [{{passage.directions.length}}] </span>
-              <strong *ngIf="rIndex == readingIndex"> [{{passage.directions.length}}] </strong>
-            </div>
-          </div>
+<div class="wide-container">
+  <div class="row">
+    <div class="col s12 m4 ">
+      <div *ngIf="readingsData" class="card">
+        <div class="card-content">
+          <table class="centered striped">
+            <thead>
+            <tr>
+              <th data-field="passage"> Passage</th>
+              <th data-field="num-practices"> # Practices</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let passage of readingsData.readings; let rIndex=index" (click)="navigateToPassage(rIndex)" class="include-pointer">
+              <td *ngIf="rIndex == readingIndex && editReadingModeOn" class="current-passage">{{editedReadingStdRef}}</td>
+              <td *ngIf="rIndex == readingIndex && !editReadingModeOn" class="current-passage">{{passage.stdRef}}</td>
+              <td *ngIf="rIndex != readingIndex">{{passage.stdRef}}</td>
+              <td [class.current-passage]="rIndex == readingIndex">{{passage.directions.length}}</td>
+            </tr>
+            <tr *ngIf="isNewReading">
+              <td class="current-passage">{{editedReadingStdRef}}</td>
+              <td class="current-passage">0</td>
+            </tr>
+            </tbody>
+          </table>
+
+
         </div>
       </div>
     </div>
-  </div>
-  <div class="col s12 m7">
-    <ul
-      class="collection with-header"
-      [class.enable-overflow] = "editPracticeModeOn || addNewPracticeModeOn">
-      <li class="collection-header">
-        <h5>Add Reading to {{dateString | amDateFormat: 'LL'}}</h5>
-      </li>
-      <li class="collection-item">
+    <div class="col s12 m8">
+      <ul
+        class="collection with-header"
+        [class.enable-overflow]="editPracticeModeOn || addNewPracticeModeOn">
+        <li class="collection-header">
+          <h5>Add Reading to {{dateString | amDateFormat: 'LL'}}</h5>
+        </li>
+        <li class="collection-item">
 
 
           <div passage-picker-anchor>
           </div>
 
-        <!--
-          <passage-picker #passagePicker
-                          (passageAdded)="addReading($event)"
-                          (passageUpdated)="updateReading($event)">
-          </passage-picker>
-          -->
+          <!--
+            <passage-picker #passagePicker
+                            (passageAdded)="addReading($event)"
+                            (passageUpdated)="updateReading($event)">
+            </passage-picker>
+            -->
 
-        <h5 *ngIf="!editReadingModeOn && reading">
-          <span class="title"> {{reading.stdRef}}</span>
-          <span *ngIf="!editPracticeModeOn && !addNewPracticeModeOn" class="right action-icons">
+          <h5 *ngIf="!editReadingModeOn && reading">
+            <span class="title"> {{reading.stdRef}}</span>
+            <span *ngIf="!editPracticeModeOn && !addNewPracticeModeOn" class="right action-icons">
 
             <a (click)="displayReading()"
                class="grey-text text-darken-2 include-pointer">
@@ -57,72 +67,72 @@
               <i class="material-icons lr-arrow">edit</i>
             </a>
           </span>
-        </h5>
-      </li>
-
-
-      <div *ngIf="reading">
-        <li *ngFor="let direction of reading.directions; let aIndex=index" class="collection-item white">
-          <app-display-direction-steps
-            [editable]="editingEnabled[aIndex]"
-            [directionTypeElement] = "directionTypeElement"
-            [parentId] = "reading.id"
-            [usedPracticeIds] = "usedPracticeIds"
-            (onEditModeEnabled)="onPracticedEdited($event)"
-            (onEditModeDisabled)="onPracticedEditingCancelled()"
-            [directionIndex] = "aIndex"
-            [direction]= "direction">
-          </app-display-direction-steps>
+          </h5>
         </li>
 
-        <div *ngIf="canAddPractice()">
-          <li class="collection-item">
+
+        <div *ngIf="reading">
+          <li *ngFor="let direction of reading.directions; let aIndex=index" class="collection-item white">
+            <app-display-direction-steps
+              [editable]="editingEnabled[aIndex]"
+              [directionTypeElement]="directionTypeElement"
+              [parentId]="reading.id"
+              [usedPracticeIds]="usedPracticeIds"
+              (onEditModeEnabled)="onPracticedEdited($event)"
+              (onEditModeDisabled)="onPracticedEditingCancelled()"
+              [directionIndex]="aIndex"
+              [direction]="direction">
+            </app-display-direction-steps>
+          </li>
+
+          <div *ngIf="canAddPractice()">
+            <li class="collection-item">
             <span class="right reading-button">
               <a class="waves-effect waves-light btn secondary-content" (click)="onAddNewPractice()">Add Practice</a>
             </span>
-          </li>
+            </li>
+          </div>
+
+          <div *ngIf="addNewPracticeModeOn">
+            <li class="collection-item white">
+              <app-display-direction-steps
+                [editable]="true"
+                [directionTypeElement]="directionTypeElement"
+                [parentId]="reading.id"
+                [usedPracticeIds]="usedPracticeIds"
+                (onEditModeDisabled)="onCancelAddPractice()"
+                [editModeOn]="true"
+                [maxDirectionSeq]="maxDirectionSeq">
+              </app-display-direction-steps>
+            </li>
+          </div>
+        </div>
+      </ul>
+      <div class="row">
+        <div class="col s8 back-link">
+          <a class="grey-text text-darken-2"
+             [routerLink]="['/admin/update-readings', dateString]">
+            <i class="material-icons lr-arrow">navigate_before</i>
+            Back to Manage Readings
+          </a>
         </div>
 
-        <div *ngIf="addNewPracticeModeOn">
-          <li class="collection-item white">
-            <app-display-direction-steps
-              [editable]="true"
-              [directionTypeElement] = "directionTypeElement"
-              [parentId] = "reading.id"
-              [usedPracticeIds] = "usedPracticeIds"
-              (onEditModeDisabled)="onCancelAddPractice()"
-              [editModeOn] = "true"
-              [maxDirectionSeq] = "maxDirectionSeq">
-            </app-display-direction-steps>
-          </li>
+        <div class="col s4">
+          <a *ngIf="canAddPractice()"
+             class="grey-text text-darken-2 right include-pointer"
+             (click)="addNewReading()"> Add another reading +
+          </a>
+          <!--<a class="waves-effect waves-light btn secondary-content" >Add Reading</a>-->
         </div>
-      </div>
-    </ul>
-    <div class="row">
-      <div class="col s8 back-link">
-        <a class="grey-text text-darken-2"
-           [routerLink]="['/admin/update-readings', dateString]">
-          <i class="material-icons lr-arrow">navigate_before</i>
-          Back to Manage Readings
-        </a>
-      </div>
 
-      <div class="col s4">
-        <a *ngIf="canAddPractice()"
-           class="grey-text text-darken-2 right include-pointer"
-           (click)="addNewReading()"> Add another reading +
-        </a>
-        <!--<a class="waves-effect waves-light btn secondary-content" >Add Reading</a>-->
+
       </div>
 
 
     </div>
-
-
-
-
   </div>
 </div>
+
 
 <app-delete-item-modal
   #deleteSingleReadingModal

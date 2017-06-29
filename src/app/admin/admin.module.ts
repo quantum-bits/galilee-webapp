@@ -36,7 +36,7 @@ import {
 import {DisplayReadingModalComponent} from './content-management/display-reading-modal/display-reading-modal.component';
 import {
   PassagePickerComponent, VerseRangeComponent,
-  PickerAnchorDirective
+  PickerAnchorDirective, PassageCommunicationService
 } from './content-management/passage-picker/passage-picker.component';
 import {BibleInfoService} from "./content-management/bible-info/bible-info.service";
 import { UpdateDailyPracticesListComponent } from './content-management/update-daily-practices-list/update-daily-practices-list.component';
@@ -149,7 +149,8 @@ const routes: Routes = [
     SharedModule
   ],
   providers: [
-    BibleInfoService
+    BibleInfoService,
+    PassageCommunicationService
   ]
 })
 export class AdminModule {

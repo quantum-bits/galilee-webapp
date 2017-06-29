@@ -1,15 +1,15 @@
 import {
-  Component, Input, OnInit, ComponentRef, ComponentFactory, ViewContainerRef,
-  ComponentFactoryResolver, ViewChild, Directive, Output, EventEmitter
+  Component, Input, OnInit, OnDestroy, ComponentRef, ComponentFactory, ViewContainerRef,
+  ComponentFactoryResolver, ViewChild, Directive, Output, EventEmitter, Injectable
 } from '@angular/core';
 
 import {Observable} from 'rxjs/Rx';
 import {Subject}    from 'rxjs/Subject';
+import { Subscription }   from 'rxjs/Subscription';
 
 import {BibleInfoService, BibleBook} from '../bible-info/bible-info.service';
 import {PassageRef, VerseRange, PassageRefFactory} from "./passage.model";
 import {IReading} from "../../../shared/interfaces/reading.interface";
-
 
 import * as _ from "lodash";
 
@@ -39,6 +39,19 @@ export class PickerAnchorDirective {
   }
 }
 
+@Injectable()
+export class PassageCommunicationService {
+
+  private passageEditedSource = new Subject();
+  passageEdited$ = this.passageEditedSource.asObservable();
+
+  announcePassageEdited() {
+    this.passageEditedSource.next();
+  }
+
+}
+
+
 @Component({
   selector: 'verse-range',
   templateUrl: './verse-range.html'
@@ -59,6 +72,9 @@ export class VerseRangeComponent implements OnInit {
   private toChapters: Array<number> = [];
   private toVerses: Array<number> = [];
 
+  constructor(private passageCommunicationService: PassageCommunicationService) {
+  }
+
   ngOnInit() {
     this.updateDropdowns();
   }
@@ -77,6 +93,10 @@ export class VerseRangeComponent implements OnInit {
     this.toVerses = _.range(
       this.verseRange.sameChapter() ? this.verseRange.fromVerse : 1,
       verseCounts[this.verseRange.toChapter - 1] + 1);
+
+    this.passageCommunicationService.announcePassageEdited();
+
+
   }
 
   // User updated the 'from' chapter.
@@ -131,7 +151,7 @@ export class VerseRangeComponent implements OnInit {
   selector: 'passage-picker',
   templateUrl: './passage-picker.html'
 })
-export class PassagePickerComponent implements OnInit {
+export class PassagePickerComponent implements OnInit, OnDestroy {
   // Each verse range component is attached as a sibling of this view child.
   @ViewChild(PickerAnchorDirective) pickerAnchor: PickerAnchorDirective;
 
@@ -153,11 +173,13 @@ export class PassagePickerComponent implements OnInit {
   private cancelEditingSource = new Subject();
   private passageAddedSource = new Subject<AddReadingData>();
   private passageUpdatedSource = new Subject<UpdateReadingData>();
+  private passageEditedSource = new Subject<string>();
 
   readyForPassage$ = this.readyForPassageSource.asObservable();
   cancelEditing$ = this.cancelEditingSource.asObservable();
   passageAdded$ = this.passageAddedSource.asObservable();
   passageUpdated$ = this.passageUpdatedSource.asObservable();
+  passageEdited$ = this.passageEditedSource.asObservable();
 
   private nextStep = NextStep;
 
@@ -174,8 +196,15 @@ export class PassagePickerComponent implements OnInit {
   // Contains the reading being updated when in update mode.
   private currentReading: IReading = null;
 
+  private subPassageEdited: Subscription = null;
+
   constructor(private bibleInfo: BibleInfoService,
-              private componentFactoryResolver: ComponentFactoryResolver) {
+              private componentFactoryResolver: ComponentFactoryResolver,
+              private passageCommunicationService: PassageCommunicationService) {
+    this.subPassageEdited = this.passageCommunicationService.passageEdited$.subscribe(
+      () => {
+        this.announceRevisedPassage();
+      });
   }
 
   ngOnInit() {
@@ -210,6 +239,11 @@ export class PassagePickerComponent implements OnInit {
   // of the selected book.
   onBook(osisName: string) {
     this.configForPassage(this.passageRefFactory.forOsisBook(osisName));
+    //this.passageEditedSource.next(this.passageRef.displayRef());
+  }
+
+  announceRevisedPassage() {
+    this.passageEditedSource.next(this.passageRef.displayRef());
   }
 
   // Respond to the add/update button.
@@ -292,5 +326,11 @@ export class PassagePickerComponent implements OnInit {
   private lengthVerseRanges() {
     return this.passageRef.verseRanges.length;
   }
+
+  ngOnDestroy() {
+    this.subPassageEdited.unsubscribe();
+  }
+
+
 
 }

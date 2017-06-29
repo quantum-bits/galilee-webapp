@@ -89,6 +89,7 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
       return this.dateStringCalendarInit;
     }
   }
+
   editReadingDayName() {
     this.updateReadingDayModal.openModal(this.dateString, false, this.readingsData.name);
   }
@@ -156,7 +157,10 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
       this.router.navigate(['/admin/update-readings', this.dateString]);
     } else {
       console.log('no readings for this day; creating one....');
-      this.updateReadingDayModal.openModal(this.dateString, true);
+      this.createNewReadingDay('', this.dateString);
+      // uncomment the following line (and comment out the above one) to force the user to assign a
+      // name to the reading day as part of the process of creating it
+      //this.updateReadingDayModal.openModal(this.dateString, true);
     }
   }
 
