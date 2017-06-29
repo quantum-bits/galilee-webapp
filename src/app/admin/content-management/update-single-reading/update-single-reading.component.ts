@@ -38,16 +38,16 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
 
   private passagePickerViewContainerRef: ViewContainerRef = null;
 
-  private dateString: string;
+  dateString: string;
   private readingIndex: number;
-  private readingsData: ReadingDay = null;
-  private reading: any = null; // data for the single reading in question
-  private editReadingModeOn: boolean = false; // true if the reading is being edited
-  private editPracticeModeOn: boolean = false; // true if any practice is being edited
+  readingsData: ReadingDay = null;
+  reading: any = null; // data for the single reading in question
+  editReadingModeOn: boolean = false; // true if the reading is being edited
+  editPracticeModeOn: boolean = false; // true if any practice is being edited
   private editingEnabled: boolean[]; //true or false for each 'direction'
-  private addNewPracticeModeOn: boolean = false;
+  addNewPracticeModeOn: boolean = false;
 
-  private singleReadingStdRef: string = null; // used in 'delete reading' modal
+  singleReadingStdRef: string = null; // used in 'delete reading' modal
   private editedReadingStdRef: string = null; // the standard reference string for the reading that is currently being edited, if such is the case
   private editedReadingStdRefTemp: string = null; // used within afterViewChecked as a work-around
   private recentPassageUpdate: boolean = false; // used within afterViewChecked as a work-around

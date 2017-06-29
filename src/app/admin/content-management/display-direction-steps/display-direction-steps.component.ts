@@ -79,7 +79,7 @@ export class DisplayDirectionStepsComponent implements OnInit {
 
   private showSteps: boolean = false;
 
-  private singleDirectionTitle: string = ''; // used in 'delete direction' modal
+  singleDirectionTitle: string = ''; // used in 'delete direction' modal
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver,
               private directionService: DirectionService,

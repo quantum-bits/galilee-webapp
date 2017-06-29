@@ -181,7 +181,7 @@ export class PassagePickerComponent implements OnInit, OnDestroy {
   passageUpdated$ = this.passageUpdatedSource.asObservable();
   passageEdited$ = this.passageEditedSource.asObservable();
 
-  private nextStep = NextStep;
+  nextStep = NextStep;
 
 
   // Container for all verse range component.
@@ -323,7 +323,7 @@ export class PassagePickerComponent implements OnInit, OnDestroy {
     this.appendVerseRange(newRange);
   }
 
-  private lengthVerseRanges() {
+  lengthVerseRanges() {
     return this.passageRef.verseRanges.length;
   }
 

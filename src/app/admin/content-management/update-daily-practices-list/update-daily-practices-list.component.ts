@@ -7,8 +7,6 @@ import {Direction} from '../../../shared/interfaces/direction.interface';
 
 import {DirectionType, DirectionService} from  '../../../shared/services/direction.service';
 import {ReadingService} from '../../../shared/services/reading.service';
-import {UpdatePracticeFormComponent} from '../update-practice-form/update-practice-form.component';
-
 
 @Component({
   selector: 'app-update-daily-practices-list',
@@ -21,7 +19,6 @@ export class UpdateDailyPracticesListComponent implements OnInit, OnChanges {
   @Input() dateString: string = "";
 
   @ViewChild('deleteDirectionModal') modalDeleteDirection: DeleteItemModalComponent;
-  @ViewChild('updateDirectionModal') modalUpdateDirection: UpdatePracticeFormComponent;
 
   incrementer: number = 0;
 
