@@ -1,114 +1,122 @@
-<div materialize class="container">
-  <div class="card">
-    <div class="card-content">
-      <div class="card-title">
-        Manage Groups
-      </div>
-      <div class="row">
-        <div class = "card col s10 offset-s1">
-          <div class = "card-content">
-            <div class="row">
-              <div class="col s6">
-                <div class="row">
-                  <div class="input-field col s12">
-                    <select #selectedOption
-                            materialize="material_select"
-                            [materializeSelectOptions]="filterSelectOptionsDropdown"
-                            (change)="onSelect(selectedOption.value)">
-                      <option *ngFor="let option of filterSelectOptionsDropdown"
-                              [value]="option.value">{{option.name}}</option>
-                    </select>
-                    <label>Filter By</label>
-                  </div>
+<div materialize class="row">
+  <div class="col s3 manage-groups-sidebar">
 
-                  <div class="input-field col s12">
-                    <label for="filter">Filter</label>
-                    <input
-                      id="filter"
-                      type="text"
-                      class="input"
-                      [(ngModel)]="filter"
-                      (keyup)="onKey()">
-                  </div>
-                </div>
-              </div>
+    <div class="row">
 
+      <h5 class="col s12">
+        Text Filter
+      </h5>
 
-              <div class="col s6 ">
-                <table class="centered striped">
-                  <thead>
-                  <tr>
-                    <th data-field="permissionType"> Status</th>
-                    <th data-field="permission-can"> yes </th>
-                    <th data-field="permission-cannot"> no </th>
-                    <th data-field="permission-either"> either </th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr>
-                    <td>Group Enabled</td>
-                    <td>
-                      <input type="radio"
-                             name="enabledFilter"
-                             id="enabledFilter_1"
-                             class="with-gap"
-                             (click)="selectEnabledFilter(enabledFilterType.ONLY)"
-                             [checked] = "displayEnabled.getDisplayStatus() === enabledFilterType.ONLY">
-                      <label [attr.for]="'enabledFilter_1'"></label>
-                    </td>
-                    <td>
-                      <input type="radio"
-                             name="enabledFilter"
-                             id="enabledFilter_2"
-                             class="with-gap"
-                             (click)="selectEnabledFilter(enabledFilterType.ONLYNOT)"
-                             [checked] = "displayEnabled.getDisplayStatus() === enabledFilterType.ONLYNOT">
-                      <label [attr.for]="'enabledFilter_2'"></label>
-                    </td>
-                    <td>
-                      <input type="radio"
-                             name="enabledFilter"
-                             id="enabledFilter_3"
-                             class="with-gap"
-                             (click)="selectEnabledFilter(enabledFilterType.ALL)"
-                             [checked] = "displayEnabled.getDisplayStatus() === enabledFilterType.ALL">
-                      <label [attr.for]="'enabledFilter_3'"></label>
-                    </td>
-                  </tr>
-                  </tbody>
-                </table>
-              </div>
-
-            </div>
-          </div>
-          <div class="card-action">
-            <button class="btn-flat" (click)="resetFilters()">
-              <i class="material-icons arrow">refresh</i>
-              Reset Filters
-            </button>
-            <button class="btn-flat" (click)="openNewGroupModal()">add group</button>
-          </div>
-
-        </div>
+      <div class="input-field col s12">
+        <select #selectedOption
+                materialize="material_select"
+                [materializeSelectOptions]="filterSelectOptionsDropdown"
+                (change)="onSelect(selectedOption.value)">
+          <option *ngFor="let option of filterSelectOptionsDropdown"
+                  [value]="option.value">{{option.name}}
+          </option>
+        </select>
+        <label>Filter By</label>
       </div>
 
-      <span class="row">
+      <div class="input-field col s12">
+        <label for="filter">Filter</label>
+        <input
+          id="filter"
+          type="text"
+          class="input"
+          [(ngModel)]="filter"
+          (keyup)="onKey()">
+      </div>
+      <h5 class="col s12">
+        Attribute Filter
+      </h5>
+      <div class="col s12">
+        <table class="centered striped">
+          <thead>
+          <tr>
+            <th data-field="permissionType"> Status</th>
+            <th data-field="permission-can"> yes</th>
+            <th data-field="permission-cannot"> no</th>
+            <th data-field="permission-either"> either</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Group Enabled</td>
+            <td>
+              <input type="radio"
+                     name="enabledFilter"
+                     id="enabledFilter_1"
+                     class="with-gap"
+                     (click)="selectEnabledFilter(enabledFilterType.ONLY)"
+                     [checked]="displayEnabled.getDisplayStatus() === enabledFilterType.ONLY">
+              <label [attr.for]="'enabledFilter_1'"></label>
+            </td>
+            <td>
+              <input type="radio"
+                     name="enabledFilter"
+                     id="enabledFilter_2"
+                     class="with-gap"
+                     (click)="selectEnabledFilter(enabledFilterType.ONLYNOT)"
+                     [checked]="displayEnabled.getDisplayStatus() === enabledFilterType.ONLYNOT">
+              <label [attr.for]="'enabledFilter_2'"></label>
+            </td>
+            <td>
+              <input type="radio"
+                     name="enabledFilter"
+                     id="enabledFilter_3"
+                     class="with-gap"
+                     (click)="selectEnabledFilter(enabledFilterType.ALL)"
+                     [checked]="displayEnabled.getDisplayStatus() === enabledFilterType.ALL">
+              <label [attr.for]="'enabledFilter_3'"></label>
+            </td>
+          </tr>
+          </tbody>
+        </table>
 
-        <div class="col s12">
-          <table class="striped">
-            <thead>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col s12 center-align">
+        <button class="waves-effect waves-light btn" (click)="resetFilters()">
+          <i class="material-icons arrow">refresh</i>
+          Reset Filters
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col s9 manage-groups-content">
+    <div class="card">
+      <div class="card-content">
+        <div class="row">
+
+
+          <div class="card-title col s9">
+            Manage Groups
+          </div>
+          <div class="col s3 right-align">
+            <button class="waves-effect waves-light btn" (click)="openNewGroupModal()">add group</button>
+          </div>
+
+
+          <div class="col s12">
+            <table class="striped">
+              <thead>
               <tr>
                 <!-- sortable columns -->
                 <th *ngFor="let column of sortableColumns" data-field="column.value">
                   <a class="grey-text text-darken-4 include-pointer" (click)="toggleSort(column.value)">{{column.name}}
                     <span *ngIf="sortColumn == column.value">
-                      <span *ngIf="sortAscending">
-                        <i class="material-icons arrow">keyboard_arrow_up</i>
-                      </span>
-                      <span *ngIf="!sortAscending">
-                        <i class="material-icons arrow">keyboard_arrow_down</i>
-                      </span>
+                    <span *ngIf="sortAscending">
+                      <i class="material-icons arrow">keyboard_arrow_up</i>
                     </span>
+                    <span *ngIf="!sortAscending">
+                      <i class="material-icons arrow">keyboard_arrow_down</i>
+                    </span>
+                  </span>
                   </a>
                 </th>
                 <th data-field="enabled">
@@ -118,111 +126,115 @@
                 </th>
                 <th data-field="edit">Edit</th>
               </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let group of filteredGroups | paginate: config; let i=index">
-                  <td *ngFor="let column of sortableColumns">
-                    <span *ngIf="column.value === 'createdAt'">
-                        {{ group[column.value] | amTimeAgo }}
-                    </span>
-                    <span *ngIf="column.value === 'organization'">
-                        {{ group.organization.name }}
-                    </span>
-                    <span *ngIf="column.value === 'numberMembers'">
-                        {{ group.members.length }}
-                    </span>
-                    <span *ngIf="column.value === 'name'">
+              </thead>
+              <tbody>
+              <tr *ngFor="let group of filteredGroups | paginate: config; let i=index">
+                <td *ngFor="let column of sortableColumns">
+                  <span *ngIf="column.value === 'createdAt'">
+                      {{ group[column.value] | amTimeAgo }}
+                  </span>
+                  <span *ngIf="column.value === 'organization'">
+                      {{ group.organization.name }}
+                  </span>
+                  <span *ngIf="column.value === 'numberMembers'">
+                      {{ group.members.length }}
+                  </span>
+                  <span *ngIf="column.value === 'name'">
+                    <a
+                      *ngIf="!group.divIsOpen()"
+                      (click)="toggleDiv(i)"
+                      class="grey-text text-darken-4 include-pointer">
+                      <i class="material-icons lr-arrow">add</i>
+                        {{ group[column.value] }}
+                      </a>
+                    <span *ngIf="group.divIsOpen()">
                       <a
-                        *ngIf="!group.divIsOpen()"
                         (click)="toggleDiv(i)"
                         class="grey-text text-darken-4 include-pointer">
-                        <i class="material-icons lr-arrow">add</i>
+                        <i class="material-icons lr-arrow">remove</i>
                           {{ group[column.value] }}
-                        </a>
-                      <span *ngIf="group.divIsOpen()">
-                        <a
-                          (click)="toggleDiv(i)"
-                          class="grey-text text-darken-4 include-pointer">
-                          <i class="material-icons lr-arrow">remove</i>
-                            {{ group[column.value] }}
-                        </a>
-                        <span *ngFor="let member of group.members" class="grey-text text-darken-1 group-members">
-                          <br>
-                          {{member.firstName}} {{member.lastName}} ({{member.email}})
-                        </span>
+                      </a>
+                      <span *ngFor="let member of group.members" class="grey-text text-darken-1 group-members">
+                        <br>
+                        {{member.firstName}} {{member.lastName}} ({{member.email}})
                       </span>
                     </span>
-                  </td>
-                  <td>
-                    <span *ngIf="group.isEnabled()">
-                      <i class="material-icons">check_circle</i>
-                    </span>
-                  </td>
-                  <td>
-                    <a class="include-pointer" (click)="openEditGroupModal(group)">
-                      <i class="material-icons">edit</i>
-                    </a>
-                  </td>
-                </tr>
-            </tbody>
-          </table>
-          <div class="center">
-            <pagination-template
-              #p="paginationApi"
-              maxSize="9"
-              (pageChange)="config.currentPage = $event">
+                  </span>
+                </td>
+                <td>
+                  <span *ngIf="group.isEnabled()">
+                    <i class="material-icons">check_circle</i>
+                  </span>
+                </td>
+                <td>
+                  <a class="include-pointer" (click)="openEditGroupModal(group)">
+                    <i class="material-icons">edit</i>
+                  </a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <div class="center">
+              <pagination-template
+                #p="paginationApi"
+                maxSize="9"
+                (pageChange)="config.currentPage = $event">
                 <div class="custom-pagination">
-                <ul class="pagination">
-                  <li class="disabled" *ngIf="p.isFirstPage()">
-                    <a>
-                      <i class="material-icons">chevron_left</i>
-                    </a>
-                  </li>
-                  <li class="waves-effect" *ngIf="!p.isFirstPage()">
-                    <a (click)="p.previous()">
-                      <i class="material-icons">chevron_left</i>
-                    </a>
-                  </li>
-                  <span *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
-                    <li *ngIf="p.getCurrent() !== page.value" class="waves-effect">
-                      <a (click)="p.setCurrent(page.value)">
-                          <span>{{ page.label }}</span>
+                  <ul class="pagination">
+                    <li class="disabled" *ngIf="p.isFirstPage()">
+                      <a>
+                        <i class="material-icons">chevron_left</i>
                       </a>
                     </li>
-                    <li *ngIf="p.getCurrent() === page.value" class="active">
-                          <span>{{ page.label }}</span>
+                    <li class="waves-effect" *ngIf="!p.isFirstPage()">
+                      <a (click)="p.previous()">
+                        <i class="material-icons">chevron_left</i>
+                      </a>
                     </li>
-                  </span>
-                  <li class="disabled" *ngIf="p.isLastPage()">
-                    <a>
-                      <i class="material-icons">chevron_right</i>
+                    <span *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
+                  <li *ngIf="p.getCurrent() !== page.value" class="waves-effect">
+                    <a (click)="p.setCurrent(page.value)">
+                        <span>{{ page.label }}</span>
                     </a>
                   </li>
-                  <li class="waves-effect" *ngIf="!p.isLastPage()">
-                    <a (click)="p.next()">
-                      <i class="material-icons">chevron_right</i>
-                    </a>
+                  <li *ngIf="p.getCurrent() === page.value" class="active">
+                        <span>{{ page.label }}</span>
                   </li>
-                </ul>
+                </span>
+                    <li class="disabled" *ngIf="p.isLastPage()">
+                      <a>
+                        <i class="material-icons">chevron_right</i>
+                      </a>
+                    </li>
+                    <li class="waves-effect" *ngIf="!p.isLastPage()">
+                      <a (click)="p.next()">
+                        <i class="material-icons">chevron_right</i>
+                      </a>
+                    </li>
+                  </ul>
                 </div>
               </pagination-template>
 
+            </div>
+
           </div>
 
+          <div class="col s12">
 
-
-
-
-          <div *ngIf = "filteredGroups">
-            <div [ngSwitch]="filteredGroups.length" class="center">
-              <div *ngSwitchCase="1">{{filteredGroups.length}} record found</div>
-              <div *ngSwitchCase="0">No records found</div>
-              <div *ngSwitchDefault>{{filteredGroups.length}} records found</div>
+            <div *ngIf="filteredGroups">
+              <div [ngSwitch]="filteredGroups.length" class="center">
+                <div *ngSwitchCase="1">{{filteredGroups.length}} record found</div>
+                <div *ngSwitchCase="0">No records found</div>
+                <div *ngSwitchDefault>{{filteredGroups.length}} records found</div>
+              </div>
             </div>
           </div>
-
+          <div class="col s12 right-align">
+            <button class="waves-effect waves-light btn" (click)="openNewGroupModal()">add group</button>
+          </div>
         </div>
-      </span>
+
+      </div>
     </div>
   </div>
 </div>
