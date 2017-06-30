@@ -1,17 +1,24 @@
 <!-- Modal Structure -->
 <!-- https://github.com/InfomediaLtd/angular2-materialize/issues/209 -->
 <div id="edit-user-modal1" class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions" (init)="this.openModal()">
-  <div class="modal-content">
 
-    <app-edit-user
-      [userData] = "userData"
-      [updateField] = "updateField"
-    ></app-edit-user>
-
-
-  </div>
   <div class="modal-footer">
     <a class="waves-effect waves-green btn-flat" (click)="cancel()">Cancel</a>
     <!--<a class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>-->
   </div>
+
+  <div class="modal-content">
+    <app-edit-user
+      [userData] = "userData"
+      [updateField] = "updateField"
+    ></app-edit-user>
+  </div>
+
+  <div class="modal-footer">
+    <a class="waves-effect waves-green btn-flat" (click)="cancel()">Cancel</a>
+    <!--<a class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>-->
+  </div>
+
+
 </div>
+
