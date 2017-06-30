@@ -3,6 +3,8 @@ import {Router, ActivatedRoute} from '@angular/router';
 
 import { Subscription }   from 'rxjs/Subscription';
 
+import * as moment from 'moment';
+
 import {ReadingService} from '../../../shared/services/reading.service';
 
 import {PassageRef} from '../passage-picker/passage.model';
@@ -81,34 +83,45 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
   }
 
   ngOnInit() {
+    let testDateString: string;
+    let testReadingIndex: number;
+    //let testReadingIndex: number;
     console.log('inside update-single-reading oninit....');
     this.passagePickerViewContainerRef = this.passagePickerAnchor.viewContainerRef;
     this.directionTypeElement = DirectionType.reading;
     this.route.params.subscribe(params => {
       console.log('update-single-reading -- received route params');
-      this.dateString = params['dateString'];
-      this.readingIndex = +params['readingIndex'];
-      console.log(typeof this.readingIndex);
-      console.log('reading index: ', this.readingIndex);
-      this.fetchReadings(this.dateString);
+      testDateString = params['dateString'];
+      testReadingIndex = +params['readingIndex'];
+      if (this.dateIsValid(testDateString) && testReadingIndex >=0) {
+        this.dateString = testDateString;
+        this.readingIndex = testReadingIndex;
+        this.fetchReadings(this.dateString);
+      } else {
+        this.router.navigate(['/admin/update-readings']);
+      }
     });
   }
 
+
   ngAfterViewChecked() {
-    // TODO: come back and look at this; it seems like when the subscription to the observable
-    //       gets resolved, there should be a change detection event that would trigger
-    //       a new check of the page.  At the moment, that doesn't seem to be happening, and so
-    //       we have to use the work-around below.  It could be that this is an actual error
-    //       in angular, and will be fixed in the future.
-    //console.log('inside update-single-reading: AfterViewChecked! isNewReading? ', this.isNewReading);
-    //console.log('recent passage update? ', this.recentPassageUpdate);
-    // the following is a work-around, because I was getting an 'expression changed after view checked' error;
-    // see: https://stackoverflow.com/questions/39787038/how-to-manage-angular2-expression-has-changed-after-it-was-checked-exception-w
-    // apparently the problem was that page was checked, and then the
-    // subscription resolved from the passage-picker (with the updated string for
-    // the passage); the change was made, and then (in dev mode, apparently) angular did one
-    // final check and found the value to have been changed.  This triggered the error.  The
-    // following appears to trigger a _new_ round of change detection and gets around the error.
+    /*
+
+     TODO: come back and look at this; it seems like when the subscription to the observable
+           gets resolved, there should be a change detection event that would trigger
+           a new check of the page.  At the moment, that doesn't seem to be happening, and so
+           we have to use the work-around below.  It could be that this is an actual error
+           in angular, and will be fixed in the future.
+
+     the following is a work-around, because I was getting an 'expression changed after view checked' error;
+     see: https://stackoverflow.com/questions/39787038/how-to-manage-angular2-expression-has-changed-after-it-was-checked-exception-w
+     apparently the problem was that page was checked, and then the
+     subscription resolved from the passage-picker (with the updated string for
+     the passage); the change was made, and then (in dev mode, apparently) angular did one
+     final check and found the value to have been changed.  This triggered the error.  The
+     following appears to trigger a _new_ round of change detection and gets around the error.
+
+    */
     if (this.recentPassageUpdate) {
       this.editedReadingStdRef = this.editedReadingStdRefTemp;
       this.editedReadingStdRefTemp = null;
@@ -116,6 +129,20 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
     }
     this.cdRef.detectChanges();
   }
+
+
+  // returns true if the dateString is in 'YYYY-MM-DD' format and corresponds
+  // to an actual date (whether or not we have data for that date in the db)
+  // see: https://stackoverflow.com/questions/28227862/how-to-test-a-string-is-valid-date-or-not-using-moment
+  dateIsValid(dateString: string) {
+    let testDate = moment(dateString, 'YYYY-MM-DD');
+    console.log('test date is valid: ', testDate.isValid());
+    if (testDate === null || !testDate.isValid()) {
+      return false;
+    }
+    return dateString === testDate.format('YYYY-MM-DD');
+  }
+
 
   // set up the default configuration for the page; some of these
   // properties will be subsequently changed, depending on the situation
@@ -172,6 +199,8 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
           //this.modal.openModal();
           console.log('error: ', error);
           this.readingsData = null;
+          console.log('navigating away....');
+          this.router.navigate(['/admin/update-readings']);
         }
       );
   }

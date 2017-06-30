@@ -49,6 +49,7 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
   //private practiceService: PracticeService) { }
 
   ngOnInit() {
+    let testDateString: string;
     this.readingService.getReadingMetadata()
       .subscribe(
         calendarReadings => {
@@ -57,8 +58,13 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
           this.route.params.subscribe(params => {
             console.log('update-readings -- received route params');
             if ('dateString' in params) {
-              this.dateString = params['dateString'];
-              this.fetchReadings(this.dateString);
+              testDateString = params['dateString'];
+              if (this.dateIsValid(testDateString)) {
+                this.dateString = testDateString;
+                this.fetchReadings(this.dateString);
+              } else {
+                this.router.navigate(['/admin/update-readings']);
+              }
             }
           });
         },
@@ -67,6 +73,19 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
         }
       );
   }
+
+  // returns true if the dateString is in 'YYYY-MM-DD' format and corresponds
+  // to an actual date (whether or not we have data for that date in the db)
+  // see: https://stackoverflow.com/questions/28227862/how-to-test-a-string-is-valid-date-or-not-using-moment
+  dateIsValid(dateString: string) {
+    let testDate = moment(dateString, 'YYYY-MM-DD');
+    console.log('test date is valid: ', testDate.isValid());
+    if (testDate === null || !testDate.isValid()) {
+      return false;
+    }
+    return dateString === testDate.format('YYYY-MM-DD');
+  }
+
 
   reloadPageData(dateString: string) {
     this.readingService.getReadingMetadata()
@@ -174,8 +193,11 @@ export class UpdateReadingsComponent implements OnInit, OnDestroy {
         },
         error => {
           //this.modal.openModal();
-          console.log('error: ', error);
+          console.log('we have an error: ', error);
           this.readingsData = null;
+          console.log('navigating away....');
+          this.router.navigate(['/admin/update-readings']);
+
           /*
            if 404 error, immediately create a new readingDay object
            in the database, wait for the reply, and then set readingsData to the response;
