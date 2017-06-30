@@ -1,40 +1,39 @@
-<div materialize class="container">
-  <div class="card">
-    <div class="card-content">
-      <div class="card-title">
-        Manage Organizations
+<div materialize class="row">
+  <div class="col s8 offset-s2 m4 l3 manage-organizations-sidebar">
+
+    <div class="row">
+
+      <h5 class="col s12">
+        Text Filter
+      </h5>
+
+      <div class="input-field col s12">
+        <input
+          id="filter"
+          type="text"
+          class="input"
+          [(ngModel)]="filter"
+          (keyup)="onKey()">
+        <label for="filter">Filter</label>
       </div>
-      <div class="row">
-        <div class = "card col s10 offset-s1">
-          <div class = "card-content">
-            <div class="row">
-              <div class="col s6">
-                <div class="row">
-                  <div class="input-field col s12">
-                    <label for="filter">Filter</label>
-                    <input
-                      id="filter"
-                      type="text"
-                      class="input"
-                      [(ngModel)]="filter"
-                      (keyup)="onKey()">
-                  </div>
-                </div>
-              </div>
-            </div>
+    </div>
+  </div>
+
+  <div class="col s12 m8 l9 manage-organizations-content">
+    <div class="card">
+      <div class="card-content">
+        <div class="row">
+
+          <div class="card-title col s6">
+            Manage Organizations
           </div>
-          <div class="card-action">
-            <button class="btn-flat" (click)="openNewOrganizationModal()">add organization</button>
+          <div class="col s6 right-align">
+            <button class="waves-effect waves-light btn" (click)="openNewOrganizationModal()">add organization</button>
           </div>
 
-        </div>
-      </div>
-
-      <span class="row">
-
-        <div class="col s12">
-          <table class="striped">
-            <thead>
+          <div class="col s12">
+            <table class="striped">
+              <thead>
               <tr>
                 <!-- sortable columns -->
                 <th *ngFor="let column of sortableColumns" data-field="column.value">
@@ -51,46 +50,46 @@
                 </th>
                 <th data-field="edit">Edit</th>
               </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let organization of filteredOrganizations | paginate: config; let i=index">
-                  <td *ngFor="let column of sortableColumns">
+              </thead>
+              <tbody>
+              <tr *ngFor="let organization of filteredOrganizations | paginate: config; let i=index">
+                <td *ngFor="let column of sortableColumns">
                     <span *ngIf="column.value === 'created_at'">
                         {{ organization[column.value] | amTimeAgo }}
                     </span>
-                    <span *ngIf="column.value === 'name'">
+                  <span *ngIf="column.value === 'name'">
                         {{ organization.name }}
                     </span>
-                    <span *ngIf="column.value === 'numberGroups'">
+                  <span *ngIf="column.value === 'numberGroups'">
                         ???
                     </span>
-                  </td>
-                  <td>
-                    <a class="include-pointer" (click)="openEditOrganizationModal(organization)">
-                      <i class="material-icons">edit</i>
-                    </a>
-                  </td>
-                </tr>
-            </tbody>
-          </table>
-          <div class="center">
-            <pagination-template
-              #p="paginationApi"
-              maxSize="9"
-              (pageChange)="config.currentPage = $event">
+                </td>
+                <td>
+                  <a class="include-pointer" (click)="openEditOrganizationModal(organization)">
+                    <i class="material-icons">edit</i>
+                  </a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <div class="center">
+              <pagination-template
+                #p="paginationApi"
+                maxSize="9"
+                (pageChange)="config.currentPage = $event">
                 <div class="custom-pagination">
-                <ul class="pagination">
-                  <li class="disabled" *ngIf="p.isFirstPage()">
-                    <a>
-                      <i class="material-icons">chevron_left</i>
-                    </a>
-                  </li>
-                  <li class="waves-effect" *ngIf="!p.isFirstPage()">
-                    <a (click)="p.previous()">
-                      <i class="material-icons">chevron_left</i>
-                    </a>
-                  </li>
-                  <span *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
+                  <ul class="pagination">
+                    <li class="disabled" *ngIf="p.isFirstPage()">
+                      <a>
+                        <i class="material-icons">chevron_left</i>
+                      </a>
+                    </li>
+                    <li class="waves-effect" *ngIf="!p.isFirstPage()">
+                      <a (click)="p.previous()">
+                        <i class="material-icons">chevron_left</i>
+                      </a>
+                    </li>
+                    <span *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
                     <li *ngIf="p.getCurrent() !== page.value" class="waves-effect">
                       <a (click)="p.setCurrent(page.value)">
                           <span>{{ page.label }}</span>
@@ -100,36 +99,40 @@
                           <span>{{ page.label }}</span>
                     </li>
                   </span>
-                  <li class="disabled" *ngIf="p.isLastPage()">
-                    <a>
-                      <i class="material-icons">chevron_right</i>
-                    </a>
-                  </li>
-                  <li class="waves-effect" *ngIf="!p.isLastPage()">
-                    <a (click)="p.next()">
-                      <i class="material-icons">chevron_right</i>
-                    </a>
-                  </li>
-                </ul>
+                    <li class="disabled" *ngIf="p.isLastPage()">
+                      <a>
+                        <i class="material-icons">chevron_right</i>
+                      </a>
+                    </li>
+                    <li class="waves-effect" *ngIf="!p.isLastPage()">
+                      <a (click)="p.next()">
+                        <i class="material-icons">chevron_right</i>
+                      </a>
+                    </li>
+                  </ul>
                 </div>
               </pagination-template>
 
-          </div>
-
-
-
-
-
-          <div *ngIf = "filteredOrganizations">
-            <div [ngSwitch]="filteredOrganizations.length" class="center">
-              <div *ngSwitchCase="1">{{filteredOrganizations.length}} record found</div>
-              <div *ngSwitchCase="0">No records found</div>
-              <div *ngSwitchDefault>{{filteredOrganizations.length}} records found</div>
             </div>
+
           </div>
 
+          <div class="col s12">
+
+            <div *ngIf="filteredOrganizations">
+              <div [ngSwitch]="filteredOrganizations.length" class="center">
+                <div *ngSwitchCase="1">{{filteredOrganizations.length}} record found</div>
+                <div *ngSwitchCase="0">No records found</div>
+                <div *ngSwitchDefault>{{filteredOrganizations.length}} records found</div>
+              </div>
+            </div>
+
+          </div>
+          <div class="col s12 right-align">
+            <button class="waves-effect waves-light btn" (click)="openNewOrganizationModal()">add organization</button>
+          </div>
         </div>
-      </span>
+      </div>
     </div>
   </div>
 </div>

@@ -1,5 +1,5 @@
 <div materialize class="row">
-  <div class="col s3 manage-groups-sidebar">
+  <div class="col s8 offset-s2 m4 l3 manage-groups-sidebar">
 
     <div class="row">
 
@@ -20,13 +20,13 @@
       </div>
 
       <div class="input-field col s12">
-        <label for="filter">Filter</label>
         <input
           id="filter"
           type="text"
           class="input"
           [(ngModel)]="filter"
           (keyup)="onKey()">
+        <label for="filter">Filter</label>
       </div>
       <h5 class="col s12">
         Attribute Filter
@@ -88,16 +88,16 @@
     </div>
   </div>
 
-  <div class="col s9 manage-groups-content">
+  <div class="col s12 m8 l9 manage-groups-content">
     <div class="card">
       <div class="card-content">
         <div class="row">
 
 
-          <div class="card-title col s9">
+          <div class="card-title col s6">
             Manage Groups
           </div>
-          <div class="col s3 right-align">
+          <div class="col s6 right-align">
             <button class="waves-effect waves-light btn" (click)="openNewGroupModal()">add group</button>
           </div>
 
