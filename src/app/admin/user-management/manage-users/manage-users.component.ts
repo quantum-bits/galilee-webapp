@@ -55,7 +55,7 @@ export class DisplayFilter {
   title: string;
   functionArg?: string; // optional argument for the function functionName (useful for the user.can(permissionId) case)
 
-  constructor(functionName: string, title, functionArg?: string){
+  constructor(functionName: string, title: string, functionArg?: string){
     this.displayStatus = StatusOptions.ALL;
     this.functionName = functionName;
     this.title = title;

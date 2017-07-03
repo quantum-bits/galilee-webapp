@@ -12,18 +12,18 @@
             </thead>
             <tbody>
             <tr *ngFor="let passage of readingsData.readings; let rIndex=index" (click)="navigateToPassage(rIndex)" class="include-pointer">
-              <td *ngIf="rIndex == readingIndex && editReadingModeOn" class="current-passage">{{editedReadingStdRef}}</td>
-              <td *ngIf="rIndex == readingIndex && !editReadingModeOn" class="current-passage">{{passage.stdRef}}</td>
+              <td *ngIf="rIndex == readingIndex && stateManager.readingIsBeingEdited()" class="current-passage">{{editedReadingStdRef}}</td>
+              <td *ngIf="rIndex == readingIndex && !stateManager.readingIsBeingEdited()" class="current-passage">{{passage.stdRef}}</td>
               <td *ngIf="rIndex != readingIndex">{{passage.stdRef}}</td>
               <td [class.current-passage]="rIndex == readingIndex">
                 <div
                   [class.zero-practices]="passage.directions.length == 0"
-                  [class.zero-practices-editing]="passage.directions.length == 0 && addNewPracticeModeOn && rIndex == readingIndex">
+                  [class.zero-practices-editing]="stateManager.addingFirstPractice() && rIndex == readingIndex">
                   {{passage.directions.length}}
                 </div>
               </td>
             </tr>
-            <tr *ngIf="isNewReading">
+            <tr *ngIf="stateManager.isNewReading()">
               <td class="current-passage">{{editedReadingStdRef}}</td>
               <td class="current-passage">
                 <div class="zero-practices">0</div>
@@ -39,7 +39,7 @@
     <div class="col s12 m8">
       <ul
         class="collection with-header"
-        [class.enable-overflow]="editPracticeModeOn || addNewPracticeModeOn">
+        [class.enable-overflow]="stateManager.editingAPractice()">
         <li class="collection-header">
           <h5>Add Reading to {{dateString | amDateFormat: 'LL'}}</h5>
         </li>
@@ -56,9 +56,9 @@
             </passage-picker>
             -->
 
-          <h5 *ngIf="!editReadingModeOn && reading">
+          <h5 *ngIf="!stateManager.readingIsBeingEdited() && reading"><!--" && reading">-->
             <span class="title"> {{reading.stdRef}}</span>
-            <span *ngIf="!editPracticeModeOn && !addNewPracticeModeOn" class="right action-icons">
+            <span *ngIf="stateManager.canEditReading()" class="right action-icons">
 
             <a (click)="displayReading()"
                class="grey-text text-darken-2 include-pointer">
@@ -86,14 +86,14 @@
               [directionTypeElement]="directionTypeElement"
               [parentId]="reading.id"
               [usedPracticeIds]="usedPracticeIds"
-              (onEditModeEnabled)="onPracticedEdited($event)"
-              (onEditModeDisabled)="onPracticedEditingCancelled()"
+              (onEditModeEnabled)="onPracticeEdited($event)"
+              (onEditModeDisabled)="onPracticeEditingCancelled()"
               [directionIndex]="aIndex"
               [direction]="direction">
             </app-display-direction-steps>
           </li>
 
-          <div *ngIf="canAddPractice()">
+          <div *ngIf="stateManager.canAddPractice()">
             <li class="collection-item">
             <span class="right reading-button">
               <a class="waves-effect waves-light btn secondary-content" (click)="onAddNewPractice()">Add Practice</a>
@@ -101,14 +101,14 @@
             </li>
           </div>
 
-          <div *ngIf="addNewPracticeModeOn">
+          <div *ngIf="stateManager.addingAPractice()">
             <li class="collection-item white">
               <app-display-direction-steps
                 [editable]="true"
                 [directionTypeElement]="directionTypeElement"
                 [parentId]="reading.id"
                 [usedPracticeIds]="usedPracticeIds"
-                (onEditModeDisabled)="onCancelAddPractice()"
+                (onEditModeDisabled)="onPracticeEditingCancelled()"
                 [editModeOn]="true"
                 [maxDirectionSeq]="maxDirectionSeq">
               </app-display-direction-steps>
@@ -126,7 +126,7 @@
         </div>
 
         <div class="col s4">
-          <a *ngIf="canAddPractice()"
+          <a *ngIf="stateManager.canAddNewReading()"
              class="grey-text text-darken-2 right include-pointer"
              (click)="addNewReading()"> Add another reading +
           </a>
