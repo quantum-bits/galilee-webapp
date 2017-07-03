@@ -161,17 +161,12 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
   private readingIndex: number;
   readingsData: ReadingDay = null;
   reading: any = null; // data for the single reading in question
-  //editReadingModeOn: boolean = false; // true if the reading is being edited
-  //editPracticeModeOn: boolean = false; // true if any practice is being edited
   private editingEnabled: boolean[]; //true or false for each 'direction'
-  //addNewPracticeModeOn: boolean = false;
 
   singleReadingStdRef: string = null; // used in 'delete reading' modal
   private editedReadingStdRef: string = null; // the standard reference string for the reading that is currently being edited, if such is the case
   private editedReadingStdRefTemp: string = null; // used within afterViewChecked as a work-around
   private recentPassageUpdate: boolean = false; // used within afterViewChecked as a work-around
-
-  //private isNewReading: boolean = false; // true if this is a new reading, false if the reading already exists
 
   private editReadingComponent: any;
 
@@ -203,8 +198,6 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
     this.stateManager = new StateManager();
     let testDateString: string;
     let testReadingIndex: number;
-    //let testReadingIndex: number;
-    console.log('inside update-single-reading oninit....');
     this.passagePickerViewContainerRef = this.passagePickerAnchor.viewContainerRef;
     this.directionTypeElement = DirectionType.reading;
     this.route.params.subscribe(params => {
@@ -265,11 +258,6 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
   // set up the default configuration for the page; some of these
   // properties will be subsequently changed, depending on the situation
   configState() {
-    //this.isNewReading = false;
-    //this.editReadingModeOn = false;
-    //this.editPracticeModeOn = false;
-    //this.addNewPracticeModeOn = false;
-
     this.editingEnabled = [];
     this.singleReadingStdRef = null;
     this.editedReadingStdRef = null;
@@ -296,17 +284,11 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
             } else {
               this.editingEnabled = this.stateManager.setStateGetEnabledList(States.ReadingNoPractices);
             }
-            //this.editingEnabled = this.stateManager.editingEnabled();
-
-            //this.editReadingModeOn = false;
             this.editedReadingStdRef = '';
-            //this.editPracticeModeOn = false;
-            //this.editingEnabled = [];
             this.maxDirectionSeq = 0;
             this.reading.directions.forEach(direction =>
               {
                 this.usedPracticeIds.push(direction.practice.id);
-                //this.editingEnabled.push(true);
                 if (direction.seq > this.maxDirectionSeq) {
                   this.maxDirectionSeq = direction.seq;
                 }
@@ -314,18 +296,13 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
             );
             console.log('used Practice IDs: ', this.usedPracticeIds);
           } else {
-
             this.editingEnabled = this.stateManager.setStateGetEnabledList(States.NoReadingAddReading);
-
-            //this.isNewReading = true;
             this.reading = null;
-            //this.editReadingModeOn =  true;
             this.openNewReadingForm();
           }
 
         },
         error => {
-          //this.modal.openModal();
           console.log('error: ', error);
           this.readingsData = null;
           console.log('navigating away....');
@@ -352,9 +329,6 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
           //proceed to next step
           this.reading = reading; // this is just for the visual appearance in the page while the new data is being fetched from the database
           this.editReadingCloseAndCleanUp();
-          //this.fetchReadings(this.dateString);
-
-          console.log('here is the result: ', result);
 
           switch (addReadingData.nextStep) {
             case NextStep.finish: {
@@ -388,9 +362,6 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
           console.log(`Added ${updateReadingData.reading.stdRef}`);
           this.reading = updateReadingData.reading; // this is just for the visual appearance in the page while the new data is being fetched from the database
           this.editReadingCloseAndCleanUp();
-          //this.fetchReadings(this.dateString);
-
-          //console.log('readingupdated! data: ', updateReadingData)
 
           switch (updateReadingData.nextStep) {
             case NextStep.finish: {
@@ -458,8 +429,6 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
     } else {
       this.editingEnabled = this.stateManager.setStateGetEnabledList(States.ReadingNoPracticesEditReading);
     }
-    //this.editReadingModeOn = true;
-    //this.setEditingEnabledAllPractices(false);
     // assumes we already have a reading
     this.openNewReadingForm();
     if (reading.directions.length > 0) {
@@ -483,29 +452,9 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
     this.router.navigate(['/admin/update-readings', this.dateString, arrayIndex]);
   }
 
-  /*
-  setEditingEnabledAllPractices(enabled: boolean) {
-    this.editingEnabled = [];
-    if(this.reading && this.reading.directions) {
-      this.reading.directions.forEach(direction => {
-          this.editingEnabled.push(enabled);
-        }
-      );
-    }
-  }
-  */
-
-
   // called when one of the practices is opened for editing
   onPracticeEdited(directionIndex: number) {
-
     this.editingEnabled = this.stateManager.setStateGetEnabledList(States.ReadingPracticeEditPractice, this.reading.directions.length, directionIndex);
-
-    console.log('practice is being edited! index: ', directionIndex);
-    console.log('editingEnabled: ', this.editingEnabled);
-    //this.editPracticeModeOn = true;
-    //this.setEditingEnabledAllPractices(false);
-    //this.editingEnabled[directionIndex] = true;
   }
 
   // called when editing of a practice is cancelled
@@ -515,28 +464,15 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
     } else {
       this.editingEnabled = this.stateManager.setStateGetEnabledList(States.ReadingNoPractices);
     }
-    //this.editPracticeModeOn = false;
-    //this.setEditingEnabledAllPractices(true);
   }
-
 
   editReadingCloseAndCleanUp(){
     this.passagePickerViewContainerRef.clear();
-    //this.editReadingModeOn = false;
-    //this.setEditingEnabledAllPractices(true);
   }
-
-  // if a reading or any of the practices is being edited, then the 'add practice' button is hidden
-  /*
-  canAddPractice() {
-    return (!this.editPracticeModeOn)&&(!this.editReadingModeOn)&&(!this.addNewPracticeModeOn);
-  }
-  */
 
   addNewReading() {
     this.router.navigate(['/admin/update-readings', this.dateString, this.readingsData.readings.length]);
   }
-
 
   onAddNewPractice() {
     if (this.reading && this.reading.directions.length > 0) {
@@ -544,27 +480,9 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
     } else {
       this.editingEnabled = this.stateManager.setStateGetEnabledList(States.ReadingNoPracticesAddPractice);
     }
-    //this.stateManager.setState(States.)
-    //this.addNewPracticeModeOn = true;
-    //this.setEditingEnabledAllPractices(false);
   }
-
-  /*
-  onCancelAddPractice() {
-    if (this.reading && this.reading.directions.length > 0) {
-      this.stateManager.setState(States.ReadingPractice);
-    } else {
-      this.stateManager.setState(States.ReadingNoPractices);
-    }
-
-    this.addNewPracticeModeOn = false;
-    this.setEditingEnabledAllPractices(true);
-  }
-  */
-
 
   displayReading() {
-    console.log('display reading....');
     this.modal.openModal();
   }
 
@@ -593,9 +511,6 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
       subscription.unsubscribe();
     }
   }
-
-
-
 
   ngOnDestroy() {
     // unsubscribe from subscriptions to prevent memory leaks....
