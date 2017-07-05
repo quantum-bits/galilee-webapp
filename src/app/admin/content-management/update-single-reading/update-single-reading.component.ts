@@ -4,6 +4,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import { Subscription }   from 'rxjs/Subscription';
 
 import * as moment from 'moment';
+import * as _ from "lodash";
 
 import {ReadingService} from '../../../shared/services/reading.service';
 
@@ -312,11 +313,18 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
   }
 
   addReading(addReadingData: AddReadingData) {
+
+    let seqVal: number = 1;
+    if (this.readingsData.readings.length > 0) {
+      let lastReading = _.maxBy(this.readingsData.readings, function(obj) {return obj.seq;});
+      seqVal = lastReading.seq + 1;
+    }
+
     let reading: IReading = {
       id: null,
       osisRef: addReadingData.passageRef.osisRef(),
       readingDayId: this.readingsData.id,
-      seq: this.readingsData.readings.length + 1,
+      seq: seqVal,//this.readingsData.readings.length + 1,
       stdRef: addReadingData.passageRef.displayRef(),
       text: null,
       directions: [],
