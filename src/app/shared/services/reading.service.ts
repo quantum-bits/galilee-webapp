@@ -201,6 +201,23 @@ export class ReadingService {
       .map(resp => resp.json());
   }
 
+  // see: https://stackoverflow.com/questions/35676451/observable-forkjoin-and-array-argument
+  updateMultipleReadings(readings: IReading[]) {
+    let observableBatch = [];
+    readings.forEach(reading => {
+      observableBatch.push(
+        this.authHttp
+          .patch(`/api/readings/${reading.id}`, {
+            seq: reading.seq,
+            stdRef: reading.stdRef,
+            osisRef: reading.osisRef,
+          })
+          .map(resp => resp.json()));
+    });
+    return Observable.forkJoin(observableBatch);
+  }
+
+
   deleteReading(readingId: number): Observable<number> {
     return this.authHttp
       .delete(`/api/readings/${readingId}`)

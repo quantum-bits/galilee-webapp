@@ -44,92 +44,12 @@
       <div *ngIf="!reading.directions.length">
         <p></p>
       </div>
-
-      <!--
-      <a class="waves-effect waves-light btn secondary-content" (click)="launchNewPracticeModal(rIndex)">Add Practice</a>
-      -->
-
     </li>
   </ul>
 
   <span class="right reading-button">
       <a class="waves-effect waves-light btn secondary-content" (click)="navigateToAddReadingPage()">Add Reading</a>
   </span>
-
-<!--
-  <ul
-    class="collection with-header dragula-container"
-    [dragula]='"readings-bag"'
-    [dragulaModel]='readingsData.readings'>
-    <li class="collection-header">
-      <h5 class="invalid-handle">
-          Readings for {{dateString | amDateFormat: 'LL'}}
-      </h5>
-    </li>
-    <li *ngIf="readingsData.readings.length == 0" class="collection-item white">
-      <span class="invalid-handle">
-        No readings yet for {{dateString | amDateFormat: 'LL'}}.
-      </span>
-    </li>
-
-    <li *ngFor="let reading of readingsData.readings; let rIndex=index"
-        class="collection-item grey lighten-5">
-      <span class="title"> {{reading.stdRef}}</span>
-      <span class="right action-icons">
-        <a (click)="displayReading(rIndex)"
-          class="grey-text text-darken-2 include-pointer">
-        <i class="material-icons lr-arrow">pageview</i>
-        </a>
-        <a (click)="displayDeleteReadingModal(reading)"
-          class="grey-text text-darken-2 include-pointer">
-        <i class="material-icons lr-arrow">delete_forever</i>
-        </a>
-        <a (click)="editReading(rIndex)"
-          class="grey-text text-darken-2 include-pointer">
-        <i class="material-icons lr-arrow">edit</i>
-        </a>
-
-        <i class="grey-text text-darken-2 material-icons lr-arrow"><span class="handle">swap_vert</span></i>
-
-      </span>
-      <ul *ngIf="reading.directions.length" class="collection">
-        <li *ngFor="let direction of reading.directions; let aIndex=index" class="collection-item white">
-          <app-display-direction-steps
-            [editable]="false"
-            [direction]= "direction">
-          </app-display-direction-steps>
-        </li>
-
-      </ul>
-
-
-
-
-      <div *ngIf="!reading.directions.length">
-        <p></p>
-      </div>
-
-      <!--
-      <a class="waves-effect waves-light btn secondary-content" (click)="launchNewPracticeModal(rIndex)">Add Practice</a>
-
-
-    </li>
-
-    <div *ngIf="!readingsData.readings.length">
-      <p></p>
-    </div>
-
-    <p></p>
-    <span class="right reading-button">
-      <a class="waves-effect waves-light btn secondary-content" (click)="navigateToAddReadingPage()">Add Reading</a>
-    </span>
-
-
-
-
-  </ul>
-</div>
--->
 
 <app-display-reading-modal
   #displayReadingModal

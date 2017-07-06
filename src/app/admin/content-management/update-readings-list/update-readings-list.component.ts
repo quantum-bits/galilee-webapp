@@ -73,6 +73,11 @@ export class UpdateReadingsListComponent implements OnInit {
       this.onRemoveModel(value.slice(1));
     });
 
+    // the following two lines of code ensure that we don't accidentally
+    // attempt to create several instances of the readings-bag (which crashes the app)
+    // https://github.com/valor-software/ng2-dragula/issues/442
+    const bag: any = this.dragulaService.find('readings-bag');
+    if (bag !== undefined ) this.dragulaService.destroy('readings-bag');
 
     dragulaService.setOptions('readings-bag', {
       moves: function (el, container, handle) {
@@ -80,8 +85,8 @@ export class UpdateReadingsListComponent implements OnInit {
         return handle.className === 'handle';
       },
       invalid: function (el, handle) {
-        console.log('el: ',el,'el.className: ',el.className, 'handle: ',handle, 'handle.className: ',handle.className);
-        console.log('invalid? ', handle.className === 'invalid-handle' || el.className === 'collection-header');
+        //console.log('el: ',el,'el.className: ',el.className, 'handle: ',handle, 'handle.className: ',handle.className);
+        //console.log('invalid? ', handle.className === 'invalid-handle' || el.className === 'collection-header');
         return handle.className === 'invalid-handle' || el.className === 'collection-header';
       },
 
@@ -160,6 +165,8 @@ export class UpdateReadingsListComponent implements OnInit {
       );
   }
 
+
+  /*
   onDeleteDirection(directionId: number) {
     this.directionService.deleteDirection(directionId)
       .subscribe(
@@ -169,6 +176,7 @@ export class UpdateReadingsListComponent implements OnInit {
         error => console.log('error on deleting direction: ', error)
       );
   }
+  */
 
   navigateToAddReadingPage() {
     this.router.navigate(['/admin/update-readings', this.dateString, this.readingsData.readings.length]);
@@ -200,9 +208,19 @@ export class UpdateReadingsListComponent implements OnInit {
 
   private onDropModel(args) {
     let [el, target, source] = args;
-    console.log('dropped model!');
-    //console.log(this.practicesThisReading);
-    // do something else
+    let i: number = 1;
+    for (let reading of this.readingsData.readings) {
+      reading.seq = i;
+      i++;
+    }
+    this.readingService.updateMultipleReadings(this.readingsData.readings)
+      .subscribe(
+        result => {
+          console.log('success! result:', result);
+          this.readingService.announceReadingsRefresh();
+        },
+        error => console.log('error attempting to update readings: ', error)
+      );
   }
 
   private onRemoveModel(args) {
