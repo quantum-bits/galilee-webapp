@@ -17,7 +17,7 @@
 }
 
 .invalid-handle {
-  /* do nothing, but this allows dragula to grab this handle */
+  /* not doing any styling, but this allows dragula to grab this handle */
 }
 
 ul.collection.with-header.no-bottom-margin {
@@ -73,14 +73,12 @@ ul.collection.no-top-margin {
   cursor: grabbing;
   cursor: -moz-grabbing;
   cursor: -webkit-grabbing;
+  list-style-type: none; /* https://stackoverflow.com/questions/1027354/need-an-unordered-list-without-any-bullets */
+  padding: 10px 20px;
+  border-style: solid;
+  border-width: 1px;
 }
 
-.dragula-container .ex-moved {
-  background-color: #e74c3c;
-}
-.dragula-container.ex-over {
-  background-color: rgba(255, 255, 255, 0.3);
-}
 .handle {
   /*
   padding: 0 5px;
@@ -88,10 +86,6 @@ ul.collection.no-top-margin {
   background-color: rgba(0, 0, 0, 0.4);
   */
   cursor: move;
-}
-nested-repeat-example .dragula-container span {
-  display: block;
-  padding: 8px;
 }
 
 
