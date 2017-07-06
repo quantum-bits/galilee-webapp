@@ -6,6 +6,8 @@
 
 @import 'src/materialize-src/sass/materialize.scss';
 
+@import 'dragula.min.css';
+
 // The custom global styles must be imported last so that they 'cascade'
 // over the materialize styles and take priority.
 @import "global-styles.scss";

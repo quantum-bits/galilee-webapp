@@ -16,3 +16,83 @@
   padding-bottom: 10px;
 }
 
+.invalid-handle {
+  /* do nothing, but this allows dragula to grab this handle */
+}
+
+ul.collection.with-header.no-bottom-margin {
+  margin-bottom: 0px;
+  border-bottom: 0px;
+}
+
+ul.collection.no-top-margin {
+  margin-top: 0px;
+  border-top: 0px;
+}
+
+/*
+.dragula-container div,
+.gu-mirror {
+  /*margin: 10px;
+  /*padding: 10px;
+  /*background-color: rgba(0, 0, 255, 0.2);
+  transition: opacity 0.4s ease-in-out;
+}
+.dragula-container div {
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+.gu-mirror {
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+}
+*/
+
+/*
+ * note that styling gu-mirror directly is a bad practice because it's too generic.
+ * you're better off giving the draggable elements a unique class and styling that directly!
+ */
+.dragula-container div,
+.gu-mirror {
+  /*margin: 10px;*/
+  /*padding: 10px;*/
+  /*background-color: rgba(0, 0, 0, 0.2);*/
+  transition: opacity 0.4s ease-in-out;
+}
+
+.dragula-container div {
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+.gu-mirror {
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+}
+
+.dragula-container .ex-moved {
+  background-color: #e74c3c;
+}
+.dragula-container.ex-over {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+.handle {
+  /*
+  padding: 0 5px;
+  margin-right: 5px;
+  background-color: rgba(0, 0, 0, 0.4);
+  */
+  cursor: move;
+}
+nested-repeat-example .dragula-container span {
+  display: block;
+  padding: 8px;
+}
+
+
+
