@@ -126,6 +126,9 @@ export class DisplayDirectionStepsComponent implements OnInit {
   }
 
 
+  showSwapVertArrows() {
+    return true;
+  }
 
   unsubscribeSubscription(subscription: Subscription) {
     if (subscription !== null) {

@@ -17,3 +17,13 @@ ol li {
   list-style-type: decimal;
   padding-bottom: 10px;
 }
+
+.handle {
+  /*
+  padding: 0 5px;
+  margin-right: 5px;
+  background-color: rgba(0, 0, 0, 0.4);
+  */
+  cursor: move;
+}
+

@@ -156,3 +156,42 @@ nav {
 .include-pointer { /* LJ */
      cursor: pointer !important;
  }
+
+
+// dragula-specific styles:
+
+.dragula-container div,
+.gu-mirror {
+  transition: opacity 0.4s ease-in-out;
+}
+
+.dragula-container div {
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+.gu-mirror {
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+  list-style-type: none; /* https://stackoverflow.com/questions/1027354/need-an-unordered-list-without-any-bullets */
+  padding: 10px 20px;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.gu-transit {
+  /*border-style: solid;*/
+  /*border-width: 2px;*/
+}
+
+.dragula-handle {
+  /*
+  padding: 0 5px;
+  margin-right: 5px;
+  background-color: rgba(0, 0, 0, 0.4);
+  */
+  cursor: move;
+}
+

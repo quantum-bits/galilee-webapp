@@ -1,4 +1,8 @@
-import { Component, OnInit, OnChanges, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, OnChanges, OnDestroy, Input, ViewChild } from '@angular/core';
+
+import { Subscription }   from 'rxjs/Subscription';
+
+import {DragulaService} from 'ng2-dragula/ng2-dragula';
 
 import {DeleteItemModalComponent} from '../../../shared/components/delete-item-modal/delete-item-modal.component';
 
@@ -13,7 +17,7 @@ import {ReadingService} from '../../../shared/services/reading.service';
   templateUrl: './update-daily-practices-list.component.html',
   styleUrls: ['./update-daily-practices-list.component.css']
 })
-export class UpdateDailyPracticesListComponent implements OnInit, OnChanges {
+export class UpdateDailyPracticesListComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() readingDay: ReadingDay = null;
   @Input() dateString: string = "";
@@ -33,8 +37,27 @@ export class UpdateDailyPracticesListComponent implements OnInit, OnChanges {
   private editPracticeModeOn: boolean = false; // keeps track of whether or not a daily practice is currently being edited
   private addNewPracticeModeOn: boolean = false; // keeps track of whether or not a new daily practice is currently being added
 
+  private subDropModel: Subscription = null;
+
   constructor(private readingService: ReadingService,
-              private directionService: DirectionService) { }
+              private directionService: DirectionService,
+              private dragulaService:DragulaService) {
+    this.subDropModel = dragulaService.dropModel.subscribe((value) => {
+      console.log('inside daily practices -- value: ', value);
+      this.onDropModel(value);
+    });
+    // the following two lines of code ensure that we don't accidentally
+    // attempt to create several instances of the readings-bag (which crashes the app)
+    // https://github.com/valor-software/ng2-dragula/issues/442
+    const bag: any = this.dragulaService.find('daily-practices-bag');
+    if (bag !== undefined ) this.dragulaService.destroy('daily-practices-bag');
+
+    dragulaService.setOptions('daily-practices-bag', {
+      moves: function (el, container, handle) {
+        return handle.className === 'dragula-handle';
+      }
+    });
+  }
 
   ngOnInit() {
   }
@@ -118,5 +141,67 @@ export class UpdateDailyPracticesListComponent implements OnInit, OnChanges {
     this.singleDirectionTitle = direction.practice.title;
     this.modalDeleteDirection.openModal(direction.id);
   }
+
+  onDropModel(args) {
+    let [bagName, el, target, source] = args;
+    console.log('model dropped! bagName: ', bagName);
+
+    console.log('el: ', el, 'target: ', target, 'source: ', source);
+
+    if (bagName === 'daily-practices-bag') {
+      console.log('wake up the daily practice drop!!');
+      let i: number = 1;
+      let directionIds: number[] = [];
+      let practiceIds: number[] = [];
+      let directions: any[] = [];
+      let stepData = [];
+      let counter: number;
+
+      this.readingDay.directions.forEach(direction => {
+        // directions array is not allowed to include the ids, so need
+        // to rebuild it....
+        stepData = [];
+        counter = 0;
+        for (let step of direction.steps){
+          counter++;
+          stepData.push({
+            seq: counter,
+            description: step.description,
+          });
+        }
+        directions.push(
+          {
+            seq: i,
+            steps: stepData
+          }
+        );
+        directionIds.push(direction.id);
+        practiceIds.push(direction.practice.id);
+        i++;
+      });
+      this.directionService.deleteMultipleDirections(directionIds)
+        .subscribe(
+          result => {
+            console.log('successfully deleted existing directions: ', result);
+            this.directionService.createMultipleDirections(directions, this.readingDay.id, practiceIds, this.directionTypeElement)
+              .subscribe(
+                result => {
+                  console.log('successfully recreated the (re-ordered) directions: ', result);
+                  this.readingService.announceReadingsRefresh();
+                },
+                error => console.log('error! ', error)
+              );
+          },
+          error => console.log('could not delete directions: ', error)
+        );
+    }
+  }
+
+  ngOnDestroy() {
+    this.subDropModel.unsubscribe();
+  }
+
+
+
 
 }

@@ -8,16 +8,12 @@
 }
 
 .action-icons {
-  padding-right: 20px;
+  padding-right: 0px;
 }
 
 .reading-button {
-  padding-right: 20px;
+  padding-right: 0px;
   padding-bottom: 10px;
-}
-
-.invalid-handle {
-  /* not doing any styling, but this allows dragula to grab this handle */
 }
 
 ul.collection.with-header.no-bottom-margin {
@@ -25,68 +21,9 @@ ul.collection.with-header.no-bottom-margin {
   border-bottom: 0px;
 }
 
-ul.collection.no-top-margin {
+ul.collection.no-top-bottom-margin {
   margin-top: 0px;
+  margin-bottom: 0px;
   border-top: 0px;
 }
-
-/*
-.dragula-container div,
-.gu-mirror {
-  /*margin: 10px;
-  /*padding: 10px;
-  /*background-color: rgba(0, 0, 255, 0.2);
-  transition: opacity 0.4s ease-in-out;
-}
-.dragula-container div {
-  cursor: move;
-  cursor: grab;
-  cursor: -moz-grab;
-  cursor: -webkit-grab;
-}
-.gu-mirror {
-  cursor: grabbing;
-  cursor: -moz-grabbing;
-  cursor: -webkit-grabbing;
-}
-*/
-
-/*
- * note that styling gu-mirror directly is a bad practice because it's too generic.
- * you're better off giving the draggable elements a unique class and styling that directly!
- */
-.dragula-container div,
-.gu-mirror {
-  /*margin: 10px;*/
-  /*padding: 10px;*/
-  /*background-color: rgba(0, 0, 0, 0.2);*/
-  transition: opacity 0.4s ease-in-out;
-}
-
-.dragula-container div {
-  cursor: move;
-  cursor: grab;
-  cursor: -moz-grab;
-  cursor: -webkit-grab;
-}
-.gu-mirror {
-  cursor: grabbing;
-  cursor: -moz-grabbing;
-  cursor: -webkit-grabbing;
-  list-style-type: none; /* https://stackoverflow.com/questions/1027354/need-an-unordered-list-without-any-bullets */
-  padding: 10px 20px;
-  border-style: solid;
-  border-width: 1px;
-}
-
-.handle {
-  /*
-  padding: 0 5px;
-  margin-right: 5px;
-  background-color: rgba(0, 0, 0, 0.4);
-  */
-  cursor: move;
-}
-
-
 

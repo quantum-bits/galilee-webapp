@@ -202,7 +202,7 @@ export class ReadingService {
   }
 
   // see: https://stackoverflow.com/questions/35676451/observable-forkjoin-and-array-argument
-  updateMultipleReadings(readings: IReading[]) {
+  updateMultipleReadings(readings: IReading[]): Observable<Array<IReading>> {
     let observableBatch = [];
     readings.forEach(reading => {
       observableBatch.push(

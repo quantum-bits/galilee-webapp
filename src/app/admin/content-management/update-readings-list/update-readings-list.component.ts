@@ -54,7 +54,7 @@ export class UpdateReadingsListComponent implements OnInit, OnDestroy {
               private dragulaService:DragulaService,
               private router: Router) {
     this.subDropModel = dragulaService.dropModel.subscribe((value) => {
-      this.onDropModel(value.slice(1));
+      this.onDropModel(value);
     });
     // the following two lines of code ensure that we don't accidentally
     // attempt to create several instances of the readings-bag (which crashes the app)
@@ -64,15 +64,9 @@ export class UpdateReadingsListComponent implements OnInit, OnDestroy {
 
     dragulaService.setOptions('readings-bag', {
       moves: function (el, container, handle) {
-        return handle.className === 'handle';
-      },
-      invalid: function (el, handle) {
-        return handle.className === 'invalid-handle' || el.className === 'collection-header';
-      },
-
+        return handle.className === 'dragula-handle';
+      }
     });
-
-
   }
 
   ngOnInit() {
@@ -153,20 +147,22 @@ export class UpdateReadingsListComponent implements OnInit, OnDestroy {
   }
 
   private onDropModel(args) {
-    let [el, target, source] = args;
-    let i: number = 1;
-    for (let reading of this.readingsData.readings) {
-      reading.seq = i;
-      i++;
+    let [bagName, el, target, source] = args;
+    if (bagName === 'readings-bag') {
+      let i: number = 1;
+      for (let reading of this.readingsData.readings) {
+        reading.seq = i;
+        i++;
+      }
+      this.readingService.updateMultipleReadings(this.readingsData.readings)
+        .subscribe(
+          result => {
+            console.log('success! result:', result);
+            this.readingService.announceReadingsRefresh();
+          },
+          error => console.log('error attempting to update readings: ', error)
+        );
     }
-    this.readingService.updateMultipleReadings(this.readingsData.readings)
-      .subscribe(
-        result => {
-          console.log('success! result:', result);
-          this.readingService.announceReadingsRefresh();
-        },
-        error => console.log('error attempting to update readings: ', error)
-      );
   }
 
   ngOnDestroy() {

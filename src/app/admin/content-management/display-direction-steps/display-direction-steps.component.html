@@ -24,6 +24,10 @@
       class="grey-text text-darken-2 include-pointer">
     <i class="material-icons lr-arrow">edit</i>
     </a>
+
+    <i *ngIf="showSwapVertArrows()" class="grey-text text-darken-2 material-icons lr-arrow"><span class="dragula-handle">swap_vert</span></i>
+
+
   </span>
   <div *ngIf="showSteps">
     <div *ngFor="let step of direction.steps" class="step">
