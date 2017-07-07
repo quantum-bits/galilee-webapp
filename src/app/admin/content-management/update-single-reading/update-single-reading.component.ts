@@ -579,6 +579,7 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
               .subscribe(
                 result => {
                   console.log('successfully recreated the (re-ordered) directions: ', result);
+                  this.fetchReadings(this.dateString);
                   //this.readingService.announceReadingsRefresh();
                 },
                 error => console.log('error! ', error)
