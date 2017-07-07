@@ -51,6 +51,14 @@
 .zero-practices-editing {
   @extend .zero-practices;
   background-color: #80deea;
-
 }
 
+.links-top-margin {
+  margin-top: 14.5px;
+}
+
+.add-top-border {
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #e0e0e0;
+}

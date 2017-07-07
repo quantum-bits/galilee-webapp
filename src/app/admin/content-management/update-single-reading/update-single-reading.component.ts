@@ -3,6 +3,8 @@ import {Router, ActivatedRoute} from '@angular/router';
 
 import { Subscription }   from 'rxjs/Subscription';
 
+import {DragulaService} from 'ng2-dragula/ng2-dragula';
+
 import * as moment from 'moment';
 import * as _ from "lodash";
 
@@ -18,7 +20,7 @@ import {PassagePickerComponent} from '../passage-picker/passage-picker.component
 import {IReading, ReadingDay} from '../../../shared/interfaces/reading.interface';
 import {Direction} from '../../../shared/interfaces/direction.interface';
 
-import {DirectionType} from '../../../shared/services/direction.service';
+import {DirectionType, DirectionService} from '../../../shared/services/direction.service';
 
 
 // the possible states for the update-single-user page
@@ -181,9 +183,11 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
   private subReadingEdited: Subscription = null;
   private subReadingReady: Subscription = null;
   private subReadingsRefreshed: Subscription = null;
-
+  private subDropModel: Subscription = null;
 
   constructor(private readingService: ReadingService,
+              private directionService: DirectionService,
+              private dragulaService:DragulaService,
               private route: ActivatedRoute,
               private router: Router,
               private componentFactoryResolver: ComponentFactoryResolver,
@@ -193,6 +197,21 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
         console.log('received instructions to refresh!');
         this.fetchReadings(this.dateString);
       });
+    this.subDropModel = dragulaService.dropModel.subscribe((value) => {
+      console.log('inside practices -- value: ', value);
+      this.onDropModel(value);
+    });
+    // the following two lines of code ensure that we don't accidentally
+    // attempt to create several instances of the readings-bag (which crashes the app)
+    // https://github.com/valor-software/ng2-dragula/issues/442
+    const bag: any = this.dragulaService.find('practices-bag');
+    if (bag !== undefined ) this.dragulaService.destroy('practices-bag');
+
+    dragulaService.setOptions('practices-bag', {
+      moves: function (el, container, handle) {
+        return handle.className === 'dragula-handle';
+      }
+    });
   }
 
   ngOnInit() {
@@ -514,6 +533,64 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
       );
   }
 
+
+  onDropModel(args) {
+    let [bagName, el, target, source] = args;
+    console.log('model dropped! bagName: ', bagName);
+
+    console.log('el: ', el, 'target: ', target, 'source: ', source);
+
+    if (bagName === 'practices-bag') {
+      console.log('wake up the practice drop!!');
+      let i: number = 1;
+      let directionIds: number[] = [];
+      let practiceIds: number[] = [];
+      let directions: any[] = [];
+      let stepData = [];
+      let counter: number;
+
+      this.reading.directions.forEach(direction => {
+        // directions array is not allowed to include the ids, so need
+        // to rebuild it....
+        stepData = [];
+        counter = 0;
+        for (let step of direction.steps){
+          counter++;
+          stepData.push({
+            seq: counter,
+            description: step.description,
+          });
+        }
+        directions.push(
+          {
+            seq: i,
+            steps: stepData
+          }
+        );
+        directionIds.push(direction.id);
+        practiceIds.push(direction.practice.id);
+        i++;
+      });
+      this.directionService.deleteMultipleDirections(directionIds)
+        .subscribe(
+          result => {
+            console.log('successfully deleted existing directions: ', result);
+            this.directionService.createMultipleDirections(directions, this.reading.id, practiceIds, this.directionTypeElement)
+              .subscribe(
+                result => {
+                  console.log('successfully recreated the (re-ordered) directions: ', result);
+                  //this.readingService.announceReadingsRefresh();
+                },
+                error => console.log('error! ', error)
+              );
+          },
+          error => console.log('could not delete directions: ', error)
+        );
+    }
+  }
+
+
+
   unsubscribeSubscription(subscription: Subscription) {
     if (subscription !== null) {
       subscription.unsubscribe();
@@ -528,6 +605,7 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
     this.unsubscribeSubscription(this.subReadingReady);
     this.unsubscribeSubscription(this.subReadingsRefreshed);
     this.unsubscribeSubscription(this.subReadingEdited);
+    this.unsubscribeSubscription(this.subDropModel);
   }
 
 }

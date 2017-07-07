@@ -38,6 +38,8 @@ export class DisplayDirectionStepsComponent implements OnInit {
   @Input() directionTypeElement: number = null; // DirectionType.day or DirectionType.reading; only used in the editable case
   @Input() parentId: number = null; // readingDayId or readingId, as appropriate; only used in the editable case
   @Input() usedPracticeIds: number[] = []; // ids of the practices that are currently in use for this reading or readingDay; only used in the editable case
+  @Input() showSwapVerticalArrows: boolean = false; //set to true by the parent component if there are more than one direction
+
   @Output() onEditModeEnabled = new EventEmitter();
   @Output() onEditModeDisabled = new EventEmitter();
   @Input() directionIndex: number = null; //only used in the editable case
@@ -123,11 +125,6 @@ export class DisplayDirectionStepsComponent implements OnInit {
         },
         error => console.log('error on deleting direction: ', error)
       );
-  }
-
-
-  showSwapVertArrows() {
-    return true;
   }
 
   unsubscribeSubscription(subscription: Subscription) {

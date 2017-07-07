@@ -38,23 +38,14 @@
     </div>
     <div class="col s12 m8">
       <ul
-        class="collection with-header"
+        class="collection with-header no-bottom-margin"
         [class.enable-overflow]="stateManager.editingAPractice()">
         <li class="collection-header">
           <h5>Add Reading to {{dateString | amDateFormat: 'LL'}}</h5>
         </li>
         <li class="collection-item">
 
-
-          <div passage-picker-anchor>
-          </div>
-
-          <!--
-            <passage-picker #passagePicker
-                            (passageAdded)="addReading($event)"
-                            (passageUpdated)="updateReading($event)">
-            </passage-picker>
-            -->
+          <div passage-picker-anchor></div>
 
           <h5 *ngIf="!stateManager.readingIsBeingEdited() && reading"><!--" && reading">-->
             <span class="title"> {{reading.stdRef}}</span>
@@ -78,9 +69,17 @@
           </h5>
         </li>
 
+      </ul>
 
-        <div *ngIf="reading">
-          <li *ngFor="let direction of reading.directions; let aIndex=index" class="collection-item white">
+      <div *ngIf="reading">
+        <ul
+          class="collection no-top-bottom-margin dragula-container"
+          [dragula]='"practices-bag"'
+          [dragulaModel]='reading.directions'>
+          <li *ngFor="let direction of reading.directions; let aIndex=index"
+              class="collection-item"
+              [class.add-top-border]="aIndex == 0"
+          >
             <app-display-direction-steps
               [editable]="editingEnabled[aIndex]"
               [directionTypeElement]="directionTypeElement"
@@ -89,10 +88,13 @@
               (onEditModeEnabled)="onPracticeEdited($event)"
               (onEditModeDisabled)="onPracticeEditingCancelled()"
               [directionIndex]="aIndex"
-              [direction]="direction">
+              [direction]="direction"
+              [showSwapVerticalArrows] = "reading.directions.length > 1">
             </app-display-direction-steps>
           </li>
 
+        </ul>
+        <ul class="collection no-top-bottom-margin">
           <div *ngIf="stateManager.canAddPractice()">
             <li class="collection-item">
             <span class="right reading-button">
@@ -114,9 +116,10 @@
               </app-display-direction-steps>
             </li>
           </div>
-        </div>
-      </ul>
-      <div class="row">
+        </ul>
+      </div>
+
+      <div class="row links-top-margin">
         <div class="col s8 back-link">
           <a class="grey-text text-darken-2"
              [routerLink]="['/admin/update-readings', dateString]">

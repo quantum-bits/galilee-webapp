@@ -13,16 +13,6 @@
   */
 }
 
-ul.collection.with-header.no-bottom-margin {
-  margin-bottom: 0px;
-  border-bottom: 0px;
-}
-
-ul.collection.no-top-bottom-margin {
-  margin-top: 0px;
-  margin-bottom: 0px;
-  border-top: 0px;
-}
 
 
 
