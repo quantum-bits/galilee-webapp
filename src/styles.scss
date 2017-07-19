@@ -8,6 +8,9 @@
 
 @import 'dragula.min.css';
 
+@import 'materialize-stepper.min.css';
+/*@import 'materialize-stepper.min.js'; can't import js here.... */
+
 // The custom global styles must be imported last so that they 'cascade'
 // over the materialize styles and take priority.
 @import "global-styles.scss";
