@@ -213,6 +213,20 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
         return handle.className === 'dragula-handle';
       }
     });
+
+    // in the following we create a generic steps-bag, which is
+    // used to restrict movement to items with the class name 'dragula-step-handle';
+    // further restriction of movement of the steps within the bag is accomplished
+    // by giving names such as steps-bag0, steps-bag1, etc., within the display-direction-steps component
+    const stepsBag: any = this.dragulaService.find('steps-bag');
+    if (stepsBag !== undefined ) this.dragulaService.destroy('steps-bag');
+
+    dragulaService.setOptions('steps-bag', {
+      moves: function (el, container, handle) {
+        return handle.className === 'dragula-step-handle';
+      }
+    });
+
   }
 
   ngOnInit() {

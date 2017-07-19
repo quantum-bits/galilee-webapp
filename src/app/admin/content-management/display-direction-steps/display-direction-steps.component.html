@@ -29,12 +29,34 @@
 
 
   </span>
-  <div *ngIf="showSteps">
-    <div *ngFor="let step of direction.steps" class="step">
-      <span>Step {{step.seq}}:
-        <p [innerHTML]="step.description"></p>
-      </span>
-    </div>
+  <div *ngIf="showSteps" class="step-table">
+    <table class="striped">
+      <!--
+        the following sets up individual bags for the individual directions/practices
+        in the list (if they don't already exist); in the case that directionIndex is null, it creates a
+        bag named 'steps-bagnull', but that seems to be OK; nothing gets done with this bag;
+        also, the steps-bag0, steps-bag1,... names persist in the dragulaService, so we navigate around the site, editing
+        different practices, then these bag names are being reused; this seems not to be a
+        problem; we need differently named bags for the multiple instantiations of this component (so that steps can't be moved from one direction into another), and
+        this serves that purpose
+      -->
+      <tbody
+        class="dragula-container"
+        [dragula]='"steps-bag"+directionIndex'
+        [dragulaModel]='direction.steps'>
+      <tr *ngFor="let step of direction.steps" class="step">
+        <td>
+          <div><strong>Step {{step.seq}}:</strong>
+            <span *ngIf="editable" class="right">
+              <i class="grey-text text-darken-4 material-icons lr-arrow">
+                <span class="dragula-step-handle">swap_vert</span></i>
+            </span>
+          </div>
+          <div [innerHTML]="step.description"></div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 

@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter, Directive, ViewContaine
 
 import { Subscription }   from 'rxjs/Subscription';
 
+import {DragulaService} from 'ng2-dragula/ng2-dragula';
+
 import {DeleteItemModalComponent} from '../../../shared/components/delete-item-modal/delete-item-modal.component';
 
 import {IPractice} from '../../../shared/interfaces/practice.interface';
@@ -46,18 +48,13 @@ export class DisplayDirectionStepsComponent implements OnInit {
   @Input() editModeOn: boolean = false; // can be overridden in the parent's template
   @Input() maxDirectionSeq: number = null; // when creating a new direction, this is set to the max val of the sequence #s for the other directions for this reading
 
-  // probably delete the following, eventually....
-  //@Input() readingIndex: number;
-
-  //@Output() deleteDirection = new EventEmitter<Direction>();
-  //@Output() editDirection = new EventEmitter();
-
   private updateDirectionViewContainerRef: ViewContainerRef = null;
 
   private updateDirectionComponent: any;
 
   private subCancelEditing: Subscription = null;
   private subSave: Subscription = null;
+  private subDropModel: Subscription = null;
 
   private showSteps: boolean = false;
 
@@ -65,9 +62,18 @@ export class DisplayDirectionStepsComponent implements OnInit {
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver,
               private directionService: DirectionService,
-              private readingService: ReadingService) { }
+              private readingService: ReadingService,
+              private dragulaService: DragulaService) {
+    console.log('inside constructor; direction index: ', this.directionIndex);
+    this.subDropModel = dragulaService.dropModel.subscribe((value) => {
+      console.log('inside display-directions-steps -- value: ', value);
+      this.onDropModel(value);
+    });
+  }
 
   ngOnInit() {
+    console.log('direction index: ', this.directionIndex);
+
     this.updateDirectionViewContainerRef = this.updateDirectionAnchor.viewContainerRef;
     if (this.direction === null) {
       // adding a new direction
@@ -127,6 +133,29 @@ export class DisplayDirectionStepsComponent implements OnInit {
       );
   }
 
+  onDropModel(args) {
+    let [bagName, el, target, source] = args;
+    console.log('inside display-direction-steps; model dropped! bagName: ', bagName);
+
+    console.log('el: ', el, 'target: ', target, 'source: ', source);
+
+    if (bagName === 'steps-bag'+this.directionIndex) {
+      // since there are several subscriptions to dragulaService.dropModel,
+      // need to make sure that we only edit the direction steps if that is
+      // what has, in fact, been "dropped"
+      console.log('wake up the steps drop!!');
+
+      console.log('direction: ', this.direction);
+      // now go ahead and update the steps of the directions....
+      // WORKING HERE (look in update-single-reading for an example....)
+
+
+
+
+    }
+
+  }
+
   unsubscribeSubscription(subscription: Subscription) {
     if (subscription !== null) {
       subscription.unsubscribe();
@@ -137,6 +166,7 @@ export class DisplayDirectionStepsComponent implements OnInit {
     // unsubscribe from subscriptions to prevent memory leaks....
     this.unsubscribeSubscription(this.subCancelEditing);
     this.unsubscribeSubscription(this.subSave);
+    this.unsubscribeSubscription(this.subDropModel);
   }
 
 
