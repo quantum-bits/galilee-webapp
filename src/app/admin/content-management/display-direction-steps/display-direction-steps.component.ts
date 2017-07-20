@@ -141,19 +141,49 @@ export class DisplayDirectionStepsComponent implements OnInit {
 
     if (bagName === 'steps-bag'+this.directionIndex) {
       // since there are several subscriptions to dragulaService.dropModel,
-      // need to make sure that we only edit the direction steps if that is
-      // what has, in fact, been "dropped"
+      // need to make sure that we only edit the steps for the current
+      // direction (if that is what has, in fact, been "dropped")
       console.log('wake up the steps drop!!');
 
       console.log('direction: ', this.direction);
-      // now go ahead and update the steps of the directions....
-      // WORKING HERE (look in update-single-reading for an example....)
+      // the steps array is not allowed to include the ids (when it is newly created),
+      // so need to rebuild the array
+      let direction: any;
+      let stepData: any[] = [];
+      let counter: number = 0;
+      for (let step of this.direction.steps){
+        counter++;
+        stepData.push({
+          seq: counter,
+          description: step.description,
+        });
+      }
+      direction = {
+          seq: this.direction.seq,
+          steps: stepData
+      };
 
-
-
+      // need to delete the direction before recreating it with
+      // reordered steps....
+      this.directionService.deleteDirection(this.direction.id)
+        .subscribe(
+          result => {
+            console.log('successfully deleted existing direction: ', result);
+            this.directionService.createDirection(direction, this.parentId, this.direction.practice.id, this.directionTypeElement)
+              .subscribe(
+                result => {
+                  console.log('success!  result: ', result);
+                  //this.saveSource.next();//let the parent component know
+                  this.readingService.announceReadingsRefresh();
+                  //this.closeModal();
+                },
+                error => console.log('error! ', error)
+              );
+          },
+          error => console.log('could not delete direction: ', error)
+        );
 
     }
-
   }
 
   unsubscribeSubscription(subscription: Subscription) {
