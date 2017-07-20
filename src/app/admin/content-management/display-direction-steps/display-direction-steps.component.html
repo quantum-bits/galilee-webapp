@@ -47,7 +47,7 @@
       <tr *ngFor="let step of direction.steps" class="step">
         <td>
           <div><strong>Step {{step.seq}}:</strong>
-            <span *ngIf="editable" class="right">
+            <span *ngIf="editable && direction.steps.length > 1" class="right">
               <i class="grey-text text-darken-4 material-icons lr-arrow">
                 <span class="dragula-step-handle">swap_vert</span></i>
             </span>
