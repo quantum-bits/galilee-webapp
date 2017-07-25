@@ -1,53 +1,77 @@
-<div class="row">
-  <div class="col s12">
-    <div *ngIf="days">
-      <div class="row">
-        <ul class="tabs tabs-fixed-width" materialize="tabs">
-          <li class="tab disabled nav-arrow">
-            <a *ngIf="canShiftLeft" class="include-pointer" (click)="shiftWeek(-1)">
-              <i class="material-icons calendar">navigate_before</i>
-            </a>
-          </li>
-          <li *ngFor="let day of days; let i=index"
-              appSpy
-              class="tab"
-              [ngClass]="{ 'disabled': day.disabled }"
-          >
-            <!--
-             Note: $event.preventDefault() prevents the tab slider from sliding to the clicked position;
-                   we do this programmatically instead, since we need to be able to do that if the user
-                   clicks on the 'home' button, etc.  Doing it programmatically _and_ allowing the slider
-                   to move when the element is clicked leads to problems; see:
-                   https://github.com/InfomediaLtd/angular2-materialize/blob/master/app/components/tabs-routing.ts
+<div class="hide-on-small-only">
 
-            -->
-            <a
-              (click)="$event.preventDefault();shiftRCLDate(i)"
-              class="include-pointer"
-              [ngClass]="{ 'active': day.isRCLToday }"
-              [attr.href]="'#date-nav-tab'+i"
+  <div class="row">
+    <div class="col s12">
+      <div *ngIf="days">
+        <div class="row">
+          <ul class="tabs tabs-fixed-width" materialize="tabs">
+            <li class="tab disabled nav-arrow">
+              <a *ngIf="canShiftLeft" class="include-pointer" (click)="shiftWeek(-1)">
+                <i class="material-icons calendar">navigate_before</i>
+              </a>
+            </li>
+            <li *ngFor="let day of days; let i=index"
+                appSpy
+                class="tab"
+                [ngClass]="{ 'disabled': day.disabled }"
             >
-              <div class="center-align tooltipped"
-                   materialize="tooltip"
-                   data-position="bottom"
-                   data-delay="150"
-                   [attr.data-tooltip]="(day.date | amDateFormat:'LL')+disabledMessage(day.disabled)">
-                {{day.name}}
-              </div>
-            </a>
+              <!--
+               Note: $event.preventDefault() prevents the tab slider from sliding to the clicked position;
+                     we do this programmatically instead, since we need to be able to do that if the user
+                     clicks on the 'home' button, etc.  Doing it programmatically _and_ allowing the slider
+                     to move when the element is clicked leads to problems; see:
+                     https://github.com/InfomediaLtd/angular2-materialize/blob/master/app/components/tabs-routing.ts
 
-          </li>
-          <li class="tab disabled nav-arrow">
-            <a *ngIf="canShiftRight" class="include-pointer" (click)="shiftWeek(1)">
-              <i class="material-icons calendar">navigate_next</i>
-            </a>
-          </li>
-          <li *ngIf="currentUserIsAdmin" class="tab">
-            <input materialize materialize="pickadate" type="date" class="datepicker"
-                   [ngModel]="this.pickerdate"
-                   (ngModelChange)="updateDate($event)"
-                   [materializeParams]="[{ disable: this.datepickerReadings, format: 'yyyy-mm-dd', min: this.datepickerMin, max: this.datepickerMax }]" />
-          </li>
+              -->
+              <a
+                (click)="$event.preventDefault();shiftRCLDate(i)"
+                class="include-pointer"
+                [ngClass]="{ 'active': day.isRCLToday }"
+                [attr.href]="'#date-nav-tab'+i"
+              >
+                <div class="center-align tooltipped"
+                     materialize="tooltip"
+                     data-position="bottom"
+                     data-delay="150"
+                     [attr.data-tooltip]="(day.date | amDateFormat:'LL')+disabledMessage(day.disabled)">
+                  {{day.name}}
+                </div>
+              </a>
+
+            </li>
+            <li class="tab disabled nav-arrow">
+              <a *ngIf="canShiftRight" class="include-pointer" (click)="shiftWeek(1)">
+                <i class="material-icons calendar">navigate_next</i>
+              </a>
+            </li>
+            <li *ngIf="currentUserIsAdmin" class="tab">
+              <input materialize materialize="pickadate" type="date" class="datepicker"
+                     [ngModel]="this.pickerdate"
+                     (ngModelChange)="updateDate($event)"
+                     [materializeParams]="[{ disable: this.datepickerReadings, format: 'yyyy-mm-dd', min: this.datepickerMin, max: this.datepickerMax }]" />
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="hide-on-med-and-up">
+  <div class="row">
+    <div class="col s12">
+      <div *ngIf="days">
+        <ul class="tabs tabs-fixed-width" materialize="tabs">
+          <div class="row">
+            <div class="col s6 offset-s6">
+              <li class="tab">
+                <input materialize materialize="pickadate" type="date" class="datepicker"
+                       [ngModel]="this.pickerdate"
+                       (ngModelChange)="updateDate($event)"
+                       [materializeParams]="[{ disable: this.datepickerReadings, format: 'yyyy-mm-dd', min: this.datepickerMin, max: this.datepickerMax }]" />
+              </li>
+            </div>
+          </div>
         </ul>
       </div>
     </div>
