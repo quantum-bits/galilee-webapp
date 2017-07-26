@@ -51,21 +51,21 @@
             <span class="title"> {{reading.stdRef}}</span>
             <span *ngIf="stateManager.canEditReading()" class="right action-icons">
 
-            <a (click)="displayReading()"
-               class="grey-text text-darken-2 include-pointer">
-            <i class="material-icons lr-arrow">pageview</i>
-            </a>
-            <a (click)="displayDeleteReadingModal()"
-               class="grey-text text-darken-2 include-pointer">
-            <i class="material-icons lr-arrow">delete_forever</i>
-            </a>
+              <a (click)="displayReading()"
+                 class="grey-text text-darken-2 include-pointer">
+              <i class="material-icons lr-arrow">pageview</i>
+              </a>
+              <a (click)="displayDeleteReadingModal()"
+                 class="grey-text text-darken-2 include-pointer">
+              <i class="material-icons lr-arrow">delete_forever</i>
+              </a>
 
-            <a
-              (click)="openEditReadingForm(reading)"
-              class="grey-text text-darken-2 include-pointer">
-              <i class="material-icons lr-arrow">edit</i>
-            </a>
-          </span>
+              <a
+                (click)="openEditReadingForm(reading)"
+                class="grey-text text-darken-2 include-pointer">
+                <i class="material-icons lr-arrow">edit</i>
+              </a>
+            </span>
           </h5>
         </li>
 

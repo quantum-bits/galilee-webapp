@@ -44,11 +44,16 @@
                 <i class="material-icons calendar">navigate_next</i>
               </a>
             </li>
-            <li *ngIf="currentUserIsAdmin" class="tab">
+            <li *ngIf="currentUserIsAdmin" class="tab disabled">
               <input materialize materialize="pickadate" type="date" class="datepicker"
+                     [hidden]="true"
                      [ngModel]="this.pickerdate"
                      (ngModelChange)="updateDate($event)"
+                     [materializeActions]="adminActions"
                      [materializeParams]="[{ disable: this.datepickerReadings, format: 'yyyy-mm-dd', min: this.datepickerMin, max: this.datepickerMax }]" />
+              <a class="include-pointer" (click)="openAdminCalendar()">
+                <i class="material-icons calendar">date_range</i>
+              </a>
             </li>
           </ul>
         </div>
@@ -58,26 +63,23 @@
 </div>
 
 <div class="hide-on-med-and-up">
-  <div class="row">
-    <div class="col s12">
-      <div *ngIf="days">
-        <ul class="tabs tabs-fixed-width" materialize="tabs">
-          <div class="row">
-            <div class="col s6 offset-s6">
-              <li class="tab">
-                <input materialize materialize="pickadate" type="date" class="datepicker"
-                       [ngModel]="this.pickerdate"
-                       (ngModelChange)="updateDate($event)"
-                       [materializeParams]="[{ disable: this.datepickerReadings, format: 'yyyy-mm-dd', min: this.datepickerMin, max: this.datepickerMax }]" />
-              </li>
-            </div>
-          </div>
-        </ul>
-      </div>
+  <div class="small-device-date-nav">
+    <div *ngIf="days">
+      <span class="date-small-device">
+        {{formattedRCLDate()}}
+      </span>
+      <span class="right">
+        <input materialize materialize="pickadate" type="date" class="datepicker"
+               [hidden]="true"
+               [ngModel]="this.pickerdate"
+               (ngModelChange)="updateDate($event)"
+               [materializeActions]="actions"
+               [materializeParams]="[{ disable: this.datepickerReadings, format: 'yyyy-mm-dd', min: this.datepickerMin, max: this.datepickerMax }]" />
+        <a class="include-pointer" (click)="openCalendar()">
+          <i class="material-icons calendar">date_range</i>
+        </a>
+      </span>
     </div>
   </div>
 </div>
 
-<!--
-<a class="waves-effect waves-light btn" (click)="onClick()">button</a>
--->

@@ -1,8 +1,10 @@
-import { Component, OnInit, OnChanges, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, OnDestroy, Input, EventEmitter } from '@angular/core';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 
 import * as moment from 'moment';
+
+import {MaterializeAction} from 'angular2-materialize';
 
 import {ReadingService} from '../../shared/services/reading.service';
 import {DateNavSpyService} from '../../shared/services/date-nav-spy.service';
@@ -40,6 +42,9 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
   private datepickerMin: any = false;
   private datepickerMax: any = false;
   private currentUserIsAdmin: boolean;
+
+  actions = new EventEmitter<string|MaterializeAction>();
+  adminActions = new EventEmitter<string|MaterializeAction>();
 
   constructor(private router: Router,
               private readingService: ReadingService,
@@ -262,6 +267,28 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
       this.RCLDate = moment(event);
       this.router.navigate(['/end-user/readings', event]);
     }
+  }
+
+  formattedRCLDate() {
+    return this.RCLDate.format('ddd MMM DD');
+  }
+
+  openCalendar() {
+    this.actions.emit({action: "pickadate", params: ["open"]});
+    /*
+    window.setTimeout(()=> {
+      this.actions.emit({action: "pickadate", params: ["close"]});
+    }, 1000);
+    */
+  }
+
+  openAdminCalendar() {
+    this.adminActions.emit({action: "pickadate", params: ["open"]});
+    /*
+     window.setTimeout(()=> {
+     this.actions.emit({action: "pickadate", params: ["close"]});
+     }, 1000);
+     */
   }
 
 }

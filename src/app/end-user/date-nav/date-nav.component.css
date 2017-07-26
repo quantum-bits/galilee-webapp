@@ -1,6 +1,11 @@
 .material-icons.calendar {
   vertical-align: middle;
   padding-left: 10px;
+  color: rgb(121, 134, 203);
+}
+
+.material-icons.calendar:hover {
+  color: rgb(48,63,159);
 }
 
 .nav-arrow {
@@ -10,3 +15,19 @@
 picker__day picker__day--infocus picker__day--disabled {
   color: #dddddd;
 }
+
+.small-device-date-nav {
+  height: 48px;
+  line-height: 48px;
+  width: 100%;
+  background-color: #fff;
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.date-small-device {
+  text-transform: uppercase;
+  color: #3f51b5;
+}
+
