@@ -11,9 +11,68 @@
       <br>
       <p *ngIf="practiceData.steps.length > 1">Step {{stepIndex+1}} of {{practiceData.steps.length}}</p>
       <br *ngIf="practiceData.steps.length > 1">
-      <p [innerHTML]="practiceData.steps[stepIndex].description" class="step"></p>
+      <div [innerHTML]="practiceData.steps[stepIndex].description" class="step"></div>
 
       <br>
+
+      <ul class="stepper horizontal">
+        <li *ngFor="let resource of practiceData.steps[stepIndex].resources; let i=index"
+            class="step"
+            [class.active] = "i == 0">
+
+          <div class="step-content">
+            <div class="row valign-wrapper">
+              <div class="col s1">
+                <i *ngIf="hasPreviousResource(i)"
+                   class="material-icons previous-step">navigate_before</i>
+              </div>
+              <div class="col s10 center-align hide-on-med-and-up">
+
+                <img [src]="resource.fileUrl"
+                     [alt]="resource.caption"
+                     [width]="determineWidth(i, imageDimensions.smallViewPort.maxWidth, imageDimensions.smallViewPort.maxHeight )"
+                     [height]="determineHeight(i, imageDimensions.smallViewPort.maxWidth, imageDimensions.smallViewPort.maxHeight)"/>
+
+              </div>
+
+              <div class="col s10 center-align hide-on-small-only hide-on-large-only">
+
+                <img [src]="resource.fileUrl"
+                     [alt]="resource.caption"
+                     [width]="determineWidth(i, imageDimensions.medViewPort.maxWidth, imageDimensions.medViewPort.maxHeight )"
+                     [height]="determineHeight(i, imageDimensions.medViewPort.maxWidth, imageDimensions.medViewPort.maxHeight)"/>
+
+              </div>
+
+              <div class="col s10 center-align hide-on-med-and-down">
+
+                <img [src]="resource.fileUrl"
+                     [alt]="resource.caption"
+                     [width]="determineWidth(i, imageDimensions.largeViewPort.maxWidth, imageDimensions.largeViewPort.maxHeight )"
+                     [height]="determineHeight(i, imageDimensions.largeViewPort.maxWidth, imageDimensions.largeViewPort.maxHeight)"/>
+
+<!--
+                <img [src]="resource.fileUrl" [alt]="resource.caption" max-height="400px"/>
+                -->
+              </div>
+              <div class="col s1">
+                <i *ngIf="hasNextResource(i)"
+                   class="material-icons next-step">navigate_next</i>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s12 center-align">
+                {{resource.caption}}
+              </div>
+            </div>
+
+          </div>
+
+          <div class="step-title waves-effect">Media {{i}}</div>
+
+
+        </li>
+      </ul>
 
       <!--<div class="divider"></div>-->
 
@@ -29,3 +88,9 @@
     </div>
   </div>
 </div>
+
+
+<a class="waves-effect waves-light btn" (click)="initializeStepper()">initialize stepper</a>
+
+
+

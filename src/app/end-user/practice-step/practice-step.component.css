@@ -8,3 +8,10 @@ ul.browser-default li {
   padding-bottom: 10px;
 }
 
+ul.stepper.horizontal {
+  min-height: 600px;
+}
+
+.step-content {
+  padding-bottom: 20px !important;
+}

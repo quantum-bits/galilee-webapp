@@ -140,6 +140,7 @@ export class ReadingsComponent implements OnInit, OnDestroy {
       .subscribe(
         readings => {
           this.readingsData = readings;
+          this.addMedia();
           console.log(this.readingsData);
           this.todaysReadings = [];
           this.readingsData.readings.forEach(aReading => {
@@ -156,6 +157,78 @@ export class ReadingsComponent implements OnInit, OnDestroy {
         }
       );
   }
+
+  addMedia() {
+
+    let mockResource0 = {
+      id: 1,
+      caption: 'The Deposition',
+      author: 'António Nogueira',
+      date: '1564',
+      medium: 'oil on panel',
+      dimensions: '115 x 115 cm',
+      currentLocation: 'Museu Regional de Beja',
+      fileUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Antonio-nogueira_descida-da-cruz-1.jpg',
+      imageWidth: 591,
+      imageHeight: 680,
+      mimeType: 'image/jpeg'
+    }
+
+    let mockResource1 = {
+      id: 2,
+      caption: 'The Twelve-Year-Old Jesus Teaching in the Temple',
+      author: 'Ludovico Mazzolino',
+      date: '1524',
+      medium: 'oil on poplar wood',
+      dimensions: 'Height: 256 cm (100.8 in). Width: 182.5 cm (71.9 in).',
+      currentLocation: 'Gemäldegalerie, Berlin, room XVII',
+      fileUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Lodovico_Mazzolino_-_The_Twelve-Year-Old_Jesus_Teaching_in_the_Temple_-_Google_Art_Project.jpg/532px-Lodovico_Mazzolino_-_The_Twelve-Year-Old_Jesus_Teaching_in_the_Temple_-_Google_Art_Project.jpg',
+      imageWidth: 532, //px...assuming the server will determine this before sending back the image...(?)
+      imageHeight: 768,
+      mimeType: 'image/jpeg'
+    }
+
+    let mockResources = [mockResource0, mockResource1];
+
+    this.readingsData.readings.forEach(aReading => {
+      aReading.directions.forEach(direction => {
+        //a step has resources
+        direction.steps.forEach(step => {
+          step.resources = mockResources;
+          });
+      });
+    });
+  }
+
+  /*
+   export interface ResourceDetails {
+   filename: string;
+   }
+
+   */
+
+  /*
+   export interface IResource {
+   caption: string;
+   copyright_year: string;
+   copyright_owner: string;
+   fileName: string;
+
+   id: string;
+   user_id?: number;
+   resource_type_id: number;
+   details: ResourceDetails;
+
+   fileUrl
+   mimeType
+
+
+   }
+
+   */
+
+
+
 
   fetchGroupPosts() {
     this.postService.getAllUserPosts(this.maxNumberPosts)

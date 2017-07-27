@@ -22,7 +22,7 @@ import {Direction} from '../../../shared/interfaces/direction.interface';
 
 import {DirectionType, DirectionService} from '../../../shared/services/direction.service';
 
-declare var $: any; // for using jQuery within this angular component
+//declare var $: any; // for using jQuery within this angular component
 
 // the possible states for the update-single-user page
 export enum States {
@@ -603,10 +603,6 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
           error => console.log('could not delete directions: ', error)
         );
     }
-  }
-
-  initializeStepper(){
-      $('.stepper').activateStepper();
   }
 
   unsubscribeSubscription(subscription: Subscription) {
