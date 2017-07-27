@@ -163,6 +163,7 @@ export class ReadingsComponent implements OnInit, OnDestroy {
     let mockResource0 = {
       id: 1,
       caption: 'The Deposition',
+      description: 'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?',
       author: 'António Nogueira',
       date: '1564',
       medium: 'oil on panel',
@@ -177,6 +178,7 @@ export class ReadingsComponent implements OnInit, OnDestroy {
     let mockResource1 = {
       id: 2,
       caption: 'The Twelve-Year-Old Jesus Teaching in the Temple',
+      description: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.',
       author: 'Ludovico Mazzolino',
       date: '1524',
       medium: 'oil on poplar wood',
