@@ -190,7 +190,25 @@ export class ReadingsComponent implements OnInit, OnDestroy {
       mimeType: 'image/jpeg'
     }
 
-    let mockResources = [mockResource0, mockResource1];
+    let mockResource2 = {
+      id: 3,
+      caption: 'The Last Supper',
+      description: 'Ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.',
+      author: 'Leonardo da Vinci',
+      date: 'from 1495 until 1498',
+      medium: 'tempera on gesso, pitch and mastic',
+      dimensions: '460 × 880 cm (181.1 × 346.5 in)',
+      currentLocation: 'Convent of Santa Maria delle Grazie, Milan',
+      fileUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Leonardo_da_Vinci_%281452-1519%29_-_The_Last_Supper_%281495-1498%29.jpg',
+      imageWidth: 5076, //px...assuming the server will determine this before sending back the image...(?)
+      imageHeight: 2645,
+      mimeType: 'image/jpeg'
+    }
+
+
+
+
+    let mockResources = [mockResource0, mockResource1, mockResource2];
 
     this.readingsData.readings.forEach(aReading => {
       aReading.directions.forEach(direction => {

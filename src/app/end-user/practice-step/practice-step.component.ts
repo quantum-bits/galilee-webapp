@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, EventEmitter, ViewChild } from '@angular/core';
 import {Router} from '@angular/router';
 
-import {MaterializeAction} from "angular2-materialize"
+//import {MaterializeAction} from "angular2-materialize"
 
-declare var $: any; // for using jQuery within this angular component
+//declare var $: any; // for using jQuery within this angular component
 
 @Component({
   selector: 'app-practice-step',
@@ -18,7 +18,7 @@ export class PracticeStepComponent implements OnInit {
   @Input() practiceIndex: number;
   @Input() stepIndex: number;
 
-
+/*
   @ViewChild('carousel') carouselElement;
   actions = new EventEmitter<string>();
 
@@ -49,6 +49,7 @@ export class PracticeStepComponent implements OnInit {
     },
 
   }
+*/
 
   constructor(private router: Router) { }
 
@@ -84,49 +85,12 @@ export class PracticeStepComponent implements OnInit {
     this.router.navigate(['/end-user/reading-practice', this.dateString, this.readingIndex, this.practiceIndex, this.stepIndex -1]);
   }
 
-  hasPreviousResource(i: number) {
-    return i>0;
-  }
-
-  hasNextResource(i: number) {
-    return i < this.practiceData.steps[this.stepIndex].resources.length-1;
-  }
-
-  determineWidth(i: number, maxWidth: number, maxHeight: number) {
-    console.log('max width is: ', maxWidth);
-    let width = this.practiceData.steps[this.stepIndex].resources[i].imageWidth;
-    let height = this.practiceData.steps[this.stepIndex].resources[i].imageHeight;
-    let widthRatio = width/maxWidth;
-    let heightRatio = height/maxHeight;
-    if ((widthRatio <= 1 && heightRatio <= 1) || (widthRatio > heightRatio)) {
-      return maxWidth;
-    } else {
-      return width/heightRatio;
-    }
-
-  }
-
-  determineHeight(i: number, maxWidth: number, maxHeight: number) {
-    let width = this.practiceData.steps[this.stepIndex].resources[i].imageWidth;
-    let height = this.practiceData.steps[this.stepIndex].resources[i].imageHeight;
-    let widthRatio = width/maxWidth;
-    let heightRatio = height/maxHeight;
-    console.log('width ratio: ', widthRatio);
-    console.log('height ratio: ', heightRatio);
-    if ((widthRatio <= 1 && heightRatio <= 1) || (widthRatio < heightRatio)) {
-      return maxHeight;
-    } else {
-      return height/widthRatio;
-    }
-  }
-
-
-
+/*
   initializeStepper(){
     $('.carousel.carousel-slider').carousel({fullWidth: true});
     //$('.stepper').activateStepper();
   }
-
+*/
 
 
 

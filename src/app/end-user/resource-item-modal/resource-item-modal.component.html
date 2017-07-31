@@ -1,0 +1,40 @@
+<div #imageContainer id="resource-item-modal"
+     class="modal"
+     materialize="modal"
+     [materializeParams]="[{dismissible: true, endingTop: getTop()}]"
+     [materializeActions]="modalActions"
+     [ngStyle]="{ 'width': getWidth(), 'height': getHeight(), 'top': getTop() }"
+     (init)="this.openModal()">
+
+  <!--endingTop: '10%', // Ending top style attribute
+  ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+  alert("Ready");
+  console.log(modal, trigger);
+  },
+  complete: function() { alert('Closed'); } // Callback for Modal close
+-->
+  <div class="modal-content">
+
+    <img
+      [src]="resources[2].fileUrl"
+      [alt]="resources[2].caption"
+      width="100%"
+    />
+
+    <!--
+    <app-edit-user
+      [userData] = "userData"
+      [updateField] = "updateField"
+    ></app-edit-user>
+    -->
+  </div>
+
+  <!--
+  <div class="modal-footer">
+    <a class="waves-effect waves-green btn-flat" (click)="getContainerDimensions()">info</a>
+  </div>
+  -->
+
+
+</div>
+

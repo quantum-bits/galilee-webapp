@@ -1,0 +1,91 @@
+.media-data {
+  padding-right: 50px;
+  padding-bottom: 40px;
+}
+
+.carousel-custom-fixed {
+  padding-right: 20px;
+}
+//.carousel {
+//  &.carousel-slider {
+//    .carousel-fixed-item {
+//      &.with-indicators {
+//        bottom: 20px;
+//      }
+//    }
+//  }
+//}
+
+// text over image: https://css-tricks.com/text-blocks-over-image/
+
+.image {
+  position: relative;
+  width: 100%; /* for IE 6 */
+}
+
+.image-title {
+  position: absolute;
+  top: 0px;
+  //left: 0;
+  width: 100%;
+  text-align: center;
+  display: table;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  height: 80px;
+  background-color: rgba(255, 255, 255, 0.3);
+  color: black;
+}
+
+.image-title-text {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+
+.launch-modal-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  //width: 100%;
+  //text-align: center;
+  //display: table;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  //height: 80px;
+  //background-color: rgba(255, 255, 255, 0.3);
+  //color: black;
+}
+
+
+.carousel-custom {
+  @media only screen and (min-width: 601px) {
+    height: 500px !important;
+  }
+  @media only screen and (max-width: 600px) {
+    height: 500px !important;
+  }
+}
+
+
+//.hide-on-med-only {
+//  @media only screen and (min-width: $small-screen) and (max-width: $medium-screen) {
+//    display: none !important;
+//  }
+//}
+
+
+//$small-screen-up: 601px !default;
+//$medium-screen-up: 993px !default;
+//$large-screen-up: 1201px !default;
+//$small-screen: 600px !default;
+//$medium-screen: 992px !default;
+//$large-screen: 1200px !default;
+
+//$medium-and-up: "only screen and (min-width : #{$small-screen-up})" !default;
+//$large-and-up: "only screen and (min-width : #{$medium-screen-up})" !default;
+//$extra-large-and-up: "only screen and (min-width : #{$large-screen-up})" !default;
+//$small-and-down: "only screen and (max-width : #{$small-screen})" !default;
+//$medium-and-down: "only screen and (max-width : #{$medium-screen})" !default;
+//$medium-only: "only screen and (min-width : #{$small-screen-up}) and (max-width : #{$medium-screen})" !default;
+

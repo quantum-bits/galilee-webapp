@@ -13,8 +13,12 @@
       <br *ngIf="practiceData.steps.length > 1">
       <div [innerHTML]="practiceData.steps[stepIndex].description" class="step"></div>
 
-      <br *ngIf="practiceData.steps[stepIndex].resources.length > 0">
-
+      <div *ngIf="practiceData.steps[stepIndex].resources.length > 0">
+        <app-resource-list
+          [resources]="practiceData.steps[stepIndex].resources"
+        ></app-resource-list>
+      </div>
+      <!--
       <div *ngIf="practiceData.steps[stepIndex].resources.length > 0" class="carousel carousel-slider center" data-indicators="true"
            [ngClass]="{ 'initialized': showInitialized }"
            materialize="carousel"
@@ -24,13 +28,28 @@
         </div>
         <div *ngFor="let resource of practiceData.steps[stepIndex].resources; let i=index"
              class="carousel-item indigo lighten-3 white-text">
+          <div class="row">
+            <div class="col s6">
+              <img
+                [src]="resource.fileUrl"
+                [alt]="resource.caption"
+                width="100%"/>
+            </div>
+            <div class="col s6">
+              <h5>{{resource.caption}}</h5>
+              <div [innerHTML]="resource.description"></div>
+            </div>
+          </div>
+          <!--
           <h5>{{resource.caption}}</h5>
           <div [innerHTML]="resource.description"></div>
           <img
             [src]="resource.fileUrl"
             [alt]="resource.caption"/>
+
         </div>
       </div>
+      -->
 
       <br>
 

@@ -43,6 +43,9 @@ import { DateNavComponent } from './date-nav/date-nav.component';
 import { HelpCreateAccountComponent } from './help-create-account/help-create-account.component';
 import { HelpHowForumComponent } from './help-how-forum/help-how-forum.component';
 import { HelpHowJournalComponent } from './help-how-journal/help-how-journal.component';
+import { ResourceListComponent } from './resource-list/resource-list.component';
+import { ResourceItemModalComponent } from './resource-item-modal/resource-item-modal.component';
+import { ResourceItemModalAnchorDirective } from './resource-list/resource-item-modal-anchor.directive';
 
 const routes: Routes = [
   {
@@ -156,6 +159,9 @@ const routes: Routes = [
     ReactiveFormsModule,
     SharedModule
   ],
+  entryComponents: [
+    ResourceItemModalComponent
+  ],
   declarations: [
     //DashboardComponent,
     EndUserComponent,
@@ -189,7 +195,10 @@ const routes: Routes = [
     DateNavComponent,
     HelpCreateAccountComponent,
     HelpHowForumComponent,
-    HelpHowJournalComponent
+    HelpHowJournalComponent,
+    ResourceListComponent,
+    ResourceItemModalComponent,
+    ResourceItemModalAnchorDirective
   ]
 })
 export class EndUserModule {
