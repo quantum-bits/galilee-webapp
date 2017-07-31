@@ -1,7 +1,7 @@
 <div #imageContainer id="resource-item-modal"
      class="modal"
      materialize="modal"
-     [materializeParams]="[{dismissible: true, endingTop: getTop()}]"
+     [materializeParams]="[{dismissible: false, opacity: 0.9, endingTop: getTop()}]"
      [materializeActions]="modalActions"
      [ngStyle]="{ 'width': getWidth(), 'height': getHeight(), 'top': getTop() }"
      (init)="this.openModal()">
@@ -13,13 +13,41 @@
   },
   complete: function() { alert('Closed'); } // Callback for Modal close
 -->
-  <div class="modal-content">
 
+  <a class="modal-close">
+    <i class="material-icons grey-text lighten-4 include-pointer" (click)="closeModal()">close</i>
+  </a>
+
+  <div class="image">
     <img
-      [src]="resources[2].fileUrl"
-      [alt]="resources[2].caption"
+      [src]="resources[currentIndex].fileUrl"
+      [alt]="resources[currentIndex].caption"
       width="100%"
     />
+
+    <a *ngIf = "!showInfo" class="image-info-icon"
+    >
+      <i class="material-icons white-text include-pointer" (click)="toggleShowInfo()">info_outline</i>
+    </a>
+
+
+    <div *ngIf = "showInfo" class="image-info"
+        [ngStyle]="{'width': getInfoBoxWidth(), 'height': getInfoBoxHeight(), 'top': getInfoBoxTop(), 'left': getInfoBoxLeft()}"
+    >
+      <p><strong> Title: </strong>{{resources[currentIndex].caption}}</p>
+      <p><strong> Description: </strong>{{resources[currentIndex].description}}</p>
+      <p><strong> Author: </strong>{{resources[currentIndex].author}}</p>
+      <p><strong> Date: </strong>{{resources[currentIndex].date}}</p>
+      <p><strong> Medium: </strong>{{resources[currentIndex].medium}}</p>
+      <p><strong> Dimensions: </strong>{{resources[currentIndex].dimensions}}</p>
+      <p><strong> Current Location: </strong>{{resources[currentIndex].currentLocation}}</p>
+
+      <a class="image-action">
+        <i class="material-icons grey-text darken-2 include-pointer" (click)="toggleShowInfo()">clear</i>
+      </a>
+
+    </div>
+  </div>
 
     <!--
     <app-edit-user
@@ -27,7 +55,7 @@
       [updateField] = "updateField"
     ></app-edit-user>
     -->
-  </div>
+
 
   <!--
   <div class="modal-footer">

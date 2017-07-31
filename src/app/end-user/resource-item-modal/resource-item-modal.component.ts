@@ -10,13 +10,19 @@ import {MaterializeAction} from 'angular2-materialize';
 export class ResourceItemModalComponent implements OnInit {
 
   @Input() resources: any = null;
+  @Input() currentIndex: number = 0;
   @ViewChild('imageContainer') imageElement: ElementRef;
 
   modalActions = new EventEmitter<string|MaterializeAction>();
+  showInfo: boolean = true;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  toggleShowInfo() {
+    this.showInfo = !this.showInfo;
   }
 
   pxToNumber(val: string) {
@@ -29,6 +35,7 @@ export class ResourceItemModalComponent implements OnInit {
   numberToPx(val: number) {
     return val.toString()+'px';
   }
+
 
   /*
   The following provides some useful ways to determine the size of the
@@ -63,37 +70,60 @@ export class ResourceItemModalComponent implements OnInit {
     let viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 
-    let maxWidth = 0.95*viewportWidth;
+    let maxWidth = Math.min(0.95*viewportWidth, viewportWidth - 100); // to make sure there is room for the 'close' icon
     let maxHeight = 0.95*viewportHeight;
 
     let viewportAspectRatio = maxWidth/maxHeight;
 
-    // TODO: FIX THIS!!!  Hard-coding the 0th image here....
-    let width = this.resources[2].imageWidth;
-    let height = this.resources[2].imageHeight;
+    let width = this.resources[this.currentIndex].imageWidth;
+    let height = this.resources[this.currentIndex].imageHeight;
 
     let imageAspectRatio = width/height;
 
-    console.log('viewport: max width, max height:', maxWidth, maxHeight);
-    console.log('image: max width, max height:', width, height);
+    //console.log('viewport: max width, max height:', maxWidth, maxHeight);
+    //console.log('image: max width, max height:', width, height);
 
+    let modalData: any;
     if (imageAspectRatio > viewportAspectRatio) {
       // set image width to the full width available
       //console.log('iAR > vpAR...width: ', this.numberToPx(maxWidth));
-      return {
-        width: this.numberToPx(maxWidth),
-        height: this.numberToPx(height*maxWidth/width),
-        top: this.numberToPx((viewportHeight-height*maxWidth/width)/2)
+      modalData = {
+        width: maxWidth,
+        height: height*maxWidth/width
       };
 
     } else {
-      return {
-        width: this.numberToPx(width*maxHeight/height),
-        height: this.numberToPx(maxHeight),
-        top: this.numberToPx((viewportHeight-maxHeight)/2)
+      modalData = {
+        width: width*maxHeight/height,
+        height: maxHeight
       };
     }
+
+    modalData.top = (viewportHeight - modalData.height)/2;
+
+    if (imageAspectRatio > 1) {
+      // put the info box on the right half
+      modalData.infoBoxWidth = modalData.width/2;//margin is 10 px
+      modalData.infoBoxHeight = modalData.height;
+      modalData.infoBoxTop = 0;
+      modalData.infoBoxLeft = modalData.width/2;
+    } else {
+      // put the info box at the bottom
+      modalData.infoBoxWidth = modalData.width;//margin is 10 px
+      modalData.infoBoxHeight = modalData.height/2;
+      modalData.infoBoxTop = modalData.height/2;
+      modalData.infoBoxLeft = 0;
+    }
+
+    for (let key in modalData) {
+      modalData[key] = this.numberToPx(modalData[key]);
+    }
+
+    //console.log(modalData);
+
+    return modalData;
   }
+
 
 
   getWidth() {
@@ -105,9 +135,25 @@ export class ResourceItemModalComponent implements OnInit {
   }
 
   getTop() {
-    console.log('top: ', this.computeModalDimensions().top);
-    console.log(typeof this.computeModalDimensions().top);
+    //console.log('top: ', this.computeModalDimensions().top);
+    //console.log(typeof this.computeModalDimensions().top);
     return this.computeModalDimensions().top;
+  }
+
+  getInfoBoxWidth() {
+    return this.computeModalDimensions().infoBoxWidth;
+  }
+
+  getInfoBoxHeight() {
+    return this.computeModalDimensions().infoBoxHeight;
+  }
+
+  getInfoBoxTop() {
+    return this.computeModalDimensions().infoBoxTop;
+  }
+
+  getInfoBoxLeft() {
+    return this.computeModalDimensions().infoBoxLeft;
   }
 
   openModal() {

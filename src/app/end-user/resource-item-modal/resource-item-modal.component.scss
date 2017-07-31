@@ -3,10 +3,63 @@
   //width: 400px;
   max-height: 95% !important;
   max-width: 95% !important;
+  overflow: visible;
   //top: 2.5%;
   //top: 10px !important;
   //bottom: 10px !important;
 }
+
+.modal-close {
+  position: absolute;
+  right: -40px;
+  top: 0px;
+}
+
+.image {
+  position: relative;
+  width: 100%; /* for IE 6 */
+}
+
+.image-info-icon {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  //background-color: rgba(255, 255, 255, 0.8);
+}
+
+.image-info {
+  position: absolute;
+  padding: 10px 10px 5px 10px;
+  bottom: 0px;
+  text-align: left;
+  //display: table;
+  //margin: 10px;
+  //margin-bottom: 0px;
+  //height: 80px;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: black;
+
+  overflow: scroll;
+}
+
+.image-info p {
+  padding-bottom: 5px;
+}
+
+.image-info .image-action {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.image-title-text {
+  display: table-cell;
+  vertical-align: top;
+  overflow-y: scroll;
+}
+
+
+
 
 .modal-content {
   padding: 0px !important;
