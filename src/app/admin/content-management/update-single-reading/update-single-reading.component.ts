@@ -214,19 +214,6 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
       }
     });
 
-    // in the following we create a generic steps-bag, which is
-    // used to restrict movement to items with the class name 'dragula-step-handle';
-    // further restriction of movement of the steps within the bag is accomplished
-    // by giving names such as steps-bag0, steps-bag1, etc., within the display-direction-steps component
-    const stepsBag: any = this.dragulaService.find('steps-bag');
-    if (stepsBag !== undefined ) this.dragulaService.destroy('steps-bag');
-
-    dragulaService.setOptions('steps-bag', {
-      moves: function (el, container, handle) {
-        return handle.className === 'dragula-step-handle';
-      }
-    });
-
   }
 
   ngOnInit() {
@@ -251,6 +238,8 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
 
 
   ngAfterViewChecked() {
+    console.log('inside after view checked....');
+
     /*
 
      TODO: come back and look at this; it seems like when the subscription to the observable
@@ -319,6 +308,9 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
             } else {
               this.editingEnabled = this.stateManager.setStateGetEnabledList(States.ReadingNoPractices);
             }
+
+            this.initializeDragulaStepBags();
+
             this.editedReadingStdRef = '';
             this.maxDirectionSeq = 0;
             this.reading.directions.forEach(direction =>
@@ -345,6 +337,28 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
         }
       );
   }
+
+  // called after the reading for the page has been updated; now it
+  // is known how many directions there are, so we can initialize
+  // the steps-bags and make the steps only draggable by their handles....
+  initializeDragulaStepBags() {
+    let stepsBag: any;
+    // the step bags have names steps-bag0, steps-bag1, etc., within the display-direction-steps component
+    let index: number = 0;
+    let bagName: string;
+    for (let direction of this.reading.directions) {
+      bagName = 'steps-bag'+index.toString();
+      stepsBag = this.dragulaService.find(bagName);
+      if (stepsBag !== undefined ) this.dragulaService.destroy(bagName);
+      this.dragulaService.setOptions(bagName, {
+        moves: function (el, container, handle) {
+          return handle.className === 'dragula-step-handle';
+        }
+      });
+      index++;
+    }
+  }
+
 
   addReading(addReadingData: AddReadingData) {
 

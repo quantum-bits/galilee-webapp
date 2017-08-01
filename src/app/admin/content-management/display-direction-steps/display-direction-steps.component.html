@@ -26,15 +26,14 @@
     </a>
 
     <i *ngIf="showSwapVerticalArrows" class="grey-text text-darken-2 material-icons lr-arrow"><span class="dragula-handle">swap_vert</span></i>
-
-
+    
   </span>
   <div *ngIf="showSteps" class="step-table">
     <table class="striped">
       <!--
         the following sets up individual bags for the individual directions/practices
         in the list (if they don't already exist); in the case that directionIndex is null, it creates a
-        bag named 'steps-bagnull', but that seems to be OK; nothing gets done with this bag;
+        bag named 'steps-bagnull'; movement of these steps is disabled in the constructor of update-readings-list;
         also, the steps-bag0, steps-bag1,... names persist in the dragulaService, so we navigate around the site, editing
         different practices, then these bag names are being reused; this seems not to be a
         problem; we need differently named bags for the multiple instantiations of this component (so that steps can't be moved from one direction into another), and
@@ -46,12 +45,11 @@
         [dragulaModel]='direction.steps'>
       <tr *ngFor="let step of direction.steps" class="step">
         <td>
-          <div><strong>Step {{step.seq}}:</strong>
-            <span *ngIf="editable && direction.steps.length > 1" class="right">
-              <i class="grey-text text-darken-4 material-icons lr-arrow">
-                <span class="dragula-step-handle">swap_vert</span></i>
-            </span>
-          </div>
+          <strong>Step {{step.seq}}:</strong>
+          <span *ngIf="editable && direction.steps.length > 1" class="right">
+            <i class="grey-text text-darken-4 material-icons lr-arrow">
+              <span class="dragula-step-handle">swap_vert</span></i>
+          </span>
           <div [innerHTML]="step.description"></div>
         </td>
       </tr>

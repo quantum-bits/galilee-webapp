@@ -63,6 +63,7 @@ export class UpdateDailyPracticesListComponent implements OnInit, OnChanges, OnD
   }
 
   ngOnChanges() {
+    this.initializeDragulaStepBags()
     this.initializePractices();
   }
 
@@ -82,6 +83,28 @@ export class UpdateDailyPracticesListComponent implements OnInit, OnChanges, OnD
       }
     );
   }
+
+  // called after the reading for the page has been updated; now it
+  // is known how many daily directions there are, so we can initialize
+  // the steps-bags and make the steps only draggable by their handles....
+  initializeDragulaStepBags() {
+    let stepsBag: any;
+    // the step bags have names steps-bag0, steps-bag1, etc., within the display-direction-steps component
+    let index: number = 0;
+    let bagName: string;
+    for (let direction of this.readingDay.directions) {
+      bagName = 'steps-bag'+index.toString();
+      stepsBag = this.dragulaService.find(bagName);
+      if (stepsBag !== undefined ) this.dragulaService.destroy(bagName);
+      this.dragulaService.setOptions(bagName, {
+        moves: function (el, container, handle) {
+          return handle.className === 'dragula-step-handle';
+        }
+      });
+      index++;
+    }
+  }
+
 
   setEditingEnabledAllPractices(enabled: boolean) {
     this.editingEnabled = [];

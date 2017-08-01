@@ -67,6 +67,17 @@ export class UpdateReadingsListComponent implements OnInit, OnDestroy {
         return handle.className === 'dragula-handle';
       }
     });
+
+    // disable the movement of steps in the directions...they are all part of one
+    // bag named 'steps-bagnull'
+    const noneditableStepsBag: any = this.dragulaService.find('steps-bagnull');
+    if (noneditableStepsBag !== undefined ) this.dragulaService.destroy('steps-bagnull');
+
+    dragulaService.setOptions('steps-bagnull', {
+      moves: function (el, container, handle) {
+        return false;
+      }
+    });
   }
 
   ngOnInit() {

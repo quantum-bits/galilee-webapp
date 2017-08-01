@@ -209,6 +209,8 @@ export class ReadingsComponent implements OnInit, OnDestroy {
 
 
     let mockResources = [mockResource0, mockResource1, mockResource2];
+    // comment out the next line to add some mock resources....
+    //mockResources = [];
 
     this.readingsData.readings.forEach(aReading => {
       aReading.directions.forEach(direction => {
@@ -218,6 +220,7 @@ export class ReadingsComponent implements OnInit, OnDestroy {
           });
       });
     });
+    //this.readingsData.readings[0].directions[0].steps[1].resources = [mockResource1, mockResource2];
   }
 
   /*
