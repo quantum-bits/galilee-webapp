@@ -13,7 +13,7 @@ import {PostService} from './shared/services/post.service';
 import {ReadingDayService} from './shared/services/reading-day.service';
 import {DirectionService} from './shared/services/direction.service';
 import {DateNavSpyService} from './shared/services/date-nav-spy.service';
-
+import {ResourceModalCommunicationService} from './end-user/resource-list/resource-modal-communication.service';
 
 @Component({
   selector: 'app-root',
@@ -30,7 +30,8 @@ import {DateNavSpyService} from './shared/services/date-nav-spy.service';
     DirectionService,
     DateNavSpyService,
     UserService,
-    GroupService
+    GroupService,
+    ResourceModalCommunicationService
   ]
 })
 export class AppComponent implements OnInit {

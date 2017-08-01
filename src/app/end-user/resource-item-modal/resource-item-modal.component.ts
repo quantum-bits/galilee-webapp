@@ -2,6 +2,8 @@ import { Component, OnInit, Input, ViewChild, EventEmitter, ElementRef } from '@
 
 import {MaterializeAction} from 'angular2-materialize';
 
+import { ResourceModalCommunicationService } from '../resource-list/resource-modal-communication.service';
+
 @Component({
   selector: 'app-resource-item-modal',
   templateUrl: './resource-item-modal.component.html',
@@ -10,13 +12,13 @@ import {MaterializeAction} from 'angular2-materialize';
 export class ResourceItemModalComponent implements OnInit {
 
   @Input() resources: any = null;
-  @Input() currentIndex: number = 0;
+  @Input() currentIndex: number = 2;
   @ViewChild('imageContainer') imageElement: ElementRef;
 
   modalActions = new EventEmitter<string|MaterializeAction>();
   showInfo: boolean = true;
 
-  constructor() { }
+  constructor(private resourceModalCommunicationService: ResourceModalCommunicationService) { }
 
   ngOnInit() {
   }
@@ -118,12 +120,8 @@ export class ResourceItemModalComponent implements OnInit {
     for (let key in modalData) {
       modalData[key] = this.numberToPx(modalData[key]);
     }
-
-    //console.log(modalData);
-
     return modalData;
   }
-
 
 
   getWidth() {
@@ -163,16 +161,16 @@ export class ResourceItemModalComponent implements OnInit {
   }
 
   closeModal() {
+    //console.log('received message to close the modal....');
     this.modalActions.emit({action:"modal",params:['close']});
   }
 
   cancel() {
     // could close the modal directly here, but need to both close
     // the modal and delete the component itself, so we let the
-    // manage-users component take care of everything....
-    //let refreshUsers: boolean = false;
-    //this.userService.announceCloseAndCleanUp(refreshUsers);
-    this.closeModal();//TODO: FIX THIS
+    // resource-list component take care of everything....
+    //console.log('click registered...hitting the service');
+    this.resourceModalCommunicationService.announceModalClosed();
   }
 
 }

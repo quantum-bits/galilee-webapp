@@ -1,10 +1,12 @@
-import { Component, OnInit, Input, ViewChild, EventEmitter, ComponentFactoryResolver, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ViewChild, EventEmitter, ComponentFactoryResolver, ElementRef } from '@angular/core';
+
+import {Subscription} from 'rxjs/Subscription';
 
 import {MaterializeAction} from "angular2-materialize"
 
 import {ResourceItemModalComponent} from '../resource-item-modal/resource-item-modal.component';
 import { ResourceItemModalAnchorDirective } from '../resource-list/resource-item-modal-anchor.directive';
-
+import { ResourceModalCommunicationService } from '../resource-list/resource-modal-communication.service';
 
 declare var $: any; // for using jQuery within this angular component
 
@@ -13,7 +15,7 @@ declare var $: any; // for using jQuery within this angular component
   templateUrl: './resource-list.component.html',
   styleUrls: ['./resource-list.component.scss']
 })
-export class ResourceListComponent implements OnInit {
+export class ResourceListComponent implements OnInit, OnDestroy {
 
   //TODO: use the Resources type
   @Input() resources: any = null;
@@ -26,6 +28,7 @@ export class ResourceListComponent implements OnInit {
 
   //innerHtml
 
+  private subscription: Subscription;
   showInitialized = false;
 
   private modalComponent: any;
@@ -50,7 +53,14 @@ export class ResourceListComponent implements OnInit {
 
 
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
+  constructor(private componentFactoryResolver: ComponentFactoryResolver,
+              private resourceModalCommunicationService: ResourceModalCommunicationService) {
+    this.subscription = this.resourceModalCommunicationService.modalClosed$.subscribe(
+      () => {
+        //console.log('received word from modal...!  Closing....');
+        this.modalCloseAndCleanUp();
+      });
+  }
 
   ngOnInit() {
     //this.initializeCarousel();
@@ -156,13 +166,27 @@ export class ResourceListComponent implements OnInit {
     }
   }
 
-  openResourceModal(i: number) {
+  openResourceModal() {
     this.resourceItemModalAnchor.viewContainer.clear();
     let componentFactory = this.componentFactoryResolver.resolveComponentFactory(ResourceItemModalComponent);
     this.modalComponent = this.resourceItemModalAnchor.viewContainer.createComponent(componentFactory).instance;
     this.modalComponent.resources = this.resources;
   }
 
+  modalCloseAndCleanUp(){
+    // close the modal and then clear the viewContainer
+    //console.log('sending message to close modal');
+    this.modalComponent.closeModal();
+    //console.log('clearing view container');
+    this.resourceItemModalAnchor.viewContainer.clear();
+  }
+
+  ngOnDestroy() {
+    // prevent memory leak when component destroyed
+    this.subscription.unsubscribe();
+  }
+
+  /*
   initializeCarousel(){
     $('.carousel-slider').carousel({
       onCycleTo: function () {
@@ -171,6 +195,7 @@ export class ResourceListComponent implements OnInit {
       }
     });
   }
+  */
 
 
 
