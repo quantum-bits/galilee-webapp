@@ -1,0 +1,167 @@
+<div *ngIf="directionForm" class="direction-form">
+
+  <!--
+  <div class="container">
+  -->
+    <form [formGroup]="directionForm" novalidate (ngSubmit)="onSubmit()">
+
+      <div class="row tighten-margin">
+        <div class="col s12 ">
+
+          <!--
+          <div class="card">
+            <div class="card-content">
+          -->
+          <div class="row tighten-margin">
+            <div class="col s9">
+              <h5 *ngIf="isNewDirection" class="card-title">
+                Add New {{daily}} Practice and Steps
+              </h5>
+              <h5 *ngIf="!isNewDirection" class="card-title">
+                    Update {{daily}} Practice and/or Steps
+              </h5>
+            </div>
+            <div class="col s3 right-align btn-spacing">
+              <button
+                (click)="onCancel()"
+                class="waves-effect waves-teal btn-flat"
+                type="button"
+              >Cancel
+              </button>
+            </div>
+          </div>
+              <div class="row">
+                <div class="col s12">
+                  <ul class="collection with-header enable-overflow">
+                    <li class="collection-header"><span class="title">Practice</span></li>
+                    <li class="collection-item">
+                      <div *ngIf="havePracticeTypes" class="row">
+                        <div class="input-field col s12 m12 l10 offset-l1">
+                          <select
+                            materialize="material_select"
+                            [materializeSelectOptions]="selectOptions"
+                            formControlName="practiceId"
+                          >
+                            <option *ngIf="isNewDirection" value="" disabled selected>Choose a practice</option>
+                            <option *ngFor="let practice of availablePractices"
+                                    [value]="practice.id"
+                            >{{practice.title}}</option>
+                          </select>
+
+                          <div *ngIf="directionForm.controls.practiceId.errors && directionForm.controls.practiceId.touched">
+                            <small class="warning">
+                              This field is required.
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- https://scotch.io/tutorials/how-to-build-nested-model-driven-forms-in-angular-2 -->
+              <div class="row">
+                <div class="col s12">
+
+                  <div formArrayName="steps">
+
+                    <ul class="collection with-header">
+                      <li class="collection-header"><span class="title">Step(s)</span></li>
+                      <li *ngFor="let step of directionForm.controls.steps.controls; let i=index" class="collection-item">
+                        <!-- step header, show remove button when more than one address available -->
+                        <div class="row">
+                          <div class="input-field col s12">
+                            <span>Step {{i + 1}}</span>
+                            <a *ngIf="directionForm.controls.steps.controls.length > 1"
+                               (click)="removeStep(i)"
+                               class="grey-text text-darken-2 right include-pointer">
+                              <i class="material-icons">close</i>
+                            </a>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <!-- Angular assigns array index as group name by default 0, 1, 2, ... -->
+                          <div [formGroupName]="i" class="col s10 offset-s1">
+                            <!--description-->
+                            <!--<div class="input-field">
+                              <label [attr.for]="'description'+i">Description</label>
+                              -->
+                            <quill-editor
+                              [modules]="modules"
+                              [minLength]="'1'"
+                              (onEditorCreated)="onCreated(i, $event)"
+                              (onContentChanged)="setStepDescription(i, $event)"
+                            >
+                            </quill-editor>
+
+                            <div *ngIf="directionForm.controls.steps.controls[i].controls.description.errors && directionForm.controls.steps.controls[i].controls.description.touched">                                <small class="warning">
+                              This field is required.
+                            </small>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col s12">
+                  <a (click)="addStep()"
+                     class="grey-text text-darken-2 right include-pointer"> Add another step +
+                  </a>
+                </div>
+
+              </div>
+
+          <!--
+            </div>
+        -->
+        <!--
+            <div class="card-action">
+            -->
+
+
+        <!--
+            </div>
+
+          </div>
+          -->
+        </div>
+
+
+
+
+      </div>
+
+
+      <div class="row form-actions">
+        <div class="col s12">
+
+          <button
+            (click)="onCancel()"
+            class="waves-effect waves-light btn"
+            type="button"
+          >Cancel
+          </button>
+
+          <button
+            class="waves-effect waves-light btn right"
+            type="submit"
+            [class.disabled]="!directionForm.valid"
+            [disabled]="!directionForm.valid"
+          >{{ isNewDirection ? 'Save' : 'Update' }}
+          </button>
+
+
+          </div>
+        </div>
+
+    </form>
+  <!--
+  </div>
+  -->
+</div>
+
+<!--
+<a class="waves-effect waves-light btn" (click)="onCancel()">cancel</a>
+-->

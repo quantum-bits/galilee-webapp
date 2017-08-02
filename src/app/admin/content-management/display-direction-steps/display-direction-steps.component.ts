@@ -12,7 +12,8 @@ import {DirectionType, DirectionService} from '../../../shared/services/directio
 
 import {ReadingService} from '../../../shared/services/reading.service';
 
-import {UpdateDirectionFormComponent} from '../update-direction-form';
+import {UpdateDirectionFormV1Component} from '../update-direction-form-v1';
+import {UpdateDirectionFormComponent} from '../update-direction-form/update-direction-form.component';
 
 @Directive({
   selector: '[update-direction-anchor]',

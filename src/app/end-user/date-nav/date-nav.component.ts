@@ -52,7 +52,7 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
               private userService: UserService) {
     this.subscription = dateNavSpyService.dateNavUpdated$
       .subscribe(message => {
-        //console.log('SPY....received message: ', message);
+        console.log('SPY....received message: ', message);
         this.updateTabSlider();
       });
   }
@@ -95,11 +95,12 @@ export class DateNavComponent implements OnInit, OnChanges, OnDestroy {
     this.tabCounter++;
     //console.log('tabCounter: ', this.tabCounter);
     if (this.tabCounter === 7) {
-      //console.log('XXXXXXXXXXX moving tab to: ', this.currentDateIndex);
+      console.log('XXXXXXXXXXX moving tab to: ', this.currentDateIndex);
       let tabId = 'date-nav-tab' + this.currentDateIndex;
       $('ul.tabs').tabs('select_tab', 'date-nav-tab' + this.currentDateIndex);
     }
   }
+
   setRCLDate(dateString: string) {
     if (dateString === 'today') {
       this.RCLDate = moment();

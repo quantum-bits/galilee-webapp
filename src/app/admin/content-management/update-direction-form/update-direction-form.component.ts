@@ -1,25 +1,22 @@
-import { Component, OnInit, /*OnChanges,*/ Input/*, EventEmitter*/ } from '@angular/core';
-import {Router} from '@angular/router';
-import {FormArray, FormControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 
 import {Observable} from 'rxjs/Rx';
 import {Subject}    from 'rxjs/Subject';
 
-//import {IReading, ReadingDay} from '../../../shared/interfaces/reading.interface';
+import {ReadingService} from '../../../shared/services/reading.service';
+import {PracticeService} from "../../../shared/services/practice.service";
+import {IPractice} from '../../../shared/interfaces/practice.interface';
 
 import {Direction} from '../../../shared/interfaces/direction.interface';
 import {DirectionFormData} from '../../../shared/interfaces/direction-form-data.interface';
 import {DirectionType, DirectionService} from '../../../shared/services/direction.service';
-import {ReadingService} from '../../../shared/services/reading.service';
 
-import {PracticeService} from "../../../shared/services/practice.service";
-
-import {IPractice} from '../../../shared/interfaces/practice.interface';
 
 @Component({
   selector: 'app-update-direction-form',
-  templateUrl: './update-direction-form.component.html',
-  styleUrls: ['./update-direction-form.component.scss']
+  templateUrl: 'update-direction-form.component.html',
+  styleUrls: ['update-direction-form.component.scss']
 })
 export class UpdateDirectionFormComponent implements OnInit {
 
@@ -39,35 +36,16 @@ export class UpdateDirectionFormComponent implements OnInit {
   /**
    * Add new form elements dynamically:
    * https://scotch.io/tutorials/how-to-build-nested-model-driven-forms-in-angular-2
+   * Also, here is the example that this form is based on:
+   * https://plnkr.co/edit/azWpaFNC0ItsOcGj6sAK?p=preview
    */
 
   public directionForm: FormGroup; // our model driven form
 
-  //private directionFormData: Direction;
   private availablePractices: IPractice[] = [];
   private havePracticeTypes: boolean = false;
   private allPractices: IPractice[] = [];
   private daily: string = '';
-
-  private modules = {
-    toolbar: [
-      ['bold', 'italic', 'underline'],        // toggled buttons
-      ['blockquote'],// 'code-block'],
-
-      //[{ 'header': 1 }, { 'header': 2 }],               // custom button values
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-      //[{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-      [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-      //[{ 'direction': 'rtl' }],                         // text direction
-
-      //[{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-      //[{ 'header': [3, 4, false] }],
-
-      //['clean'],                                         // remove formatting button
-
-      ['link']                         // link, but not image or video
-    ]
-  };
 
   constructor(private formBuilder: FormBuilder,
               private practiceService: PracticeService,
@@ -79,17 +57,13 @@ export class UpdateDirectionFormComponent implements OnInit {
     this.isNewDirection = (this.directionFormData === null);
     console.log('is new direction: ', this.isNewDirection);
 
-
     if (this.directionTypeElement === DirectionType.day) {
       this.daily = "Daily";
     } else {
       this.daily = "";
     }
-
     this.determineAvailablePractices();
-
     this.initializeForm();
-
   }
 
   initializeForm() {
@@ -108,21 +82,15 @@ export class UpdateDirectionFormComponent implements OnInit {
           id: null, // for a new direction
           description: '',
           directionId: null,
-          seq: null
+          seq: null,
+          resources: []
         }]
       }
     }
 
     this.directionForm = this.formBuilder.group({
-      practiceId: [this.directionFormData.practice.id, [<any>Validators.required]],
-      steps: this.formBuilder.array([
-      ])
+      practiceId: [this.directionFormData.practice.id, [<any>Validators.required]]
     });
-
-    for (let step of this.directionFormData.steps){
-      this.addStep(step.description);
-    }
-
   }
 
   determineAvailablePractices(){
@@ -159,89 +127,10 @@ export class UpdateDirectionFormComponent implements OnInit {
     return returnVal;
   }
 
-  initStep(description?: string) {
-    // initialize our step
-    return this.formBuilder.group({
-      description: [description||'', Validators.required]
-    });
-  }
-
-  addStep(description?: string) {
-    // add step to the list
-    const control = <FormArray>this.directionForm.controls['steps'];
-    control.push(this.initStep(description));
-  }
-
-  removeStep(i: number) {
-    // remove step from the list
-    const control = <FormArray>this.directionForm.controls['steps'];
-    control.removeAt(i);
-  }
-
-  onCreated(i: number, event) {
-    event.root.innerHTML = this.directionForm.value.steps[i].description;
-  }
-
-  setStepDescription(i:number, event) {
-    const control = <FormArray>this.directionForm.controls['steps'];
-    control.at(i).setValue({description: event.html});
-  }
-
-  onSubmit(){
-    let practiceId = +this.directionForm.value.practiceId;
-    let direction = {seq: +this.directionFormData.seq};
-    let stepData = [];
-    let counter = 0;
-    for (let step of this.directionForm.value.steps){
-      counter++;
-      stepData.push({
-        seq: counter,
-        description: step.description,
-      });
-    }
-    direction['steps']=stepData;
-
-    console.log('direction: ', direction);
-
-    /**
-     * If !this.isNewDirection, need to delete the existing direction and then create a new one
-     */
-    if (this.isNewDirection) {
-      this.directionService.createDirection(direction, this.parentId, practiceId, this.directionTypeElement)
-        .subscribe(
-          result => {
-            console.log('success!  result: ', result);
-            this.saveSource.next();//let the parent component know
-            this.readingService.announceReadingsRefresh();
-            //this.closeModal();
-          },
-          error => console.log('error! ', error)
-        );
-    } else {// if this is an update, need to delete the existing direction first....
-      let directionId = this.directionFormData.id;
-      this.directionService.deleteDirection(directionId)
-        .subscribe(
-          result => {
-            console.log('successfully deleted existing direction: ', result);
-            this.directionService.createDirection(direction, this.parentId, practiceId, this.directionTypeElement)
-              .subscribe(
-                result => {
-                  console.log('success!  result: ', result);
-                  this.saveSource.next();//let the parent component know
-                  this.readingService.announceReadingsRefresh();
-                  //this.closeModal();
-                },
-                error => console.log('error! ', error)
-              );
-          },
-          error => console.log('could not delete direction: ', error)
-        );
-    }
-  }
-
 
   onCancel() {
     this.cancelEditingSource.next();
   }
+
 
 }

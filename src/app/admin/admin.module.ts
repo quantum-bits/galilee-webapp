@@ -51,6 +51,7 @@ import { EditOrganizationModalAnchorDirective } from './organization-management/
 import { EditOrganizationModalComponent } from './organization-management/edit-organization-modal/edit-organization-modal.component';
 import { EditOrganizationComponent } from './organization-management/edit-organization/edit-organization.component';
 import { PassagePickerAnchorDirective, UpdateSingleReadingComponent } from './content-management/update-single-reading/update-single-reading.component';
+import { UpdateDirectionFormV1Component } from './content-management/update-direction-form-v1/update-direction-form-v1.component';
 import { UpdateDirectionFormComponent } from './content-management/update-direction-form/update-direction-form.component';
 
 const routes: Routes = [
@@ -116,6 +117,7 @@ const routes: Routes = [
     EditOrganizationComponent,
     UpdateSingleReadingComponent,
     PassagePickerAnchorDirective,
+    UpdateDirectionFormV1Component,
     UpdateDirectionFormComponent
   ],
   exports: [
@@ -128,6 +130,7 @@ const routes: Routes = [
     EditOrganizationModalComponent,
     VerseRangeComponent,
     PassagePickerComponent,
+    UpdateDirectionFormV1Component,
     UpdateDirectionFormComponent
   ],
   imports: [
