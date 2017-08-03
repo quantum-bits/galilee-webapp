@@ -41,7 +41,7 @@ export class ResourceArrayComponent implements OnInit {
   }
 
   removeResource(index: number) {
-    if (this.resources.length > 1) {
+    if (this.resources.length > 0) {
       this.resources.splice(index, 1);
       (<FormArray>this.parentForm.get('resources')).removeAt(index);
     }

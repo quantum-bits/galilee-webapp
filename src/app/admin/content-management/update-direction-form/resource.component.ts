@@ -52,9 +52,37 @@ export class ResourceComponent implements OnInit {
 
   toFormGroup(resource: IResource) {
     return this.formBuilder.group({
-      description: [resource.description, Validators.required]
+      caption: [resource.caption, Validators.required],
+      description: [resource.description],
+      author: [resource.author],
+      date: [resource.date],
+      medium: [resource.medium],
+      dimensions: [resource.dimensions],
+      currentLocation: [resource.currentLocation],
+      originalFileUrl: [resource.originalFileUrl, Validators.required]
     });
   }
+
+  /*
+
+   id: null, // for a new resource
+   seq: null,
+   caption: '',
+   description: '',
+   author: '',
+   date: '',
+   medium: '',
+   dimensions: '',
+   currentLocation: '',
+   fileUrl: null, // api endpoint on our server
+   originalFileUrl: '', // original source of the image (wikimedia commons, say)
+   imageWidth: null, // determined by the server-side code
+   imageHeight: null, // determined by the server-side code
+   mimeType: '' //
+   */
+
+
+
 
   onCreated(event) {
     event.root.innerHTML = this.resourceGroup.value.description;

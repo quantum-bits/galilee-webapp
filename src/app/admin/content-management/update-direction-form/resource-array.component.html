@@ -1,28 +1,28 @@
 <div class="row">
   <div class="col s12">
-
     <div [formGroup]="parentForm">
       <div formArrayName="resources">
-
-        <ul class="collection with-header">
-          <li class="collection-header"><span class="title">Resource(s)</span></li>
-          <li *ngFor="let resource of resources; let i=index" class="collection-item">
-
-            <app-resource
-              [formArray]="parentForm.controls.resources"
-              [resource]="resource"
-              [index]="i"
-              (removed)="removeResource(i)">
-            </app-resource>
-          </li>
-
-        </ul>
+        <div *ngFor="let resource of resources; let i=index">
+          <app-resource
+            [formArray]="parentForm.controls.resources"
+            [resource]="resource"
+            [index]="i"
+            (removed)="removeResource(i)">
+          </app-resource>
+        </div>
       </div>
     </div>
-    <div class="col s12">
-      <a (click)="addResource()"
-         class="grey-text text-darken-2 right include-pointer"> Add another resource +
-      </a>
-    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col s12">
+    <a *ngIf="resources.length > 0"
+       (click)="addResource()"
+       class="grey-text text-darken-2 right include-pointer"> Add another resource +
+    </a>
+    <a *ngIf="resources.length == 0"
+       (click)="addResource()"
+       class="grey-text text-darken-2 right include-pointer"> Add a resource +
+    </a>
   </div>
 </div>

@@ -2,7 +2,6 @@
   <div class="input-field col s12">
     <span>Resource {{index + 1}}</span>
     <a
-      *ngIf="formArray.length > 1"
       (click)="removed.emit()"
       class="grey-text text-darken-2 right include-pointer"
     >
@@ -11,15 +10,105 @@
   </div>
 </div>
 <div class="row">
-  <div [formGroup]="resourceGroup" class="col s10 offset-s1">
-
-    <quill-editor
-      [modules]="modules"
-      [minLength]="'0'"
-      (onEditorCreated)="onCreated($event)"
-      (onContentChanged)="setResourceDescription($event)"
-    >
-    </quill-editor>
-    
+  <div [formGroup]="resourceGroup">
+    <div class="col s12">
+      <!-- description -->
+      <quill-editor
+        [placeholder]="'Description of this resource (not required)....'"
+        [modules]="modules"
+        [minLength]="'0'"
+        (onEditorCreated)="onCreated($event)"
+        (onContentChanged)="setResourceDescription($event)"
+      >
+      </quill-editor>
+    </div>
+    <div class="input-field col s12">
+      <!-- caption -->
+      <input
+        [input-wake-up]="'caption'"
+        [class.warning-background]="resourceGroup.controls.caption.errors && resourceGroup.controls.caption.touched"
+        id="caption"
+        type="text"
+        formControlName="caption">
+      <label for="caption">Caption</label>
+      <div *ngIf="resourceGroup.controls.caption.errors && resourceGroup.controls.caption.touched">
+        <small class="warning">
+          This field is required.
+        </small>
+      </div>
+    </div>
+    <div class="input-field col s12">
+      <!-- originalFileUrl -->
+      <input
+        [input-wake-up]="'originalFileUrl'"
+        [class.warning-background]="resourceGroup.controls.originalFileUrl.errors && resourceGroup.controls.originalFileUrl.touched"
+        id="originalFileUrl"
+        type="text"
+        formControlName="originalFileUrl">
+      <label for="originalFileUrl">Url of the file (not the page)</label>
+      <div *ngIf="resourceGroup.controls.originalFileUrl.errors && resourceGroup.controls.originalFileUrl.touched">
+        <small class="warning">
+          This field is required.
+        </small>
+      </div>
+    </div>
+    <div class="input-field col s12">
+      <!-- author -->
+      <input
+        [input-wake-up]="'author'"
+        id="author"
+        type="text"
+        formControlName="author">
+      <label for="author">Author (optional)</label>
+    </div>
+    <div class="input-field col s12">
+      <!-- date -->
+      <input
+        [input-wake-up]="'date'"
+        id="date"
+        type="text"
+        formControlName="date">
+      <label for="date">Date (optional)</label>
+    </div>
+    <div class="input-field col s12">
+      <!-- medium -->
+      <input
+        [input-wake-up]="'medium'"
+        id="medium"
+        type="text"
+        formControlName="medium">
+      <label for="medium">Medium (optional)</label>
+    </div>
+    <div class="input-field col s12">
+      <!-- dimensions -->
+      <input
+        [input-wake-up]="'dimensions'"
+        id="dimensions"
+        type="text"
+        formControlName="dimensions">
+      <label for="dimensions">Dimensions (optional)</label>
+    </div>
+    <div class="input-field col s12">
+      <!-- currentLocation -->
+      <input
+        [input-wake-up]="'currentLocation'"
+        id="currentLocation"
+        type="text"
+        formControlName="currentLocation">
+      <label for="currentLocation">Current Location (optional)</label>
+    </div>
   </div>
 </div>
+
+
+
+<!--
+caption: [resource.caption],
+      description: [resource.description, Validators.required],
+      author: [resource.author],
+      date: [resource.date],
+      medium: [resource.medium],
+      dimensions: [resource.dimensions],
+      currentLocation: [resource.currentLocation],
+      originalFileUrl: [resource.originalFileUrl, Validators.required]
+    -->
