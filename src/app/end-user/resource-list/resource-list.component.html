@@ -5,9 +5,8 @@
      [ngClass]="{ 'initialized': showInitialized }"
      data-indicators="true"
      materialize="carousel"
-     [materializeParams]="[{fullWidth: true}]"
+     [materializeParams]="[{fullWidth: true, onCycleTo: carouselCycled }]"
 >
-
 
 
   <div class="carousel-fixed-item right-align carousel-custom-fixed">
@@ -21,7 +20,7 @@
   </div>
   -->
   <div *ngFor="let resource of resources; let i=index"
-       class="carousel-item indigo lighten-3">
+       class="carousel-item indigo lighten-3" [attr.data-carousel-index]="i">
     <div class="row">
       <div class="col s12 center">
         <div class="image">
@@ -30,7 +29,7 @@
             [alt]="resource.caption"
             [attr.width]="determineWidth(i)"
             [attr.height]="determineHeight(i)"
-            />
+          />
           <h5 class="image-title"><span class="image-title-text">{{resource.caption}}</span></h5>
           <!--
           <div class="launch-modal-button">

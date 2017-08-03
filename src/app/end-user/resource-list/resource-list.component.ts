@@ -28,6 +28,11 @@ export class ResourceListComponent implements OnInit, OnDestroy {
 
   //innerHtml
 
+  carouselCycled(curr_item, dragged) {
+    let curr_index = curr_item.data('carousel-index');
+    console.log("carousel cycled to index", curr_index);
+  }
+
   private subscription: Subscription;
   showInitialized = false;
 
