@@ -8,3 +8,44 @@
 .warning {
   color: #c62828;
 }
+
+.material-icons.lr-arrow {
+  vertical-align: middle;
+  padding-left: 0px;
+}
+
+.quill-editor {
+  margin-bottom: 10px;
+}
+
+.resource-item {
+  margin-top: 10px;
+  //border: solid 1px grey;
+  border-radius: 2px;
+  background-color: rgba(0,0,0,0.02);
+}
+
+.resource-item-warning {
+  margin-top: 10px;
+  //border: solid 1px grey;
+  border-radius: 2px;
+  background-color: rgba(255,0,0,0.1);
+}
+
+.media-title {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: rgba(0,0,0,0.1);
+}
+
+.media-title-warning {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.metadata-title {
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: rgba(0,0,0,0.05);
+}

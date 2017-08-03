@@ -29,6 +29,7 @@ export class ResourceListComponent implements OnInit, OnDestroy {
   //innerHtml
 
   carouselCycled(curr_item, dragged) {
+    // jQuery: 'data-carousel-index' in the template is connected to 'carousel-index' here
     let curr_index = curr_item.data('carousel-index');
     console.log("carousel cycled to index", curr_index);
   }

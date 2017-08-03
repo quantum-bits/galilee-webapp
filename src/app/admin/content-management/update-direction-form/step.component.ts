@@ -32,7 +32,6 @@ export class StepComponent implements OnInit {
 
       //[{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
       //[{ 'header': [3, 4, false] }],
-
       //['clean'],                                         // remove formatting button
 
       ['link']                         // link, but not image or video
@@ -60,8 +59,15 @@ export class StepComponent implements OnInit {
   }
 
   // see: https://toddmotto.com/angular-2-form-controls-patch-value-set-value
+  //      https://stackoverflow.com/questions/42399462/angular2-how-to-set-touched-property-on-from-to-true
   setStepDescription(event) {
     this.stepGroup.controls['description'].setValue(event.html);
+  }
+
+  selectionChanged(event) {
+    if ((event.range === null) && (event.oldRange !== null)) {
+      this.stepGroup.controls['description'].markAsTouched();
+    }
   }
 
 }

@@ -18,13 +18,16 @@
     <!--<div class="input-field">
       <label [attr.for]="'description'+i">Description</label>
       -->
-    <quill-editor
-      [modules]="modules"
-      [minLength]="'1'"
-      (onEditorCreated)="onCreated($event)"
-      (onContentChanged)="setStepDescription($event)"
-    >
-    </quill-editor>
+    <div [class.quill-warning]="stepGroup.controls.description.errors && stepGroup.controls.description.touched">
+      <quill-editor
+        [modules]="modules"
+        [minLength]="'1'"
+        (onEditorCreated)="onCreated($event)"
+        (onContentChanged)="setStepDescription($event)"
+        (onSelectionChanged)="selectionChanged($event)"
+      >
+      </quill-editor>
+    </div>
 
     <div *ngIf="stepGroup.controls.description.errors && stepGroup.controls.description.touched">                                <small class="warning">
       This field is required.

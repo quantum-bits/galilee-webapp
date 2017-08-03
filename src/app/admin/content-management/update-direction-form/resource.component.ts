@@ -18,6 +18,8 @@ export class ResourceComponent implements OnInit {
   @Output() removed = new EventEmitter();
 
   resourceGroup: FormGroup;
+  isOpen: boolean = true;
+  metadataOpen: boolean = false;
 
   modules = {
     toolbar: [
@@ -63,27 +65,6 @@ export class ResourceComponent implements OnInit {
     });
   }
 
-  /*
-
-   id: null, // for a new resource
-   seq: null,
-   caption: '',
-   description: '',
-   author: '',
-   date: '',
-   medium: '',
-   dimensions: '',
-   currentLocation: '',
-   fileUrl: null, // api endpoint on our server
-   originalFileUrl: '', // original source of the image (wikimedia commons, say)
-   imageWidth: null, // determined by the server-side code
-   imageHeight: null, // determined by the server-side code
-   mimeType: '' //
-   */
-
-
-
-
   onCreated(event) {
     event.root.innerHTML = this.resourceGroup.value.description;
   }
@@ -91,6 +72,14 @@ export class ResourceComponent implements OnInit {
   // see: https://toddmotto.com/angular-2-form-controls-patch-value-set-value
   setResourceDescription(event) {
     this.resourceGroup.controls['description'].setValue(event.html);
+  }
+
+  toggleOpenClose() {
+    this.isOpen = !this.isOpen;
+  }
+
+  toggleMetadataOpenClose () {
+    this.metadataOpen = !this.metadataOpen;
   }
 
 }
