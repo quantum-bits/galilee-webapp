@@ -6,7 +6,7 @@
         class="grey-text text-darken-2 include-pointer">
         <i class="material-icons lr-arrow">remove</i>
       </a>
-      Media: Art
+      Media: Art <span *ngIf="resourceGroup.value.caption != ''">({{resourceGroup.value.caption}})</span>
       <a
         (click)="removed.emit()"
         class="grey-text text-darken-2 right include-pointer"
@@ -145,7 +145,7 @@
         class="grey-text text-darken-2 include-pointer">
         <i class="material-icons lr-arrow">add</i>
       </a>
-      Media: Art
+      Media: Art <span *ngIf="resourceGroup.value.caption != ''">({{resourceGroup.value.caption}})</span>
       <a
         (click)="removed.emit()"
         class="grey-text text-darken-2 right include-pointer"
