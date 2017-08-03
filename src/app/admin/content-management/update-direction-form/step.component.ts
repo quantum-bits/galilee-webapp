@@ -15,11 +15,10 @@ export class StepComponent implements OnInit {
 
   @Input() formArray: FormArray;
   @Input() step: Step;
+  @Input() index: number;
   @Output() removed = new EventEmitter();
 
   stepGroup: FormGroup;
-
-  index: number;
 
   modules = {
     toolbar: [
@@ -47,7 +46,6 @@ export class StepComponent implements OnInit {
     this.stepGroup = this.toFormGroup(this.step);
 
     resolvedPromise.then(() => {
-      this.index = this.formArray.length;
       this.formArray.push(this.stepGroup);
     })
   }
@@ -66,11 +64,5 @@ export class StepComponent implements OnInit {
   setStepDescription(event) {
     this.stepGroup.controls['description'].setValue(event.html);
   }
-
-
-  //TODO: when you delete a step at the moment, it doesn't renumber
-  //      the other steps....hmm.....
-
-
 
 }

@@ -11,6 +11,7 @@
             <app-step
                     [formArray]="parentForm.controls.steps"
                     [step]="step"
+                    [index]="i"
                     (removed)="removeStep(i)">
             </app-step>
           </li>

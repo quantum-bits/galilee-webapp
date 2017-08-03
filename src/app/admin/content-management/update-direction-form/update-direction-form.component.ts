@@ -127,7 +127,58 @@ export class UpdateDirectionFormComponent implements OnInit {
     return returnVal;
   }
 
+  onSubmit(){
+    let practiceId = +this.directionForm.value.practiceId;
+    let direction = {seq: +this.directionFormData.seq};
+    let stepData = [];
+    let counter = 0;
+    for (let step of this.directionForm.value.steps){
+      counter++;
+      stepData.push({
+        seq: counter,
+        description: step.description,
+      });
+    }
+    direction['steps']=stepData;
 
+    console.log('direction: ', direction);
+
+    /**
+     * If !this.isNewDirection, need to delete the existing direction and then create a new one
+     */
+    if (this.isNewDirection) {
+      this.directionService.createDirection(direction, this.parentId, practiceId, this.directionTypeElement)
+        .subscribe(
+          result => {
+            console.log('success!  result: ', result);
+            this.saveSource.next();//let the parent component know
+            this.readingService.announceReadingsRefresh();
+            //this.closeModal();
+          },
+          error => console.log('error! ', error)
+        );
+    } else {// if this is an update, need to delete the existing direction first....
+      let directionId = this.directionFormData.id;
+      this.directionService.deleteDirection(directionId)
+        .subscribe(
+          result => {
+            console.log('successfully deleted existing direction: ', result);
+            this.directionService.createDirection(direction, this.parentId, practiceId, this.directionTypeElement)
+              .subscribe(
+                result => {
+                  console.log('success!  result: ', result);
+                  this.saveSource.next();//let the parent component know
+                  this.readingService.announceReadingsRefresh();
+                  //this.closeModal();
+                },
+                error => console.log('error! ', error)
+              );
+          },
+          error => console.log('could not delete direction: ', error)
+        );
+    }
+  }
+  
   onCancel() {
     this.cancelEditingSource.next();
   }
