@@ -28,10 +28,12 @@ export class ResourceListComponent implements OnInit, OnDestroy {
 
   //innerHtml
 
+  carouselIndex: number = 0;
+
   carouselCycled(curr_item, dragged) {
     // jQuery: 'data-carousel-index' in the template is connected to 'carousel-index' here
-    let curr_index = curr_item.data('carousel-index');
-    console.log("carousel cycled to index", curr_index);
+    this.carouselIndex = curr_item.data('carousel-index');
+    console.log("carousel cycled to index", this.carouselIndex);
   }
 
   private subscription: Subscription;
@@ -173,10 +175,12 @@ export class ResourceListComponent implements OnInit, OnDestroy {
   }
 
   openResourceModal() {
+    console.log('carousel index: ', this.carouselIndex);
     this.resourceItemModalAnchor.viewContainer.clear();
     let componentFactory = this.componentFactoryResolver.resolveComponentFactory(ResourceItemModalComponent);
     this.modalComponent = this.resourceItemModalAnchor.viewContainer.createComponent(componentFactory).instance;
     this.modalComponent.resources = this.resources;
+    this.modalComponent.currentIndex = this.carouselIndex;
   }
 
   modalCloseAndCleanUp(){
@@ -187,22 +191,13 @@ export class ResourceListComponent implements OnInit, OnDestroy {
     this.resourceItemModalAnchor.viewContainer.clear();
   }
 
+  logIndex() {
+    console.log('carousel index: ', this.carouselIndex);
+  }
+
   ngOnDestroy() {
     // prevent memory leak when component destroyed
     this.subscription.unsubscribe();
   }
-
-  /*
-  initializeCarousel(){
-    $('.carousel-slider').carousel({
-      onCycleTo: function () {
-        //do what needs to be done in here ...
-        console.log('slid!');
-      }
-    });
-  }
-  */
-
-
 
 }

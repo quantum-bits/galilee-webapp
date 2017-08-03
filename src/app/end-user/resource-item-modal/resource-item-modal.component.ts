@@ -12,7 +12,7 @@ import { ResourceModalCommunicationService } from '../resource-list/resource-mod
 export class ResourceItemModalComponent implements OnInit {
 
   @Input() resources: any = null;
-  @Input() currentIndex: number = 2;
+  @Input() currentIndex: number = 0;
   @ViewChild('imageContainer') imageElement: ElementRef;
 
   modalActions = new EventEmitter<string|MaterializeAction>();
