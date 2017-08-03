@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="input-field col s12">
+    <span>Step {{index + 1}}</span>
+    <a
+      *ngIf="formArray.length > 1"
+      (click)="removed.emit()"
+      class="grey-text text-darken-2 right include-pointer"
+    >
+      <i class="material-icons">close</i>
+    </a>
+  </div>
+</div>
+<div class="row">
+  <!-- Angular assigns array index as group name by default 0, 1, 2, ... -->
+  <div [formGroup]="stepGroup" class="col s10 offset-s1">
+
+    <!--description-->
+    <!--<div class="input-field">
+      <label [attr.for]="'description'+i">Description</label>
+      -->
+    <quill-editor
+      [modules]="modules"
+      [minLength]="'1'"
+      (onEditorCreated)="onCreated($event)"
+      (onContentChanged)="setStepDescription($event)"
+    >
+    </quill-editor>
+
+
+
+    <div *ngIf="stepGroup.controls.description.errors && stepGroup.controls.description.touched">                                <small class="warning">
+      This field is required.
+    </small>
+    </div>
+  </div>
+</div>
+
+<!--
+<email-array [parentForm]="contractGroup" [emails]="contract?.emails"></email-array>
+-->
+
+<!--
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <span>Contract {{index + 1}}</span>
+    <span class="glyphicon glyphicon-remove pull-right" *ngIf="formArray.length > 1" (click)="removed.emit()"></span>
+  </div>
+  <div class="panel-body">
+    <div [formGroup]="contractGroup">
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" class="form-control" formControlName="name">
+      </div>
+      <email-array [parentForm]="contractGroup" [emails]="contract?.emails"></email-array>
+    </div>
+  </div>
+</div>
+-->

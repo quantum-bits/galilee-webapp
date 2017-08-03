@@ -53,6 +53,10 @@ import { EditOrganizationComponent } from './organization-management/edit-organi
 import { PassagePickerAnchorDirective, UpdateSingleReadingComponent } from './content-management/update-single-reading/update-single-reading.component';
 import { UpdateDirectionFormV1Component } from './content-management/update-direction-form-v1/update-direction-form-v1.component';
 import { UpdateDirectionFormComponent } from './content-management/update-direction-form/update-direction-form.component';
+import { StepArrayComponent } from './content-management/update-direction-form/step-array.component';
+import { StepComponent } from './content-management/update-direction-form/step.component';
+import { ResourceArrayComponent } from './content-management/update-direction-form/resource-array.component';
+import { ResourceComponent } from './content-management/update-direction-form/resource.component';
 
 const routes: Routes = [
   {
@@ -118,7 +122,11 @@ const routes: Routes = [
     UpdateSingleReadingComponent,
     PassagePickerAnchorDirective,
     UpdateDirectionFormV1Component,
-    UpdateDirectionFormComponent
+    UpdateDirectionFormComponent,
+    StepArrayComponent,
+    StepComponent,
+    ResourceArrayComponent,
+    ResourceComponent
   ],
   exports: [
     EditUserComponent

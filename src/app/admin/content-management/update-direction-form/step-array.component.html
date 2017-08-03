@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col s12">
+
+    <div [formGroup]="parentForm">
+      <div formArrayName="steps">
+
+        <ul class="collection with-header">
+          <li class="collection-header"><span class="title">Step(s)</span></li>
+          <li *ngFor="let step of steps; let i=index" class="collection-item">
+
+            <app-step
+                    [formArray]="parentForm.controls.steps"
+                    [step]="step"
+                    (removed)="removeStep(i)">
+            </app-step>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+    <div class="col s12">
+      <a (click)="addStep()"
+         class="grey-text text-darken-2 right include-pointer"> Add another step +
+      </a>
+    </div>
+  </div>
+</div>

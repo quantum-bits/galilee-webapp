@@ -34,14 +34,19 @@
     <div *ngIf = "showInfo" class="image-info"
         [ngStyle]="{'width': getInfoBoxWidth(), 'height': getInfoBoxHeight(), 'top': getInfoBoxTop(), 'left': getInfoBoxLeft()}"
     >
-      <p><strong> Title: </strong>{{resources[currentIndex].caption}}</p>
-      <p><strong> Description: </strong>{{resources[currentIndex].description}}</p>
-      <p><strong> Author: </strong>{{resources[currentIndex].author}}</p>
-      <p><strong> Date: </strong>{{resources[currentIndex].date}}</p>
-      <p><strong> Medium: </strong>{{resources[currentIndex].medium}}</p>
-      <p><strong> Dimensions: </strong>{{resources[currentIndex].dimensions}}</p>
-      <p><strong> Current Location: </strong>{{resources[currentIndex].currentLocation}}</p>
+      <h5 class="center-align">{{resources[currentIndex].caption}}</h5>
 
+      <div class="description">{{resources[currentIndex].description}}</div>
+
+      <div class="divider"></div>
+
+      <div class="metadata">
+        <p><strong> Author: </strong>{{resources[currentIndex].author}}</p>
+        <p><strong> Date: </strong>{{resources[currentIndex].date}}</p>
+        <p><strong> Medium: </strong>{{resources[currentIndex].medium}}</p>
+        <p><strong> Dimensions: </strong>{{resources[currentIndex].dimensions}}</p>
+        <p><strong> Current Location: </strong>{{resources[currentIndex].currentLocation}}</p>
+      </div>
       <a class="image-action">
         <i class="material-icons grey-text darken-2 include-pointer" (click)="toggleShowInfo()">clear</i>
       </a>
