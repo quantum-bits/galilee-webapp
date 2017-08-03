@@ -26,12 +26,13 @@
     >
     </quill-editor>
 
-
-
     <div *ngIf="stepGroup.controls.description.errors && stepGroup.controls.description.touched">                                <small class="warning">
       This field is required.
     </small>
     </div>
+
+    <app-resource-array [parentForm]="stepGroup" [resources]="step?.resources"></app-resource-array>
+
   </div>
 </div>
 

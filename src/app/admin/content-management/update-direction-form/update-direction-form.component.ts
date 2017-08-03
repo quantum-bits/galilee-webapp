@@ -178,7 +178,7 @@ export class UpdateDirectionFormComponent implements OnInit {
         );
     }
   }
-  
+
   onCancel() {
     this.cancelEditingSource.next();
   }

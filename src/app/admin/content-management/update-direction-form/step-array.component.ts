@@ -4,17 +4,6 @@ import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 
 import {Step} from '../../../shared/interfaces/step.interface';
 
-
-/*
-export interface Step {
-  id: number;
-  description: string;
-  seq: number;
-  directionId?: number;
-  resources?: IResource[];
-}
-*/
-
 @Component({
   selector: 'app-step-array',
   templateUrl: './step-array.component.html',

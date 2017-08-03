@@ -1,3 +1,25 @@
-<p>
-  resource works!
-</p>
+<div class="row">
+  <div class="input-field col s12">
+    <span>Resource {{index + 1}}</span>
+    <a
+      *ngIf="formArray.length > 1"
+      (click)="removed.emit()"
+      class="grey-text text-darken-2 right include-pointer"
+    >
+      <i class="material-icons">close</i>
+    </a>
+  </div>
+</div>
+<div class="row">
+  <div [formGroup]="resourceGroup" class="col s10 offset-s1">
+
+    <quill-editor
+      [modules]="modules"
+      [minLength]="'0'"
+      (onEditorCreated)="onCreated($event)"
+      (onContentChanged)="setResourceDescription($event)"
+    >
+    </quill-editor>
+    
+  </div>
+</div>

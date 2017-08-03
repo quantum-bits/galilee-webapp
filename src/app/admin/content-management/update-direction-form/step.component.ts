@@ -1,10 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectorRef } from '@angular/core';
+// I don't think ChangeDetectorRef is being used...?
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {Step} from '../../../shared/interfaces/step.interface';
 
 const resolvedPromise = Promise.resolve(undefined);
-
-
 
 @Component({
   selector: 'app-step',
