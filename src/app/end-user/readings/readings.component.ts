@@ -159,60 +159,71 @@ export class ReadingsComponent implements OnInit, OnDestroy {
   }
 
   addMedia() {
-
     let mockResource0 = {
       id: 1,
       seq: 1,
-      caption: 'The Deposition',
+      title: 'The Deposition',
       description: 'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?',
-      author: 'António Nogueira',
-      date: '1564',
+      creator: 'António Nogueira',
+      creationDate: '1564',
+      copyrightDate: '1524',
+      importDate: '2015-3-25',
+      license: { id: 1, licenseType: 'creative commons'},
+      keywords: '',
+      notes: '',
       medium: 'oil on panel',
-      dimensions: '115 x 115 cm',
+      physicalDimensions: '115 x 115 cm',
       currentLocation: 'Museu Regional de Beja',
       fileUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Antonio-nogueira_descida-da-cruz-1.jpg',
-      originalFileUrl: '',
-      imageWidth: 591,
-      imageHeight: 680,
+      source: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Antonio-nogueira_descida-da-cruz-1.jpg',
+      width: 591,
+      height: 680,
       mimeType: 'image/jpeg'
     }
 
     let mockResource1 = {
       id: 2,
       seq: 2,
-      caption: 'The Twelve-Year-Old Jesus Teaching in the Temple',
+      title: 'The Twelve-Year-Old Jesus Teaching in the Temple',
       description: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.',
-      author: 'Ludovico Mazzolino',
-      date: '1524',
+      creator: 'Ludovico Mazzolino',
+      creationDate: '1524',
+      copyrightDate: '1524',
+      importDate: '2015-3-25',
+      license: { id: 2, licenseType: 'public domain'},
+      keywords: '',
+      notes: '',
       medium: 'oil on poplar wood',
-      dimensions: 'Height: 256 cm (100.8 in). Width: 182.5 cm (71.9 in).',
+      physicalDimensions: 'Height: 256 cm (100.8 in). Width: 182.5 cm (71.9 in).',
       currentLocation: 'Gemäldegalerie, Berlin, room XVII',
       fileUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Lodovico_Mazzolino_-_The_Twelve-Year-Old_Jesus_Teaching_in_the_Temple_-_Google_Art_Project.jpg/532px-Lodovico_Mazzolino_-_The_Twelve-Year-Old_Jesus_Teaching_in_the_Temple_-_Google_Art_Project.jpg',
-      originalFileUrl: '',
-      imageWidth: 532, //px...assuming the server will determine this before sending back the image...(?)
-      imageHeight: 768,
+      originalFileUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Antonio-nogueira_descida-da-cruz-1.jpg',
+      width: 532, //px...assuming the server will determine this before sending back the image...(?)
+      height: 768,
       mimeType: 'image/jpeg'
     }
 
     let mockResource2 = {
       id: 3,
       seq: 3,
-      caption: 'The Last Supper',
+      title: 'The Last Supper',
       description: 'Ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.',
-      author: 'Leonardo da Vinci',
-      date: 'from 1495 until 1498',
+      creator: 'Leonardo da Vinci',
+      creationDate: 'from 1495 until 1498',
+      copyrightDate: '1498',
+      importDate: '2015-3-25',
+      license: { id: 3, licenseType: 'unknown'},
+      keywords: '',
+      notes: '',
       medium: 'tempera on gesso, pitch and mastic',
-      dimensions: '460 × 880 cm (181.1 × 346.5 in)',
+      physicalDimensions: '460 × 880 cm (181.1 × 346.5 in)',
       currentLocation: 'Convent of Santa Maria delle Grazie, Milan',
       fileUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Leonardo_da_Vinci_%281452-1519%29_-_The_Last_Supper_%281495-1498%29.jpg',
-      originalFileUrl: '',
-      imageWidth: 5076, //px...assuming the server will determine this before sending back the image...(?)
-      imageHeight: 2645,
+      originalFileUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Antonio-nogueira_descida-da-cruz-1.jpg',
+      width: 5076, //px...assuming the server will determine this before sending back the image...(?)
+      height: 2645,
       mimeType: 'image/jpeg'
     }
-
-
-
 
     let mockResources = [mockResource0, mockResource1, mockResource2];
     // comment out the next line to add some mock resources....
@@ -238,7 +249,7 @@ export class ReadingsComponent implements OnInit, OnDestroy {
 
   /*
    export interface IResource {
-   caption: string;
+   title: string;
    copyright_year: string;
    copyright_owner: string;
    fileName: string;

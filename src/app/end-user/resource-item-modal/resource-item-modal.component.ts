@@ -77,8 +77,8 @@ export class ResourceItemModalComponent implements OnInit {
 
     let viewportAspectRatio = maxWidth/maxHeight;
 
-    let width = this.resources[this.currentIndex].imageWidth;
-    let height = this.resources[this.currentIndex].imageHeight;
+    let width = this.resources[this.currentIndex].width;
+    let height = this.resources[this.currentIndex].height;
 
     let imageAspectRatio = width/height;
 

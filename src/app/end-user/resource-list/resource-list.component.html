@@ -27,11 +27,11 @@
         <div class="image">
           <img
             [src]="resource.fileUrl"
-            [alt]="resource.caption"
+            [alt]="resource.title"
             [attr.width]="determineWidth(i)"
             [attr.height]="determineHeight(i)"
           />
-          <h5 class="image-title"><span class="image-title-text">{{resource.caption}}</span></h5>
+          <h5 class="image-title"><span class="image-title-text">{{resource.title}}</span></h5>
           <!--
           <div class="launch-modal-button">
             <i class="material-icons white-text" (click)="openResourceModal(i)">fullscreen</i>

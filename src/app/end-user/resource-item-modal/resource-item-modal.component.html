@@ -34,17 +34,17 @@
     <div *ngIf = "showInfo" class="image-info"
         [ngStyle]="{'width': getInfoBoxWidth(), 'height': getInfoBoxHeight(), 'top': getInfoBoxTop(), 'left': getInfoBoxLeft()}"
     >
-      <h5 class="center-align">{{resources[currentIndex].caption}}</h5>
+      <h5 class="center-align">{{resources[currentIndex].title}}</h5>
 
       <div class="description">{{resources[currentIndex].description}}</div>
 
       <div class="divider"></div>
 
       <div class="metadata">
-        <p><strong> Author: </strong>{{resources[currentIndex].author}}</p>
-        <p><strong> Date: </strong>{{resources[currentIndex].date}}</p>
+        <p><strong> Artist: </strong>{{resources[currentIndex].creator}}</p>
+        <p><strong> Date: </strong>{{resources[currentIndex].creationDate}}</p>
         <p><strong> Medium: </strong>{{resources[currentIndex].medium}}</p>
-        <p><strong> Dimensions: </strong>{{resources[currentIndex].dimensions}}</p>
+        <p><strong> Dimensions: </strong>{{resources[currentIndex].physicalDimensions}}</p>
         <p><strong> Current Location: </strong>{{resources[currentIndex].currentLocation}}</p>
       </div>
       <a class="image-action">

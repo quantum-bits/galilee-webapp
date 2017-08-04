@@ -149,8 +149,8 @@ export class ResourceListComponent implements OnInit, OnDestroy {
 
 
   determineWidth(i: number) {
-    let width = this.resources[i].imageWidth;
-    let height = this.resources[i].imageHeight;
+    let width = this.resources[i].width;
+    let height = this.resources[i].height;
     let containerDimensions = this.getContainerDimensions();
     let widthRatio = width/containerDimensions.width;
     let heightRatio = height/containerDimensions.height;
@@ -162,8 +162,8 @@ export class ResourceListComponent implements OnInit, OnDestroy {
   }
 
   determineHeight(i: number) {
-    let width = this.resources[i].imageWidth;
-    let height = this.resources[i].imageHeight;
+    let width = this.resources[i].width;
+    let height = this.resources[i].height;
     let containerDimensions = this.getContainerDimensions();
     let widthRatio = width/containerDimensions.width;
     let heightRatio = height/containerDimensions.height;
