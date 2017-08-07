@@ -158,6 +158,12 @@ export class ReadingsComponent implements OnInit, OnDestroy {
       );
   }
 
+  // TODO: eliminate the fileUrl (here and throughout the code...use grep to find instances)
+  // - here I am passing in the fileUrl; eventually, we
+  //   will generate this dynamically in the component(s) using an
+  //   api endpoint on our server, along with a unique id for the resource
+  //   itself.  Thus, in the end, there will be no need to pass in
+  //   a fileUrl....
   addMedia() {
     let mockResource0 = {
       id: 1,
@@ -168,7 +174,7 @@ export class ReadingsComponent implements OnInit, OnDestroy {
       creationDate: '1564',
       copyrightDate: '1524',
       importDate: '2015-3-25',
-      license: { id: 1, licenseType: 'creative commons'},
+      licenseType: { id: 1, name: 'Creative Commons'},
       keywords: '',
       notes: '',
       medium: 'oil on panel',
@@ -190,14 +196,14 @@ export class ReadingsComponent implements OnInit, OnDestroy {
       creationDate: '1524',
       copyrightDate: '1524',
       importDate: '2015-3-25',
-      license: { id: 2, licenseType: 'public domain'},
+      licenseType: { id: 2, name: 'unknown'},
       keywords: '',
       notes: '',
       medium: 'oil on poplar wood',
       physicalDimensions: 'Height: 256 cm (100.8 in). Width: 182.5 cm (71.9 in).',
       currentLocation: 'Gemäldegalerie, Berlin, room XVII',
       fileUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Lodovico_Mazzolino_-_The_Twelve-Year-Old_Jesus_Teaching_in_the_Temple_-_Google_Art_Project.jpg/532px-Lodovico_Mazzolino_-_The_Twelve-Year-Old_Jesus_Teaching_in_the_Temple_-_Google_Art_Project.jpg',
-      originalFileUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Antonio-nogueira_descida-da-cruz-1.jpg',
+      source: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Antonio-nogueira_descida-da-cruz-1.jpg',
       width: 532, //px...assuming the server will determine this before sending back the image...(?)
       height: 768,
       mimeType: 'image/jpeg'
@@ -212,14 +218,14 @@ export class ReadingsComponent implements OnInit, OnDestroy {
       creationDate: 'from 1495 until 1498',
       copyrightDate: '1498',
       importDate: '2015-3-25',
-      license: { id: 3, licenseType: 'unknown'},
+      licenseType: { id: 3, name: 'Public Domain'},
       keywords: '',
       notes: '',
       medium: 'tempera on gesso, pitch and mastic',
       physicalDimensions: '460 × 880 cm (181.1 × 346.5 in)',
       currentLocation: 'Convent of Santa Maria delle Grazie, Milan',
       fileUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Leonardo_da_Vinci_%281452-1519%29_-_The_Last_Supper_%281495-1498%29.jpg',
-      originalFileUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Antonio-nogueira_descida-da-cruz-1.jpg',
+      source: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Antonio-nogueira_descida-da-cruz-1.jpg',
       width: 5076, //px...assuming the server will determine this before sending back the image...(?)
       height: 2645,
       mimeType: 'image/jpeg'
