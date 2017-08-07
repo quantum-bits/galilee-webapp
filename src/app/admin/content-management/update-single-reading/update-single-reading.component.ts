@@ -89,7 +89,6 @@ export class StateManager {
     return editingEnabled;
   }
 
-
   isNewReading() {
     // returns true if there are currently no readings, and we are adding a new reading
     return this.currentState === States.NoReadingAddReading;
@@ -238,7 +237,7 @@ export class UpdateSingleReadingComponent implements OnInit, OnDestroy, AfterVie
 
 
   ngAfterViewChecked() {
-    console.log('inside after view checked....');
+    //console.log('inside after view checked....');
 
     /*
 

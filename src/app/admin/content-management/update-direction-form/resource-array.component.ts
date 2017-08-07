@@ -25,18 +25,25 @@ export class ResourceArrayComponent implements OnInit {
     this.resources.push({
       id: null, // for a new resource
       seq: null,
-      caption: '',
+      creator: '',
+      creationDate: '',
+      copyrightDate: '',
+      importDate: null, // for a new resource
+      licenseType: {
+        id: null,
+        name: ''
+      },
+      keywords: '',
+      source: '', // original source of the image (url at wikimedia commons, say, or 'I took this picture by my house')
+      mimeType: '', // determined by server-side code (?)
+      title: '',
       description: '',
-      author: '',
-      date: '',
+      notes: '',
+      height: null,
+      width: null,
       medium: '',
-      dimensions: '',
-      currentLocation: '',
-      fileUrl: null, // api endpoint on our server
-      originalFileUrl: '', // original source of the image (wikimedia commons, say)
-      imageWidth: null, // determined by the server-side code
-      imageHeight: null, // determined by the server-side code
-      mimeType: '' // determined by server-side code (?)
+      physicalDimensions: '',
+      currentLocation: ''
     });
   }
 

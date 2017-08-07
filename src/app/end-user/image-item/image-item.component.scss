@@ -1,0 +1,54 @@
+// text over image: https://css-tricks.com/text-blocks-over-image/
+.image {
+  position: relative;
+  width: 100%; /* for IE 6 */
+}
+
+// setting the icon container to have display:table so that
+// the icons can be centered vertically...not sure anymore where
+// I saw this....
+.image-icon-container {
+  position: absolute;
+  bottom: 0px;
+  //left: 0;
+  width: 100%;
+  //text-align: center;
+  display: table;
+  table-layout: fixed;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+// the following is used to create an empty table cell that fills
+// up the remaining space in the table "row" so that the icon table
+// cells can have a fixed width and be right justified
+.image-empty-icon {
+  display: table-cell;
+  vertical-align: middle;
+}
+.image-info-icon {
+  display: table-cell;
+  vertical-align: middle;
+  width: 30px;
+  //position: absolute;
+  //right: 40px;
+  //bottom: 10px;
+  //background-color: rgba(255, 255, 255, 0.8);
+}
+
+.image-fullscreen-icon {
+  display: table-cell;
+  vertical-align: middle;
+  width: 40px;
+  //position: absolute;
+  //right: 10px;
+  //bottom: 10px;
+  //background-color: rgba(255, 255, 255, 0.8);
+}
+
+.image-title-text {
+  display: table-cell;
+  vertical-align: middle;
+}

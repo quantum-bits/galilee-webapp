@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="col s12 center">
+    <h5>{{resource.title}}</h5>
+  </div>
+  <div class="col s12 m10 offset-m1 l8 center">
+    <div #imageContainer class="image">
+      <img #imageTag
+        [src]="resource.fileUrl"
+        [alt]="resource.title"
+        [attr.width]="'100%'"
+      />
+      <div
+        class="image-icon-container"
+        [ngStyle]="imageIconContainerStyle()"
+      >
+        <span class="image-empty-icon"></span>
+        <i class="image-info-icon material-icons white-text include-pointer" (click)="launchMetadataModal()">info_outline</i>
+        <i class="image-fullscreen-icon material-icons white-text include-pointer" (click)="launchModal()">fullscreen</i>
+      </div>
+    </div>
+  </div>
+  <div class="col s12 m10 offset-m1 l4">
+    <div *ngIf="allowTruncation">
+      <div>
+        {{resource.description | truncate : truncationLimit}}
+        <!--{{journalEntry.hasTags()}}-->
+      </div>
+      <div *ngIf="descriptionIsLong(truncationLimit)">
+        <br>
+        <a class="grey-text darken-3 include-pointer" (click)="toggleAllowTruncation()"> Read More... </a>
+      </div>
+    </div>
+
+    <div *ngIf="!allowTruncation">
+      <div>
+        {{resource.description }}
+        <!--{{journalEntry.hasTags()}}-->
+      </div>
+      <div *ngIf="descriptionIsLong(truncationLimit)">
+        <br>
+        <a class="grey-text darken-3 include-pointer" (click)="toggleAllowTruncation()"> Read Less </a>
+      </div>
+    </div>
+
+    <br>
+  </div>
+</div>
+
+
+<!--
+<a class="waves-effect waves-light btn" (click)="getContainerDimensions()">info</a>
+<a class="waves-effect waves-light btn" (click)="launchModal()">button</a>
+-->
+
+<!--
+[attr.width]="determineWidth()"
+[attr.height]="determineHeight()"
+-->

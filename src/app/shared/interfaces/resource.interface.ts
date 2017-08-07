@@ -45,8 +45,8 @@ export interface IResource {
   height?: number; // in pixels; used by image and video
   width?: number; // in pixels; used by image and video
   medium?: string; // used by image
-  physicalDimensions: string; // used by image
-  currentLocation: string; // used by image
-  duration: string; //hh:mm:ss; used by video and audio
+  physicalDimensions?: string; // used by image
+  currentLocation?: string; // used by image
+  duration?: string; //hh:mm:ss; used by video and audio
 }
 

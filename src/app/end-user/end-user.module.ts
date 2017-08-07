@@ -45,7 +45,9 @@ import { HelpHowForumComponent } from './help-how-forum/help-how-forum.component
 import { HelpHowJournalComponent } from './help-how-journal/help-how-journal.component';
 import { ResourceListComponent } from './resource-list/resource-list.component';
 import { ResourceItemModalComponent } from './resource-item-modal/resource-item-modal.component';
-import { ResourceItemModalAnchorDirective } from './resource-list/resource-item-modal-anchor.directive';
+import { ResourceModalAnchorDirective } from './resource-list/resource-modal-anchor.directive';
+import { ImageItemComponent } from './image-item/image-item.component';
+import { ResourceItemMetadataModalComponent } from './resource-item-metadata-modal/resource-item-metadata-modal.component';
 
 const routes: Routes = [
   {
@@ -160,7 +162,8 @@ const routes: Routes = [
     SharedModule
   ],
   entryComponents: [
-    ResourceItemModalComponent
+    ResourceItemModalComponent,
+    ResourceItemMetadataModalComponent
   ],
   declarations: [
     //DashboardComponent,
@@ -198,7 +201,9 @@ const routes: Routes = [
     HelpHowJournalComponent,
     ResourceListComponent,
     ResourceItemModalComponent,
-    ResourceItemModalAnchorDirective
+    ResourceModalAnchorDirective,
+    ImageItemComponent,
+    ResourceItemMetadataModalComponent
   ]
 })
 export class EndUserModule {

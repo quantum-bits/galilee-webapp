@@ -1,0 +1,25 @@
+<div #imageContainer id="resource-item-modal"
+     class="modal"
+     materialize="modal"
+     [materializeParams]="[{dismissible: false, opacity: 0.5}]"
+     [materializeActions]="modalActions"
+     (init)="this.openModal()">
+
+  <div class="image-info">
+    <!-- [ngStyle]="infoStyle()" -->
+    <h5 class="center-align">{{resources[currentIndex].title}}</h5>
+
+    <div class="metadata">
+      <p><strong> Artist: </strong>{{resources[currentIndex].creator}}</p>
+      <p><strong> Date: </strong>{{resources[currentIndex].creationDate}}</p>
+      <p><strong> Medium: </strong>{{resources[currentIndex].medium}}</p>
+      <p><strong> Dimensions: </strong>{{resources[currentIndex].physicalDimensions}}</p>
+      <p><strong> Current Location: </strong>{{resources[currentIndex].currentLocation}}</p>
+    </div>
+    <a class="image-action">
+      <i class="material-icons grey-text darken-2 include-pointer" (click)="cancel()">clear</i>
+    </a>
+  </div>
+
+</div>
+

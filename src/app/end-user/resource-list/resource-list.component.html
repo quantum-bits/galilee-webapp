@@ -1,5 +1,14 @@
 <!-- *ngIf="resources.length > 0"-->
 
+<div *ngFor="let resource of resources; let i=index">
+  <app-image-item
+    [resource]="resource"
+    (openModal)="openResourceModal(i)"
+    (openMetadataModal)="openResourceMetadataModal(i)"
+  ></app-image-item>
+</div>
+
+<!--
 <div #carouselSlider
      class="carousel carousel-slider carousel-custom"
      [ngClass]="{ 'initialized': showInitialized }"
@@ -19,6 +28,11 @@
     <i class="material-icons white-text medium">art_track</i>
   </div>
   -->
+
+
+  <!--
+
+
   <div *ngFor="let resource of resources; let i=index"
        class="carousel-item indigo lighten-3"
        [attr.data-carousel-index]="i">
@@ -36,7 +50,7 @@
           <div class="launch-modal-button">
             <i class="material-icons white-text" (click)="openResourceModal(i)">fullscreen</i>
           </div>
-          -->
+
         </div>
       </div>
     </div>
@@ -46,13 +60,17 @@
     <img
       [src]="resource.fileUrl"
       [alt]="resource.caption"/>
-      -->
+
   </div>
 </div>
-
+-->
+<!--
 <a class="waves-effect waves-light btn" (click)="logIndex()">carousel index</a>
-
-<div appResourceItemModalAnchor></div>
+-->
+<div appResourceModalAnchor></div>
+<!--
+<div appResourceItemMetadataModalAnchor></div>
+-->
 
 <!--
 <div class="row">

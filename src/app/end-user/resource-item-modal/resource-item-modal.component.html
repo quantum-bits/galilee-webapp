@@ -3,7 +3,7 @@
      materialize="modal"
      [materializeParams]="[{dismissible: false, opacity: 0.9, endingTop: getTop()}]"
      [materializeActions]="modalActions"
-     [ngStyle]="{ 'width': getWidth(), 'height': getHeight(), 'top': getTop() }"
+     [ngStyle]="modalStyle()"
      (init)="this.openModal()">
 
   <!--endingTop: '10%', // Ending top style attribute
@@ -32,12 +32,13 @@
 
 
     <div *ngIf = "showInfo" class="image-info"
-        [ngStyle]="{'width': getInfoBoxWidth(), 'height': getInfoBoxHeight(), 'top': getInfoBoxTop(), 'left': getInfoBoxLeft()}"
+        [ngStyle]="infoStyle()"
     >
       <h5 class="center-align">{{resources[currentIndex].title}}</h5>
 
       <div class="description">{{resources[currentIndex].description}}</div>
 
+      <!--
       <div class="divider"></div>
 
       <div class="metadata">
@@ -47,6 +48,7 @@
         <p><strong> Dimensions: </strong>{{resources[currentIndex].physicalDimensions}}</p>
         <p><strong> Current Location: </strong>{{resources[currentIndex].currentLocation}}</p>
       </div>
+      -->
       <a class="image-action">
         <i class="material-icons grey-text darken-2 include-pointer" (click)="toggleShowInfo()">clear</i>
       </a>

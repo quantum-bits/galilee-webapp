@@ -4,12 +4,29 @@ import {Observable} from 'rxjs/Rx';
 
 import {AuthHttp} from "angular2-jwt";
 import {Direction} from "../interfaces/direction.interface";
+import {LicenseType} from "../interfaces/resource.interface";
 
 export const DEFAULT_INFO_URL: string = "https://www.biblegateway.com/resources/scripture-engagement/";
 export enum DirectionType {
   reading,
   day
 }
+
+const LICENSE_TYPES: LicenseType[] = [
+  {
+    id: 1,
+    name: 'unknown'
+  },
+  {
+    id: 2,
+    name: 'Creative Commons'
+  },
+  {
+    id: 3,
+    name: 'Public Domain'
+  }
+]
+
 
 @Injectable()
 export class DirectionService {
@@ -112,7 +129,10 @@ export class DirectionService {
     return Observable.forkJoin(observableBatch);
   }
 
-
+  getAllLicenseTypes(): Observable<Array<LicenseType>> {
+    let promise = Promise.resolve(LICENSE_TYPES);
+    return Observable.fromPromise(promise);
+  }
 
 
 

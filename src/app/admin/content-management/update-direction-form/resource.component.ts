@@ -1,7 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectorRef } from '@angular/core';
 // I don't think ChangeDetectorRef is being used...?
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {IResource} from '../../../shared/interfaces/resource.interface';
+import {LicenseType, IResource} from '../../../shared/interfaces/resource.interface';
+
+import {DirectionService} from '../../../shared/services/direction.service';
 
 const resolvedPromise = Promise.resolve(undefined);
 
@@ -15,11 +17,13 @@ export class ResourceComponent implements OnInit {
   @Input() formArray: FormArray;
   @Input() resource: IResource;
   @Input() index: number;
+  @Input() isNewResource: boolean = true;
   @Output() removed = new EventEmitter();
 
   resourceGroup: FormGroup;
   isOpen: boolean = true;
   metadataOpen: boolean = false;
+  licenseTypes: LicenseType[] = [];
 
   modules = {
     toolbar: [
@@ -41,7 +45,8 @@ export class ResourceComponent implements OnInit {
     ]
   };
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,
+              private directionService: DirectionService) {
   }
 
   ngOnInit() {
@@ -49,19 +54,30 @@ export class ResourceComponent implements OnInit {
 
     resolvedPromise.then(() => {
       this.formArray.push(this.resourceGroup);
-    })
+    });
+
+    this.directionService.getAllLicenseTypes()
+      .subscribe(
+        licenseTypes => {
+          console.log('license types:', licenseTypes);
+          this.licenseTypes = licenseTypes;
+        },
+        error => console.log('error fetching license types: ', error)
+      );
   }
 
   toFormGroup(resource: IResource) {
     return this.formBuilder.group({
-      caption: [resource.caption, Validators.required],
+      title: [resource.title, Validators.required],
       description: [resource.description],
-      author: [resource.author],
-      date: [resource.date],
+      creator: [resource.creator],
+      creationDate: [resource.creationDate],
+      copyrightDate: [resource.copyrightDate],
+      licenseId: [resource.licenseType.id, Validators.required],
       medium: [resource.medium],
-      dimensions: [resource.dimensions],
+      physicalDimensions: [resource.physicalDimensions],
       currentLocation: [resource.currentLocation],
-      originalFileUrl: [resource.originalFileUrl, Validators.required]
+      source: [resource.source, Validators.required]
     });
   }
 

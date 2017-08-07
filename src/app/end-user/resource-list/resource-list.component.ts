@@ -5,7 +5,9 @@ import {Subscription} from 'rxjs/Subscription';
 import {MaterializeAction} from "angular2-materialize"
 
 import {ResourceItemModalComponent} from '../resource-item-modal/resource-item-modal.component';
-import { ResourceItemModalAnchorDirective } from '../resource-list/resource-item-modal-anchor.directive';
+import {ResourceItemMetadataModalComponent} from '../resource-item-metadata-modal/resource-item-metadata-modal.component';
+import { ResourceModalAnchorDirective } from '../resource-list/resource-modal-anchor.directive';
+//import { ResourceItemMetadataModalAnchorDirective } from '../resource-list/resource-item-metadata-modal-anchor.directive';
 import { ResourceModalCommunicationService } from '../resource-list/resource-modal-communication.service';
 
 declare var $: any; // for using jQuery within this angular component
@@ -22,19 +24,45 @@ export class ResourceListComponent implements OnInit, OnDestroy {
 
   //@ViewChild('carousel') carouselElement; // not currently being used
   @ViewChild('carouselSlider') carouselElement: ElementRef;
-  @ViewChild(ResourceItemModalAnchorDirective) resourceItemModalAnchor: ResourceItemModalAnchorDirective;
+  @ViewChild(ResourceModalAnchorDirective) resourceModalAnchor: ResourceModalAnchorDirective;
+  //@ViewChild(ResourceItemMetadataModalAnchorDirective) resourceItemMetadataModalAnchor: ResourceItemMetadataModalAnchorDirective;
 
   //actions = new EventEmitter<string>(); // not currently being used
 
   //innerHtml
 
-  carouselIndex: number = 0;
+  //carouselIndex: number = 0;
 
-  carouselCycled(curr_item, dragged) {
-    // jQuery: 'data-carousel-index' in the template is connected to 'carousel-index' here
-    this.carouselIndex = curr_item.data('carousel-index');
-    console.log("carousel cycled to index", this.carouselIndex);
-  }
+
+  /**
+   * From Tom:
+   * The problem was that because the method was invoked from
+   * the callback inside of Materialize, `this` was not bound
+   * to the `ResourceListComponent`. In fact, it was bound to
+   * the global `window` object of the browser. So we were, in
+   * fact, setting a completely different variable.
+   * The solution was to define the method using the “fat arrow”
+   * notation of ES6, which binds `this` from the lexical context;
+   * in other words, from the `ResourceListComponent` in which it’s
+   * defined. Thusly:
+   *
+   * public carouselCycled = (curr_item) => {
+   *   this.carouselIndex = curr_item.data('carousel-index');
+   * }
+   */
+
+  /**
+   * The following does not work...!  See the discussion above....
+   *
+   * carouselCycled(curr_item, dragged) {
+   *   // jQuery: 'data-carousel-index' in the template is connected to 'carousel-index' here
+   *   this.carouselIndex = curr_item.data('carousel-index');
+   *   console.log("carousel cycled to index", this.carouselIndex);
+   * }
+   *
+   */
+
+
 
   private subscription: Subscription;
   showInitialized = false;
@@ -73,6 +101,11 @@ export class ResourceListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     //this.initializeCarousel();
   }
+
+  isImage(mimeType: string) {
+    return mimeType.split("/")[0] === 'image';
+  }
+
 
   logDimensions() {
     console.log('carouselElement: ', this.carouselElement.nativeElement.offsetWidth);
@@ -174,26 +207,34 @@ export class ResourceListComponent implements OnInit, OnDestroy {
     }
   }
 
-  openResourceModal() {
-    console.log('carousel index: ', this.carouselIndex);
-    this.resourceItemModalAnchor.viewContainer.clear();
+  openResourceModal(index: number) {
+    this.resourceModalAnchor.viewContainer.clear();
     let componentFactory = this.componentFactoryResolver.resolveComponentFactory(ResourceItemModalComponent);
-    this.modalComponent = this.resourceItemModalAnchor.viewContainer.createComponent(componentFactory).instance;
+    this.modalComponent = this.resourceModalAnchor.viewContainer.createComponent(componentFactory).instance;
     this.modalComponent.resources = this.resources;
-    this.modalComponent.currentIndex = this.carouselIndex;
+    this.modalComponent.currentIndex = index;
+  }
+
+  openResourceMetadataModal(index: number) {
+    this.resourceModalAnchor.viewContainer.clear();
+    let componentFactory = this.componentFactoryResolver.resolveComponentFactory(ResourceItemMetadataModalComponent);
+    this.modalComponent = this.resourceModalAnchor.viewContainer.createComponent(componentFactory).instance;
+    this.modalComponent.resources = this.resources;
+    this.modalComponent.currentIndex = index;
   }
 
   modalCloseAndCleanUp(){
     // close the modal and then clear the viewContainer
     //console.log('sending message to close modal');
     this.modalComponent.closeModal();
-    //console.log('clearing view container');
-    this.resourceItemModalAnchor.viewContainer.clear();
+    this.resourceModalAnchor.viewContainer.clear();
   }
 
+  /*
   logIndex() {
     console.log('carousel index: ', this.carouselIndex);
   }
+  */
 
   ngOnDestroy() {
     // prevent memory leak when component destroyed

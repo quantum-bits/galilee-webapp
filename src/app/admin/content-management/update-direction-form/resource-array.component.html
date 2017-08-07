@@ -17,12 +17,23 @@
 <div class="row">
   <div class="col s12">
     <a *ngIf="resources.length > 0"
-       (click)="addResource()"
-       class="grey-text text-darken-2 right include-pointer"> Add another resource +
-    </a>
+       materialize="dropdown"
+       [materializeParams]="[{alignment:'right'}]"
+       class='dropdown-button grey-text text-darken-2 right include-pointer'
+       data-activates='media-dropdown'>Add more media +</a>
     <a *ngIf="resources.length == 0"
-       (click)="addResource()"
-       class="grey-text text-darken-2 right include-pointer"> Add a resource +
-    </a>
+       materialize="dropdown"
+       [materializeParams]="[{alignment:'right'}]"
+       class='dropdown-button grey-text text-darken-2 right include-pointer'
+       data-activates='media-dropdown'>Add media +</a>
   </div>
 </div>
+
+
+<!-- Dropdown Structure -->
+<ul id='media-dropdown' class='dropdown-content medium-width'>
+  <li><a (click)="addResource()">art (upload file)</a></li>
+  <li><a (click)="addResource()">art (url)</a></li>
+  <li><a>video</a></li>
+  <li><a>music</a></li>
+</ul>

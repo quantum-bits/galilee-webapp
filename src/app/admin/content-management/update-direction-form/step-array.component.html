@@ -4,7 +4,7 @@
     <div [formGroup]="parentForm">
       <div formArrayName="steps">
 
-        <ul class="collection with-header">
+        <ul class="collection with-header enable-overflow">
           <li class="collection-header"><span class="title">Step(s)</span></li>
           <li *ngFor="let step of steps; let i=index" class="collection-item">
 

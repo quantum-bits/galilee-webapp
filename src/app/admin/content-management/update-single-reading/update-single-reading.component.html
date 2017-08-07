@@ -41,7 +41,9 @@
         class="collection with-header no-bottom-margin"
         [class.enable-overflow]="stateManager.editingAPractice()">
         <li class="collection-header">
-          <h5>Add Reading to {{dateString | amDateFormat: 'LL'}}</h5>
+          <h5 *ngIf="stateManager.isNewReading()">Add Reading to {{dateString | amDateFormat: 'LL'}}</h5>
+          <h5 *ngIf="stateManager.readingIsBeingEdited() && !stateManager.isNewReading()">Update Reading for {{dateString | amDateFormat: 'LL'}}</h5>
+          <h5 *ngIf="!stateManager.readingIsBeingEdited()">Edit Reading or Practice(s) for {{dateString | amDateFormat: 'LL'}}</h5>
         </li>
         <li class="collection-item">
 
@@ -94,7 +96,9 @@
           </li>
 
         </ul>
-        <ul class="collection no-top-bottom-margin">
+        <ul
+          class="collection no-top-bottom-margin"
+          [class.enable-overflow]="stateManager.editingAPractice()">
           <div *ngIf="stateManager.canAddPractice()">
             <li class="collection-item">
             <span class="right reading-button">

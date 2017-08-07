@@ -105,15 +105,15 @@ export class ResourceItemModalComponent implements OnInit {
 
     if (imageAspectRatio > 1) {
       // put the info box on the right half
-      modalData.infoBoxWidth = modalData.width/2;//margin is 10 px
+      modalData.infoBoxWidth = modalData.width/3;//margin is 10 px
       modalData.infoBoxHeight = modalData.height;
       modalData.infoBoxTop = 0;
-      modalData.infoBoxLeft = modalData.width/2;
+      modalData.infoBoxLeft = 2*modalData.width/3;
     } else {
       // put the info box at the bottom
       modalData.infoBoxWidth = modalData.width;//margin is 10 px
-      modalData.infoBoxHeight = modalData.height/2;
-      modalData.infoBoxTop = modalData.height/2;
+      modalData.infoBoxHeight = modalData.height/3;
+      modalData.infoBoxTop = 2*modalData.height/3;
       modalData.infoBoxLeft = 0;
     }
 
@@ -123,19 +123,30 @@ export class ResourceItemModalComponent implements OnInit {
     return modalData;
   }
 
+  getTop() {
+    //console.log('top: ', this.computeModalDimensions().top);
+    //console.log(typeof this.computeModalDimensions().top);
+    return this.computeModalDimensions().top;
+  }
 
+  modalStyle() {
+    let dimensions = this.computeModalDimensions();
+    return { 'width': dimensions.width, 'height': dimensions.height, 'top': dimensions.top };
+  }
+
+  infoStyle() {
+    let dimensions = this.computeModalDimensions();
+    return { 'width': dimensions.infoBoxWidth, 'height': dimensions.infoBoxHeight, 'top': dimensions.infoBoxTop, 'left': dimensions.infoBoxLeft };
+    //{'width': getInfoBoxWidth(), 'height': getInfoBoxHeight(), 'top': getInfoBoxTop(), 'left': getInfoBoxLeft()}
+  }
+
+  /*
   getWidth() {
     return this.computeModalDimensions().width;
   }
 
   getHeight() {
     return this.computeModalDimensions().height;
-  }
-
-  getTop() {
-    //console.log('top: ', this.computeModalDimensions().top);
-    //console.log(typeof this.computeModalDimensions().top);
-    return this.computeModalDimensions().top;
   }
 
   getInfoBoxWidth() {
@@ -153,6 +164,7 @@ export class ResourceItemModalComponent implements OnInit {
   getInfoBoxLeft() {
     return this.computeModalDimensions().infoBoxLeft;
   }
+  */
 
   openModal() {
     // note that we open the modal programmatically upon initialization
