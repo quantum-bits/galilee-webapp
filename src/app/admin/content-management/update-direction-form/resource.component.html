@@ -6,7 +6,7 @@
         class="grey-text text-darken-2 include-pointer">
         <i class="material-icons lr-arrow">remove</i>
       </a>
-      Media: Art <span *ngIf="resourceGroup.value.title != ''">({{resourceGroup.value.title}})</span>
+      Media: Image <span *ngIf="resourceGroup.value.title != ''">({{resourceGroup.value.title}})</span>
       <a
         (click)="removed.emit()"
         class="grey-text text-darken-2 right include-pointer"
@@ -66,7 +66,7 @@
       <div class="col s12 quill-editor">
         <!-- description -->
         <quill-editor
-          [placeholder]="'Description of this artwork (optional)....'"
+          [placeholder]="'Description of this image (optional)....'"
           [modules]="modules"
           [minLength]="'0'"
           (onEditorCreated)="onCreated($event)"
@@ -170,7 +170,7 @@
         class="grey-text text-darken-2 include-pointer">
         <i class="material-icons lr-arrow">add</i>
       </a>
-      Media: Art <span *ngIf="resourceGroup.value.title != ''">({{resourceGroup.value.title}})</span>
+      Media: Image <span *ngIf="resourceGroup.value.title != ''">({{resourceGroup.value.title}})</span>
       <a
         (click)="removed.emit()"
         class="grey-text text-darken-2 right include-pointer"

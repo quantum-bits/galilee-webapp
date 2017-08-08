@@ -86,6 +86,19 @@ export class UpdateDirectionFormComponent implements OnInit {
           resources: []
         }]
       }
+    } else {
+      // TODO: eventually can probably delete the following
+      //       few lines of code, but at the moment, the data
+      //       coming back from the server does not have a
+      //       resources array in every step, so need to create
+      //       an empty array there or the form crashes....
+      for (let step of this.directionFormData.steps) {
+        if (!("resources" in step)) {
+          console.log('formdata step has no resources!!!');
+          step["resources"] = [];
+        }
+      }
+      console.log('fixed the problem: ', this.directionFormData);
     }
 
     this.directionForm = this.formBuilder.group({
