@@ -6,6 +6,12 @@ import {AuthHttp} from "angular2-jwt";
 import {Direction} from "../interfaces/direction.interface";
 import {LicenseType} from "../interfaces/resource.interface";
 
+// the following are different types and sources of media
+export const IMAGE_URL = 'IMAGE_URL';
+export const IMAGE_UPLOAD = 'IMAGE_UPLOAD';
+export const VIDEO_URL = 'VIDEO_URL';
+export const MUSIC_URL = 'MUSIC_URL';
+
 export const DEFAULT_INFO_URL: string = "https://www.biblegateway.com/resources/scripture-engagement/";
 export enum DirectionType {
   reading,

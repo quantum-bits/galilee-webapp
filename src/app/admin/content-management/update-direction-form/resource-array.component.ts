@@ -4,6 +4,8 @@ import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 
 import {IResource} from '../../../shared/interfaces/resource.interface';
 
+import {IMAGE_URL, IMAGE_UPLOAD, VIDEO_URL, MUSIC_URL} from '../../../shared/services/direction.service';
+
 @Component({
   selector: 'app-resource-array',
   templateUrl: './resource-array.component.html',
@@ -12,8 +14,12 @@ import {IResource} from '../../../shared/interfaces/resource.interface';
 export class ResourceArrayComponent implements OnInit {
 
   @Input() parentForm: FormGroup;
-
   @Input() resources: IResource[];
+
+  imageUrl: string = IMAGE_URL; // need to make these class-level variables to use them in the template
+  imageUpload: string = IMAGE_UPLOAD;
+  videoUrl: string = VIDEO_URL;
+  musicUrl: string = MUSIC_URL;
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -21,7 +27,7 @@ export class ResourceArrayComponent implements OnInit {
     this.parentForm.addControl('resources', new FormArray([]));
   }
 
-  addResource() {
+  addResource(mediaType: string) {
     this.resources.push({
       id: null, // for a new resource
       seq: null,
@@ -43,7 +49,9 @@ export class ResourceArrayComponent implements OnInit {
       width: null,
       medium: '',
       physicalDimensions: '',
-      currentLocation: ''
+      currentLocation: '',
+      duration: '',
+      mediaType: mediaType
     });
   }
 

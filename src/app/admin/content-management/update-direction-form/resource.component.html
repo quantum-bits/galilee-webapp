@@ -6,7 +6,7 @@
         class="grey-text text-darken-2 include-pointer">
         <i class="material-icons lr-arrow">remove</i>
       </a>
-      Media: Image <span *ngIf="resourceGroup.value.title != ''">({{resourceGroup.value.title}})</span>
+      Media: {{formManager.getMediaType()}} <span *ngIf="resourceGroup.value.title != ''">({{resourceGroup.value.title}})</span>
       <a
         (click)="removed.emit()"
         class="grey-text text-darken-2 right include-pointer"
@@ -41,7 +41,7 @@
           id="source"
           type="text"
           formControlName="source">
-        <label for="originalFileUrl">Url of the file (not the page)</label>
+        <label for="originalFileUrl">{{formManager.getSourceFieldText()}}</label>
         <div *ngIf="resourceGroup.controls.source.errors && resourceGroup.controls.source.touched">
           <small class="warning">
             This field is required.
@@ -66,7 +66,7 @@
       <div class="col s12 quill-editor">
         <!-- description -->
         <quill-editor
-          [placeholder]="'Description of this image (optional)....'"
+          [placeholder]="'Description of this ' + formManager.getDescriptionFieldText() + ' (optional)....'"
           [modules]="modules"
           [minLength]="'0'"
           (onEditorCreated)="onCreated($event)"
@@ -126,7 +126,7 @@
             formControlName="copyrightDate">
           <label for="copyrightDate">Copyright date</label>
         </div>
-        <div class="input-field col s12">
+        <div *ngIf="formManager.displayMediumField()" class="input-field col s12">
           <!-- medium -->
           <input
             [input-wake-up]="'medium'"
@@ -135,7 +135,7 @@
             formControlName="medium">
           <label for="medium">Medium</label>
         </div>
-        <div class="input-field col s12">
+        <div *ngIf="formManager.displayPhysicalDimensionsField()" class="input-field col s12">
           <!-- physicalDimensions -->
           <input
             [input-wake-up]="'physicalDimensions'"
@@ -144,7 +144,7 @@
             formControlName="physicalDimensions">
           <label for="physicalDimensions">Physical dimensions</label>
         </div>
-        <div class="input-field col s12">
+        <div *ngIf="formManager.displayCurrentLocationField()" class="input-field col s12">
           <!-- currentLocation -->
           <input
             [input-wake-up]="'currentLocation'"
@@ -170,7 +170,7 @@
         class="grey-text text-darken-2 include-pointer">
         <i class="material-icons lr-arrow">add</i>
       </a>
-      Media: Image <span *ngIf="resourceGroup.value.title != ''">({{resourceGroup.value.title}})</span>
+      Media: {{formManager.getMediaType()}} <span *ngIf="resourceGroup.value.title != ''">({{resourceGroup.value.title}})</span>
       <a
         (click)="removed.emit()"
         class="grey-text text-darken-2 right include-pointer"

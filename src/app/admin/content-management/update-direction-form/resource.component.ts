@@ -3,9 +3,99 @@ import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectorRef } fro
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {LicenseType, IResource} from '../../../shared/interfaces/resource.interface';
 
-import {DirectionService} from '../../../shared/services/direction.service';
+import {IMAGE_URL, IMAGE_UPLOAD, VIDEO_URL, MUSIC_URL, DirectionService} from '../../../shared/services/direction.service';
 
 const resolvedPromise = Promise.resolve(undefined);
+
+export class FormManager {
+  // this class contains information and methods related to the
+  // the state of the form; in particular, it keeps track of what
+  // type of form is being exposed, which depends on whether we are
+  // uploading an image from a file, pasting in a url, etc.
+  mediaType: string; // one of the media types listed in the direction service
+
+  constructor(mediaType: string) {
+    this.mediaType = mediaType;
+  }
+
+  getMediaType() {
+    let returnVal: string = null;
+    switch(this.mediaType) {
+      case IMAGE_URL: {
+        returnVal = 'Image - url';
+        break;
+      }
+      case IMAGE_UPLOAD: {
+        returnVal = 'Image - file upload';
+        break;
+      }
+      case MUSIC_URL: {
+        returnVal = 'Music - url';
+        break;
+      }
+      case VIDEO_URL: {
+        returnVal = 'Video - url';
+        break;
+      }
+      default: {
+        returnVal = 'unknown';
+        break;
+      }
+    }
+    return returnVal;
+  }
+
+  getSourceFieldText() {
+    let returnVal: string = null;
+    if (this.mediaType === IMAGE_UPLOAD) {
+      returnVal = 'Source (e.g., personal photo)';
+    } else {
+      returnVal = 'Url of the file (not the page)';
+    }
+    return returnVal;
+  }
+
+  getDescriptionFieldText() {
+    let returnVal: string = null;
+    switch(this.mediaType) {
+      case IMAGE_URL: {
+        returnVal = 'image';
+        break;
+      }
+      case IMAGE_UPLOAD: {
+        returnVal = 'image';
+        break;
+      }
+      case MUSIC_URL: {
+        returnVal = 'music';
+        break;
+      }
+      case VIDEO_URL: {
+        returnVal = 'video';
+        break;
+      }
+      default: {
+        returnVal = 'unknown';
+        break;
+      }
+    }
+    return returnVal;
+  }
+
+  displayMediumField() {
+    return (this.mediaType === IMAGE_UPLOAD) || (this.mediaType === IMAGE_URL);
+  }
+
+  displayPhysicalDimensionsField() {
+    return (this.mediaType === IMAGE_UPLOAD) || (this.mediaType === IMAGE_URL);
+  }
+
+  displayCurrentLocationField() {
+    return (this.mediaType === IMAGE_UPLOAD) || (this.mediaType === IMAGE_URL);
+  }
+
+}
+
 
 @Component({
   selector: 'app-resource',
@@ -19,6 +109,13 @@ export class ResourceComponent implements OnInit {
   @Input() index: number;
   @Input() isNewResource: boolean = true;
   @Output() removed = new EventEmitter();
+
+  formManager: FormManager;
+
+  imageUrl: string = IMAGE_URL; // need to make these class-level variables to use them in the template
+  imageUpload: string = IMAGE_UPLOAD;
+  videoUrl: string = VIDEO_URL;
+  musicUrl: string = MUSIC_URL;
 
   resourceGroup: FormGroup;
   isOpen: boolean = true;
@@ -50,6 +147,7 @@ export class ResourceComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.formManager = new FormManager(this.resource.mediaType);
     this.resourceGroup = this.toFormGroup(this.resource);
 
     resolvedPromise.then(() => {

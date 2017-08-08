@@ -93,6 +93,7 @@ export class UpdateDirectionFormComponent implements OnInit {
       //       resources array in every step, so need to create
       //       an empty array there or the form crashes....
       for (let step of this.directionFormData.steps) {
+        // https://stackoverflow.com/questions/1098040/checking-if-a-key-exists-in-a-javascript-object
         if (!("resources" in step)) {
           console.log('formdata step has no resources!!!');
           step["resources"] = [];

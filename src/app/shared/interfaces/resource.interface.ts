@@ -48,5 +48,6 @@ export interface IResource {
   physicalDimensions?: string; // used by image
   currentLocation?: string; // used by image
   duration?: string; //hh:mm:ss; used by video and audio
+  mediaType: string; // the different media types are in direction.service.ts; the media type includes information about the source (file upload vs. url)
 }
 
