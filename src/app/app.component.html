@@ -30,7 +30,7 @@ http://materializecss.com/footer.html
               Journal
             </a>
           </li>
-          <li [hidden] = "!currentUserIsAdmin">
+          <li [hidden]="!currentUserIsAdmin">
             <a materialize="dropdown"
                data-alignment="right"
                data-beloworigin="true"
@@ -172,12 +172,19 @@ http://materializecss.com/footer.html
           <li><a [routerLink]="['/end-user/help-how-journal']">How to use the journal</a></li>
         </ul>
       </li>
-
-
-
     </ul>
   </nav>
 </header>
+
+<div class="fb-share-button"
+     data-href="https://galilee.cse.taylor.edu/"
+     data-layout="button_count"
+     data-size="large"
+     data-mobile-iframe="true">
+  <a class="fb-xfbml-parse-ignore"
+     target="_blank"
+     href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgalilee.cse.taylor.edu%2F&amp;src=sdkpreparse">Share</a>
+</div>
 
 <main>
   <router-outlet></router-outlet>
@@ -207,18 +214,18 @@ http://materializecss.com/footer.html
           </li>
         </ul>
       </div>
-<!--
-      <li>
-        <a materialize="dropdown"
-           data-beloworigin="true"
-           data-alignment="right"
-           class='dropdown-button'
-           data-activates='resourcesDropdownMenu'>
-          About
-          <i class="material-icons right">arrow_drop_down</i>
-        </a>
-      </li>
--->
+      <!--
+            <li>
+              <a materialize="dropdown"
+                 data-beloworigin="true"
+                 data-alignment="right"
+                 class='dropdown-button'
+                 data-activates='resourcesDropdownMenu'>
+                About
+                <i class="material-icons right">arrow_drop_down</i>
+              </a>
+            </li>
+      -->
 
 
       <div class="col l3 m6 s12">
@@ -246,7 +253,8 @@ http://materializecss.com/footer.html
 
     <div class="container">
       © Phil Collins, Ph.D., 2014. This material was created in partnership
-      with the <a href="http://tucse.taylor.edu" class = "white-text link-underline" target="_blank">Taylor University Center for Scripture Engagement</a>.
+      with the <a href="http://tucse.taylor.edu" class="white-text link-underline" target="_blank">Taylor University
+      Center for Scripture Engagement</a>.
       <!--<a class="grey-text text-lighten-4 right" href="#!">More</a>-->
     </div>
   </div>
@@ -264,7 +272,6 @@ http://materializecss.com/footer.html
   <li><a [routerLink]="['/update-preferences']">Profile</a></li>
   <li><a (click)="logout()">Logout</a></li>
 </ul>
-
 
 
 <!-- Dropdown Structure -->
