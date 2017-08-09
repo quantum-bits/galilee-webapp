@@ -3,7 +3,7 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Resource } from '../../../shared/models/resource.model';
 import { ResourceCollection } from '../../../shared/interfaces/resource-collection.interface';
 import { UpdateResourceItemComponent } from '../update-resource-item';
-import { UploadResourceComponent } from '../upload-resource';
+import { UploadResourceV1Component } from '../upload-resource-v1';
 
 declare var $: any; // for using jQuery within this angular component
 

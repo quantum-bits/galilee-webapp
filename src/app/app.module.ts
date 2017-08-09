@@ -18,6 +18,7 @@ import {DatePickerModule} from 'ng2-datepicker';
 import {MomentModule} from 'angular2-moment';
 import {Ng2CompleterModule} from "ng2-completer";
 import {NgxPaginationModule} from 'ngx-pagination';
+import { FacebookModule } from 'ngx-facebook';
 
 // the following attempts to implement lazy loading of the admin module
 // TODO: probably need to remove AdminModule from the imports[] list below;
@@ -54,7 +55,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     MomentModule,
     Ng2CompleterModule,
     NgxPaginationModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FacebookModule.forRoot()
   ],
   declarations: [
     AppComponent,

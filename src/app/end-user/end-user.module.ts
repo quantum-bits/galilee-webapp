@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
 
@@ -48,6 +48,8 @@ import { ResourceItemModalComponent } from './resource-item-modal/resource-item-
 import { ResourceModalAnchorDirective } from './resource-list/resource-modal-anchor.directive';
 import { ImageItemComponent } from './image-item/image-item.component';
 import { ResourceItemMetadataModalComponent } from './resource-item-metadata-modal/resource-item-metadata-modal.component';
+
+import { FacebookModule } from 'ngx-facebook';
 
 const routes: Routes = [
   {
@@ -159,7 +161,8 @@ const routes: Routes = [
     MaterializeModule,
     MomentModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    FacebookModule
   ],
   entryComponents: [
     ResourceItemModalComponent,

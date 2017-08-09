@@ -25,7 +25,7 @@ import {UpdatePracticesComponent} from './content-management/update-practices';
 import {UpdateResourceCollectionComponent} from './content-management/update-resource-collection';
 import {UpdateResourceItemComponent} from './content-management/update-resource-item';
 import {UpdateResourcesComponent} from './content-management/update-resources';
-import {UploadResourceComponent} from './content-management/upload-resource';
+import {UploadResourceV1Component} from './content-management/upload-resource-v1';
 import {UpdateReadingsComponent} from './content-management/update-readings/update-readings.component';
 import {UpdateReadingsListComponent} from './content-management/update-readings-list/update-readings-list.component';
 import {
@@ -57,6 +57,7 @@ import { StepArrayComponent } from './content-management/update-direction-form/s
 import { StepComponent } from './content-management/update-direction-form/step.component';
 import { ResourceArrayComponent } from './content-management/update-direction-form/resource-array.component';
 import { ResourceComponent } from './content-management/update-direction-form/resource.component';
+import { UploadResourceComponent } from './content-management/upload-resource/upload-resource.component';
 
 const routes: Routes = [
   {
@@ -98,7 +99,7 @@ const routes: Routes = [
     UpdateResourceCollectionComponent,
     UpdateResourceItemComponent,
     UpdateResourcesComponent,
-    UploadResourceComponent,
+    UploadResourceV1Component,
     UpdateReadingsComponent,
     UpdateReadingsListComponent,
     DisplayDirectionStepsComponent,
@@ -126,7 +127,8 @@ const routes: Routes = [
     StepArrayComponent,
     StepComponent,
     ResourceArrayComponent,
-    ResourceComponent
+    ResourceComponent,
+    UploadResourceComponent
   ],
   exports: [
     EditUserComponent

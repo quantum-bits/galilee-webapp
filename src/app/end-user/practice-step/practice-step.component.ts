@@ -1,9 +1,19 @@
-import { Component, OnInit, Input, EventEmitter, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, Input, EventEmitter, ViewChild } from '@angular/core';
 import {Router} from '@angular/router';
+
+//import { FacebookService, UIParams, UIResponse } from 'ngx-facebook';
+//import { FacebookService, LoginResponse, LoginOptions, UIResponse, UIParams, FBVideoComponent } from 'ngx-facebook';
+
+import {FBShareComponent} from 'ngx-facebook';
+
+
+import { DOCUMENT } from '@angular/platform-browser';
 
 //import {MaterializeAction} from "angular2-materialize"
 
 //declare var $: any; // for using jQuery within this angular component
+
+declare var window: any;
 
 @Component({
   selector: 'app-practice-step',
@@ -18,43 +28,31 @@ export class PracticeStepComponent implements OnInit {
   @Input() practiceIndex: number;
   @Input() stepIndex: number;
 
-/*
-  @ViewChild('carousel') carouselElement;
-  actions = new EventEmitter<string>();
-
-  imageURLs = [
-    "https://image.shutterstock.com/display_pic_with_logo/1264645/364153082/stock-photo-asian-girl-in-sunflower-field-364153082.jpg",
-    "https://image.shutterstock.com/display_pic_with_logo/1264645/298927574/stock-photo-a-young-traveler-girl-sit-on-the-wooden-bridge-in-halong-bay-and-enjoy-the-beauty-of-seascape-298927574.jpg",
-    "https://image.shutterstock.com/display_pic_with_logo/1264645/298757792/stock-photo-a-young-traveler-girl-sit-on-the-top-of-mountain-in-halong-bay-and-enjoy-the-beauty-of-seascape-298757792.jpg",
-    "https://image.shutterstock.com/display_pic_with_logo/2565601/411902890/stock-photo-ha-long-bay-scenic-view-hanoi-vietnam-411902890.jpg",
-    "https://image.shutterstock.com/display_pic_with_logo/2565601/413207668/stock-photo-the-temple-of-literature-in-hanoi-vietnam-the-chinese-words-is-poem-of-thie-temple-and-templs-s-413207668.jpg"
-  ];
-
-  showInitialized = false;
+  safeUrl: string = '';
 
 
-
-  imageDimensions = {
-    smallViewPort: {
-      maxWidth: 200,
-      maxHeight: 350
-    },
-    medViewPort: {
-      maxWidth: 300,
-      maxHeight: 350
-    },
-    largeViewPort: {
-      maxWidth: 400,
-      maxHeight: 400
-    },
-
+  //https://stackoverflow.com/questions/37796449/how-to-get-the-current-url-in-the-browser-in-angular-2-using-typescript
+  constructor(private router: Router,
+              //private fb: FacebookService,
+              @Inject(DOCUMENT) public document: any) {
+    console.log(this.document.location.href);
+    this.safeUrl = 'https://galilee.cse.taylor.edu';
+    //this.safeUrl = 'href=https%3A%2F%2Fgalilee.cse.taylor.edu';
+    //this.fbSrc = "https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2F"+document.location.href+"u&layout=button&size=large&mobile_iframe=true&width=73&height=28&appId";
   }
-*/
 
-  constructor(private router: Router) { }
 
   ngOnInit() {
+    //https://github.com/zyra/ngx-facebook/issues/74
+    console.log('inside OnInit!!!!!!');
+    window.FB.XFBML.parse();
   }
+
+  /*
+  ngAfterViewChecked() {
+    window.FB.XFBML.parse();
+  }
+  */
 
   includeNavigationButtons() {
     return this.showPreviousButton() || this.showNextButton();
@@ -91,6 +89,24 @@ export class PracticeStepComponent implements OnInit {
     //$('.stepper').activateStepper();
   }
 */
+
+
+
+/*
+  share(url: string) {
+
+    let params: UIParams = {
+      href: 'https://github.com/zyra/ngx-facebook',
+      method: 'share'
+    };
+
+    this.fb.ui(params)
+      .then((res: UIResponse) => console.log(res))
+      .catch((e: any) => console.error(e));
+
+  }
+  */
+
 
 
 

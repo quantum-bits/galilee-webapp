@@ -29,13 +29,13 @@
   <div class="modal-content">
     <h5>Edit Resource(s)</h5>
     <!-- NOTE: modalID is used to close the modal programmatically at the end -->
-    <app-upload-resource
+    <app-upload-resource-v1
       [newCollection]="false"
       [modalID]="'modalEditResource'+resourceCollection.id"
       (onFinished)="onModalFinished($event)"
       [resourceCollection]="resourceCollection"
       [resourcePath]="resourcePath">
-    </app-upload-resource>
+    </app-upload-resource-v1>
 
   </div>
 </div>

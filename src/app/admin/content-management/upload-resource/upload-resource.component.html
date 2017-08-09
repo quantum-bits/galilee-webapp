@@ -1,224 +1,107 @@
-<div class="modal-wrapper">
+<!--
+<p>
+  upload-resource works!
+</p>
 
-  <form materialize [formGroup]="resourceCollectionForm"
-        novalidate
-        (ngSubmit)="save(resourceCollectionForm.value)">
+<div ng2FileDrop  [uploader]="uploader">
+  <input type="file" ng2FileSelect [uploader]="uploader" multiple />
+</div>
+-->
+
+
+<!-- file drop/browse area -->
+<div class="row">
+ <div class="col s4">
 
     <div class="row">
-      <div class="card col s12">
-        <div class="row">
-          <div class="col s8">
-            <div class="row">
-              <div class="input-field col s12">
-                <!-- title -->
-                <input
-                  [class.warning-background]="!(resourceCollectionForm.controls.title.valid||!resourceCollectionForm.controls.title.touched)"
-                  [class.valid-background]="(resourceCollectionForm.controls.title.valid||!resourceCollectionForm.controls.title.touched)"
-                  id="title"
-                  type="text"
-                  formControlName="title">
-                <!--display error message if name is not valid-->
-                <div *ngIf="!resourceCollectionForm.controls.title.valid">
-                  <small
-                    [class.warning]="resourceCollectionForm.controls.title.touched">
-                    Title is required.
-                  </small>
-                </div>
-                <label for="title">Title for Collection</label>
-              </div>
-              <div class="input-field col s12">
-                <!--  description -->
-                <textarea
-                  [textarea-autoresize]="'textarea1'"
-                  [class.warning-background]="!(resourceCollectionForm.controls.description.valid||!resourceCollectionForm.controls.description.touched)"
-                  [class.valid-background]="(resourceCollectionForm.controls.description.valid||!resourceCollectionForm.controls.description.touched)"
-                  id="textarea1"
-                  class="materialize-textarea"
-                  formControlName="description"></textarea>
-                <!--display error message if description is not valid-->
-                <div *ngIf="!resourceCollectionForm.controls.description.valid">
-                  <small
-                    [class.warning]="resourceCollectionForm.controls.description.touched">
-                    Description is required.
-                  </small>
-                </div>
-                <label for="textarea1">Description</label>
-              </div>
-            </div>
-          </div>
-
-          <!-- file drop/browse area -->
-          <div *ngIf="resourceCollectionForm.controls.title.valid && resourceCollectionForm.controls.description.valid">
-            <div class="col s4">
-
-              <div class="row">
-                <div class="col s12 drop-title">
-                  <strong>Drop or browse file(s)</strong>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col s12">
-                  <div ng2FileDrop
-                       [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
-                       (fileOver)="fileOverBase($event)"
-                       [uploader]="uploader"
-                       class="my-drop-zone">
-                    Drop here
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col s12">
-                  <!-- overriding native styling in css by setting display: none
-                  (see: http://stackoverflow.com/questions/572768/styling-an-input-type-file-button) -->
-                  <label class="btn waves-light">
-                    Browse
-                    <input type="file" ng2FileSelect [uploader]="uploader" multiple/><br/>
-                  </label>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
+      <div class="col s12 drop-title">
+        <strong>Drop or browse file(s)</strong>
       </div>
+    </div>
 
-      <div *ngIf="showQueue()">
-        <div class="card col s12" style="margin-bottom: 40px">
-          <div class="card-content">
-            <span class="card-title"> Upload queue</span>
-            <p>Queue length: {{numFiles}} </p>
-            <table class="table">
-              <thead>
-              <tr>
-                <th width="50%">Name</th>
-                <th>Size</th>
-                <th>Actions</th>
-                <th>Progress</th>
-                <th>Status</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr *ngFor="let item of uploader.queue; let i=index">
-
-                <td><strong>{{item._file.name}}</strong></td>
-
-                <!-- not sure if we need the part about isHTML5 -->
-                <td *ngIf="uploader.isHTML5" nowrap>0.00 MB</td>
-                <td *ngIf="uploader.isHTML5">
-                  <div class="progress" style="margin-bottom: 0;">
-                    <div class="determinate" [ngStyle]="{ 'width': item.progress + '%' }"></div>
-                  </div>
-                </td>
-                <td class="text-center">
-                  <span *ngIf="item.isSuccess"><i class="material-icons left">check_circle</i></span>
-                  <span *ngIf="item.isCancel"><i class="material-icons left">cancel</i></span>
-                  <span *ngIf="item.isError"><i class="material-icons left">error_outline</i></span>
-                </td>
-                <td nowrap>
-                  <!-- could put buttons here instead, but they take up more room.... -->
-                  <div *ngIf="item.isUploading">
-                    <a (click)="item.cancel()">
-                      <i class="material-icons left">cancel</i>
-                    </a>
-                  </div>
-                  <div *ngIf="!item.isUploading">
-                    <!-- original code: <div (click)="item.upload()" [class.disabled]="item.isReady || item.isUploading || item.isSuccess">-->
-                    <div (click)="uploadItem(i)" [class.disabled]="item.isReady || item.isUploading || item.isSuccess">
-                      <i class="material-icons left icon-teal">file_upload</i>
-                    </div>
-                    <div (click)="item.remove()">
-                      <i class="material-icons left icon-red">delete_forever</i>
-                    </div>
-                  </div>
-
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- copyrights and captions for individual files -->
-      <div formArrayName="resources">
-        <!-- TODO (Nurk) The iterated object might be completely wrong; had to change it to get AoT compile to work -->
-        <div *ngFor="let resource of resourceCollectionForm.controls; let i=index" class="col s6">
-          <!-- Angular assigns array index as group name by default 0, 1, 2, ... -->
-          <div [formGroupName]="i">
-            <!--caption-->
-            <div class="card-wrapper">
-              <div class="card">
-                <div class="card-content">
-                  <div class="row">
-                    <div class="col s12">
-                      {{resource.value.fileName}}
-                      <a (click)="removeResource(i)"><i class="material-icons right">close</i></a>
-                    </div>
-                    <!--caption-->
-
-                    <div class="input-field col s12">
-                      <input
-                        [input-wake-up]="'captionInModal'+i"
-                        id="captionInModal{{i}}"
-                        type="text"
-                        [class.warning-background]="!(resourceCollectionForm.controls.resources.controls[i].controls.caption.valid||!resourceCollectionForm.controls.resources.controls[i].controls.caption.touched)"
-                        [class.valid-background]="(resourceCollectionForm.controls.resources.controls[i].controls.caption.valid||!resourceCollectionForm.controls.resources.controls[i].controls.caption.touched)"
-                        formControlName="caption">
-                      <label [attr.for]="'captionInModal'+i">Caption</label>
-                      <div *ngIf="!resourceCollectionForm.controls.resources.controls[i].controls.caption.valid">
-                        <small
-                          [class.warning]="resourceCollectionForm.controls.resources.controls[i].controls.caption.touched">
-                          Caption is required
-                        </small>
-                      </div>
-                    </div>
-
-                    <div class="input-field col s12">
-                      <label [attr.for]="'copyrightOwnerInModal'+i">Copyright Owner (optional)</label>
-                      <input
-                        class="valid-background"
-                        [input-wake-up]="'copyrightOwnerInModal'+i"
-                        id="copyrightOwnerInModal{{i}}"
-                        type="text"
-                        formControlName="copyrightOwner">
-                    </div>
-
-                    <div class="input-field col s12">
-                      <label [attr.for]="'copyrightYearInModal'+i">Copyright Year (optional)</label>
-                      <input
-                        class="valid-background"
-                        [input-wake-up]="'copyrightYearInModal'+i"
-                        id="copyrightYearInModal{{i}}"
-                        type="text"
-                        formControlName="copyrightYear">
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+    <div class="row">
+      <div class="col s12">
+        <div ng2FileDrop
+             [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+             (fileOver)="fileOverBase($event)"
+             [uploader]="uploader"
+             class="my-drop-zone">
+          Drop here
         </div>
       </div>
     </div>
 
     <div class="row">
       <div class="col s12">
-        <button
-          class="btn right"
-          type="submit"
-          [class.disabled]="!resourceCollectionForm.valid"
-          [disabled]="!resourceCollectionForm.valid">Submit
-        </button>
+        <!-- overriding native styling in css by setting display: none
+        (see: http://stackoverflow.com/questions/572768/styling-an-input-type-file-button) -->
+        <label class="btn waves-light">
+          Browse
+          <input type="file" ng2FileSelect [uploader]="uploader"/><br/>
+        </label>
       </div>
     </div>
 
-  </form>
+  </div>
 
-  <button class="btn btn-flat" (click)="dumpUploaderDetails()">info about file(s)</button>
 
+  <div *ngIf="showQueue()">
+    <div class="card col s12" style="margin-bottom: 40px">
+      <div class="card-content">
+        <span class="card-title"> Upload queue</span>
+        <p>Queue length: {{numFiles}} </p>
+        <table class="table">
+          <thead>
+          <tr>
+            <th width="50%">Name</th>
+            <th>Size</th>
+            <th>Actions</th>
+            <th>Progress</th>
+            <th>Status</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of uploader.queue; let i=index">
+
+            <td><strong>{{item._file.name}}</strong></td>
+
+            <!-- not sure if we need the part about isHTML5 -->
+            <td *ngIf="uploader.isHTML5" nowrap>0.00 MB</td>
+            <td *ngIf="uploader.isHTML5">
+              <div class="progress" style="margin-bottom: 0;">
+                <div class="determinate" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+              </div>
+            </td>
+            <td class="text-center">
+              <span *ngIf="item.isSuccess"><i class="material-icons left">check_circle</i></span>
+              <span *ngIf="item.isCancel"><i class="material-icons left">cancel</i></span>
+              <span *ngIf="item.isError"><i class="material-icons left">error_outline</i></span>
+            </td>
+            <td nowrap>
+              <!-- could put buttons here instead, but they take up more room.... -->
+              <div *ngIf="item.isUploading">
+                <a (click)="item.cancel()">
+                  <i class="material-icons left">cancel</i>
+                </a>
+              </div>
+              <div *ngIf="!item.isUploading">
+                <!-- original code: <div (click)="item.upload()" [class.disabled]="item.isReady || item.isUploading || item.isSuccess">-->
+                <div (click)="uploadItem(i)" [class.disabled]="item.isReady || item.isUploading || item.isSuccess">
+                  <i class="material-icons left icon-teal">file_upload</i>
+                </div>
+                <div (click)="item.remove()">
+                  <i class="material-icons left icon-red">delete_forever</i>
+                </div>
+              </div>
+
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
+
+
+<a class="waves-effect waves-light btn" (click)="dumpUploaderDetails()">uploader info</a>

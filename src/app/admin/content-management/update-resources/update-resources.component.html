@@ -40,13 +40,13 @@
     <h5>Upload Resource(s)</h5>
 
     <!-- NOTE: modalID is used to close the modal programmatically at the end -->
-    <app-upload-resource
+    <app-upload-resource-v1
       [newCollection]="true"
       [modalID]="'modalUploadResource'"
       (onFinished)="onModalFinished($event)"
       [resourceCollection]="initialResourceCollection"
       [resourcePath]="resourcePath">
-    </app-upload-resource>
+    </app-upload-resource-v1>
   </div>
 </div>
 

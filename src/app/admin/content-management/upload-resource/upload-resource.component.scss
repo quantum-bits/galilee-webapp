@@ -1,0 +1,80 @@
+.my-drop-zone {/* http://jsfiddle.net/yeaqrh48/ */
+  display: -webkit-flexbox;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  /*line-height: 80px;
+  vertical-align: middle;*/
+  border: dotted 3px lightgray;
+  border-radius: 10px;
+  /*text-align: center;*/
+}
+.nv-file-over { /* Default class applied to drop zones on over */
+  display: -webkit-flexbox;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  background: rgba(38,165,154,0.8); /* approximate green colour used for buttons */
+  color: rgba(255,255,255,1);
+  border: rgba(38,165,154,1);
+  /*background: green;*/
+  /*opacity: 0.2;*/
+  border-radius: 10px;
+}
+
+.modal-wrapper {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.card-wrapper {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.drop-title {
+  padding-top: 30px;
+}
+
+.well {
+  height: 100px
+}
+
+html, body { height: 100%; }
+
+input[type="file"] {
+  display: none;
+}
+
+/* http://stackoverflow.com/questions/35961565/how-to-change-color-icon-in-materialize */
+i.icon-teal {
+  color: #009688; /* teal */
+}
+
+i.icon-red {
+  color: #c62828; /* darken-3 */
+}
+
+/* invalid color */
+.warning {
+  color: #c62828;
+}
+
+.warning-background {
+  background-color: rgba(255,0,0,0.1);
+}
+
+.valid-background {
+  background-color: rgba(0,255,0,0.1);
+}

@@ -14,6 +14,8 @@ import {ReadingDayService} from './shared/services/reading-day.service';
 import {DirectionService} from './shared/services/direction.service';
 import {DateNavSpyService} from './shared/services/date-nav-spy.service';
 import {ResourceModalCommunicationService} from './end-user/resource-list/resource-modal-communication.service';
+import { FacebookService, InitParams } from 'ngx-facebook';
+import { UIParams, UIResponse } from 'ngx-facebook';
 
 @Component({
   selector: 'app-root',
@@ -31,7 +33,8 @@ import {ResourceModalCommunicationService} from './end-user/resource-list/resour
     DateNavSpyService,
     UserService,
     GroupService,
-    ResourceModalCommunicationService
+    ResourceModalCommunicationService,
+    FacebookService
   ]
 })
 export class AppComponent implements OnInit {
@@ -57,7 +60,17 @@ export class AppComponent implements OnInit {
               private userService: UserService,
               private router: Router,
               private postService: PostService,
-              private groupService: GroupService) {
+              private groupService: GroupService,
+              private fb: FacebookService) {
+/*
+    let initParams: InitParams = {
+      appId: '1927971220769787',
+      xfbml: true,
+      version: 'v2.10'
+    };
+    fb.init(initParams);
+    */
+
   }
 
   ngOnInit() {
@@ -147,5 +160,23 @@ export class AppComponent implements OnInit {
   inAnyGroups() {
     return this.userService.inGroups();
   }
+
+  /*
+  share() {
+
+    const options: UIParams = {
+      method: 'share',
+      href: 'https://github.com/zyramedia/ng2-facebook-sdk'
+    };
+
+    this.fb.ui(options)
+      .then((res: UIResponse) => {
+        console.log('Got the users profile', res);
+      });
+
+  }
+  */
+
+
 
 }
