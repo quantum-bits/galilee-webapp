@@ -1,30 +1,25 @@
 // TODO: reconcile Resource model with IResource interface
 //import {ResourceDetails} from './resource-details.interface';
+import {Tag} from './tag.interface';
 
-/*
-  deprecated....
-export interface IResource {
+export interface License {
   id: number;
-  seq: number;
-  caption: string;
-  description?: string;
-  author?: string;
-  date?: string;
-  medium?: string;
-  dimensions?: string;
-  currentLocation?: string;
-  fileUrl: string; // api endpoint on our server for retrieving the image
-  originalFileUrl?: string; // url for the original image (wikimedia commons, say)
-  imageWidth: number;
-  imageHeight: number;
-  mimeType: string;
+  name: string; // e.g., 'public domain', 'creative commons', 'unknown, 'other', etc.
+  description: string;
+  url: string;
 }
-*/
 
-export interface LicenseType {
-  id: number;
-  name: string; //, such as 'public domain', 'creative commons', 'unknown, 'other', etc.
+export interface MediaType {
+  id: number; //specifically, one of the MediaTypeOption enum values in the direction service
+  description: string; //human-readable description of the media type, appropriate for a drop-down, say
 }
+
+export interface MimeType {
+  id: number;
+  type: string;
+  description: string;
+}
+
 
 export interface IResource {
   // common properties
@@ -34,20 +29,21 @@ export interface IResource {
   creationDate?: string; // input by user
   copyrightDate?: string; // input by user
   importDate: string; // supplied by server
-  licenseType: LicenseType; // server will supply various license types
-  keywords?: string; // at this point we will have one string, possibly including spaces
-  source: string; // supplied by user, could be a url, or some free-form text ('a picture I took')
+  license: License; // server will supply various license types
+  tags?: Tag[]; // one or more Tag objects in the db
   mimeType: string; // supplied by server; UI will infer the media type by parsing the mime type (e.g., 'image/png' means it's an image, etc.)
   title: string; // supplied by user
   description: string; // supplied by user
   notes?: string; //supplied by user
   // special properties for different types of media
+  sourceUrl?: string; // url for the original file in the cases in which the file is uploaded from the web (image, video and music)
+  source?: string; // free form text (e.g., 'a picture I took') for the case in which the file is uploaded from the user's hard drive (image only, at this point)
   height?: number; // in pixels; used by image and video
   width?: number; // in pixels; used by image and video
   medium?: string; // used by image
   physicalDimensions?: string; // used by image
   currentLocation?: string; // used by image
   duration?: string; //hh:mm:ss; used by video and audio
-  mediaType: string; // the different media types are in direction.service.ts; the media type includes information about the source (file upload vs. url)
+  mediaType: MediaType; // the different media types are in direction.service.ts; the media type includes information about the source (file upload vs. url)
 }
 

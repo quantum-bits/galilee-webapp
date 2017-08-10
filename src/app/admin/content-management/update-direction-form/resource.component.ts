@@ -1,9 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectorRef } from '@angular/core';
 // I don't think ChangeDetectorRef is being used...?
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {LicenseType, IResource} from '../../../shared/interfaces/resource.interface';
+import {License, IResource} from '../../../shared/interfaces/resource.interface';
 
-import {IMAGE_URL, IMAGE_UPLOAD, VIDEO_URL, MUSIC_URL, DirectionService} from '../../../shared/services/direction.service';
+import {MediaTypeOptions, DirectionService} from '../../../shared/services/direction.service';
 
 const resolvedPromise = Promise.resolve(undefined);
 
@@ -12,28 +12,28 @@ export class FormManager {
   // the state of the form; in particular, it keeps track of what
   // type of form is being exposed, which depends on whether we are
   // uploading an image from a file, pasting in a url, etc.
-  mediaType: string; // one of the media types listed in the direction service
+  mediaTypeElement: number; // one of the enums in MediaTypeOptions
 
-  constructor(mediaType: string) {
-    this.mediaType = mediaType;
+  constructor(mediaTypeElement: number) {
+    this.mediaTypeElement = mediaTypeElement;
   }
 
   getMediaType() {
     let returnVal: string = null;
-    switch(this.mediaType) {
-      case IMAGE_URL: {
+    switch(this.mediaTypeElement) {
+      case MediaTypeOptions.imageUrl: {
         returnVal = 'Image - url';
         break;
       }
-      case IMAGE_UPLOAD: {
+      case MediaTypeOptions.imageUpload: {
         returnVal = 'Image - file upload';
         break;
       }
-      case MUSIC_URL: {
+      case MediaTypeOptions.musicUrl: {
         returnVal = 'Music - url';
         break;
       }
-      case VIDEO_URL: {
+      case MediaTypeOptions.videoUrl: {
         returnVal = 'Video - url';
         break;
       }
@@ -45,9 +45,13 @@ export class FormManager {
     return returnVal;
   }
 
+  getMediaTypeId() {
+    return this.mediaTypeElement;
+  }
+
   getSourceFieldText() {
     let returnVal: string = null;
-    if (this.mediaType === IMAGE_UPLOAD) {
+    if (this.mediaTypeElement === MediaTypeOptions.imageUpload) {
       returnVal = 'Source (e.g., personal photo)';
     } else {
       returnVal = 'Url of the file (not the page)';
@@ -57,20 +61,20 @@ export class FormManager {
 
   getDescriptionFieldText() {
     let returnVal: string = null;
-    switch(this.mediaType) {
-      case IMAGE_URL: {
+    switch(this.mediaTypeElement) {
+      case MediaTypeOptions.imageUrl: {
         returnVal = 'image';
         break;
       }
-      case IMAGE_UPLOAD: {
+      case MediaTypeOptions.imageUpload: {
         returnVal = 'image';
         break;
       }
-      case MUSIC_URL: {
+      case MediaTypeOptions.musicUrl: {
         returnVal = 'music';
         break;
       }
-      case VIDEO_URL: {
+      case MediaTypeOptions.videoUrl: {
         returnVal = 'video';
         break;
       }
@@ -83,15 +87,25 @@ export class FormManager {
   }
 
   displayMediumField() {
-    return (this.mediaType === IMAGE_UPLOAD) || (this.mediaType === IMAGE_URL);
+    return (this.mediaTypeElement === MediaTypeOptions.imageUpload) || (this.mediaTypeElement === MediaTypeOptions.imageUrl);
   }
 
   displayPhysicalDimensionsField() {
-    return (this.mediaType === IMAGE_UPLOAD) || (this.mediaType === IMAGE_URL);
+    return (this.mediaTypeElement === MediaTypeOptions.imageUpload) || (this.mediaTypeElement === MediaTypeOptions.imageUrl);
   }
 
   displayCurrentLocationField() {
-    return (this.mediaType === IMAGE_UPLOAD) || (this.mediaType === IMAGE_URL);
+    return (this.mediaTypeElement === MediaTypeOptions.imageUpload) || (this.mediaTypeElement === MediaTypeOptions.imageUrl);
+  }
+
+  uploadFromHardDrive() {
+    // returns true if the user is to upload a file from their computer
+    // (as opposed to specifying a url for the file)
+    return this.mediaTypeElement === MediaTypeOptions.imageUpload;
+  }
+
+  uploadFromUrl() {
+    return (this.mediaTypeElement === MediaTypeOptions.imageUrl) || (this.mediaTypeElement === MediaTypeOptions.musicUrl) || (this.mediaTypeElement === MediaTypeOptions.videoUrl);
   }
 
 }
@@ -112,15 +126,10 @@ export class ResourceComponent implements OnInit {
 
   formManager: FormManager;
 
-  imageUrl: string = IMAGE_URL; // need to make these class-level variables to use them in the template
-  imageUpload: string = IMAGE_UPLOAD;
-  videoUrl: string = VIDEO_URL;
-  musicUrl: string = MUSIC_URL;
-
   resourceGroup: FormGroup;
   isOpen: boolean = true;
   metadataOpen: boolean = false;
-  licenseTypes: LicenseType[] = [];
+  licenses: License[] = [];
 
   modules = {
     toolbar: [
@@ -147,36 +156,47 @@ export class ResourceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.formManager = new FormManager(this.resource.mediaType);
+    this.formManager = new FormManager(this.resource.mediaType.id);
     this.resourceGroup = this.toFormGroup(this.resource);
 
     resolvedPromise.then(() => {
       this.formArray.push(this.resourceGroup);
     });
 
-    this.directionService.getAllLicenseTypes()
+    this.directionService.getAllLicenses()
       .subscribe(
-        licenseTypes => {
-          console.log('license types:', licenseTypes);
-          this.licenseTypes = licenseTypes;
+        licenses => {
+          console.log('license types:', licenses);
+          this.licenses = licenses;
         },
         error => console.log('error fetching license types: ', error)
       );
   }
 
+  // TODO: eventually include tags
   toFormGroup(resource: IResource) {
-    return this.formBuilder.group({
+    // note: it's convenient to include the mediaTypeId in the
+    //       formGroup so that the (parent) direction form will
+    //       know this information
+    let formGroup = this.formBuilder.group({
       title: [resource.title, Validators.required],
       description: [resource.description],
       creator: [resource.creator],
       creationDate: [resource.creationDate],
       copyrightDate: [resource.copyrightDate],
-      licenseId: [resource.licenseType.id, Validators.required],
+      licenseId: [resource.license.id, Validators.required],
       medium: [resource.medium],
       physicalDimensions: [resource.physicalDimensions],
       currentLocation: [resource.currentLocation],
-      source: [resource.source, Validators.required]
+      source: [resource.source],
+      mediaTypeId: [this.formManager.getMediaTypeId()]
     });
+    if (this.formManager.uploadFromUrl()) {
+      formGroup["sourceUrl"] = [resource.sourceUrl, Validators.required];
+    } else {
+      formGroup["sourceUrl"] = [resource.sourceUrl];
+    }
+    return formGroup;
   }
 
   onCreated(event) {

@@ -4,13 +4,15 @@ import {Observable} from 'rxjs/Rx';
 
 import {AuthHttp} from "angular2-jwt";
 import {Direction} from "../interfaces/direction.interface";
-import {LicenseType} from "../interfaces/resource.interface";
+import {License} from "../interfaces/resource.interface";
 
 // the following are different types and sources of media
-export const IMAGE_URL = 'IMAGE_URL';
-export const IMAGE_UPLOAD = 'IMAGE_UPLOAD';
-export const VIDEO_URL = 'VIDEO_URL';
-export const MUSIC_URL = 'MUSIC_URL';
+export enum MediaTypeOptions {
+  imageUrl,
+  imageUpload,
+  videoUrl,
+  musicUrl
+}
 
 export const DEFAULT_INFO_URL: string = "https://www.biblegateway.com/resources/scripture-engagement/";
 export enum DirectionType {
@@ -18,18 +20,24 @@ export enum DirectionType {
   day
 }
 
-const LICENSE_TYPES: LicenseType[] = [
+const LICENSES: License[] = [
   {
     id: 1,
-    name: 'unknown'
+    name: 'unknown',
+    description: '',
+    url: ''
   },
   {
     id: 2,
-    name: 'Creative Commons'
+    name: 'Creative Commons',
+    description: '',
+    url: ''
   },
   {
     id: 3,
-    name: 'Public Domain'
+    name: 'Public Domain',
+    description: '',
+    url: ''
   }
 ]
 
@@ -135,8 +143,8 @@ export class DirectionService {
     return Observable.forkJoin(observableBatch);
   }
 
-  getAllLicenseTypes(): Observable<Array<LicenseType>> {
-    let promise = Promise.resolve(LICENSE_TYPES);
+  getAllLicenses(): Observable<Array<License>> {
+    let promise = Promise.resolve(LICENSES);
     return Observable.fromPromise(promise);
   }
 

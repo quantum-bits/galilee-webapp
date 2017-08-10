@@ -35,6 +35,27 @@
 
       <div class="input-field col s12">
         <!-- source -->
+
+        <!--
+
+
+
+
+
+        WORKING HERE!!!!
+
+
+        FIX!!!!!!
+        - confusion between source and originalFileUrl below
+        - need to consolidate as sourceUrl
+        - ALSO...need to add a source field in the optional metadata
+          section in the image - file upload case
+
+
+
+        -->
+
+
         <input
           [input-wake-up]="'source'"
           [class.warning-background]="resourceGroup.controls.source.errors && resourceGroup.controls.source.touched"
@@ -57,9 +78,9 @@
           formControlName="licenseId"
         >
           <option *ngIf="isNewResource" value="" disabled selected>Type of license</option>
-          <option *ngFor="let licenseType of licenseTypes"
-                  [value]="licenseType.id"
-          >{{licenseType.name}}
+          <option *ngFor="let license of licenses"
+                  [value]="license.id"
+          >{{license.name}}
           </option>
         </select>
       </div>
@@ -74,11 +95,10 @@
         >
         </quill-editor>
       </div>
-      <div class="col s12">
+      <div *ngIf="formManager.uploadFromHardDrive()" class="col s12">
         <app-upload-resource
         >
         </app-upload-resource>
-
       </div>
 
     </div>

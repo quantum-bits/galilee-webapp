@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 
 import {IResource} from '../../../shared/interfaces/resource.interface';
 
-import {IMAGE_URL, IMAGE_UPLOAD, VIDEO_URL, MUSIC_URL} from '../../../shared/services/direction.service';
+import {MediaTypeOptions} from '../../../shared/services/direction.service';
 
 @Component({
   selector: 'app-resource-array',
@@ -16,10 +16,7 @@ export class ResourceArrayComponent implements OnInit {
   @Input() parentForm: FormGroup;
   @Input() resources: IResource[];
 
-  imageUrl: string = IMAGE_URL; // need to make these class-level variables to use them in the template
-  imageUpload: string = IMAGE_UPLOAD;
-  videoUrl: string = VIDEO_URL;
-  musicUrl: string = MUSIC_URL;
+  mediaTypeOptions = MediaTypeOptions;
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -27,7 +24,7 @@ export class ResourceArrayComponent implements OnInit {
     this.parentForm.addControl('resources', new FormArray([]));
   }
 
-  addResource(mediaType: string) {
+  addResource(mediaTypeElement: number) {
     this.resources.push({
       id: null, // for a new resource
       seq: null,
@@ -35,23 +32,29 @@ export class ResourceArrayComponent implements OnInit {
       creationDate: '',
       copyrightDate: '',
       importDate: null, // for a new resource
-      licenseType: {
+      license: {
         id: null,
-        name: ''
+        name: '',
+        description: '',
+        url: ''
       },
-      keywords: '',
-      source: '', // original source of the image (url at wikimedia commons, say, or 'I took this picture by my house')
-      mimeType: '', // determined by server-side code (?)
+      tags: [],
+      sourceUrl: '', // original source of the image (url at wikimedia commons, say)
+      source: '', // free-form text (e.g., 'I took this picture by my house'); only used in the case that the file is uploaded from the user's hard drive
+      mimeType: null, // determined by server-side code
       title: '',
       description: '',
       notes: '',
-      height: null,
-      width: null,
+      height: null, // determined by server-side code
+      width: null, // determined by server-side code
       medium: '',
       physicalDimensions: '',
       currentLocation: '',
       duration: '',
-      mediaType: mediaType
+      mediaType: {
+        id: mediaTypeElement, //one of the enum values in MediaTypeOptions in the direction service
+        description: '' //TODO could get this from the server, but it's probably not important here....
+      }
     });
   }
 

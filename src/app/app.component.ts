@@ -62,7 +62,7 @@ export class AppComponent implements OnInit {
               private postService: PostService,
               private groupService: GroupService,
               private fb: FacebookService) {
-/*
+    /*
     let initParams: InitParams = {
       appId: '1927971220769787',
       xfbml: true,
