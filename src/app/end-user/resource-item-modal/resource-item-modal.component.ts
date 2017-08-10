@@ -16,16 +16,18 @@ export class ResourceItemModalComponent implements OnInit {
   @ViewChild('imageContainer') imageElement: ElementRef;
 
   modalActions = new EventEmitter<string|MaterializeAction>();
-  showInfo: boolean = true;
+  //showInfo: boolean = true;
 
   constructor(private resourceModalCommunicationService: ResourceModalCommunicationService) { }
 
   ngOnInit() {
   }
 
+  /*
   toggleShowInfo() {
     this.showInfo = !this.showInfo;
   }
+  */
 
   pxToNumber(val: string) {
     // extracts a numeric value from a string such as '10.875px'
@@ -66,7 +68,6 @@ export class ResourceItemModalComponent implements OnInit {
 
   }
 
-
   computeModalDimensions() {
     // TODO: apparently the following is undefined in IE8; is this an issue?!?
     let viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
@@ -103,6 +104,7 @@ export class ResourceItemModalComponent implements OnInit {
 
     modalData.top = (viewportHeight - modalData.height)/2;
 
+    /*
     if (imageAspectRatio > 1) {
       // put the info box on the right half
       modalData.infoBoxWidth = modalData.width/3;//margin is 10 px
@@ -116,6 +118,7 @@ export class ResourceItemModalComponent implements OnInit {
       modalData.infoBoxTop = 2*modalData.height/3;
       modalData.infoBoxLeft = 0;
     }
+    */
 
     for (let key in modalData) {
       modalData[key] = this.numberToPx(modalData[key]);
@@ -134,35 +137,11 @@ export class ResourceItemModalComponent implements OnInit {
     return { 'width': dimensions.width, 'height': dimensions.height, 'top': dimensions.top };
   }
 
+  /*
   infoStyle() {
     let dimensions = this.computeModalDimensions();
     return { 'width': dimensions.infoBoxWidth, 'height': dimensions.infoBoxHeight, 'top': dimensions.infoBoxTop, 'left': dimensions.infoBoxLeft };
     //{'width': getInfoBoxWidth(), 'height': getInfoBoxHeight(), 'top': getInfoBoxTop(), 'left': getInfoBoxLeft()}
-  }
-
-  /*
-  getWidth() {
-    return this.computeModalDimensions().width;
-  }
-
-  getHeight() {
-    return this.computeModalDimensions().height;
-  }
-
-  getInfoBoxWidth() {
-    return this.computeModalDimensions().infoBoxWidth;
-  }
-
-  getInfoBoxHeight() {
-    return this.computeModalDimensions().infoBoxHeight;
-  }
-
-  getInfoBoxTop() {
-    return this.computeModalDimensions().infoBoxTop;
-  }
-
-  getInfoBoxLeft() {
-    return this.computeModalDimensions().infoBoxLeft;
   }
   */
 

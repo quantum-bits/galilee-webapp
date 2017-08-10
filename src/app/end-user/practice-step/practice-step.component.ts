@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 //import { FacebookService, UIParams, UIResponse } from 'ngx-facebook';
 //import { FacebookService, LoginResponse, LoginOptions, UIResponse, UIParams, FBVideoComponent } from 'ngx-facebook';
 
-import {FBShareComponent} from 'ngx-facebook';
+//import {FBShareComponent} from 'ngx-facebook';
 
 
 import { DOCUMENT } from '@angular/platform-browser';
