@@ -1,13 +1,12 @@
 <!-- file drop/browse area -->
-<div class="row">
 
-  <div class="col s12 drop-title">
-    <strong>Drop or browse image file</strong>
-  </div>
+<div *ngIf="!showQueue()" class="row">
 
+  <p class="col s12 drop-title">
+    Drop or browse image file:
+  </p>
 
-
-  <div class="col s12">
+  <div class="col s12 m12 l6">
     <div ng2FileDrop
          [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
          (fileOver)="fileOverBase($event)"
@@ -19,16 +18,46 @@
 
 
 
-  <div class="col s12">
+  <div class="col s12 m12 l6 btn-space">
     <!-- overriding native styling in css by setting display: none
     (see: http://stackoverflow.com/questions/572768/styling-an-input-type-file-button) -->
-    <label class="btn waves-light">
+    <label class="btn waves-effect waves-light">
       Browse
       <input type="file" ng2FileSelect [uploader]="uploader"/><br/>
     </label>
   </div>
 
 
+</div>
+
+
+<div *ngIf="showQueue()">
+  <div class="card">
+    <div class="card-content">
+      <div class="row no-bottom-margin">
+        <div class="col s12">
+          <p class="selected-file-title"><strong>Selected file (upload or discard): </strong></p>
+          <div>
+            <span class="chip">
+              {{uploader.queue[0]._file.name}}
+            </span>
+            <span class="right">
+              <a
+                (click)="uploadFile()"
+                class="btn btn-floating pulse horizontal-space">
+                <i class="material-icons">file_upload</i>
+              </a>
+              <a
+                (click)="remove()"
+                class="btn btn-floating pulse">
+                <i class="material-icons">close</i>
+              </a>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 

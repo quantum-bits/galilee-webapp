@@ -32,6 +32,11 @@
           </small>
         </div>
       </div>
+      <div *ngIf="formManager.uploadFromHardDrive()" class="col s12">
+        <app-upload-resource
+        >
+        </app-upload-resource>
+      </div>
       <div *ngIf="formManager.uploadFromUrl()" class="input-field col s12">
         <!-- sourceUrl -->
         <input
@@ -79,12 +84,6 @@
         >
         </quill-editor>
       </div>
-      <div *ngIf="formManager.uploadFromHardDrive()" class="col s12">
-        <app-upload-resource
-        >
-        </app-upload-resource>
-      </div>
-
     </div>
 
     <div *ngIf="!metadataOpen">

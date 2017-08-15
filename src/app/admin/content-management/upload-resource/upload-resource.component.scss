@@ -26,7 +26,7 @@
   align-items: center;
   justify-content: center;
   height: 80px;
-  background: rgba(38,165,154,0.8); /* approximate green colour used for buttons */
+  background: #00bcd4;
   color: rgba(255,255,255,1);
   border: rgba(38,165,154,1);
   /*background: green;*/
@@ -44,7 +44,11 @@
   padding-right: 10px;
 }
 .drop-title {
-  padding-top: 30px;
+  padding-top: 0px;
+}
+
+.selected-file-title {
+  padding-bottom: 10px;
 }
 
 .well {
@@ -77,4 +81,21 @@ i.icon-red {
 
 .valid-background {
   background-color: rgba(0,255,0,0.1);
+}
+
+.btn-space {
+  padding-top: 10px;
+}
+
+.horizontal-space {
+  margin-right: 10px;
+}
+
+.no-bottom-margin {
+  margin-bottom: 0px;
+}
+
+.material-icons.lr-arrow {
+  vertical-align: middle;
+  padding-left: 10px;
 }

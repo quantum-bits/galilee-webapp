@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 
 import { FileUploader } from 'ng2-file-upload';
+
+import {MaterializeAction} from "angular2-materialize";
 
 const URL = '/api/resources';
 
@@ -16,6 +18,7 @@ const URL = '/api/resources';
 })
 export class UploadResourceComponent implements OnInit {
 
+  tapTargetActions = new EventEmitter<MaterializeAction>();
 
   public uploader: FileUploader = new FileUploader({url: URL});
   public hasBaseDropZoneOver: boolean = false;
@@ -24,6 +27,7 @@ export class UploadResourceComponent implements OnInit {
 
   ngOnInit() {
   }
+
 
   public fileOverBase(e: any): void {
     this.hasBaseDropZoneOver = e;
@@ -38,5 +42,15 @@ export class UploadResourceComponent implements OnInit {
     return this.uploader.queue.length > 0;
   }
 
+  uploadFile() {
+    // upload file
+    console.log('upload file...!');
+  }
+
+  remove() {
+    // remove file from upload queue
+    console.log('remove file from queue...!');
+    this.uploader.queue[0].remove();
+  }
 
 }
