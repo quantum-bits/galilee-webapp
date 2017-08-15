@@ -1,6 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectorRef } from '@angular/core';
 // I don't think ChangeDetectorRef is being used...?
 import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+
+import { CustomValidators } from 'ng2-validation';
+
 import {License, IResource} from '../../../shared/interfaces/resource.interface';
 
 import {MediaTypeOptions, DirectionService} from '../../../shared/services/direction.service';
@@ -183,8 +186,11 @@ export class ResourceComponent implements OnInit {
     });
     let sourceUrlControl: FormControl;
     if (this.formManager.uploadFromUrl()) {
-      sourceUrlControl = new FormControl(resource.sourceUrl, Validators.required);
-      } else {
+      sourceUrlControl = new FormControl(
+        resource.sourceUrl,
+        [Validators.required, CustomValidators.url]
+      );
+    } else {
       sourceUrlControl = new FormControl(resource.sourceUrl);
     }
     formGroup.addControl('sourceUrl', sourceUrlControl);

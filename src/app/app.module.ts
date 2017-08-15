@@ -4,6 +4,8 @@ import {FormsModule, FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule, Http, RequestOptions} from '@angular/http';
 import {RouterModule, Routes} from "@angular/router";
 
+import { CustomFormsModule } from 'ng2-validation'
+
 import {AuthConfig, AuthHttp} from 'angular2-jwt';
 
 import {AdminModule} from './admin/admin.module';
@@ -56,6 +58,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     Ng2CompleterModule,
     NgxPaginationModule,
     ReactiveFormsModule,
+    CustomFormsModule,
     FacebookModule.forRoot()
   ],
   declarations: [

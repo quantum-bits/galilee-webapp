@@ -39,11 +39,17 @@
           [class.warning-background]="resourceGroup.controls.sourceUrl.errors && resourceGroup.controls.sourceUrl.touched"
           id="sourceUrl"
           type="text"
-          formControlName="sourceUrl">
+          formControlName="sourceUrl"
+          url />
         <label for="sourceUrl">Url of the file (not the page)</label>
-        <div *ngIf="resourceGroup.controls.sourceUrl.errors && resourceGroup.controls.sourceUrl.touched">
+        <div *ngIf="resourceGroup.controls.sourceUrl.errors?.required && resourceGroup.controls.sourceUrl.touched">
           <small class="warning">
             This field is required.
+          </small>
+        </div>
+        <div *ngIf="resourceGroup.controls.sourceUrl.errors?.url && resourceGroup.controls.sourceUrl.touched">
+          <small class="warning">
+            This field must have the form of a url.
           </small>
         </div>
       </div>

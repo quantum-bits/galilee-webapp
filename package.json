@@ -38,6 +38,7 @@
     "ng2-datepicker": "^1.4.8",
     "ng2-dragula": "^1.5.0",
     "ng2-file-upload": "^1.2.1",
+    "ng2-validation": "^4.2.0",
     "ngx-facebook": "^2.4.0",
     "ngx-pagination": "^3.0.0",
     "ngx-quill": "^1.0.0",
