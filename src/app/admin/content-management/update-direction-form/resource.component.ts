@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectorRef } from '@angular/core';
 // I don't think ChangeDetectorRef is being used...?
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import {License, IResource} from '../../../shared/interfaces/resource.interface';
 
 import {MediaTypeOptions, DirectionService} from '../../../shared/services/direction.service';
@@ -47,16 +47,6 @@ export class FormManager {
 
   getMediaTypeId() {
     return this.mediaTypeElement;
-  }
-
-  getSourceFieldText() {
-    let returnVal: string = null;
-    if (this.mediaTypeElement === MediaTypeOptions.imageUpload) {
-      returnVal = 'Source (e.g., personal photo)';
-    } else {
-      returnVal = 'Url of the file (not the page)';
-    }
-    return returnVal;
   }
 
   getDescriptionFieldText() {
@@ -191,11 +181,13 @@ export class ResourceComponent implements OnInit {
       source: [resource.source],
       mediaTypeId: [this.formManager.getMediaTypeId()]
     });
+    let sourceUrlControl: FormControl;
     if (this.formManager.uploadFromUrl()) {
-      formGroup["sourceUrl"] = [resource.sourceUrl, Validators.required];
-    } else {
-      formGroup["sourceUrl"] = [resource.sourceUrl];
+      sourceUrlControl = new FormControl(resource.sourceUrl, Validators.required);
+      } else {
+      sourceUrlControl = new FormControl(resource.sourceUrl);
     }
+    formGroup.addControl('sourceUrl', sourceUrlControl);
     return formGroup;
   }
 

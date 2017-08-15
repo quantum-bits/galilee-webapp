@@ -32,38 +32,16 @@
           </small>
         </div>
       </div>
-
-      <div class="input-field col s12">
-        <!-- source -->
-
-        <!--
-
-
-
-
-
-        WORKING HERE!!!!
-
-
-        FIX!!!!!!
-        - confusion between source and originalFileUrl below
-        - need to consolidate as sourceUrl
-        - ALSO...need to add a source field in the optional metadata
-          section in the image - file upload case
-
-
-
-        -->
-
-
+      <div *ngIf="formManager.uploadFromUrl()" class="input-field col s12">
+        <!-- sourceUrl -->
         <input
-          [input-wake-up]="'source'"
-          [class.warning-background]="resourceGroup.controls.source.errors && resourceGroup.controls.source.touched"
-          id="source"
+          [input-wake-up]="'sourceUrl'"
+          [class.warning-background]="resourceGroup.controls.sourceUrl.errors && resourceGroup.controls.sourceUrl.touched"
+          id="sourceUrl"
           type="text"
-          formControlName="source">
-        <label for="originalFileUrl">{{formManager.getSourceFieldText()}}</label>
-        <div *ngIf="resourceGroup.controls.source.errors && resourceGroup.controls.source.touched">
+          formControlName="sourceUrl">
+        <label for="sourceUrl">Url of the file (not the page)</label>
+        <div *ngIf="resourceGroup.controls.sourceUrl.errors && resourceGroup.controls.sourceUrl.touched">
           <small class="warning">
             This field is required.
           </small>
@@ -179,6 +157,16 @@
             type="text"
             formControlName="currentLocation">
           <label for="currentLocation">Current location</label>
+        </div>
+        <div *ngIf="formManager.uploadFromHardDrive()" class="input-field col s12">
+          <!-- source -->
+          <input
+            [input-wake-up]="'source'"
+            [class.warning-background]="resourceGroup.controls.source.errors && resourceGroup.controls.source.touched"
+            id="source"
+            type="text"
+            formControlName="source">
+          <label for="source">Source (e.g., personal photo)</label>
         </div>
       </div>
     </div>
