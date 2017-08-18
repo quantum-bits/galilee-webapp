@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import {AuthHttp} from 'angular2-jwt';
 import { FileUploader } from 'ng2-file-upload';
@@ -30,6 +30,9 @@ declare var Materialize:any;
 })
 export class UploadResourceComponent implements OnInit {
 
+  @Output() onUploaded = new EventEmitter<string>(); //UUID of uploaded file
+  @Output() onDelete = new EventEmitter<string>(); //UUID of file that was uploaded but should now be deleted
+
   tapTargetActions = new EventEmitter<MaterializeAction>();
 
   public uploader: FileUploader = new FileUploader({url: URL, authToken: this.authenticationService.getToken()});
@@ -37,6 +40,7 @@ export class UploadResourceComponent implements OnInit {
   public hasBaseDropZoneOver: boolean = false;
 
   public errorMessage: string = null;
+  public fileId: string = null;
 
   constructor(private authHttp: AuthHttp,
               private authenticationService: AuthenticationService) {
@@ -50,7 +54,16 @@ export class UploadResourceComponent implements OnInit {
         this.errorMessage = responsePath.message;
         this.uploader.queue[0].remove();
       } else {
-        Materialize.toast('File uploaded successfully', 2000, 'rounded');
+        if (responsePath.fileId) {
+          Materialize.toast('File uploaded successfully', 2000, 'rounded');
+          this.fileId = responsePath.fileId;
+          this.broadcastUploadSuccess();
+        } else {
+          // this shouldn't happen, but just in case....
+          Materialize.toast('Sorry, there was an error...', 2000);
+          this.errorMessage = 'unknown error';
+          this.uploader.queue[0].remove();
+        }
       }
     };
   }
@@ -79,6 +92,10 @@ export class UploadResourceComponent implements OnInit {
     return this.uploader.queue.length === 1 && this.uploader.queue[0].isUploaded && (!this.uploader.queue[0].isError);
   }
 
+  itemUploading() {
+    return this.uploader.queue.length === 1 && this.uploader.queue[0].isUploading;
+  }
+
   uploadFile() {
     // upload file; it is the zeroth element in the queue, since we only allow for one file to be uploaded
     console.log('upload file...!');
@@ -91,9 +108,22 @@ export class UploadResourceComponent implements OnInit {
     this.uploader.queue[0].remove();
   }
 
+  cancelUpload() {
+    // remove file from upload queue
+    console.log('cancel file upload');
+    this.uploader.cancelAll();
+  }
+
+  broadcastUploadSuccess() {
+    this.onUploaded.emit(this.fileId);
+  }
+
   deleteFile() {
     // delete file from server and remove from queue
     console.log('delete file');
+    // TODO: hit the api to delete the resource
+    this.uploader.queue[0].remove(); // remove it from the queue
+    this.onDelete.emit(this.fileId); // emit message so that parent component deletes UUID from the form
   }
 
   clearErrorMessage() {

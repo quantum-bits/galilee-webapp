@@ -31,6 +31,7 @@ export interface IResource {
   importDate: string; // supplied by server
   license: License; // server will supply various license types
   tags?: Tag[]; // one or more Tag objects in the db
+  fileUUID?: string; // supplied by server; required for anything that is uploaded and stored on the server
   mimeType: string; // supplied by server; UI will infer the media type by parsing the mime type (e.g., 'image/png' means it's an image, etc.)
   title: string; // supplied by user
   description: string; // supplied by user

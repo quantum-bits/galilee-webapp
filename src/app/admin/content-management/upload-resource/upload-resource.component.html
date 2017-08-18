@@ -53,17 +53,35 @@
               {{uploader.queue[0]._file.name}}
             </span>
             <span class="right">
-              <a
+              <a *ngIf="!itemUploading()"
                 (click)="uploadFile()"
                 class="btn btn-floating pulse horizontal-space">
                 <i class="material-icons">file_upload</i>
               </a>
-              <a
+              <a *ngIf="!itemUploading()"
                 (click)="remove()"
                 class="btn btn-floating pulse">
                 <i class="material-icons">close</i>
               </a>
+              <a *ngIf="itemUploading()"
+                 (click)="cancelUpload()"
+                 class="btn btn-floating">
+                <i class="material-icons">close</i>
+              </a>
             </span>
+          </div>
+        </div>
+        <div *ngIf="itemUploading()" class="col s12 center-align">
+          <div class="preloader-wrapper small active">
+            <div class="spinner-layer spinner-cyan-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+            </div>
           </div>
         </div>
       </div>
@@ -71,23 +89,20 @@
   </div>
 </div>
 
+
 <div *ngIf="itemUploadedSuccessfully()">
-  <div class="row no-bottom-margin">
-    <div class="col s12">
-      <p class="selected-file-title">Uploaded file:</p>
-      <div>
-        <span class="chip">
-          {{uploader.queue[0]._file.name}} ({{uploader.queue[0]._file.size | byteConversion : 4 }})
-        </span>
-        <span class="right">
-          <a
-            (click)="deleteFile()"
-            class="btn btn-floating">
-            <i class="material-icons">close</i>
-          </a>
-        </span>
-      </div>
-    </div>
+  <p class="selected-file-title">Uploaded file:</p>
+  <div>
+    <span class="chip">
+      {{uploader.queue[0]._file.name}} ({{uploader.queue[0]._file.size | byteConversion : 4 }})
+    </span>
+    <span class="right">
+      <a
+        (click)="deleteFile()"
+        class="btn btn-floating">
+        <i class="material-icons">close</i>
+      </a>
+    </span>
   </div>
 </div>
 

@@ -17,26 +17,24 @@
   </div>
   <div [formGroup]="resourceGroup">
     <div class="row">
-      <div class="input-field col s12">
-        <!-- title -->
-        <input
-          [input-wake-up]="'title'"
-          [class.warning-background]="resourceGroup.controls.title.errors && resourceGroup.controls.title.touched"
-          id="title"
-          type="text"
-          formControlName="title">
-        <label for="title">Title</label>
-        <div *ngIf="resourceGroup.controls.title.errors && resourceGroup.controls.title.touched">
-          <small class="warning">
-            This field is required.
-          </small>
-        </div>
-      </div>
-      <div *ngIf="formManager.uploadFromHardDrive()" class="col s12">
+
+      <div
+        *ngIf="formManager.uploadFromHardDrive()"
+        [class.file-upload-warning]="resourceGroup.controls.fileUUID.errors && resourceGroup.controls.fileUUID.touched"
+        class="col s12"
+      >
+        <!-- file uploader -->
         <app-upload-resource
+          (onUploaded)="fileUploaded($event)"
+          (onDelete)="fileDeleted($event)"
         >
         </app-upload-resource>
       </div>
+      <div *ngIf="resourceGroup.controls.fileUUID.errors && resourceGroup.controls.fileUUID.touched">                                <small class="warning">
+        This field is required.
+      </small>
+      </div>
+
       <div *ngIf="formManager.uploadFromUrl()" class="input-field col s12">
         <!-- sourceUrl -->
         <input
@@ -60,6 +58,21 @@
       </div>
 
       <div class="input-field col s12">
+        <!-- title -->
+        <input
+          [input-wake-up]="'title'"
+          [class.warning-background]="resourceGroup.controls.title.errors && resourceGroup.controls.title.touched"
+          id="title"
+          type="text"
+          formControlName="title">
+        <label for="title">Title</label>
+        <div *ngIf="resourceGroup.controls.title.errors && resourceGroup.controls.title.touched">
+          <small class="warning">
+            This field is required.
+          </small>
+        </div>
+      </div>
+      <div *ngIf="haveLicenseTypes" class="input-field col s12">
         <!-- license type -->
         <select
           materialize="material_select"
@@ -74,6 +87,7 @@
         </select>
       </div>
       <div class="col s12 quill-editor">
+        <div class="description">Description:</div>
         <!-- description -->
         <quill-editor
           [placeholder]="'Description of this ' + formManager.getDescriptionFieldText() + ' (optional)....'"

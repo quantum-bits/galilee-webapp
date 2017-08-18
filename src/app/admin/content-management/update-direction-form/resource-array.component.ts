@@ -41,6 +41,7 @@ export class ResourceArrayComponent implements OnInit {
       tags: [],
       sourceUrl: '', // original source of the image (url at wikimedia commons, say)
       source: '', // free-form text (e.g., 'I took this picture by my house'); only used in the case that the file is uploaded from the user's hard drive
+      fileUUID: '', // determined by server-side code, but inserted in the form upon upload of the file
       mimeType: null, // determined by server-side code
       title: '',
       description: '',

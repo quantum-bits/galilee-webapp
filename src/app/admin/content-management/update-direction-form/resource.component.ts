@@ -101,6 +101,11 @@ export class FormManager {
     return (this.mediaTypeElement === MediaTypeOptions.imageUrl) || (this.mediaTypeElement === MediaTypeOptions.musicUrl) || (this.mediaTypeElement === MediaTypeOptions.videoUrl);
   }
 
+  fileUUIDRequired() {
+    // TODO: eventually add imageUrl type here, too, since those images will be stored on the server
+    return this.mediaTypeElement === MediaTypeOptions.imageUpload;
+  }
+
 }
 
 
@@ -123,6 +128,8 @@ export class ResourceComponent implements OnInit {
   isOpen: boolean = true;
   metadataOpen: boolean = false;
   licenses: License[] = [];
+
+  haveLicenseTypes: boolean = false;
 
   modules = {
     toolbar: [
@@ -161,6 +168,7 @@ export class ResourceComponent implements OnInit {
         licenses => {
           console.log('license types:', licenses);
           this.licenses = licenses;
+          this.haveLicenseTypes = true;
         },
         error => console.log('error fetching license types: ', error)
       );
@@ -184,6 +192,8 @@ export class ResourceComponent implements OnInit {
       source: [resource.source],
       mediaTypeId: [this.formManager.getMediaTypeId()]
     });
+
+    // sourceUrl is a special case, since it is only required sometimes
     let sourceUrlControl: FormControl;
     if (this.formManager.uploadFromUrl()) {
       sourceUrlControl = new FormControl(
@@ -194,6 +204,19 @@ export class ResourceComponent implements OnInit {
       sourceUrlControl = new FormControl(resource.sourceUrl);
     }
     formGroup.addControl('sourceUrl', sourceUrlControl);
+
+    // fileUUID is a special case, since it is only required if a file is stored on the server
+    let fileUUIDControl: FormControl;
+    if (this.formManager.fileUUIDRequired()) {
+      fileUUIDControl = new FormControl(
+        resource.fileUUID,
+        [Validators.required]
+      );
+    } else {
+      fileUUIDControl = new FormControl(resource.fileUUID);
+    }
+    formGroup.addControl('fileUUID', fileUUIDControl);
+
     return formGroup;
   }
 
@@ -213,5 +236,23 @@ export class ResourceComponent implements OnInit {
   toggleMetadataOpenClose () {
     this.metadataOpen = !this.metadataOpen;
   }
+
+  fileUploaded(fileId: string) {
+    // add the file's UUID to the form
+    console.log('message received that file has been uploaded!', fileId);
+    this.resourceGroup.controls['fileUUID'].setValue(fileId);
+  }
+
+  fileDeleted(fileId: string) {
+    // remove the file's UUID from the form
+    console.log('message received to delete file!', fileId);
+    this.resourceGroup.controls['fileUUID'].setValue('');
+    this.markFileUUIDAsTouched();
+  }
+
+  markFileUUIDAsTouched() {
+    this.resourceGroup.controls['fileUUID'].markAsTouched();
+  }
+
 
 }

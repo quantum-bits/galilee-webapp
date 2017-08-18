@@ -144,8 +144,12 @@ export class DirectionService {
   }
 
   getAllLicenses(): Observable<Array<License>> {
-    let promise = Promise.resolve(LICENSES);
-    return Observable.fromPromise(promise);
+    return this.authHttp
+      .get('/api/resources/licenses')
+      .map(resp => resp.json());
+
+    //let promise = Promise.resolve(LICENSES);
+    //return Observable.fromPromise(promise);
   }
 
 
