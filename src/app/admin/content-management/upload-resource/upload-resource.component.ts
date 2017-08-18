@@ -69,6 +69,7 @@ export class UploadResourceComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('upload-resource on init');
   }
 
   public fileOverBase(e: any): void {
