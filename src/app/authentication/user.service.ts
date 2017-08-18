@@ -110,24 +110,24 @@ export class UserService {
 
   updateName(userId: number, firstName: string, lastName: string) {
     return this.authHttp
-      .patch(`/api/users/name`, {firstName: firstName, lastName: lastName});
+      .patch(`/api/users/${userId}`, {firstName: firstName, lastName: lastName});
   }
 
   updateEmail(userId: number, email: string) {
     return this.authHttp
-      .patch(`/api/users/email`, {email: email});
+      .patch(`/api/users/${userId}`, {email: email});
   }
 
   updatePassword(userId: number, password: string) {
     console.log('updating password: ', password);
     return this.authHttp
-      .patch(`/api/users/password`, {password: password});
+      .patch(`/api/users/${userId}`, {password: password});
   }
 
   updatePreferredVersion(userId: number, preferredVersionId: number) {
     console.log('updating default version: ', preferredVersionId);
     return this.authHttp
-      .patch(`/api/users/version`, {preferredVersionId: preferredVersionId});
+      .patch(`/api/users/${userId}`, {preferredVersionId: preferredVersionId});
   }
 
   getPreferredVersionId(): number {
@@ -187,7 +187,7 @@ export class UserService {
   }
 
   getPermissionTypes() {
-    return this.http.get('/api/users/permissions')
+    return this.authHttp.get('/api/users/permissions')
       .map(res => res.json());
   }
 

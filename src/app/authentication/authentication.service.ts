@@ -47,4 +47,9 @@ export class AuthenticationService {
   revokeAuthentication(): void {
     localStorage.removeItem(JWT_TOKEN_KEY);
   }
+
+  getToken() {
+    return localStorage.getItem(JWT_TOKEN_KEY);
+  }
+
 }

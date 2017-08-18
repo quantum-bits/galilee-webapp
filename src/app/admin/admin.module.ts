@@ -59,6 +59,8 @@ import { ResourceArrayComponent } from './content-management/update-direction-fo
 import { ResourceComponent } from './content-management/update-direction-form/resource.component';
 import { UploadResourceComponent } from './content-management/upload-resource/upload-resource.component';
 
+import {ByteConversionPipe} from '../shared/pipes/byte-conversion.pipe';
+
 const routes: Routes = [
   {
     path: '',
@@ -128,7 +130,8 @@ const routes: Routes = [
     StepComponent,
     ResourceArrayComponent,
     ResourceComponent,
-    UploadResourceComponent
+    UploadResourceComponent,
+    ByteConversionPipe
   ],
   exports: [
     EditUserComponent

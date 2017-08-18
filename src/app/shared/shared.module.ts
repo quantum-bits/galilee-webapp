@@ -10,6 +10,7 @@ import {WarningMessageComponent} from './components/warning-message/warning-mess
 import {MiniCalendarComponent} from './components/mini-calendar/mini-calendar.component';
 import { DeleteItemModalComponent } from './components/delete-item-modal/delete-item-modal.component';
 import { SpyDirective } from './directives/spy.directive';
+//import { ByteConversionPipe } from './pipes/byte-conversion.pipe';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { SpyDirective } from './directives/spy.directive';
     MiniCalendarComponent,
     DeleteItemModalComponent,
     SpyDirective
+    //ByteConversionPipe
   ],
   exports: [
     InputWakeUp,

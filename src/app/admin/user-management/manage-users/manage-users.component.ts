@@ -428,7 +428,7 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
     this.modalComponent = this.editUserModalAnchor.viewContainer.createComponent(componentFactory).instance;
     // fix the @Input() values....
     this.modalComponent.userData = user;
-    this.modalComponent.updateField = 'name';
+    //this.modalComponent.updateField = 'name';
 
     // FIXME is it safe to fix these after the fact like this?  how do we know it
     // will get done before OnInit?

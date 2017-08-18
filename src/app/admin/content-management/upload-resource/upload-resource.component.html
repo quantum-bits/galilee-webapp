@@ -1,6 +1,17 @@
-<!-- file drop/browse area -->
+<div *ngIf="errorMessage">
+  <div class="card">
+    <div class="card-content">
+      <div><strong>There was an error:</strong> {{errorMessage}} </div>
+      <div>Please try again....</div>
+    </div>
+    <div class="card-action">
+      <a class="waves-effect waves-light btn" (click)="clearErrorMessage()">OK</a>
+    </div>
+  </div>
+</div>
 
-<div *ngIf="!showQueue()" class="row">
+<!-- file drop/browse area -->
+<div *ngIf="noUploadItem()" class="row">
 
   <p class="col s12 drop-title">
     Drop or browse image file:
@@ -31,7 +42,7 @@
 </div>
 
 
-<div *ngIf="showQueue()">
+<div *ngIf="itemReadyForUpload()">
   <div class="card">
     <div class="card-content">
       <div class="row no-bottom-margin">
@@ -60,8 +71,32 @@
   </div>
 </div>
 
+<div *ngIf="itemUploadedSuccessfully()">
+  <div class="row no-bottom-margin">
+    <div class="col s12">
+      <p class="selected-file-title">Uploaded file:</p>
+      <div>
+        <span class="chip">
+          {{uploader.queue[0]._file.name}} ({{uploader.queue[0]._file.size | byteConversion : 4 }})
+        </span>
+        <span class="right">
+          <a
+            (click)="deleteFile()"
+            class="btn btn-floating">
+            <i class="material-icons">close</i>
+          </a>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
 
-<div *ngIf="showQueue()">
+<!--
+<div materialize [materializeParams]="['I am also a toast',4000]" [materializeActions]="globalActions"></div>
+-->
+
+<!--
+<div *ngIf="itemReadyForUpload()">
   <div class="row">
     <div class="card col s12" style="margin-bottom: 40px">
       <div class="card-content">
@@ -82,7 +117,7 @@
 
             <td><strong>{{item._file.name}}</strong></td>
 
-            <!-- not sure if we need the part about isHTML5 -->
+            <!-- not sure if we need the part about isHTML5
             <td *ngIf="uploader.isHTML5" nowrap>0.00 MB</td>
             <td *ngIf="uploader.isHTML5">
               <div class="progress" style="margin-bottom: 0;">
@@ -95,14 +130,14 @@
               <span *ngIf="item.isError"><i class="material-icons left">error_outline</i></span>
             </td>
             <td nowrap>
-              <!-- could put buttons here instead, but they take up more room.... -->
+              <!-- could put buttons here instead, but they take up more room....
               <div *ngIf="item.isUploading">
                 <a (click)="item.cancel()">
                   <i class="material-icons left">cancel</i>
                 </a>
               </div>
               <div *ngIf="!item.isUploading">
-                <!-- original code: <div (click)="item.upload()" [class.disabled]="item.isReady || item.isUploading || item.isSuccess">-->
+                <!-- original code: <div (click)="item.upload()" [class.disabled]="item.isReady || item.isUploading || item.isSuccess">
                 <div (click)="uploadItem(i)" [class.disabled]="item.isReady || item.isUploading || item.isSuccess">
                   <i class="material-icons left icon-teal">file_upload</i>
                 </div>
@@ -119,6 +154,6 @@
     </div>
   </div>
 </div>
-
+-->
 
 <a class="waves-effect waves-light btn" (click)="dumpUploaderDetails()">uploader info</a>

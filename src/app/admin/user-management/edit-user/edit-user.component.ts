@@ -25,30 +25,33 @@ const MIN_PASSWORD_LENGTH: number = 6;
 })
 export class EditUserComponent implements OnInit {
   /*
-   Use cases for userData:
+   Use cases for userData and updateField:
    - new user: do not pass in userData upon instantiating the component
-   - updating existing user: set userData to the user's User object
-      - if want to update only one field ('name', 'email' or 'password') then pass that in to the component as updateField
-   - (needs to be updated) updating existing user, but launching 'on the fly' (using @ViewChild, etc.):
-      set userData after the fact (see manage-users.component for an example)
+   - self-updating existing user:
+      - set userData to the user's User object
+      - set updateField to the field being updated ('name', 'email' or 'password')
+   - admin updating existing user from the manage-users page:
+      - modal and component are launched 'on the fly' (using @ViewChild, etc.), and
+        userData is set after the fact
+      - updateField is left as null (the admin is presented with a "long" form, and potentially all fields can be updated)
    */
-  @Input() userData: User; // only pass in if updating a current user; otherwise undefined
-  @Input() updateField: string;// only pass in if updating a current user; can be 'name', 'email' or 'password'
+  @Input() userData: User = null; // only pass in if updating a current user; otherwise null
+  @Input() updateField: string = null;// only pass in if updating a current user; can be 'name', 'email' or 'password'
 
   //close = new EventEmitter();
 
   onFinished = new EventEmitter<string>();
 
   private permissionTypes: Permission[];//types of permissions possible
-  public userForm: FormGroup; // our model driven form
-  private signinServerError: any;
+  userForm: FormGroup; // our model driven form
+  signinServerError: any;
 
-  private isNewUser: boolean;
-  private currentUserIsAdmin: boolean; //eventually use a method on the currentUser object
-
-  //private currentUser: User;// the user who is currently logged in
+  isNewUser: boolean;
+  currentUserIsAdmin: boolean; //eventually use a method on the currentUser object
 
   public submitted: boolean; // keep track of whether form is submitted
+
+  adminUpdatingPassword: boolean = false; // when an admin updates a user's data, there is an option of updating or not updating the password field
 
   constructor(private router: Router,
               private formBuilder: FormBuilder,
@@ -59,6 +62,7 @@ export class EditUserComponent implements OnInit {
   ngOnInit() {
 
     console.log('inside edit-user oninit; update field is: ', this.updateField);
+    console.log('here is null: ', null);
     console.log('...and userData is: ', this.userData);
 
     console.log('ADMIN is: ', ADMIN);
@@ -84,7 +88,7 @@ export class EditUserComponent implements OnInit {
     console.log('inside ngOnInit of edit-user, here is userData:');
     console.log(this.userData);
 
-    if (this.userData === undefined){
+    if (this.userData === null){
       this.isNewUser = true;
     } else {
       this.isNewUser = false;
@@ -242,6 +246,47 @@ export class EditUserComponent implements OnInit {
   }
 
   adminUpdate(){
+    // this method is used when an admin is updating his or herself, or another user,
+    // using the "long form" available from the manage-users page
+    let preferredVersionId = this.userForm.value.preferredVersionId;
+    let email = this.userForm.value.email;
+    let password = this.userForm.value.passwords.password;
+    let firstName = this.userForm.value.firstName;
+    let lastName = this.userForm.value.lastName;
+
+    console.log(preferredVersionId, email, password, firstName, lastName);
+    console.log(this.userData);
+    /*
+     avatarUrl: string;
+     id: number;
+     email: string;
+     firstName: string;
+     lastName: string;
+     joinedOn: string;
+     enabled: boolean;
+     preferredVersionId: number;
+     permissions: Array<Permission>;
+     groups: Array<IGroup>;
+     version: Version;
+     */
+
+    /*
+     createEmptyUserData() {
+     this.userData = new User({
+     id: null,//this will be assigned by the server-side code later
+     email: '',
+     firstName: '',
+     lastName: '',
+     joinedOn: null,//this will be assigned by the server-side code later
+     enabled: true,
+     preferredVersionId: null,
+     permissions: [],
+     groups: []
+     });
+     }
+     */
+
+
     // TODO: add 'enabled' as well
     // need something here for an admin to update someone else....
 
@@ -341,12 +386,13 @@ export class EditUserComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('update field', this.updateField);
     if (this.userForm.valid) {
       this.signinServerError = null;//reinitialize it....
       if (this.isNewUser) {
         this.postNewUser();
       } else {
-        switch(this.updateField) {
+        switch (this.updateField) {
           case 'name': {
             this.selfUpdateName();
             break;
@@ -359,8 +405,14 @@ export class EditUserComponent implements OnInit {
             this.selfUpdatePassword();
             break;
           }
-          case undefined: {
-            // TODO: fix this; what to do ?!?  this might be the case for an ADMIN editing a user
+          case null: {
+            // presumably the user is an admin and is updating his or herself or someone else, using the long form from the manage-users page;
+            // make sure the user is, in fact, an admin....
+            if (this.currentUserIsAdmin) {
+              this.adminUpdate();
+            } else {
+              // TODO: what to do in this case?  shouldn't arise....
+            }
             break;
           }
           default: {
@@ -369,29 +421,65 @@ export class EditUserComponent implements OnInit {
           }
         }
       }
-
-
+    } else {
+      // TODO: what to do in this case?  Shouldn't happen, since the submit
+      //       button only appears if the form is valid, but should we do something
+      //       just in case?
     }
   }
 
   // used in the template and in createUserForm() to decide whether or not to show a given field;
   // field can be 'name', 'email' or 'password'
   exposeField(field: string){
-    if ((this.isNewUser)|| (this.updateField === undefined)||(this.updateField === field)){
+    if ((this.isNewUser)||(this.updateField === field)){
       return true;
-    } else {
-      return false;
     }
+    if ((this.updateField === null)&&(field !== 'password')) {
+      return true;
+    }
+    if (field === 'password') {
+      if ((this.updateField === null) && (this.currentUserIsAdmin) && (this.adminUpdatingPassword)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /*
     This method creates the user form; the password is a special case, since it
     is not contained in the User object.  If the user is updating just the 'name'
-    or 'email' fields, then we don't want to try to validate the password fields,
-    since there is nothing there.  On the other hand, when updating the 'password'
-    field, the other fields are actually in the form, and already valid.
+    or 'email' fields, then we don't want to try to validate the password fields.
+    On the other hand, when updating the 'password' field, the other fields are
+    actually in the form, and already valid.  If an admin is editing a user's data,
+    the admin can choose to update or not update the password field.
   */
   createUserForm(){
+    // generically add the password fields to the form, but don't make them required
+    this.userForm = this.formBuilder.group({
+      email: [this.userData.email, Validators.compose([<any>Validators.required, this.emailValidator])],
+      passwords: this.formBuilder.group({
+        password: [''],
+        password2: ['']
+      }, {validator: this.areEqual}),
+      firstName: [this.userData.firstName, [<any>Validators.required]],
+      lastName: [this.userData.lastName, [<any>Validators.required]],
+      enabled: [this.userData.enabled, [<any>Validators.required]],
+      preferredVersionId: [this.userData.preferredVersionId],
+      permissions: this.formBuilder.array(
+        this.initPermissionArray(this.userData.permissions, this.permissionTypes)),
+    });
+    if (this.exposeField('password')) {
+      // if the 'password' field is exposed in the form, make it required, make it conform to the minimum length, etc.
+      let passwordsControl = this.formBuilder.group({
+        password: ['', Validators.compose([<any>Validators.required, this.passwordValidator, this.passwordWhitespaceValidator])],
+        password2: ['', Validators.compose([<any>Validators.required, this.passwordValidator, this.passwordWhitespaceValidator])]
+      }, {validator: this.areEqual});
+      this.userForm.setControl('passwords',passwordsControl);
+    }
+  }
+
+/*
+  oldCreateUserForm(){
     if (this.exposeField('password')) {
       this.userForm = this.formBuilder.group({
         email: [this.userData.email, Validators.compose([<any>Validators.required, this.emailValidator])],
@@ -418,6 +506,22 @@ export class EditUserComponent implements OnInit {
       });
     }
   }
+  */
+
+  /*
+   let sourceUrlControl: FormControl;
+   if (this.formManager.uploadFromUrl()) {
+   sourceUrlControl = new FormControl(
+   resource.sourceUrl,
+   [Validators.required, CustomValidators.url]
+   );
+   } else {
+   sourceUrlControl = new FormControl(resource.sourceUrl);
+   }
+   formGroup.addControl('sourceUrl', sourceUrlControl);
+   */
+
+
 
   /*
   I think this is not being used....
