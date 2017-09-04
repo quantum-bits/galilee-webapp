@@ -32,6 +32,7 @@ import {ResourceItemComponent} from './resource-item';
 import {SharedModule} from '../shared/shared.module';
 import {SimpleModalComponent} from './readings/simple-modal.component';
 import {TruncatePipe} from '../shared/pipes/truncate.pipe';
+import {SafeHtmlPipe} from '../shared/pipes/safe-html.pipe';
 //import {ByteConversionPipe} from '../shared/pipes/byte-conversion.pipe';
 import {UpdateJournalEntryComponent} from './update-journal-entry/update-journal-entry.component';
 import {UpdatePostComponent} from './update-post/update-post.component';
@@ -192,6 +193,7 @@ const routes: Routes = [
     ResourceItemComponent,
     SimpleModalComponent,
     TruncatePipe,
+    SafeHtmlPipe,
 //    ByteConversionPipe,
     UpdateJournalEntryComponent,
     UpdatePostComponent,

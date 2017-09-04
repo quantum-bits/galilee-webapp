@@ -93,6 +93,21 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.1;
 }
 
+.galilee h2, h3, h4, h5, h6 {
+  // used in the practice summaries
+  font-size: 1.64rem;//same as h6
+}
+
+h2, h3, h4, h5, h6 span.text {
+  // used in content from BG
+  font-size: 1.64rem;//same as h6
+}
+
+.esv-text h2, h3, h4, h5, h6 {
+  // used in ESV content
+  font-size: 1.64rem;//same as h6
+}
+
 /* KK edits begin */
 .ql-editor strong {
   font-weight: bold;
@@ -223,4 +238,10 @@ ul.collection.no-top-bottom-margin {
   margin-bottom: 0px;
   border-top: 0px;
 }
+
+
+
+
+
+
 

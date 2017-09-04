@@ -14,6 +14,7 @@ import {ReadingService} from '../shared/services/reading.service';
 import {User} from '../shared/models/user.model';
 import {LoginData} from '../shared/interfaces/login-data.interface';
 import {Version} from '../shared/interfaces/version.interface';
+import {UpdateUserData} from '../shared/interfaces/update-user-data.interface';
 
 import {Permission} from '../shared/models/permission.model';
 
@@ -119,7 +120,7 @@ export class UserService {
   }
 
   updatePassword(userId: number, password: string) {
-    console.log('updating password: ', password);
+    //console.log('updating password: ', password);
     return this.authHttp
       .patch(`/api/users/${userId}`, {password: password});
   }
@@ -128,6 +129,22 @@ export class UserService {
     console.log('updating default version: ', preferredVersionId);
     return this.authHttp
       .patch(`/api/users/${userId}`, {preferredVersionId: preferredVersionId});
+  }
+
+  adminUpdateUserData(userId: number, updateUserData: UpdateUserData) {
+    let updateFields = {
+      email: updateUserData.email,
+      firstName: updateUserData.firstName,
+      lastName: updateUserData.lastName,
+      //enabled: updateUserData.enabled, TODO: add this in
+      preferredVersionId: updateUserData.preferredVersionId
+      //permissionIds: [], TODO: add this in
+    }
+    if (updateUserData.password !=='') {
+      updateFields['password'] = updateUserData.password;
+    }
+    return this.authHttp
+      .patch(`/api/users/${userId}`, updateFields);
   }
 
   getPreferredVersionId(): number {

@@ -15,11 +15,13 @@ http://materializecss.com/footer.html
               <i (click)="goHome()" class="material-icons">home</i>
             </a>
           </li>
+          <!--
           <li *ngIf="!isLoggedIn()">
             <a [routerLink]="['/end-user/readings/today']">
               Engage
             </a>
           </li>
+          -->
           <li *ngIf="isLoggedIn() && inAnyGroups()">
             <a (click)="goToForum()">
               Forum

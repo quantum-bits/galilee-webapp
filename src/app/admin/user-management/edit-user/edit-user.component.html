@@ -66,6 +66,37 @@
                 </div>
               </div>
 
+<!--
+                <input type="radio"
+                       name="displayFilterName_{{i}}"
+                       id="displayFilter_{{i}}_1"
+                       class="with-gap"
+                       (click)="setDisplayFilter(i, displayFilterType.ONLY)"
+                       [checked] = "displayFilter.getDisplayStatus() === displayFilterType.ONLY">
+                <label [attr.for]="'displayFilter_' + i+'_1'"></label>
+-->
+
+              <!-- Switch -->
+              <div class="row">
+                <div class="col s6">
+                  Edit Password?
+                </div>
+                <div class="input col s6">
+                  <span class="switch">
+                    <label>
+                      No
+                      <input
+                        type="checkbox"
+                        [checked]="adminUpdatingPassword"
+                        (change)="togglePasswordUpdate($event)">
+                      <span class="lever"></span>
+                      Yes
+                    </label>
+                  </span>
+
+                </div>
+              </div>
+
               <div *ngIf="exposeField('password')">
 
                 <div formGroupName="passwords">

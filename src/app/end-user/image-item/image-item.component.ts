@@ -2,7 +2,9 @@ import { Component, OnInit, Input, Output, ViewChild, ElementRef, EventEmitter }
 
 import {IResource} from '../../shared/interfaces/resource.interface';
 
-const TRUNCATION_LIMIT = 25; //number of words in a post after which to truncate
+import {TruncatePipe} from '../../shared/pipes/truncate.pipe';
+
+const TRUNCATION_LIMIT = 200; //number of characters in a description after which to truncate
 
 @Component({
   selector: 'app-image-item',
@@ -25,10 +27,16 @@ export class ImageItemComponent implements OnInit {
   ngOnInit() {
   }
 
-
-  // Entry long enough to be truncated after numWords words?
-  descriptionIsLong(numWords: number): boolean {
-    return (this.resource.description.split(" ").length >= numWords);
+  // Description long enough to be truncated after numChars words?
+  // To determine this, we call the truncate pipe directly and compare the result
+  // against the original string; if it's different, we assume that the description
+  // has, in fact, been truncated.
+  // see: https://stackoverflow.com/questions/35144821/angular-2-4-use-pipes-in-services-and-components
+  descriptionIsLong(numCharacters: number): boolean {
+    //return (this.resource.description.split(" ").length >= numWords);
+    let truncatePipeFilter = new TruncatePipe();
+    let truncatedDescription = truncatePipeFilter.transform(this.resource.description, numCharacters);
+    return this.resource.description !== truncatedDescription;
   }
 
   toggleAllowTruncation() {

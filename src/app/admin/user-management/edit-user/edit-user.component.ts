@@ -15,6 +15,7 @@ import {Permission} from '../../../shared/models/permission.model';
 import {UserService} from '../../../authentication/user.service';
 
 import {ADMIN} from '../../../shared/models/permission.model';
+import {UpdateUserData} from '../../../shared/interfaces/update-user-data.interface';
 
 const MIN_PASSWORD_LENGTH: number = 6;
 
@@ -254,43 +255,44 @@ export class EditUserComponent implements OnInit {
     let firstName = this.userForm.value.firstName;
     let lastName = this.userForm.value.lastName;
 
-    console.log(preferredVersionId, email, password, firstName, lastName);
+    let enabled = this.userForm.value.enabled;
+
+    console.log(preferredVersionId, email, password, firstName, lastName, enabled);
     console.log(this.userData);
-    /*
-     avatarUrl: string;
-     id: number;
-     email: string;
-     firstName: string;
-     lastName: string;
-     joinedOn: string;
-     enabled: boolean;
-     preferredVersionId: number;
-     permissions: Array<Permission>;
-     groups: Array<IGroup>;
-     version: Version;
-     */
 
-    /*
-     createEmptyUserData() {
-     this.userData = new User({
-     id: null,//this will be assigned by the server-side code later
-     email: '',
-     firstName: '',
-     lastName: '',
-     joinedOn: null,//this will be assigned by the server-side code later
-     enabled: true,
-     preferredVersionId: null,
-     permissions: [],
-     groups: []
-     });
-     }
-     */
+    let updateUserData: UpdateUserData = {
+      email: email,
+      firstName: firstName,
+      lastName: lastName,
+      password: password, //if this is an empty string, the password will not be reset
+      enabled: enabled,
+      preferredVersionId: preferredVersionId,
+      // TODO: add in the following
+      permissionIds: []
+    }
 
-
-    // TODO: add 'enabled' as well
-    // need something here for an admin to update someone else....
-
-    //TODO: add 'enabled' as well....
+    this.userService.adminUpdateUserData(this.userData.id, updateUserData)
+      .subscribe(
+      (result) => {
+        console.log('result from attempt to update user: ', result);
+        if (result.ok) {
+          console.log('user updated!');
+          //this.close.emit('event');
+          /*
+          if (this.currentUserIsAdmin) {
+            let refreshUsers: boolean = true;
+            this.userService.announceCloseAndCleanUp(refreshUsers);
+          } else {
+            this.router.navigate(['/signup-success']);
+          }
+          */
+        }
+      },
+      (error) => {
+        console.log('there was an error');
+        this.signinServerError = JSON.parse(error._body).message;
+      }
+    );
 
     /*
 
@@ -469,59 +471,26 @@ export class EditUserComponent implements OnInit {
         this.initPermissionArray(this.userData.permissions, this.permissionTypes)),
     });
     if (this.exposeField('password')) {
-      // if the 'password' field is exposed in the form, make it required, make it conform to the minimum length, etc.
-      let passwordsControl = this.formBuilder.group({
-        password: ['', Validators.compose([<any>Validators.required, this.passwordValidator, this.passwordWhitespaceValidator])],
-        password2: ['', Validators.compose([<any>Validators.required, this.passwordValidator, this.passwordWhitespaceValidator])]
-      }, {validator: this.areEqual});
-      this.userForm.setControl('passwords',passwordsControl);
+      // if the 'password' field is exposed in the form, make it required and make it conform to the minimum length, etc.
+      this.enforcePasswordValidation();
     }
   }
 
-/*
-  oldCreateUserForm(){
-    if (this.exposeField('password')) {
-      this.userForm = this.formBuilder.group({
-        email: [this.userData.email, Validators.compose([<any>Validators.required, this.emailValidator])],
-        passwords: this.formBuilder.group({
-          password: ['', Validators.compose([<any>Validators.required, this.passwordValidator, this.passwordWhitespaceValidator])],
-          password2: ['', Validators.compose([<any>Validators.required, this.passwordValidator, this.passwordWhitespaceValidator])]
-        }, {validator: this.areEqual}),
-        firstName: [this.userData.firstName, [<any>Validators.required]],
-        lastName: [this.userData.lastName, [<any>Validators.required]],
-        enabled: [this.userData.enabled, [<any>Validators.required]],
-        preferredVersionId: [this.userData.preferredVersionId],
-        permissions: this.formBuilder.array(
-          this.initPermissionArray(this.userData.permissions, this.permissionTypes)),
-      });
-    } else {
-      this.userForm = this.formBuilder.group({
-        email: [this.userData.email, Validators.compose([<any>Validators.required, this.emailValidator])],
-        firstName: [this.userData.firstName, [<any>Validators.required]],
-        lastName: [this.userData.lastName, [<any>Validators.required]],
-        enabled: [this.userData.enabled, [<any>Validators.required]],
-        preferredVersionId: [this.userData.preferredVersionId],
-        permissions: this.formBuilder.array(
-          this.initPermissionArray(this.userData.permissions, this.permissionTypes)),
-      });
-    }
+  enforcePasswordValidation() {
+    let passwordsControl = this.formBuilder.group({
+      password: ['', Validators.compose([<any>Validators.required, this.passwordValidator, this.passwordWhitespaceValidator])],
+      password2: ['', Validators.compose([<any>Validators.required, this.passwordValidator, this.passwordWhitespaceValidator])]
+    }, {validator: this.areEqual});
+    this.userForm.setControl('passwords',passwordsControl);
   }
-  */
 
-  /*
-   let sourceUrlControl: FormControl;
-   if (this.formManager.uploadFromUrl()) {
-   sourceUrlControl = new FormControl(
-   resource.sourceUrl,
-   [Validators.required, CustomValidators.url]
-   );
-   } else {
-   sourceUrlControl = new FormControl(resource.sourceUrl);
-   }
-   formGroup.addControl('sourceUrl', sourceUrlControl);
-   */
-
-
+  ceasePasswordValidation() {
+    let passwordsControl = this.formBuilder.group({
+      password: [''],
+      password2: ['']
+    }, {validator: this.areEqual});
+    this.userForm.setControl('passwords',passwordsControl);
+  }
 
   /*
   I think this is not being used....
@@ -529,5 +498,16 @@ export class EditUserComponent implements OnInit {
     this.close.emit('event');
   }
   */
+
+  togglePasswordUpdate(event) {
+    this.adminUpdatingPassword = !this.adminUpdatingPassword;
+    if (this.adminUpdatingPassword) {
+      this.enforcePasswordValidation();
+    } else {
+      this.ceasePasswordValidation();
+    }
+  }
+
+
 
 }

@@ -1,5 +1,7 @@
 import {Tag} from '../interfaces/tag.interface';
 
+import {TruncatePipe} from '../pipes/truncate.pipe';
+
 export class JournalEntry {
   id: number;
   title: string;
@@ -17,8 +19,11 @@ export class JournalEntry {
     this.updatedAt = obj.updatedAt;
   }
 
-  // Entry long enough to be truncated after numWords words?
-  entryIsLong(numWords: number): boolean {
-    return (this.entry.split(" ").length >= numWords);
+  // Entry long enough to be truncated after numChars characters?
+  entryIsLong(numChars: number): boolean {
+    //return (this.entry.split(" ").length >= numWords);
+    let truncatePipeFilter = new TruncatePipe();
+    let truncatedEntry = truncatePipeFilter.transform(this.entry, numChars);
+    return this.entry !== truncatedEntry;
   }
 }

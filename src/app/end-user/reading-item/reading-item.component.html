@@ -17,21 +17,6 @@
       </div>
     </div>
     <div class="card-content">
-
-    <!--
-      <span class="right-align version-drop-down">
-        <a materialize="dropdown"
-           [materializeParams]="[{alignment:'right'}]"
-           class='dropdown-button waves-effect btn-flat'
-           data-activates='todaysReadingsDropdownMenu'>
-              <span>
-                  Today's Readings
-                <i class="material-icons lr-arrow">arrow_drop_down</i>
-              </span>
-        </a>
-      </span>
-      -->
-
       <div class="right-align version-drop-down">
         <a materialize="dropdown"
            [materializeParams]="[{alignment:'right'}]"
@@ -45,25 +30,29 @@
       </div>
 
       <div class="card-title">{{ reading.stdRef }}</div>
-      <br>
-<!--
-      <div class="card-title">{{ reading.stdRef }}
-        <!--
-        <div class="hide-on-med-and-up">
-          <div *ngIf="hideContent">
-            <a (click)="toggleHideContent()">
-              <i class="material-icons lr-arrow">add_circle_outline</i>
-            </a>
+
+      <div class="hide-on-large-only">
+        <div *ngIf="allowTruncation">
+          <div [innerHTML]="reading.text | truncate : truncationLimit"></div>
+          <div *ngIf="readingIsLong(truncationLimit)">
+            <br>
+            <a class="grey-text darken-3 include-pointer" (click)="toggleAllowTruncation()"> Read More... </a>
           </div>
         </div>
 
+        <div *ngIf="!allowTruncation">
+          <div [innerHTML]="reading.text"></div>
+          <div *ngIf="readingIsLong(truncationLimit)">
+            <br>
+            <a class="grey-text darken-3 include-pointer" (click)="toggleAllowTruncation()"> Read Less </a>
+          </div>
+        </div>
       </div>
-      <br>
-      -->
-      <!--hideContent: {{hideContent}}-->
-      <div class="flow-text">
-        <div [innerHTML]="reading.text"></div>
+
+      <div class="hide-on-med-and-down"
+           [innerHTML]="reading.text">
       </div>
+
       <!-- <p [innerHTML]="reading.text | truncate : 25"></p> ...this truncates it, if necessary -->
 
       <!--

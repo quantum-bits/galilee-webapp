@@ -5,6 +5,9 @@ import {ReadingService} from '../../shared/services/reading.service';
 import {IReading} from '../../shared/interfaces/reading.interface';
 import {Version} from '../../shared/interfaces/version.interface';
 
+import {TruncatePipe} from '../../shared/pipes/truncate.pipe';
+
+const TRUNCATION_LIMIT = 200; //number of characters in a passage after which to truncate
 
 @Component({
   selector: 'app-reading-item',
@@ -19,6 +22,9 @@ export class ReadingItemComponent implements OnInit, OnChanges {
   @Input() dateString: string;
   @Input() todaysReadings: string[] = [];
 
+  allowTruncation: boolean = true;
+  truncationLimit: number = TRUNCATION_LIMIT;
+
   //private versions: Version[] = [];
   selectableVersions: Version[] = [];
   //private hideContent: boolean;//hide the content of the reading if on a mobile device
@@ -31,8 +37,7 @@ export class ReadingItemComponent implements OnInit, OnChanges {
     console.log('inside ngoninit for reading-item; reading:', this.reading);
     console.log('today readings: ', this.todaysReadings);
     console.log(this.includeNavigationBar);
-    this.modifyHeaderStyle();
-
+    //this.modifyHeaderStyle();
   }
 
   ngOnChanges(){
@@ -105,9 +110,26 @@ export class ReadingItemComponent implements OnInit, OnChanges {
   //TODO: this might not be the best way to override the header styling;
   //I tried to do it via css, but it seems like this might not be possible when using flow-text
   //could give up on flow-text and set the various stylings manually (for psalm text, etc.)
+  /*
   modifyHeaderStyle(){
     //console.log(this.reading.text);
     this.reading.text = this.reading.text.replace(/<h3>/g, "<h4>").replace(/<\/h3>/g, "</h4>");
+  }
+  */
+
+  // Entry long enough to be truncated after numChars words?
+  // To determine this, we call the truncate pipe directly and compare the result
+  // against the original string; if it's different, we assume that the reading
+  // has, in fact, been truncated.
+  // see: https://stackoverflow.com/questions/35144821/angular-2-4-use-pipes-in-services-and-components
+  readingIsLong(numCharacters: number): boolean {
+    let truncatePipeFilter = new TruncatePipe();
+    let truncatedReading = truncatePipeFilter.transform(this.reading.text, numCharacters);
+    return this.reading.text !== truncatedReading;
+  }
+
+  toggleAllowTruncation() {
+    this.allowTruncation = !this.allowTruncation;
   }
 
   currentlySelectedReadingStyle(i: number) {

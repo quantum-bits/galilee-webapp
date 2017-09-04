@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {JournalService} from '../../shared/services/journal.service';
 import {JournalEntry} from '../../shared/models/journal-entry.model';
 
-const TRUNCATION_LIMIT = 25; //number of words in a journal entry after which to truncate
+const TRUNCATION_LIMIT = 200; //number of characters in a journal entry after which to truncate
 
 @Component({
   selector: 'app-journal-entry-item',

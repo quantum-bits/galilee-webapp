@@ -7,3 +7,11 @@
   vertical-align: middle;
   padding-left: 10px;
 }
+
+.galilee {
+  color: red;
+}
+
+.card .card-content p {
+  color: green !important;
+}
