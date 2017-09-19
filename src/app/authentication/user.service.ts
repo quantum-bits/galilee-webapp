@@ -156,12 +156,13 @@ export class UserService {
     }
   }
 
-  signup(email, password, firstName, lastName) {
+  signup(email, password, firstName, lastName, preferredVersionId) {
     return this.http.post('/api/users', {
       email: email,
       password: password,
       firstName: firstName,
-      lastName: lastName
+      lastName: lastName,
+      preferredVersionId: preferredVersionId
     });
   }
 

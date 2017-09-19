@@ -1,24 +1,23 @@
-
 <ul class="collection with-header">
   <li class="collection-header"><h5>Practices</h5></li>
 
   <a *ngFor="let practiceData of reading.directions; let i = index" class="collection-item include-pointer">
-    <span class="title grey-text text-darken-2" (click)="onSelectPractice(i)"> {{practiceData.practice.title}}
-     <!--
-    <a class="grey-text text-darken-1" (click)="onSelectPractice(i)">
-        {{practiceData.practice.title}}-->
+    <div class="row no-bottom-margin">
+      <span class="col s10 title grey-text text-darken-2" (click)="onSelectPractice(i)">
+        {{practiceData.practice.title}}
         <i class="material-icons lr-arrow">navigate_next</i>
       </span>
       <!--</a>-->
-      <span>
+      <span class="col s2">
         <i
           (click)="onSelectPracticeSummary(i)"
-          (mouseover) = "setHover(i)"
-          (mouseleave) = "unsetHover(i)"
+          (mouseover)="setHover(i)"
+          (mouseleave)="unsetHover(i)"
           class="material-icons right"
           [style.color]="getStyle(i)"
-          >info_outline</i>
+        >info_outline</i>
       </span>
+    </div>
   </a>
 </ul>
 
@@ -28,15 +27,3 @@
   message=""
 >
 </simple-modal>
-
-<!--
-<ul [id]="'dropdownViewPractice'+reading.id" class='dropdown-content'>
-  <li *ngFor="let practice of practices">
-    <a (click)="onSelectPractice(reading, practice)">{{practice.title}}</a>
-  </li>
-</ul>
-
-<p [innerHTML]="practiceData.practice.summary"></p>
-
-
--->

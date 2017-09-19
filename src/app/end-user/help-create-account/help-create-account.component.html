@@ -1,6 +1,6 @@
 <div class="container">
 <div class="row">
-  <div class="col s12 m6 offset-m3 l6 offset-l3">
+  <div class="col s12 m8 offset-m2 l8 offset-l2">
     <div class="card">
       <div class="card-title-bar">
         <span class="card-title">Why should I create an account?</span>
@@ -8,7 +8,10 @@
       <div class="card-content">
         <p class="info">
           We'd like to encourage you to create a personal account on Galilee.
-          The primary benefits of having a personal account are the ability to give you access to both the Journal and Forum features of the website.
+          The primary benefits of having a personal account are that you will
+          be able to manage your
+          preferences (e.g., default translation) and that you will have access
+          to the Journal feature of the website.
           <span *ngIf="!isLoggedIn()">Click <a [routerLink]="['/signup']">here</a> to create an account.</span>
         </p>
       </div>

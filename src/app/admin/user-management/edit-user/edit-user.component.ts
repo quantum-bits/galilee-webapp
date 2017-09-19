@@ -13,9 +13,12 @@ import {User} from '../../../shared/models/user.model';
 import {Permission} from '../../../shared/models/permission.model';
 
 import {UserService} from '../../../authentication/user.service';
+import {ReadingService} from '../../../shared/services/reading.service';
 
 import {ADMIN} from '../../../shared/models/permission.model';
 import {UpdateUserData} from '../../../shared/interfaces/update-user-data.interface';
+
+import {Version} from '../../../shared/interfaces/version.interface';
 
 const MIN_PASSWORD_LENGTH: number = 6;
 
@@ -54,13 +57,19 @@ export class EditUserComponent implements OnInit {
 
   adminUpdatingPassword: boolean = false; // when an admin updates a user's data, there is an option of updating or not updating the password field
 
+  availableVersions: Version[] = null;
+  haveVersions: boolean = false;
+
+
   constructor(private router: Router,
               private formBuilder: FormBuilder,
-              private userService: UserService) {
+              private userService: UserService,
+              private readingService: ReadingService) {
     console.log('inside edit-user constructor');
   }
 
   ngOnInit() {
+    this.fetchVersions();
 
     console.log('inside edit-user oninit; update field is: ', this.updateField);
     console.log('here is null: ', null);
@@ -84,7 +93,6 @@ export class EditUserComponent implements OnInit {
       //);
     }
 
-
     // TODO: check whether currentUser is actually an admin
     console.log('inside ngOnInit of edit-user, here is userData:');
     console.log(this.userData);
@@ -95,6 +103,20 @@ export class EditUserComponent implements OnInit {
       this.isNewUser = false;
     }
     this.initializeForm();
+  }
+
+  fetchVersions() {
+    this.readingService.getVersions()
+      .subscribe(
+        versions => {
+          console.log('versions: ', versions);
+          this.availableVersions = versions;
+          this.haveVersions = true;
+        },
+        error => {
+          console.log('error retrieving versions');
+        }
+      );
   }
 
   initializeForm() {
@@ -224,7 +246,8 @@ export class EditUserComponent implements OnInit {
       this.userForm.value.email,
       this.userForm.value.passwords.password,
       this.userForm.value.firstName,
-      this.userForm.value.lastName
+      this.userForm.value.lastName,
+      this.userForm.value.preferredVersionId
     ).subscribe(
       (result) => {
         console.log('result from attempt to create new user: ', result);
@@ -268,6 +291,7 @@ export class EditUserComponent implements OnInit {
       enabled: enabled,
       preferredVersionId: preferredVersionId,
       // TODO: add in the following
+      // TODO: also fix this below when setting current user
       permissionIds: []
     }
 
@@ -277,15 +301,25 @@ export class EditUserComponent implements OnInit {
         console.log('result from attempt to update user: ', result);
         if (result.ok) {
           console.log('user updated!');
-          //this.close.emit('event');
-          /*
-          if (this.currentUserIsAdmin) {
-            let refreshUsers: boolean = true;
-            this.userService.announceCloseAndCleanUp(refreshUsers);
-          } else {
-            this.router.navigate(['/signup-success']);
+
+          // if an admin is updating his or herself, need to reset
+          // the data for the current (logged in) user
+          console.log('edited user id: ', this.userData.id);
+          console.log('current user id: ', this.userService.getCurrentUser().id);
+          if (this.userData.id === this.userService.getCurrentUser().id) {
+            console.log('editing self!!!');
+            // this is a clunky way to do this; could just use updateUserData,
+            // but at the moment that will mess up the permissions
+            this.userData.email = email;
+            this.userData.firstName = firstName;
+            this.userData.lastName = lastName;
+            this.userData.enabled = enabled;
+            this.userData.preferredVersionId = preferredVersionId;
+            this.userService.setCurrentUser(this.userData);
           }
-          */
+
+          let refreshUsers: boolean = true;
+          this.userService.announceCloseAndCleanUp(refreshUsers);
         }
       },
       (error) => {
@@ -430,8 +464,13 @@ export class EditUserComponent implements OnInit {
     }
   }
 
+  // used in the template to decide whether or not to show the 'update password' slider
+  exposeEditPasswordSlider() {
+    return !(this.isNewUser || (!this.currentUserIsAdmin) || (this.updateField !== null));
+  }
+
   // used in the template and in createUserForm() to decide whether or not to show a given field;
-  // field can be 'name', 'email' or 'password'
+  // field can be 'version, 'name', 'email' or 'password'
   exposeField(field: string){
     if ((this.isNewUser)||(this.updateField === field)){
       return true;
@@ -466,7 +505,7 @@ export class EditUserComponent implements OnInit {
       firstName: [this.userData.firstName, [<any>Validators.required]],
       lastName: [this.userData.lastName, [<any>Validators.required]],
       enabled: [this.userData.enabled, [<any>Validators.required]],
-      preferredVersionId: [this.userData.preferredVersionId],
+      preferredVersionId: [this.userData.preferredVersionId, [<any>Validators.required]],
       permissions: this.formBuilder.array(
         this.initPermissionArray(this.userData.permissions, this.permissionTypes)),
     });

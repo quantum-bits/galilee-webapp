@@ -53,6 +53,12 @@ import { ResourceItemMetadataModalComponent } from './resource-item-metadata-mod
 
 import { FacebookModule } from 'ngx-facebook';
 
+import * as moment from 'moment';
+
+function todaysDate(): string {
+  return moment(new Date()).format('YYYY-MM-DD');
+}
+
 const routes: Routes = [
   {
     path: 'end-user',
@@ -60,6 +66,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
+        //redirectTo: `readings/${todaysDate()}`,
         redirectTo: 'readings/today',
         pathMatch: 'full'
       },

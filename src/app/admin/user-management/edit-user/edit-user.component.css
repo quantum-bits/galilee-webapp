@@ -17,3 +17,7 @@
 .warning {
   color: #c62828;
 }
+
+.enable-overflow {
+  overflow: visible;
+}

@@ -77,7 +77,7 @@
 -->
 
               <!-- Switch -->
-              <div class="row">
+              <div *ngIf="exposeEditPasswordSlider()" class="row">
                 <div class="col s6">
                   Edit Password?
                 </div>
@@ -141,6 +141,43 @@
                   </div>
                 </div>
               </div>
+
+
+
+              <!-- preferred version -->
+
+              <!--<ul class="collection with-header enable-overflow">-->
+              <div *ngIf="exposeField('version')">
+                <div *ngIf="haveVersions" class="row">
+                  <div class="input-field col s12 m12 l12">
+                    Preferred Version
+                    <select
+                      materialize="material_select"
+                      [materializeSelectOptions]="selectOptions"
+                      formControlName="preferredVersionId"
+                    >
+                      <option *ngIf="isNewUser" value="" disabled selected>Choose a version</option>
+                      <option *ngFor="let version of availableVersions"
+                              [value]="version.id"
+                      >{{version.code}}
+                      </option>
+                    </select>
+
+                    <div *ngIf="userForm.controls.preferredVersionId.errors && userForm.controls.preferredVersionId.touched">
+                      <small class="warning">
+                        This field is required.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+
+
               <div *ngIf="signinServerError" class="row">
                 <div class="input-field col s12">
                   <app-warning-message
